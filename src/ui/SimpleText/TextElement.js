@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function SimpleText (props) {
+export default function TextElement (props) {
     return <div className="label">{props.content || 'Yeay'}</div>;
 }
 
-SimpleText.defaultProps = {
+TextElement.defaultProps = {
     content: 'default text'
 };
 
-SimpleText.propTypes = {
+TextElement.propTypes = {
     content: PropTypes.string
 };
