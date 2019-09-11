@@ -4,7 +4,7 @@ import {text, boolean } from "@storybook/addon-knobs/react";
 import { action } from "@storybook/addon-actions";
 import BaseButton from "./index";
 
-storiesOf("AddButton", module)
+storiesOf("Sections.BaseButton", module)
     .add("default", () => <BaseButton />)
     .add("your Input with Knobs", () => {
         const label = text("Label", "Add this to list!");

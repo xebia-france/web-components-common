@@ -1,10 +1,12 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { withKnobs, text, number } from "@storybook/addon-knobs/react";
+import { withInfo } from '@storybook/addon-info';
 import SimpleText from "./index";
 
-storiesOf("Text", module)
+storiesOf("Sections.Text", module)
     .addDecorator(withKnobs)
+    .addDecorator(withInfo)
     .add("default", () => <SimpleText />)
     .add("Text and Input with Knobs", () => {
         const name = text("Name", "React App");
