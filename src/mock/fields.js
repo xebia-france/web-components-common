@@ -83,3 +83,52 @@ export const Title = {
 
     }
 };
+
+
+export const Tagline = {
+    content: {
+        text: {
+            0: 'Tagline 0',
+            1: 'Tagline1'
+        }
+    },
+    responsiveSettings: ['A'],
+    settings: {
+        color: {
+            A: {
+                hex: '#FFFFFF',
+                name: 'white',
+                rgb: '255,255,255',
+                shade: ''
+            }
+        },
+        font: {
+            A: {
+                family: 'DisplayOTF',
+                letterSpacing: '0',
+                lineHeight: '80',
+                size: '70',
+                style: null,
+                theme: 'Title1',
+                typeface: 'sans-serif',
+                weight: ['Regular', 400]
+            }
+        },
+        text: {
+            A: {
+                align: 'center',
+                decoration: null,
+                transform: null
+            }
+        },
+        opacity: {
+            A: {
+                value: '0.95'
+            }
+        },
+        seo: {
+            tag: 'h2'
+        }
+
+    }
+};
