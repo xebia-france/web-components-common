@@ -38,7 +38,7 @@ class BlockText extends Component {
             </Container>
         );
     }
-};
+}
 
 
 
