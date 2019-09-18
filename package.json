@@ -1,6 +1,6 @@
 {
   "name": "web-components-common",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "description": "Web component common",
   "main": "dist/web-components-common.js",
   "scripts": {
@@ -24,6 +24,7 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/polyfill": "7.6.0",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
     "@storybook/addon-actions": "5.1.11",
@@ -36,6 +37,7 @@
     "babel-eslint": "10.0.1",
     "babel-loader": "^8.0.1",
     "babel-plugin-macros": "2.6.1",
+    "babel-plugin-styled-components": "1.10.6",
     "babel-plugin-transform-class-properties": "6.24.1",
     "css-loader": "^1.0.0",
     "docz": "^1.2.0",
@@ -55,8 +57,9 @@
     "webpack-cli": "^3.2.0"
   },
   "dependencies": {
+    "core-js": "3.2.1",
     "react": "16.8.4",
     "react-dom": "16.8.4",
-    "styled-components": "^4.2.1"
+    "styled-components": "4.3.2"
   }
 }

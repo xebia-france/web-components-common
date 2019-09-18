@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, text, number } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
-import SimpleText from './index';
+import SimpleText from '../../src/components/SimpleText';
 
 storiesOf('Components.SimpleText', module)
     .addDecorator(withKnobs)

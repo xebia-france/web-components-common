@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, text, number, object } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
-import BlockText from './index';
-import { TemplateR, Title } from '../../mock/fields';
+import BlockText from '../../src/components/BlockText';
+import { TemplateR, Title } from '../../src/mock/fields';
 
 storiesOf('Components.BlockText', module)
     .addDecorator(withKnobs)

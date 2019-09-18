@@ -22,9 +22,9 @@ module.exports = {
 
                 test: /\.(css|scss)$/,
                 use: [
-                    { loader: 'style-loader' },
-                    { loader: 'css-loader' },
-                    { loader: 'sass-loader' },
+                    {loader: 'style-loader'},
+                    {loader: 'css-loader'},
+                    {loader: 'sass-loader'},
                 ],
             },
             {
@@ -37,6 +37,25 @@ module.exports = {
                 },
             },
         ],
+    },
+    externals: {
+        react: {
+            root: 'React',
+            commonjs2: 'react',
+            commonjs: 'react',
+            amd: 'react'
+        },
+        'react-dom': {
+            root: 'ReactDOM',
+            commonjs2: 'react-dom',
+            commonjs: 'react-dom',
+            amd: 'react-dom'
+        },
+        "styled-components": {
+            commonjs: "styled-components",
+            commonjs2: "styled-components",
+            amd: "styled-components",
+        },
     },
     // Here we define explicitly the file types we intend to deal with
     resolve: {
