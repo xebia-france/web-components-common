@@ -70,6 +70,6 @@ module.exports = {
         // sources. UMD may not be correct now and there is an open issue to fix this,
         // but until then, more reading can be found here:
         // https://webpack.js.org/configuration/output/#output-librarytarget
-        libraryTarget: 'umd',
+        libraryTarget: 'commonjs2',
     },
 };
