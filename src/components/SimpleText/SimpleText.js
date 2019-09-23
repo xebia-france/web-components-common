@@ -2,19 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-/*
-const Text = styled.p`
-	color : blue;
-	font-size : 12px;
-`;*/
-
-/*
-export default function SimpleText (props) {
-    return <div className="label" style={{ color: 'red' }}>
-       {props.content || 'Yeay'}
-    </div>
-}*/
-
 
 const Div = styled.div`
   color : blue;

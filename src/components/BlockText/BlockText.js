@@ -83,7 +83,7 @@ BlockText.defaultProps = {
                 },
                 font: {
                     A: {
-                        family: 'DisplayOTF',
+                        family: 'Arial',
                         letterSpacing: '0',
                         lineHeight: '80',
                         size: '70',

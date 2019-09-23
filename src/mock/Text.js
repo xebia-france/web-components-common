@@ -1,46 +1,9 @@
-export const TemplateR = {
-    content: {},
-    responsiveSettings: ['M', 'T', 'D'],
-    settings: {
-        color: {
-            M: {
-                hex: '#456677',
-                name: 'Bleu',
-                rgb: '69,102,119',
-                shade: 'L'
-            },
-            T: {
-                hex: '#000000',
-                name: 'black',
-                rgb: '0,0,0',
-                shade: null
-            },
-            D: {
-                hex: '#000000',
-                name: 'black',
-                rgb: '0,0,0',
-                shade: null
-            }
-        },
-        opacity: {
-            M: {
-                value: '0.95'
-            },
-            T: {
-                value: '0.95'
-            },
-            D: {
-                value: '0.95'
-            }
-        }
-    }
-};
 
-export const Title = {
+export const Text = {
     content: {
         text: {
-            0: 'Salut',
-            1: 'Hello'
+            0: 'Un text',
+            1: 'Some text'
         }
     },
     responsiveSettings: ['A'],
@@ -55,7 +18,7 @@ export const Title = {
         },
         font: {
             A: {
-                family: 'DisplayOTF',
+                family: 'Arial',
                 letterSpacing: '0',
                 lineHeight: '80',
                 size: '70',
@@ -85,11 +48,11 @@ export const Title = {
 };
 
 
-export const Tagline = {
+export const SmallText = {
     content: {
         text: {
-            0: 'Tagline 0',
-            1: 'Tagline1'
+            0: 'Un petit text',
+            1: 'Some small text'
         }
     },
     responsiveSettings: ['A'],
@@ -104,12 +67,12 @@ export const Tagline = {
         },
         font: {
             A: {
-                family: 'DisplayOTF',
+                family: 'Arial',
                 letterSpacing: '0',
-                lineHeight: '80',
-                size: '70',
+                lineHeight: '24',
+                size: '18',
                 style: null,
-                theme: 'Title1',
+                theme: 'paragraph',
                 typeface: 'sans-serif',
                 weight: ['Regular', 400]
             }
@@ -123,11 +86,11 @@ export const Tagline = {
         },
         opacity: {
             A: {
-                value: '0.95'
+                value: '1'
             }
         },
         seo: {
-            tag: 'h2'
+            tag: 'h4'
         }
 
     }
