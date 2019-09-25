@@ -7,6 +7,7 @@ import { getResponsiveKey } from '../../utils/functions';
 class HeaderPicturesOnCorners extends Component {
 
     buildComponent = (fields, field, key) => {
+        if(!fields[field]) return
         switch (field) {
             case 'Title':
                 return <Title key={key}
@@ -65,10 +66,12 @@ class HeaderPicturesOnCorners extends Component {
     render () {
         const { fields } = this.props;
 
+        console.log('fields on headerPictures', fields);
+
         const Template = fields.Template;
 
         return (
-            <Container responsive={Template.responsiveSettings}
+            <Container responsive={Template ? Template.responsiveSettings : []}
                        color={Template ? Template.settings.color : ''}>
                 {
                     ['CornerImages', 'Logo', 'Title', 'Tagline'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))

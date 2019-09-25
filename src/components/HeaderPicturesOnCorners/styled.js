@@ -7,6 +7,7 @@ export const ImageCorner = styled.div.attrs(props => ({
     size: props.size
 }))`
     position : absolute;
+    z-index : 0;
     
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
@@ -25,7 +26,7 @@ export const ImageCorner = styled.div.attrs(props => ({
          }`) }; 
          
    &>img{
-        width : inherit 
+        width : 100%; 
    }     
 `;
 
@@ -34,7 +35,6 @@ export const Container = styled.div.attrs(props => ({
     color: props.color
 
 }))`
-    background : tomato;
    width : 100%;
    height : 100vh;
    position:relative;
@@ -97,10 +97,12 @@ export const Text = styled.p.attrs(props => ({
 export const Title = styled(Text)`
     padding : 0;
     margin : 0;
+    z-index : 2;
 `;
 export const Tagline = styled(Text)`
     padding : 0;
     margin : 0;
+    z-index : 2;
 `;
 
 export const Logo = styled.div.attrs(props => ({
@@ -112,6 +114,7 @@ export const Logo = styled.div.attrs(props => ({
 }))`
     background-size : 100% auto;
     background-repeat: no-repeat;
+    z-index : 2;
     
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
@@ -132,13 +135,11 @@ export const Logo = styled.div.attrs(props => ({
             padding-bottom: ${ props.padding[size].bottom || '' }px ;
             padding-left: ${ props.padding[size].left || '' }px ;
          }`)
-}; 
+    }; 
         
   ${ props => props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
             background-image : url('${ props.asset[size].fields.file[Object.keys(props.asset[size].fields.file)[0]].url }');
          }`)
-};  
-
-               
+    };             
 `;

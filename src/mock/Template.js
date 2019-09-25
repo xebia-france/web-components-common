@@ -4,9 +4,9 @@ export const Template = {
     settings: {
         color: {
             A: {
-                hex: '#000000',
-                name: 'Black',
-                rgb: '0,0,0',
+                hex: '#F7F9FA',
+                name: 'Grey20',
+                rgb: '238, 238, 239',
                 shade: null
             }
         },

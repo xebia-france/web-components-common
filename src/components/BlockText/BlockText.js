@@ -1,46 +1,58 @@
-import React, { Component } from 'react';
-import { Container, Title } from './styled';
+import React, {Component} from 'react';
+import {Container, Title, Content} from './styled';
 import PropTypes from 'prop-types';
 
 class BlockText extends Component {
     buildComponent = (fields, field) => {
         console.log('fields', fields);
+        if (!fields[field]) return
         switch (field) {
-        case 'Title':
-            return <Title
-                responsive={fields[field].responsiveSettings}
-                color={fields[field].settings.color}
-                font={fields[field].settings.font}
-                text={fields[field].settings.text}
-                opacity={fields[field].settings.opacity}
-                as={fields[field].settings.seo.tag || 'h2'}
+            case 'Title':
+                return <Title
+                    responsive={fields[field].responsiveSettings}
+                    color={fields[field].settings.color}
+                    font={fields[field].settings.font}
+                    text={fields[field].settings.text}
+                    opacity={fields[field].settings.opacity}
+                    as={fields[field].settings.seo.tag || 'h2'}
 
-            >
-                {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
-            </Title>;
+                >
+                    {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
+                </Title>;
 
-        default :
-            return null;
+            case 'Content':
+                return <Content
+                    responsive={fields[field].responsiveSettings}
+                    color={fields[field].settings.color}
+                    font={fields[field].settings.font}
+                    text={fields[field].settings.text}
+                    opacity={fields[field].settings.opacity}
+                    dangerouslySetInnerHTML={{__html: fields[field].content.html ? fields[field].content.html[this.props.language] : <p>no content</p>}}
+                />
+
+            default :
+                return null;
         }
     }
 
-    render () {
-        const { fields } = this.props;
+    render() {
+        const {fields} = this.props;
+
+        console.log('fields on blocktext', fields);
+
 
         const Template = fields.Template;
 
         return (
             <Container responsive={Template ? Template.responsiveSettings : []}
-                color={Template.settings ? Template.settings.color : ''}>
+                       color={Template && Template.settings ? Template.settings.color : ''}>
                 {
-                    ['Title'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                    ['Title', 'Content'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
             </Container>
         );
     }
 }
-
-
 
 
 BlockText.defaultProps = {

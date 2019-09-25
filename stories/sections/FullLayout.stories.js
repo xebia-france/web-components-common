@@ -8,12 +8,12 @@ import FullLayout from '../../src/sections/FullLayout';
 storiesOf('Sections.FullLayout', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
-    .add('default', () => <FullLayout />)
+    .add('default', () => <FullLayout><p>FullLayout sections</p></FullLayout>)
     .add('Section with background', () => {
         const fieldsMock = object('Fields', {
             Template: Template
         });
-        return <FullLayout fields={fieldsMock}>
+        return (<FullLayout fields={fieldsMock}>
             <p>FullLayout sections</p>
-        </FullLayout>;
+        </FullLayout>);
     });
