@@ -4,4 +4,5 @@
 // different tech like TypeScript
 //export { default as BaseButton } from './BaseButton';
 export { default as SimpleText } from './SimpleText';
-//export { default as BlockText } from './BlockText';
+export { default as BlockText } from './BlockText';
+export { default as HeaderPicturesOnCorners } from './HeaderPicturesOnCorners';

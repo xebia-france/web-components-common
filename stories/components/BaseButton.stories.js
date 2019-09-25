@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, boolean } from '@storybook/addon-knobs/react';
 import { action } from '@storybook/addon-actions';
-import BaseButton from './index';
+import BaseButton from '../../src/components/BaseButton';
 
 storiesOf('Components.BaseButton', module)
     .add('default', () => <BaseButton />)
