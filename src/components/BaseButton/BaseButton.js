@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
-export default function BaseButton(props) {
+export default function BaseButton (props) {
     return (
         <button
             className="add-button"
             onClick={props.onClick}
             disabled={props.disabled}
         >
-            {props.content || "Add 👍"}
+            {props.content || 'Add 👍'}
         </button>
     );
 }
