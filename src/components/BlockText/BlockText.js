@@ -38,7 +38,6 @@ class BlockText extends Component {
     render() {
         const {fields} = this.props;
 
-        console.log('fields on blocktext', fields);
 
 
         const Template = fields.Template;
