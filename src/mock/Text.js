@@ -10,10 +10,10 @@ export const Text = {
     settings: {
         color: {
             A: {
-                hex: '#FFFFFF',
-                name: 'white',
-                rgb: '255,255,255',
-                shade: ''
+                hex: '#989898',
+                name: 'Grey',
+                rgb: '152,152,152',
+                shade: '50'
             }
         },
         font: {
@@ -59,10 +59,10 @@ export const SmallText = {
     settings: {
         color: {
             A: {
-                hex: '#FFFFFF',
-                name: 'white',
-                rgb: '255,255,255',
-                shade: ''
+                hex: '#989898',
+                name: 'Grey',
+                rgb: '152,152,152',
+                shade: '50'
             }
         },
         font: {

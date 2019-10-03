@@ -8,7 +8,7 @@ const BasicLayout = ({ children, fields }) => {
 
     return (
         <Wrapper responsive={Template ? Template.responsiveSettings : []}
-                 color={Template.settings ? Template.settings.color : ''}>
+                 color={Template.settings && Template.settings.color ? Template.settings.color : ''}>
             <Container>
                 {children}
             </Container>
@@ -25,19 +25,19 @@ BasicLayout.defaultProps = {
                 color: {
                     M: {
                         hex: 'transparent',
-                        name: 'transparent',
+                        name: 'Transparent',
                         rgb: null,
                         shade: null
                     },
                     T: {
                         hex: 'transparent',
-                        name: 'transparent',
+                        name: 'Transparent',
                         rgb: null,
                         shade: null
                     },
                     D: {
                         hex: 'transparent',
-                        name: 'transparent',
+                        name: 'Transparent',
                         rgb: null,
                         shade: null
                     }

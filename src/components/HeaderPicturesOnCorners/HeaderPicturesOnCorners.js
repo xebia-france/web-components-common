@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import { Container, Title, Tagline, ImageCorner, Logo } from './styled';
-import { getResponsiveKey } from '../../utils/functions';
+import {Container, Title, Tagline, ImageCorner, Logo} from './styled';
+import {getResponsiveKey} from '../../utils/functions';
 
 class HeaderPicturesOnCorners extends Component {
 
     buildComponent = (fields, field, key) => {
-        if(!fields[field]) return
+        if (!fields[field]) return
         switch (field) {
             case 'Title':
                 return <Title key={key}
@@ -38,6 +38,7 @@ class HeaderPicturesOnCorners extends Component {
                 </Tagline>;
 
             case 'Logo' :
+
                 return <Logo key={key}
                              role={'img'}
                              alt={fields[field].content.images[0].alt[this.props.language]}
@@ -54,8 +55,13 @@ class HeaderPicturesOnCorners extends Component {
 
     getCornerImages = field => {
         const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
+        console.log('field getcorners', field)
         return field.content.images.map((image, i) => {
-            const file = image.asset[responsiveContent].fields.file;
+
+            const file = image.asset[responsiveContent].fields ? image.asset[responsiveContent].fields.file : null;
+            console.log('file', file);
+            if (!file) return <ImageCorner key={i} responsive={field.responsiveSettings} size={field.settings.size}/>;
+
             return (
                 <ImageCorner key={i} responsive={field.responsiveSettings} size={field.settings.size}>
                     <img alt={image.alt[this.props.language]} src={`https:${ file[Object.keys(file)[0]].url }`}/>
@@ -63,8 +69,8 @@ class HeaderPicturesOnCorners extends Component {
         });
     }
 
-    render () {
-        const { fields } = this.props;
+    render() {
+        const {fields} = this.props;
 
         console.log('fields on headerPictures', fields);
 

@@ -12,7 +12,7 @@ export const Wrapper = styled.section.attrs(props => ({
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
              padding: 0 ${ gutter[size] }px;
-             background-color:${ props.color[size].hex };
+             background-color:${ props.color[size] ? props.color[size].hex : '' };
          }`)
     }; 
 `;

@@ -11,7 +11,7 @@ export const Images = {
                         fields : {
                             file : {
                                 0 : {
-                                    url : '//cdn.pixabay.com/photo/2016/10/25/17/58/apple-1769553_960_720.jpg'
+                                    url : '//www.freeiconspng.com/uploads/rule-of-thirds-grid-png-24.png'
                                 }
                             }
                         }
@@ -28,7 +28,7 @@ export const Images = {
                         fields : {
                             file : {
                                 0 : {
-                                    url : '//cdn.pixabay.com/photo/2016/10/25/17/58/apple-1769553_960_720.jpg'
+                                    url : '//www.freeiconspng.com/uploads/rule-of-thirds-grid-png-24.png'
                                 }
                             }
                         }
@@ -45,7 +45,7 @@ export const Images = {
                         fields : {
                             file : {
                                 0 : {
-                                    url : '//cdn.pixabay.com/photo/2016/10/25/17/58/apple-1769553_960_720.jpg'
+                                    url : '//www.freeiconspng.com/uploads/rule-of-thirds-grid-png-24.png'
                                 }
                             }
                         }
@@ -62,7 +62,7 @@ export const Images = {
                         fields : {
                             file : {
                                 0 : {
-                                    url : '//cdn.pixabay.com/photo/2016/10/25/17/58/apple-1769553_960_720.jpg'
+                                    url : '//www.freeiconspng.com/uploads/rule-of-thirds-grid-png-24.png'
                                 }
                             }
                         }
@@ -75,9 +75,9 @@ export const Images = {
     settings: {
         size: {
             A: {
-                width: '250',
-                height: '240',
-                maxWidth : '',
+                width: '20%',
+                height: 'auto',
+                maxWidth : '250',
                 maxHeight : ''
             }
         }

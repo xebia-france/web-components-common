@@ -19,7 +19,7 @@ export const ImageCorner = styled.div.attrs(props => ({
         : props.size[size].height || 'auto' };
             max-width: ${ isNumber(props.size[size].maxWidth)
         ? `${ props.size[size].maxWidth }px`
-        : props.size[size].maxWidth || '255px' };
+        : props.size[size].maxWidth || '' };
             max-height:${ isNumber(props.size[size].maxHeight)
         ? `${ props.size[size].maxHeight }px`
         : props.size[size].maxHeight || '' };
@@ -139,7 +139,7 @@ export const Logo = styled.div.attrs(props => ({
         
   ${ props => props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-            background-image : url('${ props.asset[size].fields.file[Object.keys(props.asset[size].fields.file)[0]].url }');
+            background-image : url('${ props.asset[size].fields ? props.asset[size].fields.file[Object.keys(props.asset[size].fields.file)[0]].url : '' }');
          }`)
     };             
 `;
