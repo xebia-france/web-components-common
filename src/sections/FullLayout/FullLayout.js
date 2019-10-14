@@ -8,7 +8,7 @@ const FullLayout = ({ children, fields }) => {
 
     return (
         <Wrapper responsive={Template ? Template.responsiveSettings : []}
-                 color={Template.settings ? Template.settings.color : ''}>
+                 colorElement={Template.settings ? Template.settings.color : ''}>
             {children}
         </Wrapper>
     );

@@ -32,7 +32,7 @@ export const ImageCorner = styled.div.attrs(props => ({
 
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
-    color: props.color
+    colorElement: props.colorElement
 
 }))`
    width : 100%;
@@ -64,23 +64,23 @@ export const Container = styled.div.attrs(props => ({
    
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-             background-color:${ props.color[size].hex };
+             background-color:${ props.colorElement[size].hex };
          }`)
 }; 
 `;
 
 export const Text = styled.p.attrs(props => ({
     responsive: props.responsive,
-    opacity: props.opacity,
-    color: props.color,
+    opacityElement: props.opacityElement,
+    colorElement: props.colorElement,
     font: props.font,
     text: props.text
 
 }))`
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-            opacity:${ props.opacity[size].value };
-            color:${ props.color[size].hex };
+            opacity:${ props.opacityElement[size].value };
+            color:${ props.colorElement[size].hex };
             font-size:${ props.font[size].size }px;
             font-family : '${ props.font[size].family }' };
             font-style: ${ props.font[size].style || '' };

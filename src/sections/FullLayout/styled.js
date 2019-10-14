@@ -3,7 +3,7 @@ import {device} from "../../styles/constants";
 
 export const Wrapper = styled.section.attrs(props => ({
     responsive: props.responsive,
-    color: props.color
+    colorElement: props.colorElement
 
 }))`
   display : flex;
@@ -12,7 +12,7 @@ export const Wrapper = styled.section.attrs(props => ({
   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-             background-color:${ props.color[size].hex };
+             background-color:${ props.colorElement[size].hex };
          }`)
     }; 
 `;

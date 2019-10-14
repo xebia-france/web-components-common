@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { device } from '../../styles/constants';
+import {isNumber} from '../../utils/functions';
+import  isEmpty  from 'lodash/isEmpty'
 
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -86,4 +88,50 @@ export const Content = styled.div.attrs(props => ({
         list-style : inside;
     }
     
+`;
+
+export const ImageContainer = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    size: props.size
+}))`
+   ${ props => props.responsive.map(size => `
+         @media ${ device[size] } {
+            width:${ isNumber(props.size[size].width)
+                    ? `${ props.size[size].width }px`
+                    : props.size[size].width };
+    
+            height:${ isNumber(props.size[size].height)
+    ? `${ props.size[size].height }px`
+    : props.size[size].height };
+            max-width: ${ isNumber(props.size[size].maxWidth)
+    ? `${ props.size[size].maxWidth }px`
+    : props.size[size].maxWidth || '' };
+            max-height:${ isNumber(props.size[size].maxHeight)
+    ? `${ props.size[size].maxHeight }px`
+    : props.size[size].maxHeight || '' };
+    
+    
+        &>img{
+            ${  isEmpty(props.size[size].width) ? `
+                width : auto;
+                height : 100%;    
+            
+            
+            ` : `
+                width : 100%;
+                height : auto;
+            `  }
+    
+        } 
+    
+    
+    
+    }
+         
+       
+         
+         
+   `) }; 
+         
+       
 `;

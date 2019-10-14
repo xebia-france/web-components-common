@@ -12,10 +12,10 @@ class HeaderPicturesOnCorners extends Component {
             case 'Title':
                 return <Title key={key}
                               responsive={fields[field].responsiveSettings}
-                              color={fields[field].settings.color}
+                              colorElement={fields[field].settings.color}
                               font={fields[field].settings.font}
                               text={fields[field].settings.text}
-                              opacity={fields[field].settings.opacity}
+                              opacityElement={fields[field].settings.opacity}
                               as={fields[field].settings.seo.tag || 'h2'}
 
                 >
@@ -28,8 +28,8 @@ class HeaderPicturesOnCorners extends Component {
             case 'Tagline' :
                 return <Tagline key={key}
                                 responsive={fields[field].responsiveSettings}
-                                opacity={fields[field].settings.opacity}
-                                color={fields[field].settings.color}
+                                opacityElement={fields[field].settings.opacity}
+                                colorElement={fields[field].settings.color}
                                 font={fields[field].settings.font}
                                 text={fields[field].settings.text}
                                 as={fields[field].settings.seo.tag || 'h2'}
@@ -78,7 +78,7 @@ class HeaderPicturesOnCorners extends Component {
 
         return (
             <Container responsive={Template ? Template.responsiveSettings : []}
-                       color={Template ? Template.settings.color : ''}>
+                       colorElement={Template ? Template.settings.color : ''}>
                 {
                     ['CornerImages', 'Logo', 'Title', 'Tagline'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }

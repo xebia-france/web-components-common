@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Container, Title, Content} from './styled';
+import {Container, Title, Content, ImageContainer} from './styled';
 import PropTypes from 'prop-types';
+import {getResponsiveKey} from "../../utils/functions";
 
-class BlockText extends Component {
+class Card extends Component {
     buildComponent = (fields, field) => {
         console.log('fields', fields);
         if (!fields[field]) return
@@ -30,15 +31,32 @@ class BlockText extends Component {
                     dangerouslySetInnerHTML={{__html: fields[field].content.html ? fields[field].content.html[this.props.language] : <p>no content</p>}}
                 />
 
+            case 'Image':
+                return this.getImages(fields[field]);
+
             default :
                 return null;
         }
     }
 
+
+    getImages = field => {
+        const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
+        return field.content.images.map((image, i) => {
+
+            const file = image.asset[responsiveContent].fields ? image.asset[responsiveContent].fields.file : null;
+            console.log('file', file);
+            if (!file) return <ImageContainer key={i} responsive={field.responsiveSettings} size={field.settings.size}/>;
+
+            return (
+                <ImageContainer key={i} responsive={field.responsiveSettings} size={field.settings.size}>
+                    <img alt={image.alt[this.props.language]} src={`https:${ file[Object.keys(file)[0]].url }`}/>
+                </ImageContainer>);
+        });
+    }
+
     render() {
         const {fields} = this.props;
-
-
 
         const Template = fields.Template;
 
@@ -46,7 +64,7 @@ class BlockText extends Component {
             <Container responsive={Template ? Template.responsiveSettings : []}
                        colorElement={Template && Template.settings ? Template.settings.color : ''}>
                 {
-                    ['Title', 'Content'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                    ['Title', 'Content', 'Image'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
             </Container>
         );
@@ -54,7 +72,7 @@ class BlockText extends Component {
 }
 
 
-BlockText.defaultProps = {
+Card.defaultProps = {
     fields: {
         Template: {
             content: {},
@@ -126,9 +144,9 @@ BlockText.defaultProps = {
     language: 0
 };
 
-BlockText.propTypes = {
+Card.propTypes = {
     fields: PropTypes.object.isRequired,
     language: PropTypes.number.isRequired
 };
 
-export default BlockText;
+export default Card;
