@@ -70,7 +70,7 @@ class HeaderPicturesOnCorners extends Component {
     }
 
     render() {
-        const {fields} = this.props;
+        const {fields, order} = this.props;
 
         console.log('fields on headerPictures', fields);
 
@@ -80,7 +80,8 @@ class HeaderPicturesOnCorners extends Component {
             <Container responsive={Template ? Template.responsiveSettings : []}
                        colorElement={Template ? Template.settings.color : ''}>
                 {
-                    ['CornerImages', 'Logo', 'Title', 'Tagline'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                    order ? ['CornerImages', ...order].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                    : ['CornerImages', 'Logo', 'Title', 'Tagline'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
             </Container>
         );

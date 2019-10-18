@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Title, Content, ImageContainer} from './styled';
+import {Container, Title, Content, ImageContainer, CTA} from './styled';
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
 
@@ -34,6 +34,25 @@ class Card extends Component {
             case 'Image':
                 return this.getImages(fields[field]);
 
+            case 'CTA':
+                return <CTA
+                    responsive={fields[field].responsiveSettings}
+                    basicBehavior={fields[field].settings.basic}
+                    hoverBehavior={fields[field].settings.hover}
+                    font={fields[field].settings.font}
+                    text={fields[field].settings.text}
+                    borderElement={fields[field].settings.border}
+                    marginElement={fields[field].settings.margin}
+                    paddingElement={fields[field].settings.padding}
+                    size={fields[field].settings.size}
+                    opacityElement={fields[field].settings.opacity}
+                >
+                    <a href={fields[field].content.link ? fields[field].content.link[this.props.language] : ''}
+                        target={fields[field].settings.target.external ? '_blank' : ''} >
+                        {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
+                    </a>
+                </CTA>;
+
             default :
                 return null;
         }
@@ -49,22 +68,24 @@ class Card extends Component {
             if (!file) return <ImageContainer key={i} responsive={field.responsiveSettings} size={field.settings.size}/>;
 
             return (
-                <ImageContainer key={i} responsive={field.responsiveSettings} size={field.settings.size}>
+                <ImageContainer key={i} responsive={field.responsiveSettings} size={field.settings.size} border={field.settings.border}>
                     <img alt={image.alt[this.props.language]} src={`https:${ file[Object.keys(file)[0]].url }`}/>
                 </ImageContainer>);
         });
     }
 
     render() {
-        const {fields} = this.props;
+        const {fields, order} = this.props;
 
         const Template = fields.Template;
 
         return (
             <Container responsive={Template ? Template.responsiveSettings : []}
+                       paddingElement={Template && Template.settings ? Template.settings.padding : ''}
                        colorElement={Template && Template.settings ? Template.settings.color : ''}>
                 {
-                    ['Title', 'Content', 'Image'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                    order  ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                        :['Title', 'Content', 'Image', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
             </Container>
         );
