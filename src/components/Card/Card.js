@@ -46,7 +46,11 @@ class Card extends Component {
                     paddingElement={fields[field].settings.padding}
                     size={fields[field].settings.size}
                     opacityElement={fields[field].settings.opacity}
+                    alignment={fields[field].settings.alignment}
+                    icon={fields[field].settings.icon}
+
                 >
+                    <i>{fields[field].content.icon ? fields[field].content.icon[this.props.language] : ''}</i>
                     <a href={fields[field].content.link ? fields[field].content.link[this.props.language] : ''}
                         target={fields[field].settings.target.external ? '_blank' : ''} >
                         {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
@@ -68,7 +72,12 @@ class Card extends Component {
             if (!file) return <ImageContainer key={i} responsive={field.responsiveSettings} size={field.settings.size}/>;
 
             return (
-                <ImageContainer key={i} responsive={field.responsiveSettings} size={field.settings.size} border={field.settings.border}>
+                <ImageContainer key={i} responsive={field.responsiveSettings}
+                                alignment={field.settings.alignment}
+                                marginElement={field.settings.margin}
+                                paddingElement={field.settings.padding}
+
+                                size={field.settings.size} border={field.settings.border}>
                     <img alt={image.alt[this.props.language]} src={`https:${ file[Object.keys(file)[0]].url }`}/>
                 </ImageContainer>);
         });
@@ -82,6 +91,8 @@ class Card extends Component {
         return (
             <Container responsive={Template ? Template.responsiveSettings : []}
                        paddingElement={Template && Template.settings ? Template.settings.padding : ''}
+                       marginElement={Template && Template.settings ? Template.settings.margin : ''}
+                       sizeElement={Template && Template.settings ? Template.settings.size : ''}
                        colorElement={Template && Template.settings ? Template.settings.color : ''}>
                 {
                     order  ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))

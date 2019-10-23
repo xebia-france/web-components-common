@@ -6,7 +6,9 @@ import  isEmpty  from 'lodash/isEmpty'
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
     colorElement: props.colorElement,
-    paddingElement : props.paddingElement
+    paddingElement : props.paddingElement,
+    marginElement : props.marginElement,
+    size : props.sizeElement
 
 }))`
    width : 100%;
@@ -24,6 +26,27 @@ export const Container = styled.div.attrs(props => ({
              padding-bottom : ${ props.paddingElement[size].bottom }px;
              padding-left : ${ props.paddingElement[size].left }px;
              padding-right : ${ props.paddingElement[size].right }px;
+             
+             margin-top : ${ props.marginElement[size].top }px;
+             margin-bottom : ${ props.marginElement[size].bottom }px;
+             margin-left : ${ props.marginElement[size].left }px;
+             margin-right : ${ props.marginElement[size].right }px;
+             
+             width:${ isNumber(props.size[size].width)
+                ? `${ props.size[size].width }px`
+                : props.size[size].width };
+        
+            height:${ isNumber(props.size[size].height)
+                ? `${ props.size[size].height }px`
+                : props.size[size].height };
+            max-width: ${ isNumber(props.size[size].maxWidth)
+                ? `${ props.size[size].maxWidth }px`
+                :props.size[size].maxWidth || '' };
+            max-height:${ isNumber(props.size[size].maxHeight)
+                ? `${ props.size[size].maxHeight }px`
+                : props.size[size].maxHeight || '' };
+             
+             
          }`)
 }; 
 `;
@@ -97,7 +120,10 @@ export const Content = styled.div.attrs(props => ({
 export const ImageContainer = styled.div.attrs(props => ({
     responsive: props.responsive,
     size: props.size,
-    border : props.border
+    alignment: props.alignment,
+    border : props.border,
+    margin : props.marginElement,
+    padding : props.paddingElement
 }))`
 
     overflow : hidden;
@@ -119,6 +145,10 @@ export const ImageContainer = styled.div.attrs(props => ({
                     ? `${ props.size[size].maxHeight }px`
                     : props.size[size].maxHeight || '' };
                     
+            align-self:${ props.alignment[size].horizontal || '' };
+                    
+                    
+                    
             border-color : ${ props.border[size].color.hex || '' };        
             border-top-width : ${  isNumber(props.border[size].width.top) ? `${ props.border[size].width.top }px` 
                                     : `${ props.border[size].width.top }` || '' }; 
@@ -138,6 +168,17 @@ export const ImageContainer = styled.div.attrs(props => ({
             border-bottom-left-radius :  ${  isNumber(props.border[size].radius.bottomLeft) ? `${ props.border[size].radius.bottomLeft }px` 
                                     : `${ props.border[size].radius.bottomLeft }` || '' };                         
     
+    
+            padding-top: ${ props.padding[size].top || '' }px ;
+            padding-right: ${ props.padding[size].right || '' }px ;
+            padding-bottom: ${ props.padding[size].bottom || '' }px ;
+            padding-left: ${ props.padding[size].left || '' }px ;
+            
+            margin-top: ${ props.margin[size].top || '' }px ;
+            margin-right: ${ props.margin[size].right || '' }px ;
+            margin-bottom: ${ props.margin[size].bottom || '' }px ;
+            margin-left: ${ props.margin[size].left || '' }px ;   
+            
         &>img{
             ${  isEmpty(props.size[size].width) ? `
                 width : auto;
@@ -174,10 +215,14 @@ export const CTA = styled.div.attrs(props => ({
     hoverBehavior: props.hoverBehavior,
     border : props.borderElement,
     margin : props.marginElement,
-    padding : props.paddingElement
+    padding : props.paddingElement,
+    alignment: props.alignment,
+    icon : props.icon
 }))`
     transition : all 0.25s ease;
     border-style : solid;
+    display : flex;
+    align-items:center;
     
     & a{
        transition : all 0.25s ease;
@@ -185,6 +230,14 @@ export const CTA = styled.div.attrs(props => ({
     
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
+            & i {
+                color:${ `rgba(${props.basicBehavior.icon[size].color.rgb}, ${props.basicBehavior.icon[size].opacity.value})` };
+                font-size:${ props.icon[size].font.size }px;
+                font-family : '${ props.icon[size].font.family }', ${ props.icon[size].font.typeface };
+                font-weight: ${ props.icon[size].font.weight[1] } ;
+                line-height: ${ props.icon[size].font.lineHeight }px;
+            }
+         
             & a {
                 color:${ `rgba(${props.basicBehavior.color[size].rgb}, ${props.basicBehavior.opacity[size].value})` };
                 font-size:${ props.font[size].size }px;
@@ -233,6 +286,9 @@ export const CTA = styled.div.attrs(props => ({
             max-height:${ isNumber(props.size[size].maxHeight)
                     ? `${ props.size[size].maxHeight }px`
                     : props.size[size].maxHeight || '' };
+            
+            align-self:${ props.alignment[size].horizontal || '' };
+        
                     
             padding-top: ${ props.padding[size].top || '' }px ;
             padding-right: ${ props.padding[size].right || '' }px ;
@@ -254,6 +310,11 @@ export const CTA = styled.div.attrs(props => ({
                & a{
                 color:${ `rgba(${props.hoverBehavior.color[size].rgb}, ${props.hoverBehavior.opacity[size].value})` };
                }
+               
+               & i {
+                color:${ `rgba(${props.hoverBehavior.icon[size].color.rgb}, ${props.hoverBehavior.icon[size].opacity.value})` };
+                
+                }
          
             }
          
