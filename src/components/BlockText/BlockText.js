@@ -10,10 +10,7 @@ class BlockText extends Component {
             case 'Title':
                 return <Title
                     responsive={fields[field].responsiveSettings}
-                    colorElement={fields[field].settings.color}
-                    font={fields[field].settings.font}
-                    text={fields[field].settings.text}
-                    opacityElement={fields[field].settings.opacity}
+                    typography={fields[field].settings.typography}
                     as={fields[field].settings.seo.tag || 'h2'}
 
                 >
@@ -23,10 +20,7 @@ class BlockText extends Component {
             case 'Content':
                 return <Content
                     responsive={fields[field].responsiveSettings}
-                    colorElement={fields[field].settings.color}
-                    font={fields[field].settings.font}
-                    text={fields[field].settings.text}
-                    opacityElement={fields[field].settings.opacity}
+                    typography={fields[field].settings.typography}
                     dangerouslySetInnerHTML={{__html: fields[field].content.html ? fields[field].content.html[this.props.language] : <p>no content</p>}}
                 />
 
@@ -38,13 +32,12 @@ class BlockText extends Component {
     render() {
         const {fields} = this.props;
 
-
-
         const Template = fields.Template;
 
         return (
             <Container responsive={Template ? Template.responsiveSettings : []}
-                       colorElement={Template && Template.settings ? Template.settings.color : ''}>
+                       basis={Template && Template.settings ? Template.settings.basis : {}}
+                       >
                 {
                     ['Title', 'Content'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
@@ -60,17 +53,36 @@ BlockText.defaultProps = {
             content: {},
             responsiveSettings: ['A'],
             settings: {
-                color: {
+                basis: {
                     A: {
-                        hex: null,
-                        name: null,
-                        rgb: null,
-                        shade: null
-                    }
-                },
-                opacity: {
-                    A: {
-                        value: '1'
+                        size: {
+                            width: '',
+                            height: '',
+                            maxWidth: '',
+                            maxHeight: ''
+
+                        },
+                        padding: {
+                            top: '0',
+                            right: '0',
+                            bottom: '0',
+                            left: '0'
+                        },
+                        margin: {
+                            top: '0',
+                            right: '0',
+                            bottom: '0',
+                            left: '0'
+                        },
+                        color: {
+                            hex: '#000000',
+                            rgb: '0,0,0',
+                            name: 'black',
+                            shade: null
+                        },
+                        opacity: {
+                            value: '1'
+                        }
                     }
                 }
             }
@@ -84,40 +96,75 @@ BlockText.defaultProps = {
             },
             responsiveSettings: ['A'],
             settings: {
-                color: {
+                typography: {
                     A: {
-                        hex: '#456677',
-                        name: 'Bleu',
-                        rgb: '69,102,119',
-                        shade: 'L'
-                    }
-                },
-                font: {
-                    A: {
-                        family: 'Arial',
-                        letterSpacing: '0',
-                        lineHeight: '80',
-                        size: '70',
-                        style: null,
-                        theme: 'Title1',
-                        typeface: 'sans-serif',
-                        weight: ['Regular', 400]
-                    }
-                },
-                text: {
-                    A: {
-                        align: 'center',
-                        decoration: null,
-                        transform: null
-                    }
-                },
-                opacity: {
-                    A: {
-                        value: '0.95'
+                        font: {
+                            theme: 'Title1',
+                            family: null,
+                            typeface: null,
+                            weight: null,
+                            style: null,
+                            size: null,
+                            lineHeight: null,
+                            letterSpacing: '0'
+                        },
+                        text: {
+                            align: 'center',
+                            transform: null,
+                            decoration: null
+                        },
+                        color: {
+                            hex: '#000000',
+                            rgb: '0,0,0',
+                            name: 'black',
+                            shade: null
+                        },
+                        opacity: {
+                            value: '1'
+                        }
                     }
                 },
                 seo: {
                     tag: 'h2'
+                }
+            }
+        },
+        Content: {
+            content: {
+                html: {
+                    0: '',
+                    1: ''
+                }
+            },
+            responsiveSettings: ['A'],
+            settings: {
+                typography: {
+                    A: {
+                        font: {
+                            theme: 'Paragraph',
+                            family: null,
+                            typeface: null,
+                            weight: null,
+                            style: null,
+                            size: null,
+                            lineHeight: null,
+                            letterSpacing: '0'
+                        },
+                        text: {
+                            align: 'left',
+                            transform: null,
+                            decoration: null
+                        },
+                        color: {
+                            hex: '#000000',
+                            rgb: '0,0,0',
+                            name: 'black',
+                            shade: null
+                        },
+                        opacity: {
+                            value: '1'
+                        }
+                    }
                 }
 
             }

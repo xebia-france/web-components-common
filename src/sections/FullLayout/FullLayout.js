@@ -8,7 +8,8 @@ const FullLayout = ({ children, fields }) => {
 
     return (
         <Wrapper responsive={Template ? Template.responsiveSettings : []}
-                 colorElement={Template.settings ? Template.settings.color : ''}>
+                 basis={Template.settings ? Template.settings.basis : {}}
+        >
             {children}
         </Wrapper>
     );
@@ -18,20 +19,43 @@ FullLayout.defaultProps = {
     fields: {
         Template: {
             content: {},
-            responsiveSettings: ['A'],
+            responsiveSettings: ['M', 'T', 'D'],
             settings: {
-                color: {
-                    A: {
-                        hex: 'transparent',
-                        name: 'transparent',
-                        rgb: null,
-                        shade: null
+                basis: {
+                    M: {
+                        color: {
+                            hex: '#000000',
+                            rgb: '0,0,0',
+                            name: 'black',
+                            shade: null
+                        },
+                        opacity: {
+                            value: '1'
+                        }
+                    },
+                    T: {
+                        color: {
+                            hex: '#000000',
+                            rgb: '0,0,0',
+                            name: 'black',
+                            shade: null
+                        },
+                        opacity: {
+                            value: '1'
+                        }
+                    },
+                    D: {
+                        color: {
+                            hex: '#000000',
+                            rgb: '0,0,0',
+                            name: 'black',
+                            shade: null
+                        },
+                        opacity: {
+                            value: '1'
+                        }
                     }
-                },
-                opacity: {
-                    A: {
-                        value: '1'
-                    }
+
                 }
             }
         }

@@ -11,10 +11,7 @@ class Card extends Component {
             case 'Title':
                 return <Title
                     responsive={fields[field].responsiveSettings}
-                    colorElement={fields[field].settings.color}
-                    font={fields[field].settings.font}
-                    text={fields[field].settings.text}
-                    opacityElement={fields[field].settings.opacity}
+                    typography={fields[field].settings.typography}
                     as={fields[field].settings.seo.tag || 'h2'}
 
                 >
@@ -24,10 +21,7 @@ class Card extends Component {
             case 'Content':
                 return <Content
                     responsive={fields[field].responsiveSettings}
-                    colorElement={fields[field].settings.color}
-                    font={fields[field].settings.font}
-                    text={fields[field].settings.text}
-                    opacityElement={fields[field].settings.opacity}
+                    typography={fields[field].settings.typography}
                     dangerouslySetInnerHTML={{__html: fields[field].content.html ? fields[field].content.html[this.props.language] : <p>no content</p>}}
                 />
 
@@ -37,24 +31,15 @@ class Card extends Component {
             case 'CTA':
                 return <CTA
                     responsive={fields[field].responsiveSettings}
-                    basicBehavior={fields[field].settings.basic}
-                    hoverBehavior={fields[field].settings.hover}
-                    font={fields[field].settings.font}
-                    text={fields[field].settings.text}
-                    borderElement={fields[field].settings.border}
-                    marginElement={fields[field].settings.margin}
-                    paddingElement={fields[field].settings.padding}
-                    size={fields[field].settings.size}
-                    opacityElement={fields[field].settings.opacity}
-                    alignment={fields[field].settings.alignment}
+                    basis={fields[field].settings.basis}
+                    typography={fields[field].settings.typography}
+                    border={fields[field].settings.border}
                     icon={fields[field].settings.icon}
-
+                    href={fields[field].content.link ? fields[field].content.link[this.props.language] : ''}
+                    target={fields[field].settings.target.external ? '_blank' : ''}
                 >
                     <i>{fields[field].content.icon ? fields[field].content.icon[this.props.language] : ''}</i>
-                    <a href={fields[field].content.link ? fields[field].content.link[this.props.language] : ''}
-                        target={fields[field].settings.target.external ? '_blank' : ''} >
-                        {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
-                    </a>
+                    <p> {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}</p>
                 </CTA>;
 
             default :
@@ -69,15 +54,13 @@ class Card extends Component {
 
             const file = image.asset[responsiveContent].fields ? image.asset[responsiveContent].fields.file : null;
             console.log('file', file);
-            if (!file) return <ImageContainer key={i} responsive={field.responsiveSettings} size={field.settings.size}/>;
+            if (!file) return <ImageContainer key={i} responsive={field.responsiveSettings} basis={field.settings.basis}/>;
 
             return (
-                <ImageContainer key={i} responsive={field.responsiveSettings}
-                                alignment={field.settings.alignment}
-                                marginElement={field.settings.margin}
-                                paddingElement={field.settings.padding}
-
-                                size={field.settings.size} border={field.settings.border}>
+                <ImageContainer key={i}
+                                responsive={field.responsiveSettings}
+                                basis={field.settings.basis}
+                                border={field.settings.border}>
                     <img alt={image.alt[this.props.language]} src={`https:${ file[Object.keys(file)[0]].url }`}/>
                 </ImageContainer>);
         });
@@ -90,10 +73,7 @@ class Card extends Component {
 
         return (
             <Container responsive={Template ? Template.responsiveSettings : []}
-                       paddingElement={Template && Template.settings ? Template.settings.padding : ''}
-                       marginElement={Template && Template.settings ? Template.settings.margin : ''}
-                       sizeElement={Template && Template.settings ? Template.settings.size : ''}
-                       colorElement={Template && Template.settings ? Template.settings.color : ''}>
+                       basis={Template && Template.settings ? Template.settings.basis : {}}>
                 {
                     order  ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                         :['Title', 'Content', 'Image', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
@@ -110,17 +90,39 @@ Card.defaultProps = {
             content: {},
             responsiveSettings: ['A'],
             settings: {
-                color: {
+                basis: {
                     A: {
-                        hex: null,
-                        name: null,
-                        rgb: null,
-                        shade: null
-                    }
-                },
-                opacity: {
-                    A: {
-                        value: '1'
+                        size: {
+                            width: '100',
+                            height: '100',
+                            maxWidth: '',
+                            maxHeight: ''
+
+                        },
+                        padding: {
+                            top: '0',
+                            right: '0',
+                            bottom: '0',
+                            left: '0'
+                        },
+                        margin: {
+                            top: '0',
+                            right: '0',
+                            bottom: '0',
+                            left: '0'
+                        },
+                        alignment: {
+                            horizontal: 'flex-start'
+                        },
+                        color: {
+                            hex: '#000000',
+                            rgb: '0,0,0',
+                            name: 'black',
+                            shade: null
+                        },
+                        opacity: {
+                            value: '1'
+                        }
                     }
                 }
             }
@@ -134,42 +136,89 @@ Card.defaultProps = {
             },
             responsiveSettings: ['A'],
             settings: {
-                color: {
-                    A: {
-                        hex: '#456677',
-                        name: 'Bleu',
-                        rgb: '69,102,119',
-                        shade: 'L'
-                    }
-                },
-                font: {
-                    A: {
-                        family: 'Arial',
-                        letterSpacing: '0',
-                        lineHeight: '80',
-                        size: '70',
-                        style: null,
-                        theme: 'Title1',
-                        typeface: 'sans-serif',
-                        weight: ['Regular', 400]
-                    }
-                },
-                text: {
-                    A: {
-                        align: 'center',
-                        decoration: null,
-                        transform: null
-                    }
-                },
-                opacity: {
-                    A: {
-                        value: '0.95'
+                typography: {
+                    M: {
+                        font: {
+                            theme: 'Title1',
+                            family: null,
+                            typeface: null,
+                            weight: null,
+                            style: null,
+                            size: null,
+                            lineHeight: null,
+                            letterSpacing: '0'
+                        },
+                        text: {
+                            align: 'center',
+                            transform: null,
+                            decoration: null
+                        },
+                        color: {
+                            hex: '#000000',
+                            rgb: '0,0,0',
+                            name: 'black',
+                            shade: null
+                        },
+                        opacity: {
+                            value: '1'
+                        }
+                    },
+                    T: {
+                        font: {
+                            theme: 'Title2',
+                            family: null,
+                            typeface: null,
+                            weight: null,
+                            style: null,
+                            size: null,
+                            lineHeight: null,
+                            letterSpacing: '0'
+                        },
+                        text: {
+                            align: 'center',
+                            transform: null,
+                            decoration: null
+                        },
+                        color: {
+                            hex: '#000000',
+                            rgb: '0,0,0',
+                            name: 'black',
+                            shade: null
+                        },
+                        opacity: {
+                            value: '1'
+                        }
+                    },
+                    D: {
+                        font: {
+                            theme: 'Title3',
+                            family: null,
+                            typeface: null,
+                            weight: null,
+                            style: null,
+                            size: null,
+                            lineHeight: null,
+                            letterSpacing: '0'
+                        },
+                        text: {
+                            align: 'center',
+                            transform: null,
+                            decoration: null
+                        },
+                        color: {
+                            hex: '#000000',
+                            rgb: '0,0,0',
+                            name: 'black',
+                            shade: null
+                        },
+                        opacity: {
+                            value: '1'
+                        }
                     }
                 },
                 seo: {
                     tag: 'h2'
                 }
-
             }
         }
     },

@@ -1,29 +1,33 @@
 import styled from 'styled-components';
-import { device } from '../../styles/constants';
-import { isNumber } from '../../utils/functions';
+import {device} from '../../styles/constants';
+import {isNumber} from '../../utils/functions';
 
 export const ImageCorner = styled.div.attrs(props => ({
     responsive: props.responsive,
-    size: props.size
+    basis: props.basis
 }))`
     position : absolute;
     z-index : 0;
     
-   ${ props => props.responsive.map(size => `
+    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-            width:${ isNumber(props.size[size].width)
-        ? `${ props.size[size].width }px`
-        : props.size[size].width || '20%' };
-            height:${ isNumber(props.size[size].height)
-        ? `${ props.size[size].height }px`
-        : props.size[size].height || 'auto' };
-            max-width: ${ isNumber(props.size[size].maxWidth)
-        ? `${ props.size[size].maxWidth }px`
-        : props.size[size].maxWidth || '' };
-            max-height:${ isNumber(props.size[size].maxHeight)
-        ? `${ props.size[size].maxHeight }px`
-        : props.size[size].maxHeight || '' };
-         }`) }; 
+        
+            width:${ isNumber(props.basis[size].size.width)
+    ? `${ props.basis[size].size.width }px`
+    : props.basis[size].size.width };
+    
+            height:${ isNumber(props.basis[size].size.height)
+    ? `${ props.basis[size].size.height }px`
+    : props.basis[size].size.height };
+            max-width: ${ isNumber(props.basis[size].size.maxWidth)
+    ? `${ props.basis[size].size.maxWidth }px`
+    : props.basis[size].size.maxWidth || '' };
+            max-height:${ isNumber(props.basis[size].size.maxHeight)
+    ? `${ props.basis[size].size.maxHeight }px`
+    : props.basis[size].size.maxHeight || '' };
+         
+         }`)
+    }; 
          
    &>img{
         width : 100%; 
@@ -32,7 +36,7 @@ export const ImageCorner = styled.div.attrs(props => ({
 
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
-    colorElement: props.colorElement
+    basis: props.basis
 
 }))`
    width : 100%;
@@ -64,34 +68,30 @@ export const Container = styled.div.attrs(props => ({
    
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-             background-color:${ props.colorElement[size].hex };
+            background-color:${ `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` };
          }`)
-}; 
+    }; 
 `;
 
 export const Text = styled.p.attrs(props => ({
     responsive: props.responsive,
-    opacityElement: props.opacityElement,
-    colorElement: props.colorElement,
-    font: props.font,
-    text: props.text
+    typography: props.typography
 
 }))`
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-            opacity:${ props.opacityElement[size].value };
-            color:${ props.colorElement[size].hex };
-            font-size:${ props.font[size].size }px;
-            font-family : '${ props.font[size].family }' };
-            font-style: ${ props.font[size].style || '' };
-            font-weight: ${ props.font[size].weight[1] };
-            letter-spacing: ${ props.font[size].letterSpacing }px;
-            line-height: ${ props.font[size].lineHeight }px;
-            text-align: ${ props.text[size].align };
-            text-decoration: ${ props.text[size].decoration || '' };
-            text-transform: ${ props.text[size].transform || '' };
+            color:${ `rgba(${props.typography[size].color.rgb},${props.typography[size].opacity.value})` };
+            font-size:${ props.typography[size].font.size }px;
+            font-family : '${ props.typography[size].font.family }', ${props.typography[size].font.typeface };
+            font-style: ${ props.typography[size].font.style || '' };
+            font-weight: ${ props.typography[size].font.weight[1] } ;
+            letter-spacing: ${ props.typography[size].font.letterSpacing }px;
+            line-height: ${ props.typography[size].font.lineHeight }px;
+            text-align: ${ props.typography[size].text.align };
+            text-decoration: ${ props.typography[size].text.decoration || '' };
+            text-transform: ${props.typography[size].text.transform || '' };
          }`)
-};
+    };
 `;
 
 export const Title = styled(Text)`
@@ -108,9 +108,7 @@ export const Tagline = styled(Text)`
 export const Logo = styled.div.attrs(props => ({
     responsive: props.responsive,
     responsiveContent: props.responsiveContent,
-    size: props.size,
-    padding: props.padding
-
+    basis: props.basis
 }))`
     background-size : 100% auto;
     background-repeat: no-repeat;
@@ -118,22 +116,31 @@ export const Logo = styled.div.attrs(props => ({
     
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-            width:${ isNumber(props.size[size].width)
-        ? `${ props.size[size].width }px`
-        : props.size[size].width || '200px' };
-            height:${ isNumber(props.size[size].height)
-        ? `${ props.size[size].height }px`
-        : props.size[size].height || '200px' };
-            max-width: ${ isNumber(props.size[size].maxWidth)
-        ? `${ props.size[size].maxWidth }px`
-        : props.size[size].maxWidth || '' };
-            max-height:${ isNumber(props.size[size].maxHeight)
-        ? `${ props.size[size].maxHeight }px`
-        : props.size[size].maxHeight || '' };
-            padding-top: ${ props.padding[size].top || '' }px ;
-            padding-right: ${ props.padding[size].right || '' }px ;
-            padding-bottom: ${ props.padding[size].bottom || '' }px ;
-            padding-left: ${ props.padding[size].left || '' }px ;
+        
+            width:${ isNumber(props.basis[size].size.width)
+    ? `${ props.basis[size].size.width }px`
+    : props.basis[size].size.width };
+    
+            height:${ isNumber(props.basis[size].size.height)
+    ? `${ props.basis[size].size.height }px`
+    : props.basis[size].size.height };
+            max-width: ${ isNumber(props.basis[size].size.maxWidth)
+    ? `${ props.basis[size].size.maxWidth }px`
+    : props.basis[size].size.maxWidth || '' };
+            max-height:${ isNumber(props.basis[size].size.maxHeight)
+    ? `${ props.basis[size].size.maxHeight }px`
+    : props.basis[size].size.maxHeight || '' };
+                                
+            padding-top : ${ props.basis[size].padding.top }px;
+            padding-bottom : ${ props.basis[size].padding.bottom }px;
+            padding-left : ${ props.basis[size].padding.left }px;
+            padding-right : ${ props.basis[size].padding.right }px;
+             
+            margin-top : ${ props.basis[size].margin.top }px;
+            margin-bottom : ${ props.basis[size].margin.bottom }px;
+            margin-left : ${ props.basis[size].margin.left }px;
+            margin-right : ${ props.basis[size].margin.right }px;    
+            
          }`)
     }; 
         
