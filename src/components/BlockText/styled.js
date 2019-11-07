@@ -89,17 +89,5 @@ export const Content = styled.div.attrs(props => ({
             text-transform: ${props.typography[size].text.transform || '' };
          }`)
     };
-    
-    & em {
-        font-style : italic;
-    }
-    
-    & strong {
-        font-weight : 700;
-    }
-    
-    & ol, & ul, & li{
-        list-style : inside;
-    }
-    
+   
 `;

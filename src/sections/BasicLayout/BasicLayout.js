@@ -1,6 +1,7 @@
 import React from 'react';
 import {Wrapper, Container} from './styled';
 
+
 const BasicLayout = ({children, fields}) => {
     const Template = fields.Template;
     const FlexContainer = fields.FlexContainer;

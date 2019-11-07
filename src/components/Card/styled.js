@@ -14,7 +14,6 @@ export const Container = styled.div.attrs(props => ({
    flex-direction : column;
    align-items : center;
    justify-content  : center;
-   cursor : pointer;
    
    
    ${ props => props.responsive.map((size, i) => `
@@ -91,17 +90,7 @@ export const Content = styled.div.attrs(props => ({
          }`)
     };
     
-    & em {
-        font-style : italic;
-    }
-    
-    & strong {
-        font-weight : 700;
-    }
-    
-    & ol, & ul, & li{
-        list-style : inside;
-    }
+  
     
 `;
 
