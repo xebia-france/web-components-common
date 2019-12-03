@@ -41,33 +41,9 @@ export const Container = styled.div.attrs(props => ({
              align-content: ${ props.flex[size].properties.alignContent };
              margin-bottom : -${ props.flex[size].properties.gutterVertical }px;
              
-             
-             
              &>*{
-                width: calc(100% / ${ props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px );
+                width: calc(100% / ${ props.flex[size].properties.columns } - ${   (( props.flex[size].properties.columns - 1 ) * props.flex[size].properties.gutterHorizontal ) / props.flex[size].properties.columns }px );
                 margin-bottom : ${ props.flex[size].properties.gutterVertical }px;
-                
-                ${props.flex[size].properties.justify === 'flex-start' ? `
-                    &:not(:nth-child(${ props.flex[size].properties.columns }n) ){
-                        margin-right : ${props.flex[size].properties.gutterHorizontal}px;
-                    }
-                    
-                    `  : ''
-                }
-                ${props.flex[size].properties.justify === 'flex-end' ? `
-                    &:not(:nth-child(${ props.flex[size].properties.columns }n + 1)){
-                      margin-left : ${props.flex[size].properties.gutterHorizontal}px;
-                    }
-                    `  : ''
-                }
-                
-                ${props.flex[size].properties.justify === 'center' ? `
-                    &:not(:nth-child(${ props.flex[size].properties.columns }n + 1)){
-                      margin-left : ${props.flex[size].properties.gutterHorizontal}px;
-                    }
-                    `  : ''
-                }
-                
              }
              
          }`)

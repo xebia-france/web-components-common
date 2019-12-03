@@ -48,12 +48,12 @@ class HeaderPicturesOnCorners extends Component {
     getCornerImages = field => {
         const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
         return field.content.images.map((image, i) => {
-            const file = image.asset[responsiveContent].fields ? image.asset[responsiveContent].fields.file : null;
+            const file = image.asset[responsiveContent].fileName ? image.asset[responsiveContent].fileName : null;
             if (!file) return <ImageCorner key={i} responsive={field.responsiveSettings} basis={field.settings.basis}/>;
 
             return (
                 <ImageCorner key={i} responsive={field.responsiveSettings} basis={field.settings.basis}>
-                    <img alt={image.alt[this.props.language]} src={`https:${ file[Object.keys(file)[0]].url }`}/>
+                    <img alt={image.alt[this.props.language]} src={`./assets/${ file }`}/>
                 </ImageCorner>);
         });
     }

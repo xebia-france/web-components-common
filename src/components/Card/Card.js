@@ -9,6 +9,17 @@ class Card extends Component {
         if (!fields[field]) return
         switch (field) {
             case 'Title':
+                console.log('TITLE CARD')
+                return <Title
+                    key={key}
+                    responsive={fields[field].responsiveSettings}
+                    typography={fields[field].settings.typography}
+                    as={fields[field].settings.seo.tag || 'h2'}
+                >
+                    {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
+                </Title>;
+
+            case 'Tagline':
                 return <Title
                     key={key}
                     responsive={fields[field].responsiveSettings}
@@ -19,6 +30,7 @@ class Card extends Component {
                 </Title>;
 
             case 'Content':
+                console.log('CONTENT CARD')
                 return <Content
                     key={key}
                     responsive={fields[field].responsiveSettings}
@@ -30,9 +42,11 @@ class Card extends Component {
                 />
 
             case 'Image':
+                console.log('IMAGE CARD')
                 return this.getImages(fields[field]);
 
             case 'CTA':
+
                 return <CTA
                     key={key}
                     responsive={fields[field].responsiveSettings}
@@ -49,6 +63,7 @@ class Card extends Component {
                             : null
                     }
                     <p> {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}</p>
+
                 </CTA>;
 
             default :
@@ -60,7 +75,7 @@ class Card extends Component {
     getImages = field => {
         const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
         return field.content.images.map((image, i) => {
-            const file = image.asset[responsiveContent].fields ? image.asset[responsiveContent].fields.file : null;
+            const file = image.asset[responsiveContent].fileName ? image.asset[responsiveContent].fileName : null;
             if (!file) {
                 return null
             } else {
@@ -69,12 +84,28 @@ class Card extends Component {
                                     responsive={field.responsiveSettings}
                                     basis={field.settings.basis}
                                     border={field.settings.border}>
-                        <img alt={image.alt[this.props.language]} src={`https:${ file[Object.keys(file)[0]].url }`}/>
+                        <img alt={image.alt[this.props.language]} src={`./assets/${ file }`}/>
                     </ImageContainer>);
             }
 
 
         });
+    }
+    getBackground = field => {
+        const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
+        console.log('responsive content', responsiveContent);
+        const image = field.content.images.map((image, i) => {
+            const file = image.asset[responsiveContent].fileName ? image.asset[responsiveContent].fileName : null;
+            if (!file) {
+                return null
+            } else {
+                return file
+            }
+
+
+        })
+        console.log('image -----> image', image);
+        return null
     }
 
     render() {
@@ -84,10 +115,12 @@ class Card extends Component {
 
         return (
             <Container responsive={Template ? Template.responsiveSettings : []}
+                       responsiveContent={getResponsiveKey(Template.content.images[0].asset)}
+                       asset={Template.content.images[0].asset}
                        basis={Template && Template.settings ? Template.settings.basis : {}}>
                 {
-                    order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                        : ['Title', 'Content', 'Image', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                   /* order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                        : */['Title','Tagline', 'Content', 'Image', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
             </Container>
         );

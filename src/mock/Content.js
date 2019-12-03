@@ -6,7 +6,7 @@ export const Content = {
     content: {
         html: {
             0: '<p>Contenu</p',
-            1: '<p>Content</p>'
+            1: '<p>Inner</p>'
         }
     },
     responsiveSettings: ['A'],

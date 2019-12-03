@@ -8,7 +8,7 @@ import { Text, SmallText, Template, Image, Images } from '../../src/mock';
 storiesOf('Components.HeaderPicturesOnCorners', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
-    .add('BlockText with all props', () => {
+    .add('ListSpeakersFlipCard with all props', () => {
         const language = number('Language', 0);
         const fieldsMock = object('Fields', {
             Template: Template,

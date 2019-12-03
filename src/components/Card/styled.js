@@ -5,6 +5,8 @@ import  isEmpty  from 'lodash/isEmpty'
 
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
+    responsiveContent: props.responsiveContent,
+    asset : props.asset,
     basis : props.basis
 
 }))`
@@ -14,11 +16,11 @@ export const Container = styled.div.attrs(props => ({
    flex-direction : column;
    align-items : center;
    justify-content  : center;
+   position : relative;
    
    
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-             background-color:${ `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` };
              
              width:${ isNumber(props.basis[size].size.width)
                     ? `${ props.basis[size].size.width }px`
@@ -33,6 +35,12 @@ export const Container = styled.div.attrs(props => ({
             max-height:${ isNumber(props.basis[size].size.maxHeight)
                     ? `${ props.basis[size].size.maxHeight }px`
                     :props.basis[size].size.maxHeight || '' };
+            min-width: ${ isNumber(props.basis[size].size.minWidth)
+                    ? `${ props.basis[size].size.minWidth }px`
+                    : props.basis[size].size.minWidth || '' };
+            min-height:${ isNumber(props.basis[size].size.minHeight)
+                    ? `${ props.basis[size].size.minHeight }px`
+                    : props.basis[size].size.minHeight || '' };      
                                 
             padding-top : ${ props.basis[size].padding.top }px;
             padding-bottom : ${ props.basis[size].padding.bottom }px;
@@ -43,9 +51,29 @@ export const Container = styled.div.attrs(props => ({
             margin-bottom : ${ props.basis[size].margin.bottom }px;
             margin-left : ${ props.basis[size].margin.left }px;
             margin-right : ${ props.basis[size].margin.right }px;
+            
+            &:before{
+               z-index : 1;
+               position : absolute;
+               width : 100%;
+               height : 100%;
+               content : ''; 
+               top : 0;
+               left : 0;
+               background-color:${ props.basis[size].color.rgb ?  `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` : props.basis[size].color.hex };
+
+            }
+            
            
          }`)
-}; 
+};
+
+${ props => props.responsiveContent.map((size, i) => `
+         @media ${ device[size] } {
+            background-image : url('${ props.asset[size].fileName ? `./assets/${  props.asset[size].fileName }` : '' }');
+         }`)
+    };
+ 
 `;
 
 export const Text = styled.p.attrs(props => ({
@@ -53,8 +81,9 @@ export const Text = styled.p.attrs(props => ({
     typography : props.typography
 }))`
    ${ props => props.responsive.map(size => `
+        z-index : 2;
          @media ${ device[size] } {
-            color:${ `rgba(${props.typography[size].color.rgb},${props.typography[size].opacity.value})` };
+            color:${props.typography[size].color.rgb ?  `rgba(${props.typography[size].color.rgb},${props.typography[size].opacity.value})` : props.typography[size].color.hex };
             font-size:${ props.typography[size].font.size }px;
             font-family : '${ props.typography[size].font.family }', ${props.typography[size].font.typeface };
             font-style: ${ props.typography[size].font.style || '' };
@@ -76,8 +105,9 @@ export const Content = styled.div.attrs(props => ({
     typography : props.typography
 }))`
    ${ props => props.responsive.map(size => `
+        z-index : 2;
          @media ${ device[size] } {
-            color:${ `rgba(${props.typography[size].color.rgb},${props.typography[size].opacity.value})` };
+            color:${ props.typography[size].color.rgb ? `rgba(${props.typography[size].color.rgb},${props.typography[size].opacity.value})` : props.typography[size].color.hex};
             font-size:${ props.typography[size].font.size }px;
             font-family : '${ props.typography[size].font.family }', ${props.typography[size].font.typeface };
             font-style: ${ props.typography[size].font.style || '' };
@@ -102,7 +132,7 @@ export const ImageContainer = styled.div.attrs(props => ({
 
     overflow : hidden;
     border-style : solid;
-    
+    z-index : 2;
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
              
@@ -134,7 +164,7 @@ export const ImageContainer = styled.div.attrs(props => ({
                     
                     
                     
-            border-color : ${ `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value})` };     
+            border-color : ${props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value})` : props.border[size].color.hex };     
             border-top-width : ${  isNumber(props.border[size].width.top) ? `${ props.border[size].width.top }px` 
                                     : `${ props.border[size].width.top }` || '' }; 
             border-right-width : ${  isNumber(props.border[size].width.right) ? `${ props.border[size].width.right }px` 
@@ -190,7 +220,8 @@ export const CTA = styled.a.attrs(props => ({
     transition : all 0.25s ease;
     border-style : solid;
     display : flex;
-    align-items:center;
+    align-items: center;
+    z-index : 2;
     
     & p, & i{
        transition : all 0.25s ease;
@@ -198,8 +229,8 @@ export const CTA = styled.a.attrs(props => ({
     
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-             background-color:${ `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` };
-             
+             background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
+
              width:${ isNumber(props.basis[size].size.width)
                     ? `${ props.basis[size].size.width }px`
                     : props.basis[size].size.width };
@@ -227,10 +258,10 @@ export const CTA = styled.a.attrs(props => ({
             margin-right : ${ props.basis[size].margin.right }px;
          
             & i {
-                color:${ `rgba(${props.icon[size].color.basic.rgb},${props.icon[size].opacity.basic.value})` };
+                color:${ props.icon[size].color.basic.rgb ? `rgba(${props.icon[size].color.basic.rgb},${props.icon[size].opacity.basic.value})` : props.icon[size].color.basic.hex };
                 font-size:${ props.icon[size].font.size }px;
                 font-family : '${ props.icon[size].font.family }', ${props.icon[size].font.typeface };
-                font-weight: ${ props.icon[size].font.weight[1] } ;
+                font-weight: ${ props.icon[size].font.weight ? props.icon[size].font.weight[1] : '' } ;
                 line-height: ${ props.icon[size].font.lineHeight }px;
             
                 padding-top : ${ props.icon[size].padding.top }px;
@@ -241,11 +272,12 @@ export const CTA = styled.a.attrs(props => ({
             }
          
             & p {
-                color:${ `rgba(${props.typography[size].color.basic.rgb},${props.typography[size].opacity.basic.value})` };
+                width : 100%;
+                color:${ props.typography[size].color.basic.rgb ? `rgba(${props.typography[size].color.basic.rgb},${props.typography[size].opacity.basic.value})` : props.typography[size].color.basic.hex};
                 font-size:${ props.typography[size].font.size }px;
                 font-family : '${ props.typography[size].font.family }', ${props.typography[size].font.typeface };
                 font-style: ${ props.typography[size].font.style || '' };
-                font-weight: ${ props.typography[size].font.weight[1] } ;
+                font-weight: ${ props.typography[size].font.weight ? props.typography[size].font.weight[1] : '' } ;
                 letter-spacing: ${ props.typography[size].font.letterSpacing }px;
                 line-height: ${ props.typography[size].font.lineHeight }px;
                 text-align: ${ props.typography[size].text.align };
@@ -254,7 +286,7 @@ export const CTA = styled.a.attrs(props => ({
             }
             
         
-            border-color : ${ `rgba(${props.border[size].color.basic.rgb},${props.border[size].opacity.basic.value})` };     
+            border-color : ${ props.border[size].color.basic.rgb ? `rgba(${props.border[size].color.basic.rgb},${props.border[size].opacity.basic.value})` : props.border[size].color.basic.hex };     
             
             border-top-width : ${  isNumber(props.border[size].width.top) ? `${ props.border[size].width.top }px` 
                                     : `${ props.border[size].width.top }` || '' }; 
@@ -276,17 +308,17 @@ export const CTA = styled.a.attrs(props => ({
         
          
             &:hover{
-               background-color:${ `rgba(${props.basis[size].color.hover.rgb},${props.basis[size].opacity.hover.value})` };
+               background-color:${ props.basis[size].color.hover.rgb ?  `rgba(${props.basis[size].color.hover.rgb},${props.basis[size].opacity.hover.value})` : props.basis[size].color.hover.hex };
 
            
-                border-color : ${ `rgba(${props.border[size].color.hover.rgb},${props.border[size].opacity.hover.value})` };     
+                border-color : ${ props.border[size].color.hover.rgb ? `rgba(${props.border[size].color.hover.rgb},${props.border[size].opacity.hover.value})` : props.border[size].color.hover.hex };     
                
                & p{
-                color:${ `rgba(${props.typography[size].color.hover.rgb},${props.typography[size].opacity.hover.value})` };
+                color:${ props.typography[size].color.hover.rgb ? `rgba(${props.typography[size].color.hover.rgb},${props.typography[size].opacity.hover.value})` : props.typography[size].color.hover.hex };
                }
                
                & i {
-                 color:${ `rgba(${props.icon[size].color.hover.rgb},${props.icon[size].opacity.hover.value})` };
+                 color:${ props.icon[size].color.hover.rgb ?  `rgba(${props.icon[size].color.hover.rgb},${props.icon[size].opacity.hover.value})` : props.icon[size].color.hover.hex};
               
                }
          

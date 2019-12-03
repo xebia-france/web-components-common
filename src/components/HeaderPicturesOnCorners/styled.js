@@ -146,7 +146,7 @@ export const Logo = styled.div.attrs(props => ({
         
   ${ props => props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-            background-image : url('${ props.asset[size].fields ? props.asset[size].fields.file[Object.keys(props.asset[size].fields.file)[0]].url : '' }');
+            background-image : url('${ props.asset[size].fileName ? `./assets/${  props.asset[size].fileName }` : '' }');
          }`)
     };             
 `;
