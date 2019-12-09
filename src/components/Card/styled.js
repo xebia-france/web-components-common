@@ -7,6 +7,7 @@ export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
     responsiveContent: props.responsiveContent,
     asset : props.asset,
+    assetsDirectory : props.assetsDirectory,
     basis : props.basis
 
 }))`
@@ -70,7 +71,7 @@ export const Container = styled.div.attrs(props => ({
 
 ${ props => props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-            background-image : url('${ props.asset[size].fileName ? `./assets/${  props.asset[size].fileName }` : '' }');
+            background-image : url('${ props.asset[size].fileName ? `${props.assetsDirectory  || ''}${  props.asset[size].fileName }` : '' }');
          }`)
     };
  

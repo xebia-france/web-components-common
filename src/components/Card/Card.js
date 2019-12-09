@@ -5,11 +5,9 @@ import {getResponsiveKey} from "../../utils/functions";
 
 class Card extends Component {
     buildComponent = (fields, field, key) => {
-        console.log('fields', fields);
         if (!fields[field]) return
         switch (field) {
             case 'Title':
-                console.log('TITLE CARD')
                 return <Title
                     key={key}
                     responsive={fields[field].responsiveSettings}
@@ -30,7 +28,6 @@ class Card extends Component {
                 </Title>;
 
             case 'Content':
-                console.log('CONTENT CARD')
                 return <Content
                     key={key}
                     responsive={fields[field].responsiveSettings}
@@ -42,7 +39,6 @@ class Card extends Component {
                 />
 
             case 'Image':
-                console.log('IMAGE CARD')
                 return this.getImages(fields[field]);
 
             case 'CTA':
@@ -84,32 +80,15 @@ class Card extends Component {
                                     responsive={field.responsiveSettings}
                                     basis={field.settings.basis}
                                     border={field.settings.border}>
-                        <img alt={image.alt[this.props.language]} src={`./assets/${ file }`}/>
+                        <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
                     </ImageContainer>);
             }
 
-
         });
-    }
-    getBackground = field => {
-        const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
-        console.log('responsive content', responsiveContent);
-        const image = field.content.images.map((image, i) => {
-            const file = image.asset[responsiveContent].fileName ? image.asset[responsiveContent].fileName : null;
-            if (!file) {
-                return null
-            } else {
-                return file
-            }
-
-
-        })
-        console.log('image -----> image', image);
-        return null
     }
 
     render() {
-        const {fields, order} = this.props;
+        const {fields, order, assetsDirectory} = this.props;
 
         const Template = fields.Template;
 
@@ -117,10 +96,11 @@ class Card extends Component {
             <Container responsive={Template ? Template.responsiveSettings : []}
                        responsiveContent={getResponsiveKey(Template.content.images[0].asset)}
                        asset={Template.content.images[0].asset}
+                       assetsDirectory={assetsDirectory}
                        basis={Template && Template.settings ? Template.settings.basis : {}}>
                 {
-                   /* order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                        : */['Title','Tagline', 'Content', 'Image', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                    order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                        : ['Title','Tagline', 'Content', 'Image', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
             </Container>
         );

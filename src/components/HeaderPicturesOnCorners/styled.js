@@ -108,7 +108,9 @@ export const Tagline = styled(Text)`
 export const Logo = styled.div.attrs(props => ({
     responsive: props.responsive,
     responsiveContent: props.responsiveContent,
-    basis: props.basis
+    basis: props.basis,
+    assets : props.asset,
+    assetsDirectory : props.assetsDirectory
 }))`
     background-size : 100% auto;
     background-repeat: no-repeat;
@@ -146,7 +148,7 @@ export const Logo = styled.div.attrs(props => ({
         
   ${ props => props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-            background-image : url('${ props.asset[size].fileName ? `./assets/${  props.asset[size].fileName }` : '' }');
+            background-image : url('${ props.asset[size].fileName ? `${props.assetsDirectory || ''}${  props.asset[size].fileName }` : '' }');
          }`)
     };             
 `;

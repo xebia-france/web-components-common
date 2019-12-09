@@ -38,6 +38,7 @@ class HeaderPicturesOnCorners extends Component {
                              responsive={fields[field].responsiveSettings}
                              responsiveContent={getResponsiveKey(fields[field].content.images[0].asset)}
                              asset={fields[field].content.images[0].asset}
+                             assetsDirectory={this.props.assetsDirectory}
                              basis={fields[field].settings.basis}/>;
 
             default :
@@ -53,7 +54,7 @@ class HeaderPicturesOnCorners extends Component {
 
             return (
                 <ImageCorner key={i} responsive={field.responsiveSettings} basis={field.settings.basis}>
-                    <img alt={image.alt[this.props.language]} src={`./assets/${ file }`}/>
+                    <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
                 </ImageCorner>);
         });
     }
