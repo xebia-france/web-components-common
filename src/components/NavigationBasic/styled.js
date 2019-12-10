@@ -164,6 +164,7 @@ export const Links = styled.div`
     flex-direction : column;
     position : relative;
     height : 100%;
+    justify-content : center;
     
     &>div{
         position : absolute;
