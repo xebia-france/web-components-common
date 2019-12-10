@@ -85,6 +85,9 @@ export const Link = styled.a.attrs(props => ({
             padding-bottom : ${ props.basis[size].padding.bottom }px;
             padding-left : ${ props.basis[size].padding.left }px;
             padding-right : ${ props.basis[size].padding.right }px;
+            
+            
+            
              
             margin-top : ${ props.basis[size].margin.top }px;
             margin-bottom : ${ props.basis[size].margin.bottom }px;
@@ -201,7 +204,7 @@ export const FixedContainer = styled.div.attrs(props => ({
   width : 100%;
   z-index : 20;
   transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
-  overflow : hidden;
+  
 
   
   
@@ -255,6 +258,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                          height:${ isNumber(props.basis[size].size.basic.height)
                                 ? `${ props.basis[size].size.basic.height }px`
                                 : props.basis[size].size.basic.height };
+                               
                         }
                        
                      }
@@ -268,7 +272,7 @@ export const FixedContainer = styled.div.attrs(props => ({
 
     @media  ${ device.M } {
              flex-direction : column;   
-             //height : 0px;
+             overflow : hidden;
              
              &.open{
                 height : 100vh; 
@@ -285,7 +289,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                         position : initial;
                         
                         
-                        &>li a{
+                        &>li{
                             padding-left : 20px;
                         }
                     }
