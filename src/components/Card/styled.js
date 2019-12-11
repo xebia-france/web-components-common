@@ -79,7 +79,8 @@ ${ props => props.responsiveContent.map((size, i) => `
 
 export const Text = styled.p.attrs(props => ({
     responsive: props.responsive,
-    typography : props.typography
+    typography : props.typography,
+    basis : props.basis
 }))`
    ${ props => props.responsive.map(size => `
         z-index : 2;
@@ -94,6 +95,13 @@ export const Text = styled.p.attrs(props => ({
             text-align: ${ props.typography[size].text.align };
             text-decoration: ${ props.typography[size].text.decoration || '' };
             text-transform: ${props.typography[size].text.transform || '' };
+            
+             ${ props.basis ? 
+                `padding-top : ${ props.basis[size].padding.top }px;
+                padding-bottom : ${ props.basis[size].padding.bottom }px;
+                padding-left : ${ props.basis[size].padding.left }px;
+                padding-right : ${ props.basis[size].padding.right }px;` 
+            : ''}
          }`)
 };
     
@@ -103,7 +111,8 @@ export const Title = styled(Text)``;
 
 export const Content = styled.div.attrs(props => ({
     responsive: props.responsive,
-    typography : props.typography
+    typography : props.typography,
+    basis : props.basis
 }))`
    ${ props => props.responsive.map(size => `
         z-index : 2;
@@ -118,6 +127,13 @@ export const Content = styled.div.attrs(props => ({
             text-align: ${ props.typography[size].text.align };
             text-decoration: ${ props.typography[size].text.decoration || '' };
             text-transform: ${props.typography[size].text.transform || '' };
+            
+            ${ props.basis ? 
+                `padding-top : ${ props.basis[size].padding.top }px;
+                padding-bottom : ${ props.basis[size].padding.bottom }px;
+                padding-left : ${ props.basis[size].padding.left }px;
+                padding-right : ${ props.basis[size].padding.right }px;` 
+            : ''}
          }`)
     };
     

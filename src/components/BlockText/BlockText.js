@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Title, Content} from './styled';
+import {Container, Title, Tagline, Content} from './styled';
 import PropTypes from 'prop-types';
 
 class BlockText extends Component {
@@ -11,16 +11,29 @@ class BlockText extends Component {
                 return <Title
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
+                    basis={fields[field].settings.basis}
                     as={fields[field].settings.seo.tag || 'h2'}
 
                 >
                     {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
                 </Title>;
 
+            case 'Tagline':
+                return <Tagline
+                    responsive={fields[field].responsiveSettings}
+                    typography={fields[field].settings.typography}
+                    basis={fields[field].settings.basis}
+                    as={fields[field].settings.seo.tag || 'h2'}
+
+                >
+                    {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
+                </Tagline>;
+
             case 'Content':
                 return <Content
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
+                    basis={fields[field].settings.basis}
                     dangerouslySetInnerHTML={{__html: fields[field].content.html ? fields[field].content.html[this.props.language] : <p>no content</p>}}
                 />
 
@@ -39,7 +52,7 @@ class BlockText extends Component {
                        basis={Template && Template.settings ? Template.settings.basis : {}}
                        >
                 {
-                    ['Title', 'Content'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                    ['Title', 'Tagline', 'Content'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
             </Container>
         );

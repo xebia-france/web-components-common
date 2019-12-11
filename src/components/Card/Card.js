@@ -12,6 +12,7 @@ class Card extends Component {
                     key={key}
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
+                    basis={fields[field].settings.basis}
                     as={fields[field].settings.seo.tag || 'h2'}
                 >
                     {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
@@ -22,6 +23,7 @@ class Card extends Component {
                     key={key}
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
+                    basis={fields[field].settings.basis}
                     as={fields[field].settings.seo.tag || 'h2'}
                 >
                     {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
@@ -32,6 +34,7 @@ class Card extends Component {
                     key={key}
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
+                    basis={fields[field].settings.basis}
                     dangerouslySetInnerHTML={{
                         __html: fields[field].content.html ? fields[field].content.html[this.props.language] :
                             <p>no content</p>

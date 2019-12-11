@@ -2,12 +2,13 @@ import React from 'react';
 import {Wrapper, Container} from './styled';
 
 
-const BasicLayout = ({children, fields}) => {
+const BasicLayout = ({children, fields, name}) => {
     const Template = fields.Template;
     const FlexContainer = fields.FlexContainer;
 
     return (
-        <Wrapper responsive={Template ? Template.responsiveSettings : []}
+        <Wrapper id={name}
+                responsive={Template ? Template.responsiveSettings : []}
                  basis={Template.settings && Template.settings.basis ? Template.settings.basis : {}}
         >
             <Container

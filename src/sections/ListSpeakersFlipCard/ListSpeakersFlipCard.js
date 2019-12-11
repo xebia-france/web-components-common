@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 class ListSpeakersFlipCard extends Component {
 
     render() {
-        const {fields, data, assetsDirectory, children} = this.props;
+        const {fields, data, assetsDirectory, children, name} = this.props;
 
         console.log('ListSpeakersFlipCard', fields);
         console.log('DATA ON ListSpeakersFlipCard', data);
@@ -29,7 +29,7 @@ class ListSpeakersFlipCard extends Component {
         const Speakers = fields.Speakers;
 
         return (
-            <Wrapper responsive={Template ? Template.responsiveSettings : []}
+            <Wrapper id={name} responsive={Template ? Template.responsiveSettings : []}
                      basis={Template.settings && Template.settings.basis ? Template.settings.basis : {}}
             >
                 <Container

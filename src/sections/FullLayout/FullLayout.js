@@ -3,11 +3,11 @@ import { Wrapper } from './styled';
 import PropTypes from 'prop-types';
 
 
-const FullLayout = ({ children, fields }) => {
+const FullLayout = ({ children, fields, name }) => {
     const Template = fields.Template;
 
     return (
-        <Wrapper responsive={Template ? Template.responsiveSettings : []}
+        <Wrapper id={name} responsive={Template ? Template.responsiveSettings : []}
                  basis={Template.settings ? Template.settings.basis : {}}
         >
             {children}
