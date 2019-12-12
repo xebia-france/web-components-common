@@ -33,6 +33,7 @@ class NavigationBasic extends Component {
 
     getRenderLinks = (links, parentUrl) => {
         return links.map((link) => {
+            console.log('getRenderLinks', link);
             switch (link.type) {
                 case 'anchor':
                     return <li><Link
