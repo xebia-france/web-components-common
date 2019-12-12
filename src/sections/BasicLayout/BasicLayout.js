@@ -9,11 +9,11 @@ const BasicLayout = ({children, fields, name}) => {
     return (
         <Wrapper id={name}
                 responsive={Template ? Template.responsiveSettings : []}
-                 basis={Template.settings && Template.settings.basis ? Template.settings.basis : {}}
+                 basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : {}}
         >
             <Container
                 responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                flex={FlexContainer.settings ? FlexContainer.settings.flex : {}}>
+                flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
                 {children}
             </Container>
         </Wrapper>

@@ -7,3 +7,4 @@ export { default as Card } from './Card';
 export { default as BlockText } from './BlockText';
 export { default as HeaderPicturesOnCorners } from './HeaderPicturesOnCorners';
 export { default as NavigationBasic } from './NavigationBasic';
+export { default as FooterBasic } from './FooterBasic';

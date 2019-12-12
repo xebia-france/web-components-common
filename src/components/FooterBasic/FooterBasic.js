@@ -1,86 +1,84 @@
 import React, {Component} from 'react';
-import {Container, Links, Link, Hamburger, LineWrapper, FixedContainer, Top, Locale, ImageContainer} from './styled'
+import {Container, Links, Link, FixedContainer, Bullet, ImageContainer} from './styled'
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
 
-class NavigationBasic extends Component {
+class FooterBasic extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            open: false
-        };
-    }
-
-    componentDidMount() {
 
     }
-
-    componentDidUpdate(prevProps) {
-
-    }
-
-    getUrlWithLocale = (locale, currentPath) => {
-        let result = currentPath.split('/');
-        result.splice(1, 1, locale.split('-')[0]);
-        return result.join('/')
-    }
-
-    /*getLinksByLanguage = () => {
-        const links = this.props.menu.edges.filter((edge) => edge.node.node_locale === this.props.locale)[0].node.menuHeader;
-        console.log('LINKS', links)
-        return links;
-    }*/
 
     getRenderLinks = (links, parentUrl) => {
-        return links.map((link) => {
-            console.log('getRenderLinks', link);
+
+        return links.map((link, i) => {
+
+            const fieldLinks = this.props.fields['Links'];
+            const settings = fieldLinks.settings;
             switch (link.type) {
                 case 'anchor':
                     return <li><Link
-                        responsive={this.props.fields['Links'].responsiveSettings}
-                        basis={this.props.fields['Links'].settings.basis}
-                        typography={this.props.fields['Links'].settings.typography}
-                        border={this.props.fields['Links'].settings.border}
+                        responsive={fieldLinks.responsiveSettings}
+                        basis={settings.basis}
+                        typography={settings.typography}
+                        border={settings.border}
                         href={parentUrl ? `${parentUrl}#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
                         {
                             link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
+                        }
+                        {
+                            i !== (links.length - 1) ? <Bullet responsive={fieldLinks.responsiveSettings}
+                                                               typography={settings.typography}>&#8226;</Bullet> : null
                         }
                     </li>;
 
                 case 'external':
                     return <li><Link
-                        responsive={this.props.fields['Links'].responsiveSettings}
-                        basis={this.props.fields['Links'].settings.basis}
-                        typography={this.props.fields['Links'].settings.typography}
-                        border={this.props.fields['Links'].settings.border}
+                        responsive={fieldLinks.responsiveSettings}
+                        basis={settings.basis}
+                        typography={settings.typography}
+                        border={settings.border}
                         target={'_blank'} href={`${link.urlLink}`}>{link.name}</Link>
                         {
                             link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
+                        }
+                        {
+                            i !== (links.length - 1) ? <Bullet responsive={fieldLinks.responsiveSettings}
+                                                               typography={settings.typography}>&#8226;</Bullet> : null
                         }
                     </li>;
 
                 case 'internal':
                     return <li><Link
-                        responsive={this.props.fields['Links'].responsiveSettings}
-                        basis={this.props.fields['Links'].settings.basis}
-                        typography={this.props.fields['Links'].settings.typography}
-                        border={this.props.fields['Links'].settings.border}
+                        responsive={fieldLinks.responsiveSettings}
+                        basis={settings.basis}
+                        typography={settings.typography}
+                        border={settings.border}
                         className={ this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
                         href={`/${this.props.locale.split('-')[0]}/${link.slug}`}>{link.name}</Link>
                         {
                             link.childrens ? <div> {this.getRenderLinks(link.childrens, `/${this.props.locale.split('-')[0]}/${link.slug}` )}</div> : null
                         }
+                        {
+                            i !== (links.length - 1) ? <Bullet responsive={fieldLinks.responsiveSettings}
+                                                               typography={settings.typography}>&#8226;</Bullet> : null
+                        }
                     </li>;
 
                 case 'null':
                     return <li><Link
-                        responsive={this.props.fields['Links'].responsiveSettings}
-                        basis={this.props.fields['Links'].settings.basis}
-                        typography={this.props.fields['Links'].settings.typography}
-                        border={this.props.fields['Links'].settings.border}
+                        responsive={fieldLinks.responsiveSettings}
+                        basis={settings.basis}
+                        typography={settings.typography}
+                        border={settings.border}
+                        className={'disabledHover'}
                     >{link.name}</Link>
                         {
                             link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
+                        }
+                        {
+                             i !== (links.length - 1) ? <Bullet responsive={fieldLinks.responsiveSettings}
+                                                                typography={settings.typography}>&#8226;</Bullet> : null
                         }
                     </li>;
 
@@ -111,60 +109,28 @@ class NavigationBasic extends Component {
     }
 
     render() {
-        const {fields, locales, locale, location, menu, scrollPosition} = this.props;
-
-
+        const {fields, locales, locale, location, menu} = this.props;
 
         return (
-            <Container responsive={fields['Bar'].responsiveSettings}
-                       basis={fields['Bar'].settings.basis}>
-                <FixedContainer responsive={fields['Bar'].responsiveSettings}
-                                basis={fields['Bar'].settings.basis}
-                                className={[this.state.open ? 'open' : '', scrollPosition && scrollPosition > 100 ? 'scrolled' : '' ]}
-
+            <Container responsive={fields['Template'].responsiveSettings}
+                       basis={fields['Template'].settings.basis}>
+                <FixedContainer responsive={fields['Template'].responsiveSettings}
+                                basis={fields['Template'].settings.basis}
                 >
-                    <Top>
+                    {/*<Top>
                         <div><a href={`/${locale.split('-')[0]}`}>
                             {
                                 this.getImages(fields['Image'])
                             }
                         </a></div>
 
-                        <Hamburger className={this.state.open ? 'open' : ''}
-                                   onClick={() => this.setState({open: !this.state.open})}>
-                            <LineWrapper>
-                                <div/>
-                                <div/>
-                                <div/>
-                            </LineWrapper>
-                        </Hamburger>
-                    </Top>
+                    </Top>*/}
 
-                    <Links className={this.state.open ? 'open' : ''}>
+                    <Links>
                         {
-                            menu ?
-
-                                this.getRenderLinks(menu)
-
-                                : null
+                            menu ? this.getRenderLinks(menu) : null
                         }
-                        <Locale>
-                            {
-                                locales.map((l) => {
-                                    return <Link responsive={this.props.fields['Links'].responsiveSettings}
-                                                 basis={this.props.fields['Links'].settings.basis}
-                                                 typography={this.props.fields['Links'].settings.typography}
-                                                 border={this.props.fields['Links'].settings.border}
-                                                 className={l === locale ? 'selected' : ''}
-                                                 href={this.getUrlWithLocale(l, location.pathname)}
-                                    >
-                                        {l.split('-')[0]}
-                                    </Link>
-                                })
-                            }
-                        </Locale>
                     </Links>
-
                 </FixedContainer>
             </Container>
         );
@@ -172,7 +138,7 @@ class NavigationBasic extends Component {
 }
 
 
-NavigationBasic.defaultProps = {
+FooterBasic.defaultProps = {
     fields: {
         Template: {
             content: {},
@@ -298,9 +264,9 @@ NavigationBasic.defaultProps = {
     language: 0
 };
 
-NavigationBasic.propTypes = {
+FooterBasic.propTypes = {
     fields: PropTypes.object.isRequired,
     language: PropTypes.number.isRequired
 };
 
-export default NavigationBasic;
+export default FooterBasic;
