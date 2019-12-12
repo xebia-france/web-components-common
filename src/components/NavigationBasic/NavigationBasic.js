@@ -16,6 +16,7 @@ class NavigationBasic extends Component {
     }
 
     componentDidUpdate(prevProps) {
+
     }
 
     getUrlWithLocale = (locale, currentPath) => {
@@ -24,13 +25,7 @@ class NavigationBasic extends Component {
         return result.join('/')
     }
 
-    getLinksByLanguage = () => {
-        console.log('getLinksByLanguage locale', this.props.locale)
-        console.log('getLinksByLanguage locale', this.props.menu)
-        const links = this.props.menu.edges.filter((edge) => edge.node.node_locale === this.props.locale)[0].node.menuHeader
-        console.log('getLinksByLanguage links', links)
-        return links;
-    }
+    getLinksByLanguage = () => this.props.menu.edges.filter((edge) => edge.node.node_locale === this.props.locale)[0].node.menuHeader;
 
     getRenderLinks = (links, parentUrl) => {
         return links.map((link) => {
@@ -111,20 +106,16 @@ class NavigationBasic extends Component {
     }
 
     render() {
-        const {fields, locales, locale, location, menu} = this.props;
+        const {fields, locales, locale, location, menu, scrollPosition} = this.props;
 
-        console.log('LOCATION', location)
-        console.log('MENU', menu)
-        console.log('MENU Fields', fields)
         this.getLinksByLanguage();
-
 
         return (
             <Container responsive={fields['Bar'].responsiveSettings}
                        basis={fields['Bar'].settings.basis}>
                 <FixedContainer responsive={fields['Bar'].responsiveSettings}
                                 basis={fields['Bar'].settings.basis}
-                                className={this.state.open ? 'open' : ''}
+                                className={[this.state.open ? 'open' : '', scrollPosition && scrollPosition > 100 ? 'scrolled' : '' ]}
 
                 >
                     <Top>
@@ -143,6 +134,7 @@ class NavigationBasic extends Component {
                             </LineWrapper>
                         </Hamburger>
                     </Top>
+
                     <Links className={this.state.open ? 'open' : ''}>
                         {
                             this.getLinksByLanguage() ?

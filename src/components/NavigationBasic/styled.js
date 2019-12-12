@@ -8,12 +8,15 @@ export const Container = styled.div.attrs(props => ({
     basis: props.basis
 }))`
   width : 100%;
-  
+  transition : all .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+
   ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-           height:${ isNumber(props.basis[size].size.basic.height)
+          /* height:${ isNumber(props.basis[size].size.basic.height)
                     ? `${ props.basis[size].size.basic.height }px`
                     : props.basis[size].size.basic.height };
+                    
+          */        
          }`)
 };
   
@@ -86,8 +89,6 @@ export const Link = styled.a.attrs(props => ({
             padding-left : ${ props.basis[size].padding.left }px;
             padding-right : ${ props.basis[size].padding.right }px;
             
-            
-            
              
             margin-top : ${ props.basis[size].margin.top }px;
             margin-bottom : ${ props.basis[size].margin.bottom }px;
@@ -154,7 +155,7 @@ export const Links = styled.div`
   display : flex;
   flex-wrap : no-wrap;
   transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
-
+ 
   
   
   
@@ -204,8 +205,8 @@ export const FixedContainer = styled.div.attrs(props => ({
   position : fixed;
   width : 100%;
   z-index : 20;
-  transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
-  
+  transition : all .3s cubic-bezier(.25,.46,.45,.94) 0ms;
+  box-sizing : content-box;
 
   
   
@@ -264,6 +265,62 @@ export const FixedContainer = styled.div.attrs(props => ({
                        
                      }
                   }
+            }
+            
+            &.scrolled{
+                width:${ isNumber(props.basis[size].size.scroll.width)
+                    ? `${ props.basis[size].size.scroll.width }px`
+                    : props.basis[size].size.scroll.width };
+    
+                height:${ isNumber(props.basis[size].size.scroll.height)
+                        ? `${ props.basis[size].size.scroll.height }px`
+                        : props.basis[size].size.scroll.height };
+                max-width: ${ isNumber(props.basis[size].size.scroll.maxWidth)
+                        ? `${ props.basis[size].size.scroll.maxWidth }px`
+                        : props.basis[size].size.scroll.maxWidth || '' };
+                max-height:${ isNumber(props.basis[size].size.scroll.maxHeight)
+                        ? `${ props.basis[size].size.scroll.maxHeight }px`
+                        :props.basis[size].size.scroll.maxHeight || '' };
+                min-width: ${ isNumber(props.basis[size].size.scroll.minWidth)
+                        ? `${ props.basis[size].size.scroll.minWidth }px`
+                        : props.basis[size].size.scroll.minWidth || '' };
+                min-height:${ isNumber(props.basis[size].size.scroll.minHeight)
+                        ? `${ props.basis[size].size.scroll.minHeight }px`
+                        : props.basis[size].size.scroll.minHeight || '' };      
+                                    
+                padding-top : ${ props.basis[size].padding.scroll.top }px;
+                padding-bottom : ${ props.basis[size].padding.scroll.bottom }px;
+                padding-left : ${ props.basis[size].padding.scroll.left }px;
+                padding-right : ${ props.basis[size].padding.scroll.right }px;
+                 
+                margin-top : ${ props.basis[size].margin.scroll.top }px;
+                margin-bottom : ${ props.basis[size].margin.scroll.bottom }px;
+                margin-left : ${ props.basis[size].margin.scroll.left }px;
+                margin-right : ${ props.basis[size].margin.scroll.right }px;
+                
+                background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
+    
+                
+                
+                & ${Links}{
+                    & li{
+                        
+                        
+                        &>div{
+                           background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
+                        }
+                        &:hover{
+                            &>div li{
+                             height:${ isNumber(props.basis[size].size.scroll.height)
+                                    ? `${ props.basis[size].size.scroll.height }px`
+                                    : props.basis[size].size.scroll.height };
+                                   
+                            }
+                           
+                         }
+                      }
+                }
+            
             }
             
             
