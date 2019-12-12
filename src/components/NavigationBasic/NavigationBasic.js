@@ -27,6 +27,7 @@ class NavigationBasic extends Component {
 
     getLinksByLanguage = () => {
         const links = this.props.menu.edges.filter((edge) => edge.node.node_locale === this.props.locale)[0].node.menuHeader;
+        console.log('LINKS', links)
         return links;
     }
 
