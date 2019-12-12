@@ -25,7 +25,10 @@ class NavigationBasic extends Component {
         return result.join('/')
     }
 
-    getLinksByLanguage = () => this.props.menu.edges.filter((edge) => edge.node.node_locale === this.props.locale)[0].node.menuHeader;
+    getLinksByLanguage = () => {
+        const links = this.props.menu.edges.filter((edge) => edge.node.node_locale === this.props.locale)[0].node.menuHeader;
+        return links;
+    }
 
     getRenderLinks = (links, parentUrl) => {
         return links.map((link) => {
@@ -109,6 +112,7 @@ class NavigationBasic extends Component {
         const {fields, locales, locale, location, menu, scrollPosition} = this.props;
 
         this.getLinksByLanguage();
+
 
         return (
             <Container responsive={fields['Bar'].responsiveSettings}
