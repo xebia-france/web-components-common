@@ -31,51 +31,9 @@ class NavigationBasic extends Component {
         return links;
     }*/
 
-    renderLink = (link, slugParent = null) => {
-        switch (link.type) {
-            case 'anchor':
-                return <li><Link
-                    responsive={this.props.fields['Links'].responsiveSettings}
-                    basis={this.props.fields['Links'].settings.basis}
-                    typography={this.props.fields['Links'].settings.typography}
-                    border={this.props.fields['Links'].settings.border}
-                    href={slugParent ? `/${this.props.locale.split('-')[0]}/${slugParent}#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
-                </li>;
 
-            case 'external':
-                return <li><Link
-                    responsive={this.props.fields['Links'].responsiveSettings}
-                    basis={this.props.fields['Links'].settings.basis}
-                    typography={this.props.fields['Links'].settings.typography}
-                    border={this.props.fields['Links'].settings.border}
-                    target={'_blank'} href={`${link.urlLink}`}>{link.name}</Link>
-                </li>;
 
-            case 'internal':
-                return <li><Link
-                    responsive={this.props.fields['Links'].responsiveSettings}
-                    basis={this.props.fields['Links'].settings.basis}
-                    typography={this.props.fields['Links'].settings.typography}
-                    border={this.props.fields['Links'].settings.border}
-                    className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
-                    href={`/${this.props.locale.split('-')[0]}/${link.slug}`}>{link.name}</Link>
-                </li>;
-
-            case 'null':
-                return <li><Link
-                    responsive={this.props.fields['Links'].responsiveSettings}
-                    basis={this.props.fields['Links'].settings.basis}
-                    typography={this.props.fields['Links'].settings.typography}
-                    border={this.props.fields['Links'].settings.border}
-                >{link.name}</Link>
-                </li>;
-
-            default :
-                return null;
-        }
-    }
-
-    getRenderLinks = (links) => {
+    getRenderLinks = (links, slugParent = null) => {
         return links.map((link) => {
             console.log('getRenderLinks', link);
             switch (link.type) {
@@ -87,9 +45,9 @@ class NavigationBasic extends Component {
                         basis={this.props.fields['Links'].settings.basis}
                         typography={this.props.fields['Links'].settings.typography}
                         border={this.props.fields['Links'].settings.border}
-                        href={`/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
+                        href={slugParent ? `/${this.props.locale.split('-')[0]}/${slugParent}#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
                         {
-                            //link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
+                            link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
                         }
                     </li>;
 
@@ -101,7 +59,7 @@ class NavigationBasic extends Component {
                         border={this.props.fields['Links'].settings.border}
                         target={'_blank'} href={`${link.urlLink}`}>{link.name}</Link>
                         {
-                            // link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
+                             link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
                         }
                     </li>;
 
@@ -114,62 +72,7 @@ class NavigationBasic extends Component {
                         className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
                         href={`/${this.props.locale.split('-')[0]}/${link.slug}`}>{link.name}</Link>
                         {
-                            link.childrens ?
-                                <div>
-                                    {
-
-                                        link.childrens.map((child) => {
-                                            console.log("child", child);
-                                            console.log("parent child", link);
-
-                                            switch (child.type) {
-                                                case 'anchor':
-                                                    console.log('HREF', `/${this.props.locale.split('-')[0]}/${link.slug}#${child.slug}`)
-                                                    return <li><Link
-                                                        responsive={this.props.fields['Links'].responsiveSettings}
-                                                        basis={this.props.fields['Links'].settings.basis}
-                                                        typography={this.props.fields['Links'].settings.typography}
-                                                        border={this.props.fields['Links'].settings.border}
-                                                        href={`/${this.props.locale.split('-')[0]}/${link.slug}#${child.slug}`}>{child.name}</Link>
-                                                    </li>;
-
-                                                case 'external':
-                                                    return <li><Link
-                                                        responsive={this.props.fields['Links'].responsiveSettings}
-                                                        basis={this.props.fields['Links'].settings.basis}
-                                                        typography={this.props.fields['Links'].settings.typography}
-                                                        border={this.props.fields['Links'].settings.border}
-                                                        target={'_blank'} href={`${child.urlLink}`}>{child.name}</Link>
-                                                    </li>;
-
-                                                case 'internal':
-                                                    return <li><Link
-                                                        responsive={this.props.fields['Links'].responsiveSettings}
-                                                        basis={this.props.fields['Links'].settings.basis}
-                                                        typography={this.props.fields['Links'].settings.typography}
-                                                        border={this.props.fields['Links'].settings.border}
-                                                        className={this.props.location.pathname.includes(child.slug) ? 'selected' : ''}
-                                                        href={`/${this.props.locale.split('-')[0]}/${child.slug}`}>{child.name}</Link>
-                                                    </li>;
-
-                                                case 'null':
-                                                    return <li><Link
-                                                        responsive={this.props.fields['Links'].responsiveSettings}
-                                                        basis={this.props.fields['Links'].settings.basis}
-                                                        typography={this.props.fields['Links'].settings.typography}
-                                                        border={this.props.fields['Links'].settings.border}
-                                                    >{child.name}</Link>
-                                                    </li>;
-
-                                                default :
-                                                    return null;
-                                            }
-                                        })
-
-                                    }
-                                </div>
-
-                                : null
+                            link.childrens ? <div> {this.getRenderLinks(link.childrens, link.slug)}</div> : null
                         }
                     </li>;
 
@@ -181,18 +84,7 @@ class NavigationBasic extends Component {
                         border={this.props.fields['Links'].settings.border}
                     >{link.name}</Link>
                         {
-                            link.childrens ?
-                                <div>
-                                    {
-
-                                        link.childrens.map((link) => {
-                                            return this.renderLink(link)
-                                        })
-
-                                    }
-                                </div>
-
-                                : null
+                            link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
                         }
                     </li>;
 
