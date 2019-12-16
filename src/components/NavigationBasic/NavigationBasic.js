@@ -117,7 +117,47 @@ class NavigationBasic extends Component {
                                     {
 
                                         link.childrens.map((child) => {
-                                            return this.renderLink(child , link.slug)
+                                            switch (child.type) {
+                                                case 'anchor':
+                                                    return <li><Link
+                                                        responsive={this.props.fields['Links'].responsiveSettings}
+                                                        basis={this.props.fields['Links'].settings.basis}
+                                                        typography={this.props.fields['Links'].settings.typography}
+                                                        border={this.props.fields['Links'].settings.border}
+                                                        href={`/${this.props.locale.split('-')[0]}/${link.slug}#${child.slug}`}>{child.name}</Link>
+                                                    </li>;
+
+                                                case 'external':
+                                                    return <li><Link
+                                                        responsive={this.props.fields['Links'].responsiveSettings}
+                                                        basis={this.props.fields['Links'].settings.basis}
+                                                        typography={this.props.fields['Links'].settings.typography}
+                                                        border={this.props.fields['Links'].settings.border}
+                                                        target={'_blank'} href={`${child.urlLink}`}>{child.name}</Link>
+                                                    </li>;
+
+                                                case 'internal':
+                                                    return <li><Link
+                                                        responsive={this.props.fields['Links'].responsiveSettings}
+                                                        basis={this.props.fields['Links'].settings.basis}
+                                                        typography={this.props.fields['Links'].settings.typography}
+                                                        border={this.props.fields['Links'].settings.border}
+                                                        className={this.props.location.pathname.includes(child.slug) ? 'selected' : ''}
+                                                        href={`/${this.props.locale.split('-')[0]}/${child.slug}`}>{child.name}</Link>
+                                                    </li>;
+
+                                                case 'null':
+                                                    return <li><Link
+                                                        responsive={this.props.fields['Links'].responsiveSettings}
+                                                        basis={this.props.fields['Links'].settings.basis}
+                                                        typography={this.props.fields['Links'].settings.typography}
+                                                        border={this.props.fields['Links'].settings.border}
+                                                    >{child.name}</Link>
+                                                    </li>;
+
+                                                default :
+                                                    return null;
+                                            }
                                         })
 
                                     }
