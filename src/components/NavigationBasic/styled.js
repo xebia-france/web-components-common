@@ -151,7 +151,7 @@ export const Link = styled.a.attrs(props => ({
 
 
 
-export const Links = styled.div`
+export const Links = styled.ul`
   display : flex;
   flex-wrap : no-wrap;
   transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
@@ -167,7 +167,7 @@ export const Links = styled.div`
     height : 100%;
     justify-content : center;
     
-    &>div{
+    &>ul{
         position : absolute;
         top : 100%;
         width : 100%;
@@ -182,7 +182,7 @@ export const Links = styled.div`
     }
     
      &:hover{
-        &>div{
+        &>ul{
         display : block;
          height : auto; 
         }
@@ -254,11 +254,11 @@ export const FixedContainer = styled.div.attrs(props => ({
                 & li{
                     
                     
-                    &>div{
+                    &>ul{
                        background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
                     }
                     &:hover{
-                        &>div li{
+                        &>ul li{
                          height:${ isNumber(props.basis[size].size.basic.height)
                                 ? `${ props.basis[size].size.basic.height }px`
                                 : props.basis[size].size.basic.height };
@@ -308,11 +308,11 @@ export const FixedContainer = styled.div.attrs(props => ({
                     & li{
                         
                         
-                        &>div{
+                        &>ul{
                            background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
                         }
                         &:hover{
-                            &>div li{
+                            &>ul li{
                              height:${ isNumber(props.basis[size].size.scroll.height)
                                     ? `${ props.basis[size].size.scroll.height }px`
                                     : props.basis[size].size.scroll.height };
@@ -345,7 +345,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                 & li{
                     height : auto;
                     
-                    &>div{
+                    &>ul{
                         position : initial;
                         display : block;
                         
