@@ -80,6 +80,8 @@ class NavigationBasic extends Component {
             console.log('getRenderLinks', link);
             switch (link.type) {
                 case 'anchor':
+                    console.log('ANCHOR', link)
+                    console.log('HREF LEVEL 1', `/${this.props.locale.split('-')[0]}/#${link.slug}`)
                     return <li><Link
                         responsive={this.props.fields['Links'].responsiveSettings}
                         basis={this.props.fields['Links'].settings.basis}
@@ -117,14 +119,18 @@ class NavigationBasic extends Component {
                                     {
 
                                         link.childrens.map((child) => {
+                                            console.log("child", child);
+                                            console.log("parent child", link);
+
                                             switch (child.type) {
                                                 case 'anchor':
+                                                    console.log('HREF', `/${this.props.locale.split('-')[0]}/${link.slug}#${child.slug}`)
                                                     return <li><Link
                                                         responsive={this.props.fields['Links'].responsiveSettings}
                                                         basis={this.props.fields['Links'].settings.basis}
                                                         typography={this.props.fields['Links'].settings.typography}
                                                         border={this.props.fields['Links'].settings.border}
-                                                        href={`/${this.props.locale.split('-')[0]}/${link.slug}/#${child.slug}`}>{child.name}</Link>
+                                                        href={`/${this.props.locale.split('-')[0]}/${link.slug}#${child.slug}`}>{child.name}</Link>
                                                     </li>;
 
                                                 case 'external':
