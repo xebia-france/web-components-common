@@ -42,7 +42,7 @@ class NavigationBasic extends Component {
                         basis={this.props.fields['Links'].settings.basis}
                         typography={this.props.fields['Links'].settings.typography}
                         border={this.props.fields['Links'].settings.border}
-                        href={parentUrl ? `${parentUrl}#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
+                        href={parentUrl ? `${parentUrl}/#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
                         {
                             link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
                         }
