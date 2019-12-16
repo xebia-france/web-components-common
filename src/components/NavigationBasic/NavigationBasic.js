@@ -31,8 +31,8 @@ class NavigationBasic extends Component {
         return links;
     }*/
 
-    getRenderLinks = (links, parentUrl = null) => {
-        console.log('parentUrl', parentUrl)
+    getRenderLinks = (links, parent = null) => {
+        console.log('parentUrl', parent)
         return links.map((link) => {
             console.log('getRenderLinks', link);
             switch (link.type) {
@@ -42,7 +42,7 @@ class NavigationBasic extends Component {
                         basis={this.props.fields['Links'].settings.basis}
                         typography={this.props.fields['Links'].settings.typography}
                         border={this.props.fields['Links'].settings.border}
-                        href={parentUrl ? `${parentUrl}/#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
+                        href={ `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
                         {
                             link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
                         }
@@ -69,7 +69,7 @@ class NavigationBasic extends Component {
                         className={ this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
                         href={`/${this.props.locale.split('-')[0]}/${link.slug}`}>{link.name}</Link>
                         {
-                            link.childrens ? <div> {this.getRenderLinks(link.childrens, `/${this.props.locale.split('-')[0]}/${link.slug}` )}</div> : null
+                            link.childrens ? <div> {this.getRenderLinks(link.childrens, link.slug)}</div> : null
                         }
                     </li>;
 
