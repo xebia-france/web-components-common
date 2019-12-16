@@ -31,7 +31,7 @@ class NavigationBasic extends Component {
         return links;
     }*/
 
-    renderLink = (link) => {
+    renderLink = (link, slugParent = null) => {
         switch (link.type) {
             case 'anchor':
                 return <li><Link
@@ -39,7 +39,7 @@ class NavigationBasic extends Component {
                     basis={this.props.fields['Links'].settings.basis}
                     typography={this.props.fields['Links'].settings.typography}
                     border={this.props.fields['Links'].settings.border}
-                    href={`/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
+                    href={slugParent ? `/${this.props.locale.split('-')[0]}/${slugParent}#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
                 </li>;
 
             case 'external':
@@ -116,8 +116,8 @@ class NavigationBasic extends Component {
                                 <div>
                                     {
 
-                                        link.childrens.map((link) => {
-                                            this.renderLink(link)
+                                        link.childrens.map((child) => {
+                                            return this.renderLink(child , link.slug)
                                         })
 
                                     }
@@ -140,7 +140,7 @@ class NavigationBasic extends Component {
                                     {
 
                                         link.childrens.map((link) => {
-                                            this.renderLink(link)
+                                            return this.renderLink(link)
                                         })
 
                                     }
