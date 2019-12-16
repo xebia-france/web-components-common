@@ -171,6 +171,7 @@ export const Links = styled.div`
         position : absolute;
         top : 100%;
         width : 100%;
+        display : none;
         
         overflow : hidden;
         
@@ -182,6 +183,7 @@ export const Links = styled.div`
     
      &:hover{
         &>div{
+        display : block;
          height : auto; 
         }
        
@@ -345,6 +347,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                     
                     &>div{
                         position : initial;
+                        display : block;
                         
                         
                         &>li{
