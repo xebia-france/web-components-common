@@ -31,7 +31,7 @@ class NavigationBasic extends Component {
         return links;
     }*/
 
-    getRenderLinks = (links, slugParent) => {
+    getRenderLinks = (links) => {
         return links.map((link) => {
             console.log('getRenderLinks', link);
             switch (link.type) {
@@ -41,9 +41,9 @@ class NavigationBasic extends Component {
                         basis={this.props.fields['Links'].settings.basis}
                         typography={this.props.fields['Links'].settings.typography}
                         border={this.props.fields['Links'].settings.border}
-                        href={slugParent ? `/${this.props.locale.split('-')[0]}/${slugParent}#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
+                        href={`/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
                         {
-                            link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
+                            //link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
                         }
                     </li>;
 
@@ -55,7 +55,7 @@ class NavigationBasic extends Component {
                         border={this.props.fields['Links'].settings.border}
                         target={'_blank'} href={`${link.urlLink}`}>{link.name}</Link>
                         {
-                            link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
+                           // link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
                         }
                     </li>;
 
@@ -68,7 +68,7 @@ class NavigationBasic extends Component {
                         className={ this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
                         href={`/${this.props.locale.split('-')[0]}/${link.slug}`}>{link.name}</Link>
                         {
-                            link.childrens ? <div> {this.getRenderLinks(link.childrens, link.slug )}</div> : null
+                            //link.childrens ? <div> {this.getRenderLinks(link.childrens, link.slug )}</div> : null
                         }
                     </li>;
 
@@ -80,7 +80,7 @@ class NavigationBasic extends Component {
                         border={this.props.fields['Links'].settings.border}
                     >{link.name}</Link>
                         {
-                            link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
+                            //link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
                         }
                     </li>;
 
