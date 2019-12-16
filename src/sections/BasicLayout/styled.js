@@ -41,6 +41,7 @@ export const Wrapper = styled.section.attrs(props => ({
          @media ${ device[size] } {
             background-image : url('${ props.asset[size].fileName ? `${props.assetsDirectory  || ''}${  props.asset[size].fileName }` : '' }');
             background-size : cover;
+            background-position : center;
          }`)
     : ''  };
 `;
