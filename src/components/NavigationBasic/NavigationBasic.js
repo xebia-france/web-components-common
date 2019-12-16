@@ -113,6 +113,7 @@ class NavigationBasic extends Component {
     render() {
         const {fields, locales, locale, location, menu, scrollPosition} = this.props;
 
+        console.log('MENU', menu);
 
 
         return (
