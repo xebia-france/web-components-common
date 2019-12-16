@@ -124,7 +124,7 @@ class NavigationBasic extends Component {
                                                         basis={this.props.fields['Links'].settings.basis}
                                                         typography={this.props.fields['Links'].settings.typography}
                                                         border={this.props.fields['Links'].settings.border}
-                                                        href={`/${this.props.locale.split('-')[0]}/${link.slug}#${child.slug}`}>{child.name}</Link>
+                                                        href={`/${this.props.locale.split('-')[0]}/${link.slug}/#${child.slug}`}>{child.name}</Link>
                                                     </li>;
 
                                                 case 'external':
