@@ -1,5 +1,6 @@
 import React from 'react';
 import { Wrapper } from './styled';
+import { removeSpaces } from '../../utils/functions';
 import PropTypes from 'prop-types';
 
 
@@ -7,7 +8,7 @@ const FullLayout = ({ children, fields, name }) => {
     const Template = fields.Template;
 
     return (
-        <Wrapper id={name} responsive={Template ? Template.responsiveSettings : []}
+        <Wrapper id={removeSpaces(name)} responsive={Template ? Template.responsiveSettings : []}
                  basis={Template.settings ? Template.settings.basis : {}}
         >
             {children}

@@ -3,7 +3,7 @@ import {Wrapper, Container} from './styled';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
 
 
-const BasicLayout = ({children, fields, name, assetsDirectory}) => {
+const BasicLayoutFirstFull = ({children, fields, name, assetsDirectory}) => {
     const Template = fields.Template;
     const FlexContainer = fields.FlexContainer;
 
@@ -24,7 +24,7 @@ const BasicLayout = ({children, fields, name, assetsDirectory}) => {
     );
 };
 
-BasicLayout.defaultProps = {
+BasicLayoutFirstFull.defaultProps = {
     fields: {
         Template: {
             content: {},
@@ -78,4 +78,4 @@ BasicLayout.defaultProps = {
     }
 }
 
-export default BasicLayout;
+export default BasicLayoutFirstFull;

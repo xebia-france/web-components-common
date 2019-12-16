@@ -31,11 +31,14 @@ const getResponsiveKey = props => {
 
 const isNumber = value => /^\d+$/.test(value);
 
+const removeSpaces = string => string.replace(/ /g, "");
+
 export {
     hexToRgb,
     RGBtoString,
     RGBAtoString,
     isResponsiveProps,
     getResponsiveKey,
-    isNumber
+    isNumber,
+    removeSpaces
 };

@@ -13,6 +13,7 @@ import {
     ImageContainer, Icon
 } from './styled';
 import PropTypes from 'prop-types';
+import { removeSpaces } from '../../utils/functions';
 
 class ListSpeakersFlipCard extends Component {
 
@@ -29,7 +30,7 @@ class ListSpeakersFlipCard extends Component {
         const Speakers = fields.Speakers;
 
         return (
-            <Wrapper id={name} responsive={Template ? Template.responsiveSettings : []}
+            <Wrapper id={removeSpaces(name) } responsive={Template ? Template.responsiveSettings : []}
                      basis={Template.settings && Template.settings.basis ? Template.settings.basis : {}}
             >
                 <Container
