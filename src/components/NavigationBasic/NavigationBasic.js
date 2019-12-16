@@ -31,7 +31,8 @@ class NavigationBasic extends Component {
         return links;
     }*/
 
-    getRenderLinks = (links, parentUrl) => {
+    getRenderLinks = (links, parentUrl = null) => {
+        console.log('parentUrl', parentUrl)
         return links.map((link) => {
             console.log('getRenderLinks', link);
             switch (link.type) {

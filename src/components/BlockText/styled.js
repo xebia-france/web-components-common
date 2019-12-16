@@ -108,6 +108,11 @@ export const Content = styled.div.attrs(props => ({
                 padding-right : ${ props.basis[size].padding.right }px;` 
             : ''}
             
+            & a {
+               color:${ `rgba(${props.typography[size].color.rgb},${props.typography[size].opacity.value})` };
+
+            }
+            
          }`)
     };
    

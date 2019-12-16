@@ -53,6 +53,8 @@ export const Container = styled.div.attrs(props => ({
             margin-left : ${ props.basis[size].margin.left }px;
             margin-right : ${ props.basis[size].margin.right }px;
             
+           
+            
             &:before{
                z-index : 1;
                position : absolute;
@@ -72,6 +74,7 @@ export const Container = styled.div.attrs(props => ({
 ${ props => props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
             background-image : url('${ props.asset[size].fileName ? `${props.assetsDirectory  || ''}${  props.asset[size].fileName }` : '' }');
+            background-size : cover;
          }`)
     };
  
@@ -273,6 +276,8 @@ export const CTA = styled.a.attrs(props => ({
             margin-bottom : ${ props.basis[size].margin.bottom }px;
             margin-left : ${ props.basis[size].margin.left }px;
             margin-right : ${ props.basis[size].margin.right }px;
+            
+             box-shadow : ${ props.basis[size].shadow.value || '' };
          
             & i {
                 color:${ props.icon[size].color.basic.rgb ? `rgba(${props.icon[size].color.basic.rgb},${props.icon[size].opacity.basic.value})` : props.icon[size].color.basic.hex };
@@ -340,6 +345,38 @@ export const CTA = styled.a.attrs(props => ({
                }
          
             }
+            
+            &.disabled{
+               cursor : default;
+               background-color:${ props.basis[size].color.disabled.rgb ?  `rgba(${props.basis[size].color.disabled.rgb},${props.basis[size].opacity.disabled.value})` : props.basis[size].color.disabled.hex };
+               border-color : ${ props.border[size].color.disabled.rgb ? `rgba(${props.border[size].color.disabled.rgb},${props.border[size].opacity.disabled.value})` : props.border[size].color.disabled.hex };     
+              
+               & p{
+                color:${ props.typography[size].color.disabled.rgb ? `rgba(${props.typography[size].color.disabled.rgb},${props.typography[size].opacity.disabled.value})` : props.typography[size].color.disabled.hex };
+               }
+               
+               & i {
+                 color:${ props.icon[size].color.disabled.rgb ?  `rgba(${props.icon[size].color.disabled.rgb},${props.icon[size].opacity.disabled.value})` : props.icon[size].color.disabled.hex};
+              
+               }
+               
+               &:hover{
+                background-color:${ props.basis[size].color.disabled.rgb ?  `rgba(${props.basis[size].color.disabled.rgb},${props.basis[size].opacity.disabled.value})` : props.basis[size].color.disabled.hex };
+                border-color : ${ props.border[size].color.disabled.rgb ? `rgba(${props.border[size].color.disabled.rgb},${props.border[size].opacity.disabled.value})` : props.border[size].color.disabled.hex };     
+              
+                   & p{
+                    color:${ props.typography[size].color.disabled.rgb ? `rgba(${props.typography[size].color.disabled.rgb},${props.typography[size].opacity.disabled.value})` : props.typography[size].color.disabled.hex };
+                   }
+                   
+                   & i {
+                     color:${ props.icon[size].color.disabled.rgb ?  `rgba(${props.icon[size].color.disabled.rgb},${props.icon[size].opacity.disabled.value})` : props.icon[size].color.disabled.hex};
+                  
+                   }
+               }
+         
+            }
+            
+            
          
          
          

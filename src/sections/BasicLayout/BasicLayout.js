@@ -1,14 +1,18 @@
 import React from 'react';
 import {Wrapper, Container} from './styled';
+import {getResponsiveKey} from "../../utils/functions";
 
 
-const BasicLayout = ({children, fields, name}) => {
+const BasicLayout = ({children, fields, name, assetsDirectory}) => {
     const Template = fields.Template;
     const FlexContainer = fields.FlexContainer;
 
     return (
         <Wrapper id={name}
-                responsive={Template ? Template.responsiveSettings : []}
+                 asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
+                 assetsDirectory={assetsDirectory}
+                 responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : null}
+                 responsive={Template ? Template.responsiveSettings : []}
                  basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : {}}
         >
             <Container

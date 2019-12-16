@@ -193,6 +193,14 @@ export const Links = styled.div`
      }
   }
   
+  @media  ${ device.M } {
+    flex-direction : column;
+    
+    & ${Bullet}{
+        display : none;
+    }
+  }
+  
   
   
   

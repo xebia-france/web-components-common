@@ -53,8 +53,13 @@ class Card extends Component {
                     typography={fields[field].settings.typography}
                     border={fields[field].settings.border}
                     icon={fields[field].settings.icon}
-                    href={fields[field].content.link ? fields[field].content.link[this.props.language] : ''}
-                    target={fields[field].settings.target.external ? '_blank' : ''}
+                    href={fields[field].content.link && !fields[field].settings.state.disabled ? fields[field].content.link[this.props.language] : ''}
+                    target={fields[field].settings.state.external ? '_blank' : ''}
+                    className={fields[field].settings.state.disabled ? 'disabled' : ''}
+                    onClick={(e) => {
+                        if(fields[field].settings.state.disabled) e.preventDefault();
+                    }
+                    }
                 >
                     {
                         fields[field].content.icon && fields[field].content.icon[this.props.language] ?
@@ -98,7 +103,7 @@ class Card extends Component {
         return (
             <Container responsive={Template ? Template.responsiveSettings : []}
                        responsiveContent={getResponsiveKey(Template.content.images[0].asset)}
-                       asset={Template.content.images[0].asset}
+                       asset={Template.content.images[0].asset || null}
                        assetsDirectory={assetsDirectory}
                        basis={Template && Template.settings ? Template.settings.basis : {}}>
                 {
