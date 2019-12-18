@@ -336,12 +336,17 @@ export const FixedContainer = styled.div.attrs(props => ({
              
              &.open{
                 height : 100vh; 
+                
+                 & ${Links}{
+                    display : flex;
+                 }
              }
              
              & ${Links}{
                 flex-direction : column; 
                 height : 100%;
                 position : relative;
+                display none;
                 & li{
                     height : auto;
                     

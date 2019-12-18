@@ -5,6 +5,8 @@
 //export { default as BaseButton } from './BaseButton';
 export { default as Card } from './Card';
 export { default as CardClickable } from './CardClickable';
+export { default as CardDuo } from './CardDuo';
+export { default as CardMultiCTA } from './CardMultiCTA';
 export { default as BlockText } from './BlockText';
 export { default as HeaderPicturesOnCorners } from './HeaderPicturesOnCorners';
 export { default as NavigationBasic } from './NavigationBasic';
