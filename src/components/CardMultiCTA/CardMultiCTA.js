@@ -44,7 +44,9 @@ class CardMultiCTA extends Component {
             case 'Image':
                 return this.getImages(fields[field]);
 
-            case 'CTA' || 'CTA2' || 'CTA3' :
+            case 'CTA' :
+            case 'CTA2' :
+            case 'CTA3' :
 
                 return <CTA
                     key={key}
@@ -61,12 +63,14 @@ class CardMultiCTA extends Component {
                     }
                     }
                 >
-                    {
-                        fields[field].content.icon && fields[field].content.icon[this.props.language] ?
-                            <i>{fields[field].content.icon[this.props.language]}</i>
-                            : null
-                    }
-                    <p> {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}</p>
+
+                    <p>
+                        {
+                            fields[field].content.icon && fields[field].content.icon[this.props.language] ?
+                                <i>{fields[field].content.icon[this.props.language]}</i>
+                                : null
+                        }
+                        {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}</p>
 
                 </CTA>;
 

@@ -197,6 +197,17 @@ export const Links = styled.ul`
   
 `;
 
+
+
+export const Top = styled.div`
+  display : flex;
+  align-items : center;
+  justify-content : space-between;
+  & a{
+    color: white;
+  }  
+`;
+
 export const FixedContainer = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis
@@ -248,7 +259,14 @@ export const FixedContainer = styled.div.attrs(props => ({
             
             background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
 
-            
+            & ${Top}{
+               height:${ isNumber(props.basis[size].size.basic.height)
+                    ? `${ props.basis[size].size.basic.height }px`
+                    : props.basis[size].size.basic.height };
+               min-height:${ isNumber(props.basis[size].size.basic.height)
+                    ? `${ props.basis[size].size.basic.height }px`
+                    : props.basis[size].size.basic.height };
+            }
             
             & ${Links}{
                 & li{
@@ -339,13 +357,18 @@ export const FixedContainer = styled.div.attrs(props => ({
                 
                  & ${Links}{
                     display : flex;
+                    height : 100%;
                  }
              }
              
+             
+             
+            
+             
              & ${Links}{
                 flex-direction : column; 
-                height : 100%;
-                position : relative;
+                height : 0;
+                //position : relative;
                 display none;
                 & li{
                     height : auto;
@@ -376,14 +399,6 @@ export const FixedContainer = styled.div.attrs(props => ({
      }
    
    
-`;
-export const Top = styled.div`
-  display : flex;
-  align-items : center;
-  justify-content : space-between;
-  & a{
-    color: white;
-  }  
 `;
 
 export const LineWrapper = styled.div`

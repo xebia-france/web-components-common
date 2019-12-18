@@ -16,7 +16,7 @@ export const Container = styled.div.attrs(props => ({
    display : flex;
    flex-direction : column;
    align-items : center;
-   justify-content  : center;
+  // justify-content  : center;
    position : relative;
    
    
@@ -85,6 +85,8 @@ export const Text = styled.p.attrs(props => ({
     typography : props.typography,
     basis : props.basis
 }))`
+
+    width : 100%;
    ${ props => props.responsive.map(size => `
         z-index : 2;
          @media ${ device[size] } {
@@ -245,6 +247,7 @@ export const CTA = styled.a.attrs(props => ({
     
     & p, & i{
        transition : all 0.25s ease;
+       //align-self : flex-start;
     }
     
    ${ props => props.responsive.map(size => `
