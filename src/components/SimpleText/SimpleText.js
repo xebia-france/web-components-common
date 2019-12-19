@@ -11,8 +11,7 @@ const Div = styled.div`
 export default class SimpleText extends Component {
 
     componentDidMount(){
-        console.log('TEST MOUNT');
-        console.log('DIV styled', Div);
+
     }
 
 

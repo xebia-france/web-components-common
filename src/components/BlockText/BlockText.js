@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 class BlockText extends Component {
     buildComponent = (fields, field) => {
-        console.log('fields', fields);
         if (!fields[field]) return
         switch (field) {
             case 'Title':

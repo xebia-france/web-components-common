@@ -20,10 +20,6 @@ class ListSpeakersFlipCard extends Component {
     render() {
         const {fields, data, assetsDirectory, children, name} = this.props;
 
-        console.log('ListSpeakersFlipCard', fields);
-        console.log('DATA ON ListSpeakersFlipCard', data);
-        console.log('TYPE DATA ON ListSpeakersFlipCard', typeof data);
-
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
         const TemplateCard = fields.TemplateCard;

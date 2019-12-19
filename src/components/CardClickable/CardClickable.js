@@ -73,7 +73,6 @@ class CardClickable extends Component {
     render() {
         const {fields, order, assetsDirectory} = this.props;
 
-        console.log('FIELDS ON CARD CLICK', fields);
         const Template = fields.Template;
         const Link = fields.Link;
 
