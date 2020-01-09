@@ -88,6 +88,10 @@ export const Content = styled.div.attrs(props => ({
     typography : props.typography,
     basis : props.basis
 }))`
+
+    width : 100%;
+    word-break: break-word;
+    
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
             color:${ `rgba(${props.typography[size].color.rgb},${props.typography[size].opacity.value})` };

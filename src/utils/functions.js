@@ -18,7 +18,6 @@ const RGBtoString = rgb => {
 
 const RGBAtoString = (rgb, opacity) => {
     if (!rgb) return;
-    console.log('rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + opacity + ')');
     return 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + opacity + ')';
 };
 

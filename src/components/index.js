@@ -9,5 +9,6 @@ export { default as CardDuo } from './CardDuo';
 export { default as CardMultiCTA } from './CardMultiCTA';
 export { default as BlockText } from './BlockText';
 export { default as HeaderPicturesOnCorners } from './HeaderPicturesOnCorners';
+export { default as NavigationBarExtentedTop } from './NavigationBarExtentedTop';
 export { default as NavigationBasic } from './NavigationBasic';
 export { default as FooterBasic } from './FooterBasic';

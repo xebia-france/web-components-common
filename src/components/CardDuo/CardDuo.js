@@ -102,6 +102,10 @@ class CardDuo extends Component {
         const Separator = fields.Separator;
         const Template2 = fields.Template2;
 
+        console.log('ORDER ON CARDDUO', order)
+
+        console.log('ORDER ON CARDDUO', order[0])
+
 
         return (
             <Container>
@@ -116,7 +120,8 @@ class CardDuo extends Component {
                     }
                     <SubContainer>
                         {
-                            ['Title','Tagline', 'Content', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i, ''))
+                            order && order[0] ? order[0].map((fieldName, i) => this.buildComponent(fields, fieldName, i, ''))
+                                : ['Title','Tagline', 'Content', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i, ''))
                         }
                     </SubContainer>
                 </Card>
@@ -134,13 +139,13 @@ class CardDuo extends Component {
                     {
                         fields.Image2 ? this.getImages(fields.Image2) : null
                     }
+
                     <SubContainer>
                         {
-
-                            ['Title2','Tagline2', 'Content2', 'CTA2'].map((fieldName, i) => this.buildComponent(fields, fieldName, i, '2'))
+                            order &&  order[1] ? order[1].map((fieldName, i) => this.buildComponent(fields, fieldName, i, '2'))
+                                : ['Title2','Tagline2', 'Content2', 'CTA2'].map((fieldName, i) => this.buildComponent(fields, fieldName, i, '2'))
                         }
                     </SubContainer>
-
                 </Card>
             </Container>
         );

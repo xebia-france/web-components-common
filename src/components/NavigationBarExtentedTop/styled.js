@@ -23,61 +23,32 @@ export const Container = styled.div.attrs(props => ({
 `;
 
 
-export const BubbleContainer = styled.div`
+export const Locale = styled.div`
   display : flex;
-  position :absolute;
-  width : 24px;
-  height : 100%;
   
   
-  &>svg{
+  &>div{
     width : 100%;
+    min-width : 45px;
+    
+    
+    & a{
+        display : block;
+        width : 100%;
+        height : 100%;
+        text-align : center;
+        padding : 10px;
+        
+        &.selected{
+          background : rgba(255,255,255,0.2);
+        }
+    }
+  }
+  
+  & a{
+    color: white;
   }  
 `;
-
-
-
-export const CheckContainer = styled.div`
-  display : flex;
-  width : 40px;
-  height : 40px;
-  
-  &>svg{
-    width : 0px;
-    height : 40px;
-    transition : width 0.3s ease;
-  } 
-  
-  &.selected{
-      &>svg{
-        width : 40px;
-      } 
-  }
- 
-   
-`;
-
-
-
-
-export const ArrowContainer = styled.div`
-  display : none;
-  width : 50px;
-  height : 50px;
-  transform : rotate(180deg);
-  cursor : pointer;
-  
-  &>svg{
-    width : 100%;
-  } 
-  
-  @media  ${ device.M } {
-    display : flex;
-  }
-   
-`;
-
-
 
 
 export const Link = styled.a.attrs(props => ({
@@ -154,16 +125,6 @@ export const Link = styled.a.attrs(props => ({
             border-bottom-left-radius :  ${  isNumber(props.border[size].radius.bottomLeft) ? `${ props.border[size].radius.bottomLeft }px`
     : `${ props.border[size].radius.bottomLeft }` || '' };                         
         
-        
-        
-        
-            & ${CheckContainer}, & ${ArrowContainer}{
-                & svg polyline{
-                    stroke :${ props.typography[size].color.basic.rgb ? `rgba(${props.typography[size].color.basic.rgb},${props.typography[size].opacity.basic.value})` : props.typography[size].color.basic.hex} !important;
-
-                }
-            }
-            
          
             &:hover{
                background-color:${ props.basis[size].color.hover.rgb ?  `rgba(${props.basis[size].color.hover.rgb},${props.basis[size].opacity.hover.value})` : props.basis[size].color.hover.hex };
@@ -174,133 +135,18 @@ export const Link = styled.a.attrs(props => ({
             }
             
             
-            
-            
             &.selected{
                 background-color:${ props.basis[size].color.active.rgb ?  `rgba(${props.basis[size].color.active.rgb},${props.basis[size].opacity.active.value})` : props.basis[size].color.active.hex };
                 border-color : ${ props.border[size].color.active.rgb ? `rgba(${props.border[size].color.active.rgb},${props.border[size].opacity.active.value})` : props.border[size].color.active.hex };     
                 color:${ props.typography[size].color.active.rgb ? `rgba(${props.typography[size].color.active.rgb},${props.typography[size].opacity.active.value})` : props.typography[size].color.active.hex }; 
 
-                & ${CheckContainer}, & ${ArrowContainer}{
-                    & svg polyline{
-                        stroke :${ props.typography[size].color.active.rgb ? `rgba(${props.typography[size].color.active.rgb},${props.typography[size].opacity.active.value})` : props.typography[size].color.active.hex} !important;
-    
-                    }
-                }
-            
                   
             }
-            
-            
-            & ${CheckContainer}, & ${ArrowContainer}{
-                & svg polyline{
-                    stroke :${ props.typography[size].color.basic.rgb ? `rgba(${props.typography[size].color.basic.rgb},${props.typography[size].opacity.basic.value})` : props.typography[size].color.basic.hex} !important;
-
-                }
-            }
-            
-            
             
          
          }`)
     };
     
-`;
-
-
-export const LanguageSelector = styled.ul`
-  position : absolute;
-  top : 100%;
-  right : 0;
-  overflow : hidden;
-  
-  & ${Link}{
-        display : flex;
-        width : 100%;
-        height : 0px;
-        text-align : center;
-        padding :0 0 0 20px;
-        transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;    
-        justify-content : space-between;
-  }
-  
-   @media  ${ device.M } {
-    position : initial;
-    width : 100%;
-    display : flex;
-    background-color : transparent !important;
-    border-top : 1px solid rgba(255,255,255,0.3);
-    
-    & ${Link}{
-       height : 50px; 
-       background-color : transparent;
-       
-       &:not(:last-child){
-        border-right : 1px solid rgba(255,255,255,0.3);
-       }
-    }
-    
-   }
-  
-`;
-
-
-
-export const Locale = styled.div`
-  display : flex;
-  position: relative;
-  margin-left : 20px;
-  
-  
-  &:hover{
-    & ${LanguageSelector} ${Link}{
-        height : 40px;
-        
-         
-    }
-  
-  }
-  
-  @media  ${ device.M } {
-    margin-left : 0;
-  
-      &:hover{
-        & ${LanguageSelector} ${Link}{
-            height : 50px;
-        }
-  }
- 
-`;
-
-
-export const CurrentLocale = styled.div`
-  display : flex;
-  position: relative;
-  width : 24px;
-  align-items : center;
-  justify-content : center;
-  cursor : pointer;
- 
-  
-  &>${Link}{
-    z-index : 2;
-    font-size : 12px;
-    background-color : transparent;
-    color : black;
-    
-    &:hover{
-        color : black;
-        background-color : transparent;
-    }
-  }
-  & ${BubbleContainer}{
-    z-index : 1;
-  }
-  
-  @media  ${ device.M } {
-    display : none;
-  }
-  
 `;
 
 
@@ -310,6 +156,9 @@ export const Links = styled.ul`
   flex-wrap : no-wrap;
   transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
  
+  
+  
+  
   & li{
     display : flex;
     align-items : center;
@@ -329,10 +178,6 @@ export const Links = styled.ul`
         & li{
             height : 0px;
             transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
-            
-            & a{
-                width : 100%;
-            }
         }
     }
     
@@ -345,11 +190,11 @@ export const Links = styled.ul`
      }
   }
   
-`;
-
-
-export const LinkElement = styled.li`
- 
+  
+  
+  
+  
+  
 `;
 
 
@@ -363,7 +208,6 @@ export const Top = styled.div`
   }  
 `;
 
-
 export const FixedContainer = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis
@@ -375,7 +219,7 @@ export const FixedContainer = styled.div.attrs(props => ({
   width : 100%;
   z-index : 20;
   transition : all .3s cubic-bezier(.25,.46,.45,.94) 0ms;
-  box-sizing : border-box;
+  box-sizing : content-box;
 
   
   
@@ -441,9 +285,6 @@ export const FixedContainer = styled.div.attrs(props => ({
                        
                      }
                   }
-            }            
-            & ${LanguageSelector}{
-                background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };   
             }
             
             &.scrolled{
@@ -519,6 +360,9 @@ export const FixedContainer = styled.div.attrs(props => ({
                     height : 100%;
                  }
              }
+             
+             
+             
             
              
              & ${Links}{
@@ -526,71 +370,18 @@ export const FixedContainer = styled.div.attrs(props => ({
                 height : 0;
                 //position : relative;
                 display none;
-                
-                & >li{
-                 border-bottom : 1px solid rgba(255,255,255,0.3);
-                    &:first-child{
-                        border-top : 1px solid rgba(255,255,255,0.3);
-                    }
-                
-                }
-                
                 & li{
                     height : auto;
                     
-                        & ${Link}{
-                            padding-right : 0;
-                            width : 100%;
-                            justify-content : space-between;
-                        }
-                    
                     &>ul{
-                       
                         position : initial;
-                        background-color : rgba(255,255,255, 0.1) !important;
+                        //display : block;
+                        
                         
                         &>li{
-                           padding-left : 40px;
-                           padding-right : 40px;
-                           & a{
-                            padding-left : 0px;
-                           }
-                           
-                           &:not(:last-child) a{
-                            border-bottom : 1px solid rgba(255,255,255, 0.3);
-                           }
-                            
-                        }
-                        
-                    }
-                    
-                    &.closed {
-                        &>ul{
-                           position : initial;
-                            & li{
-                                height : 0px !important;
-                            }
+                            padding-left : 20px;
                         }
                     }
-                    
-                    &.open {
-                       & ${ArrowContainer}{
-                        transform : rotate(0deg);
-                       }
-                    
-                        &>ul{
-                           position : initial;
-                           border-top : 1px solid rgba(255,255,255,0.3);
-                            & li{
-                                height:${props =>  isNumber(props.basis['M'].size.basic.height)
-                                    ? `${ props.basis['M'].size.basic.height }px`
-                                    : props.basis['M'].size.basic.height };
-                                
-                            }
-                        }
-                    }
-                    
-                    
                 }
                 
                 & ${ Locale}{

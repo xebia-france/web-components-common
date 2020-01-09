@@ -46,7 +46,7 @@ const size = {
 
 export const device = {
     A: `(min-width: 0px) `,
-    M: `(max-width: ${ size.T }) `,
+    M: `(max-width: ${ '767px' }) `,
     T: `(min-width: ${ size.T }) and (max-width: ${ size.D })`,
     D: `(min-width: ${ size.D })`
 };

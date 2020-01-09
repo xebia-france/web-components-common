@@ -1,28 +1,9 @@
 import React, {Component} from 'react';
-import {
-    Container,
-    Links,
-    Link,
-    Hamburger,
-    LineWrapper,
-    FixedContainer,
-    Top,
-    Locale,
-    ImageContainer,
-    BubbleContainer,
-    CurrentLocale,
-    LanguageSelector,
-    CheckContainer,
-    ArrowContainer
-} from './styled'
+import {Container, Links, Link, Hamburger, LineWrapper, FixedContainer, Top, Locale, ImageContainer} from './styled'
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
-import NavigationLink from './NavigationLink';
-import SvgBubble from '../../assets/svg/SvgBubble'
-import SvgCheck from '../../assets/svg/SvgCheck'
-import SvgArrowTop from '../../assets/svg/SvgArrowTop'
 
-class NavigationBasic extends Component {
+class NavigationBarExtentedTop extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -51,91 +32,66 @@ class NavigationBasic extends Component {
     }*/
 
 
+
     getRenderLinks = (links, slugParent = null) => {
         return links.map((link) => {
             switch (link.type) {
                 case 'anchor':
-                    return <NavigationLink><Link
+                    return <li><Link
                         responsive={this.props.fields['Links'].responsiveSettings}
                         basis={this.props.fields['Links'].settings.basis}
                         typography={this.props.fields['Links'].settings.typography}
                         border={this.props.fields['Links'].settings.border}
-                        href={slugParent ? `/${this.props.locale.split('-')[0]}/${slugParent}#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}
-                        {
-                            link.childrens ? <ArrowContainer>
-                                <SvgArrowTop/>
-                            </ArrowContainer> : null
-                        }
-                        </Link>
+                        href={slugParent ? `/${this.props.locale.split('-')[0]}/${slugParent}#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
                         <ul>
-                            {
-                                link.childrens ? this.getRenderLinks(link.childrens) : null
-                            }
+                        {
+                            link.childrens ?  this.getRenderLinks(link.childrens) : null
+                        }
                         </ul>
-                    </NavigationLink>;
+                    </li>;
 
                 case 'external':
-                    return <NavigationLink><Link
+                    return <li><Link
                         responsive={this.props.fields['Links'].responsiveSettings}
                         basis={this.props.fields['Links'].settings.basis}
                         typography={this.props.fields['Links'].settings.typography}
                         border={this.props.fields['Links'].settings.border}
-                        target={'_blank'} href={`${link.urlLink}`}>{link.name}
-                        {
-                            link.childrens ? <ArrowContainer>
-                                <SvgArrowTop/>
-                            </ArrowContainer> : null
-                        }
-                        </Link>
+                        target={'_blank'} href={`${link.urlLink}`}>{link.name}</Link>
                         <ul>
-                            {
-                                link.childrens ? this.getRenderLinks(link.childrens) : null
-                            }
+                        {
+                             link.childrens ?  this.getRenderLinks(link.childrens) : null
+                        }
                         </ul>
-                    </NavigationLink>;
+                    </li>;
 
                 case 'internal':
-                    return <NavigationLink><Link
+                    return <li><Link
                         responsive={this.props.fields['Links'].responsiveSettings}
                         basis={this.props.fields['Links'].settings.basis}
                         typography={this.props.fields['Links'].settings.typography}
                         border={this.props.fields['Links'].settings.border}
                         className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
-                        href={`/${this.props.locale.split('-')[0]}/${link.slug}`}>
-                        {link.name}
-                        {
-                            link.childrens ? <ArrowContainer>
-                                <SvgArrowTop/>
-                            </ArrowContainer> : null
-                        }
-                    </Link>
-
+                        href={`/${this.props.locale.split('-')[0]}/${link.slug}`}>{link.name}</Link>
                         <ul>
-                            {
-                                link.childrens ? this.getRenderLinks(link.childrens, link.slug) : null
-                            }
+                        {
+                            link.childrens ?  this.getRenderLinks(link.childrens, link.slug) : null
+                        }
                         </ul>
-                    </NavigationLink>;
+                    </li>;
 
                 case 'null':
-                    return <NavigationLink><Link
+                    return <li><Link
                         responsive={this.props.fields['Links'].responsiveSettings}
                         basis={this.props.fields['Links'].settings.basis}
                         typography={this.props.fields['Links'].settings.typography}
                         border={this.props.fields['Links'].settings.border}
-                    >{link.name}
-                        {
-                            link.childrens ? <ArrowContainer>
-                                <SvgArrowTop/>
-                            </ArrowContainer> : null
-                        }
-                    </Link>
+                    >{link.name}</Link>
                         <ul>
-                            {
-                                link.childrens ? this.getRenderLinks(link.childrens) : null
-                            }
+                        {
+                            link.childrens ?  this.getRenderLinks(link.childrens) : null
+                        }
                         </ul>
-                    </NavigationLink>;
+                    </li>;
 
                 default :
                     return null;
@@ -203,42 +159,21 @@ class NavigationBasic extends Component {
                                 : null
                         }
                         <Locale>
-                            <CurrentLocale>
-                                <Link responsive={this.props.fields['Links'].responsiveSettings}
-                                      basis={this.props.fields['Links'].settings.basis}
-                                      typography={this.props.fields['Links'].settings.typography}
-                                      border={this.props.fields['Links'].settings.border}
-
-                                >
-                                    {locale.split('-')[0]}
-                                </Link>
-                                <BubbleContainer>
-                                    <SvgBubble/>
-                                </BubbleContainer>
-                            </CurrentLocale>
-                            <LanguageSelector>
-                                {
-                                    locales.map((l) => {
-                                        return <Link responsive={this.props.fields['Links'].responsiveSettings}
-                                                     basis={this.props.fields['Links'].settings.basis}
-                                                     typography={this.props.fields['Links'].settings.typography}
-                                                     border={this.props.fields['Links'].settings.border}
-                                                     className={l === locale ? 'selected' : ''}
-                                                     href={this.getUrlWithLocale(l, location.pathname)}
-                                        >
-                                            {l.split('-')[0]}
-                                            <CheckContainer className={l === locale ? 'selected' : ''}>
-                                                <SvgCheck/>
-                                            </CheckContainer>
-                                        </Link>
-                                    })
-                                }
-                            </LanguageSelector>
-
-
+                            {
+                                locales.map((l) => {
+                                    return <Link responsive={this.props.fields['Links'].responsiveSettings}
+                                                 basis={this.props.fields['Links'].settings.basis}
+                                                 typography={this.props.fields['Links'].settings.typography}
+                                                 border={this.props.fields['Links'].settings.border}
+                                                 className={l === locale ? 'selected' : ''}
+                                                 href={this.getUrlWithLocale(l, location.pathname)}
+                                    >
+                                        {l.split('-')[0]}
+                                    </Link>
+                                })
+                            }
                         </Locale>
                     </Links>
-
 
                 </FixedContainer>
             </Container>
@@ -247,37 +182,7 @@ class NavigationBasic extends Component {
 }
 
 
-class LinkMenu extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false
-        };
-    }
-
-    componentDidMount() {
-
-    }
-
-    componentDidUpdate(prevProps) {
-
-    }
-
-
-
-    render() {
-        const { children } = this.props;
-
-
-
-        return (<ul>
-                { children }
-            </ul>
-        );
-    }
-}
-
-NavigationBasic.defaultProps = {
+NavigationBarExtentedTop.defaultProps = {
     fields: {
         Template: {
             content: {},
@@ -403,9 +308,9 @@ NavigationBasic.defaultProps = {
     language: 0
 };
 
-NavigationBasic.propTypes = {
+NavigationBarExtentedTop.propTypes = {
     fields: PropTypes.object.isRequired,
     language: PropTypes.number.isRequired
 };
 
-export default NavigationBasic;
+export default NavigationBarExtentedTop;
