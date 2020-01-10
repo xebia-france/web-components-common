@@ -28,7 +28,8 @@ class NavigationBasic extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false
+            open: false,
+            transitionOpening : true
         };
     }
 
@@ -45,6 +46,22 @@ class NavigationBasic extends Component {
             }
         }
 
+        if(localStorage.getItem('reloadLanguage')){
+            const reloadLanguage = localStorage.getItem('reloadLanguage');
+            if(reloadLanguage === 'true'){
+                this.setState({
+                    open : true,
+                    transitionOpening : false
+                }, () => {
+                    localStorage.setItem('reloadLanguage', 'false');
+                    setTimeout(() => {
+                        this.setState({
+                            transitionOpening : true
+                        })
+                    }, 300);
+                })
+            }
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -190,7 +207,7 @@ class NavigationBasic extends Component {
                        basis={fields['Bar'].settings.basis}>
                 <FixedContainer responsive={fields['Bar'].responsiveSettings}
                                 basis={fields['Bar'].settings.basis}
-                                className={[this.state.open ? 'open' : '', this.state.scrollY && this.state.scrollY > 100 ? 'scrolled' : '']}
+                                className={[this.state.open ? 'open' : '', this.state.scrollY && this.state.scrollY > 100 ? 'scrolled' : '', !this.state.transitionOpening ? 'no-transition' : '']}
 
                 >
                     <Top>
@@ -245,6 +262,7 @@ class NavigationBasic extends Component {
                                                      href={this.getUrlWithLocale(l, location.pathname)}
                                                      onClick={() => {
                                                          localStorage.setItem('scrollPosition', this.state.scrollY);
+                                                         localStorage.setItem('reloadLanguage', 'true');
                                                      }}
                                         >
                                             {l.split('-')[0]}
@@ -263,34 +281,6 @@ class NavigationBasic extends Component {
     }
 }
 
-
-class LinkMenu extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false
-        };
-    }
-
-    componentDidMount() {
-
-    }
-
-    componentDidUpdate(prevProps) {
-
-    }
-
-
-    render() {
-        const {children} = this.props;
-
-
-        return (<ul>
-                {children}
-            </ul>
-        );
-    }
-}
 
 NavigationBasic.defaultProps = {
     fields: {

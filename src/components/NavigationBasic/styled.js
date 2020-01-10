@@ -376,6 +376,10 @@ export const FixedContainer = styled.div.attrs(props => ({
   z-index : 20;
   transition : all .3s cubic-bezier(.25,.46,.45,.94) 0ms;
   box-sizing : border-box;
+  
+  &.no-transition{
+    transition : all 0s cubic-bezier(.25,.46,.45,.94) 0ms;
+  }
 
   
   
