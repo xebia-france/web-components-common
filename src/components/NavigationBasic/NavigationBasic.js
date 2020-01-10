@@ -31,6 +31,19 @@ class NavigationBasic extends Component {
     }
 
     componentDidMount() {
+        if(localStorage.getItem('scrollPosition')){
+            const localStorageScrollPosition = localStorage.getItem('scrollPosition');
+            const localStoragePrevLocation = localStorage.getItem('prevLocation');
+            console.log('AAA',localStorageScrollPosition )
+            console.log('AAA type', typeof localStorageScrollPosition )
+            console.log('AAA type num', typeof Number(localStorageScrollPosition) )
+
+            if(window){
+                window.scrollTo(0, Number(localStorageScrollPosition))
+            }
+
+           // window.scrollTo(Number(localStorageScrollPosition));
+        }
 
     }
 
@@ -66,7 +79,7 @@ class NavigationBasic extends Component {
                                 <SvgArrowTop/>
                             </ArrowContainer> : null
                         }
-                        </Link>
+                    </Link>
                         <ul>
                             {
                                 link.childrens ? this.getRenderLinks(link.childrens) : null
@@ -86,7 +99,7 @@ class NavigationBasic extends Component {
                                 <SvgArrowTop/>
                             </ArrowContainer> : null
                         }
-                        </Link>
+                    </Link>
                         <ul>
                             {
                                 link.childrens ? this.getRenderLinks(link.childrens) : null
@@ -163,6 +176,13 @@ class NavigationBasic extends Component {
         });
     }
 
+    saveScrollPosition = (e) => {
+        e.preventDefault();
+        return new Promise((resolve, reject) => {
+            resolve(this.props.scrollPosition || 0);
+        })
+    }
+
     render() {
         const {fields, locales, locale, location, menu, scrollPosition} = this.props;
 
@@ -225,6 +245,20 @@ class NavigationBasic extends Component {
                                                      border={this.props.fields['Links'].settings.border}
                                                      className={l === locale ? 'selected' : ''}
                                                      href={this.getUrlWithLocale(l, location.pathname)}
+                                                     onClick={(e) => {
+
+                                                         localStorage.setItem('scrollPosition', scrollPosition);
+                                                         localStorage.setItem('prevLocation', this.props.location.pathname);
+                                                         window.scrollTo(scrollPosition);
+                                                        /* this.saveScrollPosition(e).then((result)  => {
+
+                                                             console.log('result', result)
+                                                             localStorage.setItem('scrollPosition', result);
+                                                          //   window.location.pathname = this.getUrlWithLocale(l, location.pathname);
+                                                                 // window.scrollTo(result);
+                                                         } )*/
+
+                                                     }}
                                         >
                                             {l.split('-')[0]}
                                             <CheckContainer className={l === locale ? 'selected' : ''}>
@@ -264,14 +298,12 @@ class LinkMenu extends Component {
     }
 
 
-
     render() {
-        const { children } = this.props;
-
+        const {children} = this.props;
 
 
         return (<ul>
-                { children }
+                {children}
             </ul>
         );
     }
