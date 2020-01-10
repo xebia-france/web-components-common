@@ -51,14 +51,14 @@ class NavigationBasic extends Component {
             if(reloadLanguage === 'true'){
                 this.setState({
                     open : true,
-                    transitionOpening : false
+                  //  transitionOpening : false
                 }, () => {
                     localStorage.setItem('reloadLanguage', 'false');
-                    setTimeout(() => {
+                    /*setTimeout(() => {
                         this.setState({
                             transitionOpening : true
                         })
-                    }, 300);
+                    }, 300);*/
                 })
             }
         }
