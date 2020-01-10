@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { LinkElement } from './styled'
 
 class NavigationLink extends Component {
     constructor(props) {
@@ -12,17 +11,15 @@ class NavigationLink extends Component {
     render() {
         const { children } = this.props;
 
-
-
         return (
-            <LinkElement className={this.state.open ? 'open' : 'closed'} onClick={() => {
+            <li className={this.state.open ? 'open' : 'closed'} onClick={() => {
                 this.setState({
                     open : !this.state.open
                 })
                 localStorage.setItem('scrollPosition', 0);
             }}>
                 { children }
-            </LinkElement>
+            </li>
         );
     }
 }

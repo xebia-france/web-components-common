@@ -3,6 +3,7 @@ import {device} from "../../styles/constants";
 import {isNumber} from "../../utils/functions";
 import isEmpty from "lodash/isEmpty";
 
+
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis
@@ -348,12 +349,6 @@ export const Links = styled.ul`
 `;
 
 
-export const LinkElement = styled.li`
- 
-`;
-
-
-
 export const Top = styled.div`
   display : flex;
   align-items : center;
@@ -377,13 +372,6 @@ export const FixedContainer = styled.div.attrs(props => ({
   transition : all .3s cubic-bezier(.25,.46,.45,.94) 0ms;
   box-sizing : border-box;
   
-  &.no-transition{
-    transition : all 0s cubic-bezier(.25,.46,.45,.94) 0ms;
-  }
-
-  
-  
-   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
              

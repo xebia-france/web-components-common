@@ -28,8 +28,7 @@ class NavigationBasic extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false,
-            transitionOpening : true
+            open: false
         };
     }
 
@@ -38,27 +37,21 @@ class NavigationBasic extends Component {
             window.addEventListener("scroll", this.listener)
         }
 
-        if(localStorage.getItem('scrollPosition')){
+        if (localStorage.getItem('scrollPosition')) {
             const localStorageScrollPosition = Number(localStorage.getItem('scrollPosition'));
 
-            if(typeof window !== 'undefined' && (!this.props.location.hash || this.props.location.hash === '') ){
+            if (typeof window !== 'undefined' && (!this.props.location.hash || this.props.location.hash === '')) {
                 window.scrollTo(0, localStorageScrollPosition);
             }
         }
 
-        if(localStorage.getItem('reloadLanguage')){
+        if (localStorage.getItem('reloadLanguage')) {
             const reloadLanguage = localStorage.getItem('reloadLanguage');
-            if(reloadLanguage === 'true'){
+            if (reloadLanguage === 'true') {
                 this.setState({
-                    open : true,
-                  //  transitionOpening : false
+                    open: true,
                 }, () => {
                     localStorage.setItem('reloadLanguage', 'false');
-                    /*setTimeout(() => {
-                        this.setState({
-                            transitionOpening : true
-                        })
-                    }, 300);*/
                 })
             }
         }
@@ -88,21 +81,22 @@ class NavigationBasic extends Component {
     }
 
     getRenderLinks = (links, slugParent = null) => {
-        return links.map((link) => {
+        return links.map((link, i) => {
             switch (link.type) {
                 case 'anchor':
-                    return <NavigationLink><Link
-                        responsive={this.props.fields['Links'].responsiveSettings}
-                        basis={this.props.fields['Links'].settings.basis}
-                        typography={this.props.fields['Links'].settings.typography}
-                        border={this.props.fields['Links'].settings.border}
-                        href={slugParent ? `/${this.props.locale.split('-')[0]}/${slugParent}#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}
-                        {
-                            link.childrens ? <ArrowContainer>
-                                <SvgArrowTop/>
-                            </ArrowContainer> : null
-                        }
-                    </Link>
+                    return <NavigationLink key={`${i}-${link.name}`}>
+                        <Link
+                            responsive={this.props.fields['Links'].responsiveSettings}
+                            basis={this.props.fields['Links'].settings.basis}
+                            typography={this.props.fields['Links'].settings.typography}
+                            border={this.props.fields['Links'].settings.border}
+                            href={slugParent ? `/${this.props.locale.split('-')[0]}/${slugParent}#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}
+                            {
+                                link.childrens ? <ArrowContainer>
+                                    <SvgArrowTop/>
+                                </ArrowContainer> : null
+                            }
+                        </Link>
                         <ul>
                             {
                                 link.childrens ? this.getRenderLinks(link.childrens) : null
@@ -111,18 +105,19 @@ class NavigationBasic extends Component {
                     </NavigationLink>;
 
                 case 'external':
-                    return <NavigationLink><Link
-                        responsive={this.props.fields['Links'].responsiveSettings}
-                        basis={this.props.fields['Links'].settings.basis}
-                        typography={this.props.fields['Links'].settings.typography}
-                        border={this.props.fields['Links'].settings.border}
-                        target={'_blank'} href={`${link.urlLink}`}>{link.name}
-                        {
-                            link.childrens ? <ArrowContainer>
-                                <SvgArrowTop/>
-                            </ArrowContainer> : null
-                        }
-                    </Link>
+                    return <NavigationLink key={`${i}-${link.name}`}>
+                        <Link
+                            responsive={this.props.fields['Links'].responsiveSettings}
+                            basis={this.props.fields['Links'].settings.basis}
+                            typography={this.props.fields['Links'].settings.typography}
+                            border={this.props.fields['Links'].settings.border}
+                            target={'_blank'} href={`${link.urlLink}`}>{link.name}
+                            {
+                                link.childrens ? <ArrowContainer>
+                                    <SvgArrowTop/>
+                                </ArrowContainer> : null
+                            }
+                        </Link>
                         <ul>
                             {
                                 link.childrens ? this.getRenderLinks(link.childrens) : null
@@ -131,20 +126,21 @@ class NavigationBasic extends Component {
                     </NavigationLink>;
 
                 case 'internal':
-                    return <NavigationLink><Link
-                        responsive={this.props.fields['Links'].responsiveSettings}
-                        basis={this.props.fields['Links'].settings.basis}
-                        typography={this.props.fields['Links'].settings.typography}
-                        border={this.props.fields['Links'].settings.border}
-                        className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
-                        href={`/${this.props.locale.split('-')[0]}/${link.slug}`}>
-                        {link.name}
-                        {
-                            link.childrens ? <ArrowContainer>
-                                <SvgArrowTop/>
-                            </ArrowContainer> : null
-                        }
-                    </Link>
+                    return <NavigationLink key={`${i}-${link.name}`}>
+                        <Link
+                            responsive={this.props.fields['Links'].responsiveSettings}
+                            basis={this.props.fields['Links'].settings.basis}
+                            typography={this.props.fields['Links'].settings.typography}
+                            border={this.props.fields['Links'].settings.border}
+                            className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
+                            href={`/${this.props.locale.split('-')[0]}/${link.slug}`}>
+                            {link.name}
+                            {
+                                link.childrens ? <ArrowContainer>
+                                    <SvgArrowTop/>
+                                </ArrowContainer> : null
+                            }
+                        </Link>
 
                         <ul>
                             {
@@ -154,18 +150,19 @@ class NavigationBasic extends Component {
                     </NavigationLink>;
 
                 case 'null':
-                    return <NavigationLink><Link
-                        responsive={this.props.fields['Links'].responsiveSettings}
-                        basis={this.props.fields['Links'].settings.basis}
-                        typography={this.props.fields['Links'].settings.typography}
-                        border={this.props.fields['Links'].settings.border}
-                    >{link.name}
-                        {
-                            link.childrens ? <ArrowContainer>
-                                <SvgArrowTop/>
-                            </ArrowContainer> : null
-                        }
-                    </Link>
+                    return <NavigationLink key={`${i}-${link.name}`}>
+                        <Link
+                            responsive={this.props.fields['Links'].responsiveSettings}
+                            basis={this.props.fields['Links'].settings.basis}
+                            typography={this.props.fields['Links'].settings.typography}
+                            border={this.props.fields['Links'].settings.border}
+                        >{link.name}
+                            {
+                                link.childrens ? <ArrowContainer>
+                                    <SvgArrowTop/>
+                                </ArrowContainer> : null
+                            }
+                        </Link>
                         <ul>
                             {
                                 link.childrens ? this.getRenderLinks(link.childrens) : null
@@ -207,7 +204,7 @@ class NavigationBasic extends Component {
                        basis={fields['Bar'].settings.basis}>
                 <FixedContainer responsive={fields['Bar'].responsiveSettings}
                                 basis={fields['Bar'].settings.basis}
-                                className={[this.state.open ? 'open' : '', this.state.scrollY && this.state.scrollY > 100 ? 'scrolled' : '', !this.state.transitionOpening ? 'no-transition' : '']}
+                                className={[this.state.open ? 'open' : '', this.state.scrollY && this.state.scrollY > 100 ? 'scrolled' : '']}
 
                 >
                     <Top>
@@ -254,7 +251,8 @@ class NavigationBasic extends Component {
                             <LanguageSelector>
                                 {
                                     locales.map((l) => {
-                                        return <Link responsive={this.props.fields['Links'].responsiveSettings}
+                                        return <Link key={l}
+                                                     responsive={this.props.fields['Links'].responsiveSettings}
                                                      basis={this.props.fields['Links'].settings.basis}
                                                      typography={this.props.fields['Links'].settings.typography}
                                                      border={this.props.fields['Links'].settings.border}
