@@ -22,6 +22,8 @@ import SvgBubble from '../../assets/svg/SvgBubble'
 import SvgCheck from '../../assets/svg/SvgCheck'
 import SvgArrowTop from '../../assets/svg/SvgArrowTop'
 
+let scrollPositions = null;
+
 class NavigationBasic extends Component {
     constructor(props) {
         super(props);
@@ -31,18 +33,16 @@ class NavigationBasic extends Component {
     }
 
     componentDidMount() {
+        if (typeof window !== 'undefined') {
+            window.addEventListener("scroll", this.listener)
+        }
+
         if(localStorage.getItem('scrollPosition')){
-            const localStorageScrollPosition = localStorage.getItem('scrollPosition');
-            const localStoragePrevLocation = localStorage.getItem('prevLocation');
-            console.log('AAA',localStorageScrollPosition )
-            console.log('AAA type', typeof localStorageScrollPosition )
-            console.log('AAA type num', typeof Number(localStorageScrollPosition) )
+            const localStorageScrollPosition = Number(localStorage.getItem('scrollPosition'));
 
-            if(window){
-                window.scrollTo(0, Number(localStorageScrollPosition))
+            if(typeof window !== 'undefined' && (!this.props.location.hash || this.props.location.hash === '') ){
+                window.scrollTo(0, localStorageScrollPosition);
             }
-
-           // window.scrollTo(Number(localStorageScrollPosition));
         }
 
     }
@@ -51,18 +51,24 @@ class NavigationBasic extends Component {
 
     }
 
+    componentWillUnmount() {
+        if (typeof window !== 'undefined') {
+            window.removeEventListener("scroll", this.listener)
+        }
+    }
+
+    listener = () => {
+        scrollPositions = window.scrollY;
+        this.setState({
+            scrollY: window.scrollY
+        })
+    }
+
     getUrlWithLocale = (locale, currentPath) => {
         let result = currentPath.split('/');
         result.splice(1, 1, locale.split('-')[0]);
         return result.join('/')
     }
-
-    /*getLinksByLanguage = () => {
-        const links = this.props.menu.edges.filter((edge) => edge.node.node_locale === this.props.locale)[0].node.menuHeader;
-        console.log('LINKS', links)
-        return links;
-    }*/
-
 
     getRenderLinks = (links, slugParent = null) => {
         return links.map((link) => {
@@ -176,29 +182,21 @@ class NavigationBasic extends Component {
         });
     }
 
-    saveScrollPosition = (e) => {
-        e.preventDefault();
-        return new Promise((resolve, reject) => {
-            resolve(this.props.scrollPosition || 0);
-        })
-    }
-
     render() {
-        const {fields, locales, locale, location, menu, scrollPosition} = this.props;
-
-        console.log('MENU', menu);
-
+        const {fields, locales, locale, location, menu} = this.props;
 
         return (
             <Container responsive={fields['Bar'].responsiveSettings}
                        basis={fields['Bar'].settings.basis}>
                 <FixedContainer responsive={fields['Bar'].responsiveSettings}
                                 basis={fields['Bar'].settings.basis}
-                                className={[this.state.open ? 'open' : '', scrollPosition && scrollPosition > 100 ? 'scrolled' : '']}
+                                className={[this.state.open ? 'open' : '', this.state.scrollY && this.state.scrollY > 100 ? 'scrolled' : '']}
 
                 >
                     <Top>
-                        <div><a href={`/${locale.split('-')[0]}`}>
+                        <div><a href={`/${locale.split('-')[0]}`} onClick={() => {
+                            localStorage.setItem('scrollPosition', 0);
+                        }}>
                             {
                                 this.getImages(fields['Image'])
                             }
@@ -245,19 +243,8 @@ class NavigationBasic extends Component {
                                                      border={this.props.fields['Links'].settings.border}
                                                      className={l === locale ? 'selected' : ''}
                                                      href={this.getUrlWithLocale(l, location.pathname)}
-                                                     onClick={(e) => {
-
-                                                         localStorage.setItem('scrollPosition', scrollPosition);
-                                                         localStorage.setItem('prevLocation', this.props.location.pathname);
-                                                         window.scrollTo(scrollPosition);
-                                                        /* this.saveScrollPosition(e).then((result)  => {
-
-                                                             console.log('result', result)
-                                                             localStorage.setItem('scrollPosition', result);
-                                                          //   window.location.pathname = this.getUrlWithLocale(l, location.pathname);
-                                                                 // window.scrollTo(result);
-                                                         } )*/
-
+                                                     onClick={() => {
+                                                         localStorage.setItem('scrollPosition', this.state.scrollY);
                                                      }}
                                         >
                                             {l.split('-')[0]}
@@ -268,12 +255,8 @@ class NavigationBasic extends Component {
                                     })
                                 }
                             </LanguageSelector>
-
-
                         </Locale>
                     </Links>
-
-
                 </FixedContainer>
             </Container>
         );

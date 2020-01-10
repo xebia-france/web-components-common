@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Container, Links, Link, FixedContainer, Bullet, ImageContainer} from './styled'
+import {Container, Links, Link, FixedContainer, Bullet} from './styled'
 import PropTypes from 'prop-types';
-import {getResponsiveKey} from "../../utils/functions";
 
 class FooterBasic extends Component {
     constructor(props) {
@@ -90,26 +89,8 @@ class FooterBasic extends Component {
         })
     }
 
-    getImages = field => {
-        const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
-        return field.content.images.map((image, i) => {
-            const file = image.asset[responsiveContent].fileName ? image.asset[responsiveContent].fileName : null;
-            if (!file) {
-                return null
-            } else {
-                return (
-                    <ImageContainer key={i}
-                                    responsive={field.responsiveSettings}
-                                    basis={field.settings.basis}>
-                        <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
-                    </ImageContainer>);
-            }
-
-        });
-    }
-
     render() {
-        const {fields, locales, locale, location, menu} = this.props;
+        const {fields, menu} = this.props;
 
         return (
             <Container responsive={fields['Template'].responsiveSettings}
@@ -117,15 +98,6 @@ class FooterBasic extends Component {
                 <FixedContainer responsive={fields['Template'].responsiveSettings}
                                 basis={fields['Template'].settings.basis}
                 >
-                    {/*<Top>
-                        <div><a href={`/${locale.split('-')[0]}`}>
-                            {
-                                this.getImages(fields['Image'])
-                            }
-                        </a></div>
-
-                    </Top>*/}
-
                     <Links>
                         {
                             menu ? this.getRenderLinks(menu) : null
@@ -265,8 +237,8 @@ FooterBasic.defaultProps = {
 };
 
 FooterBasic.propTypes = {
-    fields: PropTypes.object.isRequired,
-    language: PropTypes.number.isRequired
+    fields: PropTypes.object.isRequired
+
 };
 
 export default FooterBasic;
