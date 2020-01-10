@@ -65,6 +65,20 @@ const generateSize = (prop, size) => {
             ? `${ prop[size].size.maxHeight }px`
             : prop[size].size.maxHeight };`
         : ''}
+        
+    ${ prop[size].size.minWidth && prop[size].size.minWidth !== '' ?
+        `min-width :${ isNumber(prop[size].size.minWidth)
+            ? `${ prop[size].size.minWidth }px`
+            : prop[size].size.minWidth };`
+        : ''}
+        
+    ${ prop[size].size.minHeight && prop[size].size.minHeight !== '' ?
+        `min-height :${ isNumber(prop[size].size.minHeight)
+            ? `${ prop[size].size.minHeight }px`
+            : prop[size].size.minHeight };`
+        : ''}
+        
+        
     `
 }
 
@@ -94,15 +108,15 @@ const generateFontProperties = (prop, size) => {
         `line-height : ${ prop[size].font.lineHeight }px;`
         : ''}
     
-    ${ prop[size].text.align  ?
+    ${ prop[size].text && prop[size].text.align  ?
         `text-align : ${ prop[size].text.align };`
         : ''}
     
-    ${ prop[size].text.decoration && prop[size].text.decoration !== ''  ?
+    ${ prop[size].text && prop[size].text.decoration && prop[size].text.decoration !== ''  ?
         `text-decoration : ${ prop[size].text.decoration };`
         : ''}
         
-    ${ prop[size].text.transform && prop[size].text.transform !== ''  ?
+    ${ prop[size].text && prop[size].text.transform && prop[size].text.transform !== ''  ?
         `text-transform : ${ prop[size].text.transform };`
         : ''}
    
@@ -110,9 +124,64 @@ const generateFontProperties = (prop, size) => {
 }
 
 
+const generateBorder = (prop, size) => {
+    return `
+    
+    ${ prop[size].width.top && prop[size].width.top !== '0'  ?
+        `border-top-width :${ isNumber(prop[size].width.top)
+            ? `${ prop[size].width.top }px;`
+            : `${ prop[size].width.top };`}`
+     : ''}
+     
+    ${ prop[size].width.right && prop[size].width.right !== '0'  ?
+        `border-right-width :${ isNumber(prop[size].width.right)
+            ? `${ prop[size].width.right }px;`
+            : `${ prop[size].width.right };`}`
+     : ''}
+     
+    ${ prop[size].width.bottom && prop[size].width.bottom !== '0'  ?
+        `border-bottom-width :${ isNumber(prop[size].width.bottom)
+            ? `${ prop[size].width.bottom }px;`
+            : `${ prop[size].width.bottom };`}`
+     : ''}
+     
+    ${ prop[size].width.left && prop[size].width.left !== '0'  ?
+        `border-left-width :${ isNumber(prop[size].width.left)
+            ? `${ prop[size].width.left }px;`
+            : `${ prop[size].width.left };`}`
+     : ''}
+     
+    ${ prop[size].radius.topLeft && prop[size].radius.topLeft !== '0'  ?
+        `border-top-left-radius :${ isNumber(prop[size].radius.topLeft)
+            ? `${ prop[size].radius.topLeft }px;`
+            : `${ prop[size].radius.topLeft };`}`
+     : ''}
+     
+    ${ prop[size].radius.topRight && prop[size].radius.topRight !== '0'  ?
+        `border-top-right-radius :${ isNumber(prop[size].radius.topRight)
+            ? `${ prop[size].radius.topRight }px;`
+            : `${ prop[size].radius.topRight };`}`
+     : ''}
+     
+    ${ prop[size].radius.bottomRight && prop[size].radius.bottomRight !== '0'  ?
+        `border-bottom-right-radius :${ isNumber(prop[size].radius.bottomRight)
+            ? `${ prop[size].radius.bottomRight }px;`
+            : `${ prop[size].radius.bottomRight };`}`
+     : ''}
+     
+    ${ prop[size].radius.bottomLeft && prop[size].radius.bottomLeft !== '0'  ?
+        `border-bottom-left-radius :${ isNumber(prop[size].radius.bottomLeft)
+            ? `${ prop[size].radius.bottomLeft }px;`
+            : `${ prop[size].radius.bottomLeft };`}`
+     : ''}
+       
+    `
+}
+
 export {
     generatePadding,
     generateMargin,
     generateSize,
-    generateFontProperties
+    generateFontProperties,
+    generateBorder
 }

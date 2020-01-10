@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Title, Content, ImageContainer, CTA} from './styled';
+import {Container, Text, Content, ImageContainer} from './styled';
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
 
@@ -8,26 +8,26 @@ class CardClickable extends Component {
         if (!fields[field]) return
         switch (field) {
             case 'Title':
-                return <Title
+                return <Text
                     key={key}
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
                     basis={fields[field].settings.basis}
                     as={fields[field].settings.seo.tag || 'h2'}
                 >
-                    {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
-                </Title>;
+                    {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}
+                </Text>;
 
             case 'Tagline':
-                return <Title
+                return <Text
                     key={key}
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
                     basis={fields[field].settings.basis}
                     as={fields[field].settings.seo.tag || 'h2'}
                 >
-                    {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
-                </Title>;
+                    {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}
+                </Text>;
 
             case 'Content':
                 return <Content
@@ -37,19 +37,17 @@ class CardClickable extends Component {
                     basis={fields[field].settings.basis}
                     dangerouslySetInnerHTML={{
                         __html: fields[field].content.html ? fields[field].content.html[this.props.language] :
-                            <p>no content</p>
+                            <p></p>
                     }}
                 />
 
             case 'Image':
                 return this.getImages(fields[field]);
 
-
             default :
                 return null;
         }
     }
-
 
     getImages = field => {
         const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
@@ -66,7 +64,6 @@ class CardClickable extends Component {
                         <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
                     </ImageContainer>);
             }
-
         });
     }
 
@@ -98,150 +95,19 @@ class CardClickable extends Component {
 }
 
 
-CardClickable.defaultProps = {
-    fields: {
-        Template: {
-            content: {},
-            responsiveSettings: ['A'],
-            settings: {
-                basis: {
-                    A: {
-                        size: {
-                            width: '100',
-                            height: '100',
-                            maxWidth: '',
-                            maxHeight: ''
-
-                        },
-                        padding: {
-                            top: '0',
-                            right: '0',
-                            bottom: '0',
-                            left: '0'
-                        },
-                        margin: {
-                            top: '0',
-                            right: '0',
-                            bottom: '0',
-                            left: '0'
-                        },
-                        alignment: {
-                            horizontal: 'flex-start'
-                        },
-                        color: {
-                            hex: '#000000',
-                            rgb: '0,0,0',
-                            name: 'black',
-                            shade: null
-                        },
-                        opacity: {
-                            value: '1'
-                        }
-                    }
-                }
-            }
-        },
-        Title: {
-            content: {
-                text: {
-                    0: 'Salut',
-                    1: 'Hello'
-                }
-            },
-            responsiveSettings: ['A'],
-            settings: {
-                typography: {
-                    M: {
-                        font: {
-                            theme: 'Title1',
-                            family: null,
-                            typeface: null,
-                            weight: null,
-                            style: null,
-                            size: null,
-                            lineHeight: null,
-                            letterSpacing: '0'
-                        },
-                        text: {
-                            align: 'center',
-                            transform: null,
-                            decoration: null
-                        },
-                        color: {
-                            hex: '#000000',
-                            rgb: '0,0,0',
-                            name: 'black',
-                            shade: null
-                        },
-                        opacity: {
-                            value: '1'
-                        }
-                    },
-                    T: {
-                        font: {
-                            theme: 'Title2',
-                            family: null,
-                            typeface: null,
-                            weight: null,
-                            style: null,
-                            size: null,
-                            lineHeight: null,
-                            letterSpacing: '0'
-                        },
-                        text: {
-                            align: 'center',
-                            transform: null,
-                            decoration: null
-                        },
-                        color: {
-                            hex: '#000000',
-                            rgb: '0,0,0',
-                            name: 'black',
-                            shade: null
-                        },
-                        opacity: {
-                            value: '1'
-                        }
-                    },
-                    D: {
-                        font: {
-                            theme: 'Title3',
-                            family: null,
-                            typeface: null,
-                            weight: null,
-                            style: null,
-                            size: null,
-                            lineHeight: null,
-                            letterSpacing: '0'
-                        },
-                        text: {
-                            align: 'center',
-                            transform: null,
-                            decoration: null
-                        },
-                        color: {
-                            hex: '#000000',
-                            rgb: '0,0,0',
-                            name: 'black',
-                            shade: null
-                        },
-                        opacity: {
-                            value: '1'
-                        }
-                    }
-                },
-                seo: {
-                    tag: 'h2'
-                }
-            }
-        }
-    },
-    language: 0
-};
+CardClickable.defaultProps = {};
 
 CardClickable.propTypes = {
-    fields: PropTypes.object.isRequired,
-    language: PropTypes.number.isRequired
+    order: PropTypes.arrayOf(PropTypes.string),
+    fields: PropTypes.shape({
+        Template: PropTypes.object,
+        Title: PropTypes.object,
+        Tagline: PropTypes.object,
+        Content: PropTypes.object,
+        Image: PropTypes.object
+    }),
+    language: PropTypes.number.isRequired,
+    assetsDirectory: PropTypes.string
 };
 
 export default CardClickable;
