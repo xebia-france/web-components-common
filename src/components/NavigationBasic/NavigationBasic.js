@@ -199,6 +199,8 @@ class NavigationBasic extends Component {
     render() {
         const {fields, locales, locale, location, menu} = this.props;
 
+        if(!fields['Bar']) return null
+
         return (
             <Container responsive={fields['Bar'].responsiveSettings}
                        basis={fields['Bar'].settings.basis}>
@@ -212,7 +214,8 @@ class NavigationBasic extends Component {
                             localStorage.setItem('scrollPosition', 0);
                         }}>
                             {
-                                this.getImages(fields['Image'])
+                                fields['Image'] ?
+                                this.getImages(fields['Image']) : null
                             }
                         </a></div>
 

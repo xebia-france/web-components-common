@@ -207,8 +207,6 @@ export const Text = styled.p.attrs(props => ({
     
 `;
 
-export const Title = styled(Text)``;
-
 export const Content = styled.div.attrs(props => ({
     responsive: props.responsive,
     typography : props.typography,
