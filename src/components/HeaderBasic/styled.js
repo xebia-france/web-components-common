@@ -59,7 +59,7 @@ export const Container = styled.div.attrs(props => ({
 `;
 
 
-export const CallToActions = styled.a.attrs(props => ({
+export const CallToActions = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis
 }))`

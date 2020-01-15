@@ -2,8 +2,15 @@ import styled from "styled-components";
 import {device} from "../../styles/constants";
 import {isNumber} from "../../utils/functions";
 import isEmpty from "lodash/isEmpty";
+import {
+    generateSize,
+    generatePadding,
+    generateMargin,
+    generateFontProperties,
+    generateBorder
+} from "../../utils/StyleGenerator";
 
-export const Container = styled.footer.attrs(props => ({
+export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis
 }))`
@@ -158,9 +165,7 @@ export const Links = styled.div`
   display : flex;
   flex-wrap : no-wrap;
   transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
- margin: auto;
-  
-  
+  margin: auto;
   
   & li{
     display : flex;
@@ -200,15 +205,9 @@ export const Links = styled.div`
         display : none;
     }
   }
-  
-  
-  
-  
-  
-  
 `;
 
-export const FixedContainer = styled.div.attrs(props => ({
+export const FooterContainer = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis
 }))`
@@ -220,45 +219,15 @@ export const FixedContainer = styled.div.attrs(props => ({
  
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-             
-            width:${ isNumber(props.basis[size].size.width)
-                    ? `${ props.basis[size].size.width }px`
-                    : props.basis[size].size.width };
-    
-            height:${ isNumber(props.basis[size].size.height)
-                    ? `${ props.basis[size].size.height }px`
-                    : props.basis[size].size.height };
-            max-width: ${ isNumber(props.basis[size].size.maxWidth)
-                    ? `${ props.basis[size].size.maxWidth }px`
-                    : props.basis[size].size.maxWidth || '' };
-            max-height:${ isNumber(props.basis[size].size.maxHeight)
-                    ? `${ props.basis[size].size.maxHeight }px`
-                    :props.basis[size].size.maxHeight || '' };
-            min-width: ${ isNumber(props.basis[size].size.minWidth)
-                    ? `${ props.basis[size].size.minWidth }px`
-                    : props.basis[size].size.minWidth || '' };
-            min-height:${ isNumber(props.basis[size].size.minHeight)
-                    ? `${ props.basis[size].size.minHeight }px`
-                    : props.basis[size].size.minHeight || '' };      
-                                
-            padding-top : ${ props.basis[size].padding.top }px;
-            padding-bottom : ${ props.basis[size].padding.bottom }px;
-            padding-left : ${ props.basis[size].padding.left }px;
-            padding-right : ${ props.basis[size].padding.right }px;
-             
-            margin-top : ${ props.basis[size].margin.top }px;
-            margin-bottom : ${ props.basis[size].margin.bottom }px;
-            margin-left : ${ props.basis[size].margin.left }px;
-            margin-right : ${ props.basis[size].margin.right }px;
+         
+            ${ props.basis ? generateSize(props.basis, size) : '' }
+            ${ props.basis ? generatePadding(props.basis, size) : '' }       
+            ${ props.basis ? generateMargin(props.basis, size) : '' }   
             
             background-color:${ props.basis[size].color.rgb ?  `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` : props.basis[size].color.hex };
 
-          
-            
             & ${Links}{
                 & li{
-                    
-                    
                     &>div{
                        background-color:${ props.basis[size].color.rgb ?  `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` : props.basis[size].color.hex };
                     }
@@ -267,16 +236,10 @@ export const FixedContainer = styled.div.attrs(props => ({
                          height:${ isNumber(props.basis[size].size.height)
                                 ? `${ props.basis[size].size.height }px`
                                 : props.basis[size].size.height };
-                               
                         }
-                       
                      }
                   }
             }
-            
-            
-            
-            
          }`)
 };
    

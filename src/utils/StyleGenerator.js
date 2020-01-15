@@ -44,37 +44,37 @@ const generateSize = (prop, size) => {
     return `
     ${ prop[size].size.width && prop[size].size.width !== '' ?
         `width :${ isNumber(prop[size].size.width)
-            ? `${ prop[size].size.width }px`
+            ? `${ prop[size].size.width }px;`
             : prop[size].size.width };`
         : ''}
     
     ${ prop[size].size.height && prop[size].size.height !== '' ?
         `height :${ isNumber(prop[size].size.height)
-            ? `${ prop[size].size.height }px`
+            ? `${ prop[size].size.height }px;`
             : prop[size].size.height };`
         : ''}
         
     ${ prop[size].size.maxWidth && prop[size].size.maxWidth !== '' ?
         `max-width :${ isNumber(prop[size].size.maxWidth)
-            ? `${ prop[size].size.maxWidth }px`
+            ? `${ prop[size].size.maxWidth }px;`
             : prop[size].size.maxWidth };`
         : ''}
         
     ${ prop[size].size.maxHeight && prop[size].size.maxHeight !== '' ?
         `max-height :${ isNumber(prop[size].size.maxHeight)
-            ? `${ prop[size].size.maxHeight }px`
+            ? `${ prop[size].size.maxHeight }px;`
             : prop[size].size.maxHeight };`
         : ''}
         
     ${ prop[size].size.minWidth && prop[size].size.minWidth !== '' ?
         `min-width :${ isNumber(prop[size].size.minWidth)
-            ? `${ prop[size].size.minWidth }px`
+            ? `${ prop[size].size.minWidth }px;`
             : prop[size].size.minWidth };`
         : ''}
         
     ${ prop[size].size.minHeight && prop[size].size.minHeight !== '' ?
         `min-height :${ isNumber(prop[size].size.minHeight)
-            ? `${ prop[size].size.minHeight }px`
+            ? `${ prop[size].size.minHeight }px;`
             : prop[size].size.minHeight };`
         : ''}
         
@@ -85,7 +85,7 @@ const generateSize = (prop, size) => {
 const generateFontProperties = (prop, size) => {
     return `
     ${ prop[size].font.size  ?
-        `font-size :${ prop[size].font.size  }px`
+        `font-size :${ prop[size].font.size  }px;`
         : ''}
     
     ${ prop[size].font.family  ?
