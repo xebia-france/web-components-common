@@ -92,8 +92,6 @@ class FooterBasic extends Component {
     render() {
         const {fields, menu} = this.props;
 
-        console.log('field Template 888', fields['Template'] )
-
         return (
             <Container responsive={fields['Template'].responsiveSettings}
                        basis={fields['Template'].settings.basis}>
