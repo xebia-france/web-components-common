@@ -3,7 +3,7 @@ import {device} from "../../styles/constants";
 import {isNumber} from "../../utils/functions";
 import isEmpty from "lodash/isEmpty";
 
-export const Container = styled.div.attrs(props => ({
+export const Container = styled.footer.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis
 }))`
