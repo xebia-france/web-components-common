@@ -78,22 +78,29 @@ export const CallToActions = styled.div.attrs(props => ({
             justify-content:${ props.basis[size].alignment.horizontal || '' };
         }`)};
 `;
+
 export const Text = styled.p.attrs(props => ({
     responsive: props.responsive,
-    typography : props.typography,
-    basis : props.basis
+    typography: props.typography,
+    basis: props.basis,
+    border : props.border
 }))`
-
-    width : 100%;
    ${ props => props.responsive.map(size => `
         z-index : 2;
-         @media ${ device[size] } {
-            color:${props.typography[size].color.rgb ?  `rgba(${props.typography[size].color.rgb},${props.typography[size].opacity.value})` : props.typography[size].color.hex };
+        width : 100%;
+        @media ${ device[size] } {
+            color:${props.typography[size].color.rgb ? `rgba(${props.typography[size].color.rgb},${props.typography[size].opacity.value})` : props.typography[size].color.hex };
+            
             ${ props.typography ? generateFontProperties(props.typography, size) : '' }
-            ${ props.basis ? generatePadding(props.basis, size) : '' } 
-         }`)
-};
-    
+            ${ props.basis ? generatePadding(props.basis, size) : '' }    
+            ${ props.border ?  generateBorder(props.border, size) : '' }        
+            ${ props.border ?
+    ( props.border[size].color ?
+        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});`
+            : `${props.border[size].color.hex};`}` : '')
+    : ''}
+        }`)
+    }; 
 `;
 
 
@@ -104,6 +111,7 @@ export const Content = styled.div.attrs(props => ({
 }))`
    ${ props => props.responsive.map(size => `
         z-index : 2;
+        width : 100%;
          @media ${ device[size] } {
             color:${ props.typography[size].color.rgb ? `rgba(${props.typography[size].color.rgb},${props.typography[size].opacity.value})` : props.typography[size].color.hex};
             ${ props.typography ? generateFontProperties(props.typography, size) : '' }

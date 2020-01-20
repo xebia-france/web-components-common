@@ -13,6 +13,7 @@ class HeaderBasic extends Component {
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
                     basis={fields[field].settings.basis}
+                    border={fields[field].settings.border}
                     as={fields[field].settings.seo.tag || 'h2'}
                 >
                     {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}
@@ -24,6 +25,7 @@ class HeaderBasic extends Component {
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
                     basis={fields[field].settings.basis}
+                    border={fields[field].settings.border}
                     as={fields[field].settings.seo.tag || 'h2'}
                 >
                     {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}

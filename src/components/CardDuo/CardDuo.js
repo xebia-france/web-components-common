@@ -13,6 +13,7 @@ class CardDuo extends Component {
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
                     basis={fields[field].settings.basis}
+                    border={fields[field].settings.border}
                     as={fields[field].settings.seo.tag || 'h2'}
                 >
                     {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
@@ -24,6 +25,7 @@ class CardDuo extends Component {
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
                     basis={fields[field].settings.basis}
+                    border={fields[field].settings.border}
                     as={fields[field].settings.seo.tag || 'h2'}
                 >
                     {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
@@ -111,7 +113,9 @@ class CardDuo extends Component {
                       responsiveContent={getResponsiveKey(Template.content.images[0].asset)}
                       asset={Template.content.images[0].asset || null}
                       assetsDirectory={assetsDirectory}
-                      basis={Template && Template.settings ? Template.settings.basis : {}}>
+                      basis={Template && Template.settings ? Template.settings.basis : null}
+                      border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
+                >
 
                     {
                         fields.Image ? this.getImages(fields.Image) : null
@@ -135,7 +139,9 @@ class CardDuo extends Component {
                       responsiveContent={getResponsiveKey(Template2.content.images[0].asset)}
                       asset={Template2.content.images[0].asset || null}
                       assetsDirectory={assetsDirectory}
-                      basis={Template2 && Template2.settings ? Template2.settings.basis : {}}>
+                      basis={Template2 && Template2.settings ? Template2.settings.basis : null}
+                      border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
+                >
                     {
                         fields.Image2 ? this.getImages(fields.Image2) : null
                     }

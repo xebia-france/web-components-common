@@ -1,10 +1,15 @@
 import styled from 'styled-components';
 import {device} from "../../styles/constants";
+import {
+    generatePadding,
+    generateBorder
+} from "../../utils/StyleGenerator";
 
 export const Wrapper = styled.section.attrs(props => ({
     responsive: props.responsive,
     responsiveContent: props.responsiveContent,
     basis: props.basis,
+    border: props.border,
     asset : props.asset,
     assetsDirectory : props.assetsDirectory
 
@@ -16,11 +21,14 @@ export const Wrapper = styled.section.attrs(props => ({
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
              
-            padding-top : ${ props.basis[size].padding.top }px;
-            padding-bottom : ${ props.basis[size].padding.bottom }px;
-            padding-left : ${ props.basis[size].padding.left }px;
-            padding-right : ${ props.basis[size].padding.right }px;
-            
+            ${ props.basis ? generatePadding(props.basis, size) : '' }
+            ${ props.border ?  generateBorder(props.border, size) : '' }        
+            ${ props.border ? 
+                    ( props.border[size].color ? 
+                        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});` 
+                                                                        : `${props.border[size].color.hex};`}` : '')
+             : ''}
+             
             &:before{
                z-index : 0;
                position : absolute;
@@ -30,10 +38,7 @@ export const Wrapper = styled.section.attrs(props => ({
                top : 0;
                left : 0;
                background-color:${ props.basis[size].color.rgb ?  `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` : props.basis[size].color.hex };
-
             }
-            
-            
          }`)
     }; 
     

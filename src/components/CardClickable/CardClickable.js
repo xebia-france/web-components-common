@@ -13,6 +13,7 @@ class CardClickable extends Component {
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
                     basis={fields[field].settings.basis}
+                    border={fields[field].settings.border}
                     as={fields[field].settings.seo.tag || 'h2'}
                 >
                     {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}
@@ -24,6 +25,7 @@ class CardClickable extends Component {
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
                     basis={fields[field].settings.basis}
+                    border={fields[field].settings.border}
                     as={fields[field].settings.seo.tag || 'h2'}
                 >
                     {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}
@@ -84,7 +86,9 @@ class CardClickable extends Component {
                        onClick={(e) => {
                            if(! Link.content.link[this.props.language] || Link.settings.state.disabled) e.preventDefault();
                        }}
-                       basis={Template && Template.settings ? Template.settings.basis : {}}>
+                       basis={Template && Template.settings ? Template.settings.basis : {}}
+                       border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
+            >
                 {
                     order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                         : ['Title','Tagline', 'Content', 'Image' ].map((fieldName, i) => this.buildComponent(fields, fieldName, i))

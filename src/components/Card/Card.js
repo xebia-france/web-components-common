@@ -13,6 +13,7 @@ class Card extends Component {
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
                     basis={fields[field].settings.basis}
+                    border={fields[field].settings.border}
                     as={fields[field].settings.seo.tag || 'h2'}
                 >
                     {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}
@@ -24,6 +25,7 @@ class Card extends Component {
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
                     basis={fields[field].settings.basis}
+                    border={fields[field].settings.border}
                     as={fields[field].settings.seo.tag || 'h2'}
                 >
                     {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}
@@ -102,7 +104,9 @@ class Card extends Component {
                        responsiveContent={getResponsiveKey(Template.content.images[0].asset)}
                        asset={Template.content.images[0].asset || null}
                        assetsDirectory={assetsDirectory}
-                       basis={Template && Template.settings ? Template.settings.basis : {}}>
+                       basis={Template && Template.settings ? Template.settings.basis : null}
+                       border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
+            >
                 {
                     order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                         : ['Title', 'Tagline', 'Content', 'Image', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))

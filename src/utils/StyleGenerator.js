@@ -2,19 +2,19 @@ import {isNumber} from "./functions";
 
 const generatePadding = (prop, size) => {
     return `
-    ${ prop[size].padding.top && prop[size].padding.top !== '0' ?
+    ${ prop[size].padding && prop[size].padding.top && prop[size].padding.top !== '0' ?
         `padding-top : ${ prop[size].padding.top }px;`
         : ''}
     
-      ${ prop[size].padding.bottom && prop[size].padding.bottom !== '0' ?
+      ${ prop[size].padding && prop[size].padding.bottom && prop[size].padding.bottom !== '0' ?
         `padding-bottom : ${ prop[size].padding.bottom }px;`
         : ''}
     
-      ${ prop[size].padding.left && prop[size].padding.left !== '0' ?
+      ${ prop[size].padding && prop[size].padding.left && prop[size].padding.left !== '0' ?
         `padding-left : ${ prop[size].padding.left }px;`
         : ''}
     
-      ${ prop[size].padding.right && prop[size].padding.right !== '0' ?
+      ${ prop[size].padding && prop[size].padding.right && prop[size].padding.right !== '0' ?
         `padding-right : ${ prop[size].padding.right }px;`
         : ''}
     `
@@ -22,19 +22,19 @@ const generatePadding = (prop, size) => {
 
 const generateMargin = (prop, size) => {
     return `
-    ${ prop[size].margin.top && prop[size].margin.top !== '0' ?
+    ${ prop[size].margin &&  prop[size].margin.top && prop[size].margin.top !== '0' ?
         `margin-top : ${ prop[size].margin.top }px;`
         : ''}
     
-      ${ prop[size].margin.bottom && prop[size].margin.bottom !== '0' ?
+      ${ prop[size].margin && prop[size].margin.bottom && prop[size].margin.bottom !== '0' ?
         `margin-bottom : ${ prop[size].margin.bottom }px;`
         : ''}
     
-      ${ prop[size].margin.left && prop[size].margin.left !== '0' ?
+      ${ prop[size].margin && prop[size].margin.left && prop[size].margin.left !== '0' ?
         `margin-left : ${ prop[size].margin.left }px;`
         : ''}
     
-      ${ prop[size].margin.right && prop[size].margin.right !== '0' ?
+      ${ prop[size].margin && prop[size].margin.right && prop[size].margin.right !== '0' ?
         `margin-right : ${ prop[size].margin.right }px;`
         : ''}
 `
@@ -42,37 +42,37 @@ const generateMargin = (prop, size) => {
 
 const generateSize = (prop, size) => {
     return `
-    ${ prop[size].size.width && prop[size].size.width !== '' ?
+    ${prop[size].size &&  prop[size].size.width && prop[size].size.width !== '' ?
         `width :${ isNumber(prop[size].size.width)
             ? `${ prop[size].size.width }px;`
             : prop[size].size.width };`
         : ''}
     
-    ${ prop[size].size.height && prop[size].size.height !== '' ?
+    ${ prop[size].size && prop[size].size.height && prop[size].size.height !== '' ?
         `height :${ isNumber(prop[size].size.height)
             ? `${ prop[size].size.height }px;`
             : prop[size].size.height };`
         : ''}
         
-    ${ prop[size].size.maxWidth && prop[size].size.maxWidth !== '' ?
+    ${ prop[size].size && prop[size].size.maxWidth && prop[size].size.maxWidth !== '' ?
         `max-width :${ isNumber(prop[size].size.maxWidth)
             ? `${ prop[size].size.maxWidth }px;`
             : prop[size].size.maxWidth };`
         : ''}
         
-    ${ prop[size].size.maxHeight && prop[size].size.maxHeight !== '' ?
+    ${ prop[size].size && prop[size].size.maxHeight && prop[size].size.maxHeight !== '' ?
         `max-height :${ isNumber(prop[size].size.maxHeight)
             ? `${ prop[size].size.maxHeight }px;`
             : prop[size].size.maxHeight };`
         : ''}
         
-    ${ prop[size].size.minWidth && prop[size].size.minWidth !== '' ?
+    ${ prop[size].size && prop[size].size.minWidth && prop[size].size.minWidth !== '' ?
         `min-width :${ isNumber(prop[size].size.minWidth)
             ? `${ prop[size].size.minWidth }px;`
             : prop[size].size.minWidth };`
         : ''}
         
-    ${ prop[size].size.minHeight && prop[size].size.minHeight !== '' ?
+    ${ prop[size].size && prop[size].size.minHeight && prop[size].size.minHeight !== '' ?
         `min-height :${ isNumber(prop[size].size.minHeight)
             ? `${ prop[size].size.minHeight }px;`
             : prop[size].size.minHeight };`
@@ -126,7 +126,7 @@ const generateFontProperties = (prop, size) => {
 
 const generateBorder = (prop, size) => {
     return `
-    
+    border-style : solid;
     ${ prop[size].width.top && prop[size].width.top !== '0'  ?
         `border-top-width :${ isNumber(prop[size].width.top)
             ? `${ prop[size].width.top }px;`

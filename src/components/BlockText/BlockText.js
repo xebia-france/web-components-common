@@ -12,6 +12,7 @@ class BlockText extends Component {
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
                     basis={fields[field].settings.basis}
+                    border={fields[field].settings.border}
                     as={fields[field].settings.seo.tag || 'h2'}
 
                 >
@@ -24,6 +25,7 @@ class BlockText extends Component {
                     responsive={fields[field].responsiveSettings}
                     typography={fields[field].settings.typography}
                     basis={fields[field].settings.basis}
+                    border={fields[field].settings.border}
                     as={fields[field].settings.seo.tag || 'h2'}
 
                 >
@@ -50,10 +52,10 @@ class BlockText extends Component {
         const {fields, order} = this.props;
 
         const Template = fields.Template;
-
         return (
             <Container responsive={Template ? Template.responsiveSettings : []}
-                       basis={Template && Template.settings ? Template.settings.basis : {}}
+                       basis={Template && Template.settings ? Template.settings.basis : null}
+                       border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
             >
                 {
                     order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))

@@ -13,3 +13,4 @@ export { default as NavigationBarExtentedTop } from './NavigationBarExtentedTop'
 export { default as NavigationBasic } from './NavigationBasic';
 export { default as FooterBasic } from './FooterBasic';
 export { default as HeaderBasic } from './HeaderBasic';
+export { default as ButtonScrollTop } from './ButtonScrollTop';

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {Container, Title, Tagline, ImageCorner, Logo} from './styled';
+import {Container, Text, Tagline, ImageCorner, Logo} from './styled';
 import {getResponsiveKey} from '../../utils/functions';
 
 class HeaderPicturesOnCorners extends Component {
@@ -10,26 +10,30 @@ class HeaderPicturesOnCorners extends Component {
         if (!fields[field]) return
         switch (field) {
             case 'Title':
-                return <Title key={key}
+                return <Text key={key}
                               responsive={fields[field].responsiveSettings}
                               typography={fields[field].settings.typography}
+                              basis={fields[field].settings.basis}
+                              border={fields[field].settings.border}
                               as={fields[field].settings.seo.tag || 'h2'}
 
                 >
                     {fields[field].content.text[this.props.language]}
-                </Title>;
+                </Text>;
 
             case 'CornerImages' :
                 return this.getCornerImages(fields[field]);
 
             case 'Tagline' :
-                return <Tagline key={key}
+                return <Text key={key}
                                 responsive={fields[field].responsiveSettings}
                                 typography={fields[field].settings.typography}
+                                basis={fields[field].settings.basis}
+                                border={fields[field].settings.border}
                                 as={fields[field].settings.seo.tag || 'h2'}
                 >
                     {fields[field].content.text[this.props.language]}
-                </Tagline>;
+                </Text>;
 
             case 'Image' :
                 return <Logo key={key}

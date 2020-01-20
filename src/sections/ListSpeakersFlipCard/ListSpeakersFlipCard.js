@@ -27,7 +27,8 @@ class ListSpeakersFlipCard extends Component {
 
         return (
             <Wrapper id={removeSpaces(name) } responsive={Template ? Template.responsiveSettings : []}
-                     basis={Template.settings && Template.settings.basis ? Template.settings.basis : {}}
+                     basis={Template.settings && Template.settings.basis ? Template.settings.basis : null}
+                     border={Template.settings && Template.settings.border ? Template.settings.border : null}
             >
                 <Container
                     responsive={FlexContainer ? FlexContainer.responsiveSettings : []}

@@ -13,7 +13,8 @@ const BasicLayoutFirstFull = ({children, fields, name, assetsDirectory}) => {
                  assetsDirectory={assetsDirectory}
                  responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : null}
                  responsive={Template ? Template.responsiveSettings : []}
-                 basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : {}}
+                 basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
+                 border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
         >
             <Container
                 responsive={FlexContainer ? FlexContainer.responsiveSettings : []}

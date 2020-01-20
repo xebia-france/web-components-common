@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import {device} from '../../styles/constants';
 import {isNumber} from '../../utils/functions';
+import {generateBorder, generateFontProperties, generatePadding, generateSize, generateMargin} from "../../utils/StyleGenerator";
 
 export const ImageCorner = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -9,23 +10,10 @@ export const ImageCorner = styled.div.attrs(props => ({
     position : absolute;
     z-index : 0;
     
+    
     ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-        
-            width:${ isNumber(props.basis[size].size.width)
-    ? `${ props.basis[size].size.width }px`
-    : props.basis[size].size.width };
-    
-            height:${ isNumber(props.basis[size].size.height)
-    ? `${ props.basis[size].size.height }px`
-    : props.basis[size].size.height };
-            max-width: ${ isNumber(props.basis[size].size.maxWidth)
-    ? `${ props.basis[size].size.maxWidth }px`
-    : props.basis[size].size.maxWidth || '' };
-            max-height:${ isNumber(props.basis[size].size.maxHeight)
-    ? `${ props.basis[size].size.maxHeight }px`
-    : props.basis[size].size.maxHeight || '' };
-         
+            ${ props.basis ? generateSize(props.basis, size) : '' }
          }`)
     }; 
          
@@ -75,35 +63,28 @@ export const Container = styled.div.attrs(props => ({
 
 export const Text = styled.p.attrs(props => ({
     responsive: props.responsive,
-    typography: props.typography
-
+    typography: props.typography,
+    basis: props.basis,
+    border : props.border
 }))`
    ${ props => props.responsive.map(size => `
-         @media ${ device[size] } {
-            color:${ `rgba(${props.typography[size].color.rgb},${props.typography[size].opacity.value})` };
-            font-size:${ props.typography[size].font.size }px;
-            font-family : '${ props.typography[size].font.family }', ${props.typography[size].font.typeface };
-            font-style: ${ props.typography[size].font.style || '' };
-            font-weight: ${ props.typography[size].font.weight[1] } ;
-            letter-spacing: ${ props.typography[size].font.letterSpacing }px;
-            line-height: ${ props.typography[size].font.lineHeight }px;
-            text-align: ${ props.typography[size].text.align };
-            text-decoration: ${ props.typography[size].text.decoration || '' };
-            text-transform: ${props.typography[size].text.transform || '' };
-         }`)
-    };
+        z-index : 2;
+        width : 100%;
+        @media ${ device[size] } {
+            color:${props.typography[size].color.rgb ? `rgba(${props.typography[size].color.rgb},${props.typography[size].opacity.value})` : props.typography[size].color.hex };
+            
+            ${ props.typography ? generateFontProperties(props.typography, size) : '' }
+            ${ props.basis ? generatePadding(props.basis, size) : '' }    
+            ${ props.border ?  generateBorder(props.border, size) : '' }        
+            ${ props.border ?
+    ( props.border[size].color ?
+        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});`
+            : `${props.border[size].color.hex};`}` : '')
+    : ''}
+        }`)
+    }; 
 `;
 
-export const Title = styled(Text)`
-    padding : 0;
-    margin : 0;
-    z-index : 2;
-`;
-export const Tagline = styled(Text)`
-    padding : 0;
-    margin : 0;
-    z-index : 2;
-`;
 
 export const Logo = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -118,31 +99,10 @@ export const Logo = styled.div.attrs(props => ({
     
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-        
-            width:${ isNumber(props.basis[size].size.width)
-    ? `${ props.basis[size].size.width }px`
-    : props.basis[size].size.width };
-    
-            height:${ isNumber(props.basis[size].size.height)
-    ? `${ props.basis[size].size.height }px`
-    : props.basis[size].size.height };
-            max-width: ${ isNumber(props.basis[size].size.maxWidth)
-    ? `${ props.basis[size].size.maxWidth }px`
-    : props.basis[size].size.maxWidth || '' };
-            max-height:${ isNumber(props.basis[size].size.maxHeight)
-    ? `${ props.basis[size].size.maxHeight }px`
-    : props.basis[size].size.maxHeight || '' };
-                                
-            padding-top : ${ props.basis[size].padding.top }px;
-            padding-bottom : ${ props.basis[size].padding.bottom }px;
-            padding-left : ${ props.basis[size].padding.left }px;
-            padding-right : ${ props.basis[size].padding.right }px;
-             
-            margin-top : ${ props.basis[size].margin.top }px;
-            margin-bottom : ${ props.basis[size].margin.bottom }px;
-            margin-left : ${ props.basis[size].margin.left }px;
-            margin-right : ${ props.basis[size].margin.right }px;    
-            
+         
+            ${ props.basis ? generateSize(props.basis, size) : '' } 
+            ${ props.basis ? generatePadding(props.basis, size) : '' }       
+            ${ props.basis ? generateMargin(props.basis, size) : '' } 
          }`)
     }; 
         
