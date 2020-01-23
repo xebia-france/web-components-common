@@ -77,8 +77,6 @@ const generateSize = (prop, size) => {
             ? `${ prop[size].size.minHeight }px;`
             : prop[size].size.minHeight };`
         : ''}
-        
-        
     `
 }
 
@@ -119,7 +117,6 @@ const generateFontProperties = (prop, size) => {
     ${ prop[size].text && prop[size].text.transform && prop[size].text.transform !== ''  ?
         `text-transform : ${ prop[size].text.transform };`
         : ''}
-   
     `
 }
 
@@ -178,10 +175,31 @@ const generateBorder = (prop, size) => {
     `
 }
 
+const generateBackgroundImage = (prop, size, assetsDirectory) => {
+    return `
+    ${ prop[size].fileName ? `
+            background-image : url('${  `${assetsDirectory  || ''}${  prop[size].fileName }`}');
+            background-size : cover;
+            background-position : center;
+            
+            ` : ''}
+    `
+}
+
+const getFormatedColor = (color, opacity) => {
+    if( color.hex === 'transparent'){
+        return color.hex
+    }else{
+        return  `rgba(${color.rgb},${opacity.value})`
+    }
+}
+
 export {
     generatePadding,
     generateMargin,
     generateSize,
     generateFontProperties,
-    generateBorder
+    generateBorder,
+    generateBackgroundImage,
+    getFormatedColor
 }

@@ -7,6 +7,9 @@ const BasicLayout = ({children, fields, name, assetsDirectory}) => {
     const Template = fields.Template;
     const FlexContainer = fields.FlexContainer;
 
+    console.log('name ', name)
+    console.log('Template ', Template)
+
     return (
         <Wrapper id={removeSpaces(name)}
                  asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}

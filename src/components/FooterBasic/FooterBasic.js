@@ -16,7 +16,7 @@ class FooterBasic extends Component {
             const settings = fieldLinks.settings;
             switch (link.type) {
                 case 'anchor':
-                    return <li><Link
+                    return <li key={i}><Link
                         responsive={fieldLinks.responsiveSettings}
                         basis={settings.basis}
                         typography={settings.typography}
@@ -32,7 +32,7 @@ class FooterBasic extends Component {
                     </li>;
 
                 case 'external':
-                    return <li><Link
+                    return <li key={i}><Link
                         responsive={fieldLinks.responsiveSettings}
                         basis={settings.basis}
                         typography={settings.typography}
@@ -48,7 +48,7 @@ class FooterBasic extends Component {
                     </li>;
 
                 case 'internal':
-                    return <li><Link
+                    return <li key={i}><Link
                         responsive={fieldLinks.responsiveSettings}
                         basis={settings.basis}
                         typography={settings.typography}
@@ -65,7 +65,7 @@ class FooterBasic extends Component {
                     </li>;
 
                 case 'null':
-                    return <li><Link
+                    return <li key={i}><Link
                         responsive={fieldLinks.responsiveSettings}
                         basis={settings.basis}
                         typography={settings.typography}
@@ -93,8 +93,7 @@ class FooterBasic extends Component {
         const {fields, menu} = this.props;
 
         return (
-            <Container responsive={fields['Template'].responsiveSettings}
-                       basis={fields['Template'].settings.basis}>
+            <Container>
                 <FooterContainer responsive={fields['Template'].responsiveSettings}
                                  basis={fields['Template'].settings.basis}
                 >

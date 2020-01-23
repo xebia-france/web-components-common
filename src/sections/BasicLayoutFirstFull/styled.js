@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import {device} from "../../styles/constants";
 import {
     generatePadding,
-    generateBorder
+    generateBorder,
+    generateBackgroundImage
 } from "../../utils/StyleGenerator";
 
 export const Wrapper = styled.section.attrs(props => ({
@@ -47,9 +48,7 @@ export const Wrapper = styled.section.attrs(props => ({
     
     ${ props =>  props.asset ?  props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-            background-image : url('${ props.asset[size].fileName ? `${props.assetsDirectory  || ''}${  props.asset[size].fileName }` : '' }');
-            background-size : cover;
-            background-position : center;
+            ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}    
          }`)
     : ''  };
 `;

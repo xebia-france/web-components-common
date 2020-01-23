@@ -2,35 +2,31 @@ import styled from "styled-components";
 import {device} from "../../styles/constants";
 import {isNumber} from "../../utils/functions";
 import isEmpty from "lodash/isEmpty";
+import {
+    generateSize,
+    generatePadding,
+    generateMargin,
+    generateFontProperties,
+    generateBorder,
+    getFormatedColor,
+    generateBackgroundImage
+} from "../../utils/StyleGenerator";
 
-export const Container = styled.div.attrs(props => ({
-    responsive: props.responsive,
-    basis: props.basis
-}))`
+export const Container = styled.div`
   width : 100%;
   transition : all .2s cubic-bezier(.25,.46,.45,.94) 0ms;
-
-  ${ props => props.responsive.map((size, i) => `
-         @media ${ device[size] } {
-          /* height:${ isNumber(props.basis[size].size.basic.height)
-                    ? `${ props.basis[size].size.basic.height }px`
-                    : props.basis[size].size.basic.height };
-                    
-          */        
-         }`)
-};
-  
 `;
-
 
 export const Locale = styled.div`
   display : flex;
   
+  & a{
+    color: white;
+  }  
   
   &>div{
     width : 100%;
     min-width : 45px;
-    
     
     & a{
         display : block;
@@ -44,12 +40,7 @@ export const Locale = styled.div`
         }
     }
   }
-  
-  & a{
-    color: white;
-  }  
 `;
-
 
 export const Link = styled.a.attrs(props => ({
     responsive: props.responsive,
@@ -62,103 +53,43 @@ export const Link = styled.a.attrs(props => ({
     display : flex;
     align-items: center;
     z-index : 2;
-    
   
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-             background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
+            background-color:${getFormatedColor(props.basis[size].color.basic, props.basis[size].opacity.basic) };
 
-             width:${ isNumber(props.basis[size].size.width)
-    ? `${ props.basis[size].size.width }px`
-    : props.basis[size].size.width };
-    
-            height:${ isNumber(props.basis[size].size.height)
-    ? `${ props.basis[size].size.height }px`
-    : props.basis[size].size.height };
-            max-width: ${ isNumber(props.basis[size].size.maxWidth)
-    ? `${ props.basis[size].size.maxWidth }px`
-    : props.basis[size].size.maxWidth || '' };
-            max-height:${ isNumber(props.basis[size].size.maxHeight)
-    ? `${ props.basis[size].size.maxHeight }px`
-    :props.basis[size].size.maxHeight || '' };
-         
+            ${ props.basis ? generateSize(props.basis, size) : '' }       
+            ${ props.basis ? generatePadding(props.basis, size) : '' }       
+            ${ props.basis ? generateMargin(props.basis, size) : '' } 
+            ${ props.typography ? generateFontProperties(props.typography, size) : '' }
+            ${ props.border ?  generateBorder(props.border, size) : '' } 
+            ${ props.border ?
+                ( props.border[size].color.basic ? `border-color : ${ getFormatedColor(props.border[size].color.basic, props.border[size].opacity.basic ) }; ` : '' )
+            : ''} 
+           
             align-self:${ props.basis[size].alignment.horizontal || '' };
-            
-            padding-top : ${ props.basis[size].padding.top }px;
-            padding-bottom : ${ props.basis[size].padding.bottom }px;
-            padding-left : ${ props.basis[size].padding.left }px;
-            padding-right : ${ props.basis[size].padding.right }px;
-            
-             
-            margin-top : ${ props.basis[size].margin.top }px;
-            margin-bottom : ${ props.basis[size].margin.bottom }px;
-            margin-left : ${ props.basis[size].margin.left }px;
-            margin-right : ${ props.basis[size].margin.right }px;
-            
-            color:${ props.typography[size].color.basic.rgb ? `rgba(${props.typography[size].color.basic.rgb},${props.typography[size].opacity.basic.value})` : props.typography[size].color.basic.hex};
-            font-size:${ props.typography[size].font.size }px;
-            font-family : '${ props.typography[size].font.family }', ${props.typography[size].font.typeface };
-            font-style: ${ props.typography[size].font.style || '' };
-            font-weight: ${ props.typography[size].font.weight ? props.typography[size].font.weight[1] : '' } ;
-            letter-spacing: ${ props.typography[size].font.letterSpacing }px;
-            line-height: ${ props.typography[size].font.lineHeight }px;
-            text-align: ${ props.typography[size].text.align };
-            text-decoration: ${ props.typography[size].text.decoration || '' };
-            text-transform: ${props.typography[size].text.transform || '' }; 
-        
-            border-color : ${ props.border[size].color.basic.rgb ? `rgba(${props.border[size].color.basic.rgb},${props.border[size].opacity.basic.value})` : props.border[size].color.basic.hex };     
-            border-top-width : ${  isNumber(props.border[size].width.top) ? `${ props.border[size].width.top }px`
-    : `${ props.border[size].width.top }` || '' }; 
-            border-right-width : ${  isNumber(props.border[size].width.right) ? `${ props.border[size].width.right }px`
-    : `${ props.border[size].width.right }` || '' }; 
-            border-bottom-width : ${  isNumber(props.border[size].width.bottom) ? `${ props.border[size].width.bottom }px`
-    : `${ props.border[size].width.bottom }` || '' }; 
-            border-left-width : ${  isNumber(props.border[size].width.left) ? `${ props.border[size].width.left }px`
-    : `${ props.border[size].width.left }` || '' }; 
-            
-            border-top-left-radius :  ${  isNumber(props.border[size].radius.topLeft) ? `${ props.border[size].radius.topLeft }px`
-    : `${ props.border[size].radius.topLeft }` || '' };
-            border-top-right-radius :  ${  isNumber(props.border[size].radius.topRight) ? `${ props.border[size].radius.topRight }px`
-    : `${ props.border[size].radius.topRight }` || '' };  
-            border-bottom-right-radius :  ${  isNumber(props.border[size].radius.bottomRight) ? `${ props.border[size].radius.bottomRight }px`
-    : `${ props.border[size].radius.bottomRight }` || '' }; 
-            border-bottom-left-radius :  ${  isNumber(props.border[size].radius.bottomLeft) ? `${ props.border[size].radius.bottomLeft }px`
-    : `${ props.border[size].radius.bottomLeft }` || '' };                         
-        
-         
+            color:${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
+                        
             &:hover{
-               background-color:${ props.basis[size].color.hover.rgb ?  `rgba(${props.basis[size].color.hover.rgb},${props.basis[size].opacity.hover.value})` : props.basis[size].color.hover.hex };
-
-               border-color : ${ props.border[size].color.hover.rgb ? `rgba(${props.border[size].color.hover.rgb},${props.border[size].opacity.hover.value})` : props.border[size].color.hover.hex };     
-               
-               color:${ props.typography[size].color.hover.rgb ? `rgba(${props.typography[size].color.hover.rgb},${props.typography[size].opacity.hover.value})` : props.typography[size].color.hover.hex }; 
+                background-color:${ getFormatedColor( props.basis[size].color.hover, props.basis[size].opacity.hover)};
+                border-color : ${ getFormatedColor(props.border[size].color.hover, props.border[size].opacity.hover)};
+                color:${ getFormatedColor(props.typography[size].color.hover, props.typography[size].opacity.hover )};
             }
-            
             
             &.selected{
-                background-color:${ props.basis[size].color.active.rgb ?  `rgba(${props.basis[size].color.active.rgb},${props.basis[size].opacity.active.value})` : props.basis[size].color.active.hex };
-                border-color : ${ props.border[size].color.active.rgb ? `rgba(${props.border[size].color.active.rgb},${props.border[size].opacity.active.value})` : props.border[size].color.active.hex };     
-                color:${ props.typography[size].color.active.rgb ? `rgba(${props.typography[size].color.active.rgb},${props.typography[size].opacity.active.value})` : props.typography[size].color.active.hex }; 
-
-                  
+                background-color:${ getFormatedColor( props.basis[size].color.active, props.basis[size].opacity.active)};
+                border-color : ${ getFormatedColor(props.border[size].color.active, props.border[size].opacity.active)};
+                color:${ getFormatedColor(props.typography[size].color.active, props.typography[size].opacity.active )};                
             }
-            
-         
          }`)
     };
-    
 `;
-
-
 
 export const Links = styled.ul`
   display : flex;
   flex-wrap : no-wrap;
   transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
  
-  
-  
-  
   & li{
     display : flex;
     align-items : center;
@@ -171,8 +102,6 @@ export const Links = styled.ul`
         position : absolute;
         top : 100%;
         width : 100%;
-       // display : none;
-        
         overflow : hidden;
         
         & li{
@@ -189,15 +118,7 @@ export const Links = styled.ul`
        
      }
   }
-  
-  
-  
-  
-  
-  
 `;
-
-
 
 export const Top = styled.div`
   display : flex;
@@ -221,9 +142,6 @@ export const FixedContainer = styled.div.attrs(props => ({
   transition : all .3s cubic-bezier(.25,.46,.45,.94) 0ms;
   box-sizing : content-box;
 
-  
-  
-   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
              
@@ -270,8 +188,6 @@ export const FixedContainer = styled.div.attrs(props => ({
             
             & ${Links}{
                 & li{
-                    
-                    
                     &>ul{
                        background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
                     }
@@ -280,9 +196,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                          height:${ isNumber(props.basis[size].size.basic.height)
                                 ? `${ props.basis[size].size.basic.height }px`
                                 : props.basis[size].size.basic.height };
-                               
                         }
-                       
                      }
                   }
             }
@@ -320,12 +234,8 @@ export const FixedContainer = styled.div.attrs(props => ({
                 
                 background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
     
-                
-                
                 & ${Links}{
                     & li{
-                        
-                        
                         &>ul{
                            background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
                         }
@@ -334,17 +244,11 @@ export const FixedContainer = styled.div.attrs(props => ({
                              height:${ isNumber(props.basis[size].size.scroll.height)
                                     ? `${ props.basis[size].size.scroll.height }px`
                                     : props.basis[size].size.scroll.height };
-                                   
                             }
-                           
                          }
                       }
                 }
-            
             }
-            
-            
-            
          }`)
 };
 
@@ -360,10 +264,6 @@ export const FixedContainer = styled.div.attrs(props => ({
                     height : 100%;
                  }
              }
-             
-             
-             
-            
              
              & ${Links}{
                 flex-direction : column; 
@@ -393,12 +293,8 @@ export const FixedContainer = styled.div.attrs(props => ({
                         width : 100%;
                     }
                 }
-                
-                 
              }
      }
-   
-   
 `;
 
 export const LineWrapper = styled.div`
@@ -419,9 +315,6 @@ export const LineWrapper = styled.div`
         margin-top : 6px;
     }
   }
-  
-  
-
 `;
 
 export const Hamburger = styled.label`
@@ -480,12 +373,7 @@ export const Hamburger = styled.label`
                 
                  }
           }
-          
-          
       }  
-      
-  
-
 `;
 
 
@@ -499,37 +387,12 @@ export const ImageContainer = styled.div.attrs(props => ({
     z-index : 2;
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-             
-             width:${ isNumber(props.basis[size].size.width)
-    ? `${ props.basis[size].size.width }px`
-    : props.basis[size].size.width };
-    
-            height:${ isNumber(props.basis[size].size.height)
-    ? `${ props.basis[size].size.height }px`
-    : props.basis[size].size.height };
-            max-width: ${ isNumber(props.basis[size].size.maxWidth)
-    ? `${ props.basis[size].size.maxWidth }px`
-    : props.basis[size].size.maxWidth || '' };
-            max-height:${ isNumber(props.basis[size].size.maxHeight)
-    ? `${ props.basis[size].size.maxHeight }px`
-    :props.basis[size].size.maxHeight || '' };
-                                
-            padding-top : ${ props.basis[size].padding.top }px;
-            padding-bottom : ${ props.basis[size].padding.bottom }px;
-            padding-left : ${ props.basis[size].padding.left }px;
-            padding-right : ${ props.basis[size].padding.right }px;
-             
-            margin-top : ${ props.basis[size].margin.top }px;
-            margin-bottom : ${ props.basis[size].margin.bottom }px;
-            margin-left : ${ props.basis[size].margin.left }px;
-            margin-right : ${ props.basis[size].margin.right }px;
+            ${ props.basis ? generateSize(props.basis, size) : '' }      
+            ${ props.basis ? generatePadding(props.basis, size) : '' }       
+            ${ props.basis ? generateMargin(props.basis, size) : '' } 
                     
             align-self:${ props.basis[size].alignment.horizontal || '' };
-                    
-                    
-                    
-            
-          
+               
         &>img{
             ${  isEmpty(props.basis[size].size.width) ? `
                 width : auto;
@@ -544,14 +407,7 @@ export const ImageContainer = styled.div.attrs(props => ({
                 height : auto;
             `)   }
         } 
-    
-    }
-         
-       
-         
-         
-   `) }; 
-         
-       
+    }   
+   `) };  
 `;
 

@@ -61,11 +61,10 @@ class CardMultiCTA extends Component {
                     target={fields[field].settings.state.external ? '_blank' : ''}
                     className={fields[field].settings.state.disabled ? 'disabled' : ''}
                     onClick={(e) => {
-                        if(fields[field].settings.state.disabled) e.preventDefault();
+                        if (fields[field].settings.state.disabled) e.preventDefault();
                     }
                     }
                 >
-
                     <p>
                         {
                             fields[field].content.icon && fields[field].content.icon[this.props.language] ?
@@ -73,14 +72,12 @@ class CardMultiCTA extends Component {
                                 : null
                         }
                         {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}</p>
-
                 </CTA>;
 
             default :
                 return null;
         }
     }
-
 
     getImages = field => {
         const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
@@ -116,7 +113,7 @@ class CardMultiCTA extends Component {
             >
                 {
                     order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                        : ['Title','Tagline', 'Content', 'Image', 'CTA', 'CTA2', 'CTA3'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                        : ['Title', 'Tagline', 'Content', 'Image', 'CTA', 'CTA2', 'CTA3'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
             </Container>
         );
@@ -124,146 +121,7 @@ class CardMultiCTA extends Component {
 }
 
 
-CardMultiCTA.defaultProps = {
-    fields: {
-        Template: {
-            content: {},
-            responsiveSettings: ['A'],
-            settings: {
-                basis: {
-                    A: {
-                        size: {
-                            width: '100',
-                            height: '100',
-                            maxWidth: '',
-                            maxHeight: ''
-
-                        },
-                        padding: {
-                            top: '0',
-                            right: '0',
-                            bottom: '0',
-                            left: '0'
-                        },
-                        margin: {
-                            top: '0',
-                            right: '0',
-                            bottom: '0',
-                            left: '0'
-                        },
-                        alignment: {
-                            horizontal: 'flex-start'
-                        },
-                        color: {
-                            hex: '#000000',
-                            rgb: '0,0,0',
-                            name: 'black',
-                            shade: null
-                        },
-                        opacity: {
-                            value: '1'
-                        }
-                    }
-                }
-            }
-        },
-        Title: {
-            content: {
-                text: {
-                    0: 'Salut',
-                    1: 'Hello'
-                }
-            },
-            responsiveSettings: ['A'],
-            settings: {
-                typography: {
-                    M: {
-                        font: {
-                            theme: 'Title1',
-                            family: null,
-                            typeface: null,
-                            weight: null,
-                            style: null,
-                            size: null,
-                            lineHeight: null,
-                            letterSpacing: '0'
-                        },
-                        text: {
-                            align: 'center',
-                            transform: null,
-                            decoration: null
-                        },
-                        color: {
-                            hex: '#000000',
-                            rgb: '0,0,0',
-                            name: 'black',
-                            shade: null
-                        },
-                        opacity: {
-                            value: '1'
-                        }
-                    },
-                    T: {
-                        font: {
-                            theme: 'Title2',
-                            family: null,
-                            typeface: null,
-                            weight: null,
-                            style: null,
-                            size: null,
-                            lineHeight: null,
-                            letterSpacing: '0'
-                        },
-                        text: {
-                            align: 'center',
-                            transform: null,
-                            decoration: null
-                        },
-                        color: {
-                            hex: '#000000',
-                            rgb: '0,0,0',
-                            name: 'black',
-                            shade: null
-                        },
-                        opacity: {
-                            value: '1'
-                        }
-                    },
-                    D: {
-                        font: {
-                            theme: 'Title3',
-                            family: null,
-                            typeface: null,
-                            weight: null,
-                            style: null,
-                            size: null,
-                            lineHeight: null,
-                            letterSpacing: '0'
-                        },
-                        text: {
-                            align: 'center',
-                            transform: null,
-                            decoration: null
-                        },
-                        color: {
-                            hex: '#000000',
-                            rgb: '0,0,0',
-                            name: 'black',
-                            shade: null
-                        },
-                        opacity: {
-                            value: '1'
-                        }
-                    }
-                },
-                seo: {
-                    tag: 'h2'
-                }
-            }
-        }
-    },
-    language: 0
-};
+CardMultiCTA.defaultProps = {};
 
 CardMultiCTA.propTypes = {
     fields: PropTypes.object.isRequired,

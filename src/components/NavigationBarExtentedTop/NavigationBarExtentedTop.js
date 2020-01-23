@@ -126,8 +126,7 @@ class NavigationBarExtentedTop extends Component {
 
 
         return (
-            <Container responsive={fields['Bar'].responsiveSettings}
-                       basis={fields['Bar'].settings.basis}>
+            <Container>
                 <FixedContainer responsive={fields['Bar'].responsiveSettings}
                                 basis={fields['Bar'].settings.basis}
                                 className={[this.state.open ? 'open' : '', scrollPosition && scrollPosition > 100 ? 'scrolled' : '']}

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {Container, Text, Tagline, ImageCorner, Logo} from './styled';
+import {Container, Text, ImageCorner, Logo} from './styled';
 import {getResponsiveKey} from '../../utils/functions';
 
 class HeaderPicturesOnCorners extends Component {
@@ -16,7 +16,6 @@ class HeaderPicturesOnCorners extends Component {
                               basis={fields[field].settings.basis}
                               border={fields[field].settings.border}
                               as={fields[field].settings.seo.tag || 'h2'}
-
                 >
                     {fields[field].content.text[this.props.language]}
                 </Text>;
@@ -44,7 +43,6 @@ class HeaderPicturesOnCorners extends Component {
                              asset={fields[field].content.images[0].asset}
                              assetsDirectory={this.props.assetsDirectory}
                              basis={fields[field].settings.basis}/>;
-
             default :
                 return null;
         }

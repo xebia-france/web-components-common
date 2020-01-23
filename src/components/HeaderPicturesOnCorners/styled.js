@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {device} from '../../styles/constants';
-import {isNumber} from '../../utils/functions';
-import {generateBorder, generateFontProperties, generatePadding, generateSize, generateMargin} from "../../utils/StyleGenerator";
+import {generatePadding, generateSize, generateMargin, getFormatedColor, generateBackgroundImage} from "../../utils/StyleGenerator";
+import {TextCommon} from "../../styles/common.styled";
 
 export const ImageCorner = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -9,7 +9,6 @@ export const ImageCorner = styled.div.attrs(props => ({
 }))`
     position : absolute;
     z-index : 0;
-    
     
     ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
@@ -25,7 +24,6 @@ export const ImageCorner = styled.div.attrs(props => ({
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis
-
 }))`
    width : 100%;
    height : 100vh;
@@ -56,35 +54,12 @@ export const Container = styled.div.attrs(props => ({
    
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-            background-color:${ `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` };
+            background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
          }`)
     }; 
 `;
 
-export const Text = styled.p.attrs(props => ({
-    responsive: props.responsive,
-    typography: props.typography,
-    basis: props.basis,
-    border : props.border
-}))`
-   ${ props => props.responsive.map(size => `
-        z-index : 2;
-        width : 100%;
-        @media ${ device[size] } {
-            color:${props.typography[size].color.rgb ? `rgba(${props.typography[size].color.rgb},${props.typography[size].opacity.value})` : props.typography[size].color.hex };
-            
-            ${ props.typography ? generateFontProperties(props.typography, size) : '' }
-            ${ props.basis ? generatePadding(props.basis, size) : '' }    
-            ${ props.border ?  generateBorder(props.border, size) : '' }        
-            ${ props.border ?
-    ( props.border[size].color ?
-        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});`
-            : `${props.border[size].color.hex};`}` : '')
-    : ''}
-        }`)
-    }; 
-`;
-
+export const Text = styled(TextCommon)``;
 
 export const Logo = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -97,18 +72,17 @@ export const Logo = styled.div.attrs(props => ({
     background-repeat: no-repeat;
     z-index : 2;
     
-   ${ props => props.responsive.map(size => `
+    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-         
             ${ props.basis ? generateSize(props.basis, size) : '' } 
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' } 
          }`)
     }; 
         
-  ${ props => props.responsiveContent.map((size, i) => `
+    ${ props => props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-            background-image : url('${ props.asset[size].fileName ? `${props.assetsDirectory || ''}${  props.asset[size].fileName }` : '' }');
+            ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''} 
          }`)
     };             
 `;
