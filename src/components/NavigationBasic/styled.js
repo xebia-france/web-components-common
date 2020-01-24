@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {device} from "../../styles/constants";
 import {isNumber} from "../../utils/functions";
 import isEmpty from "lodash/isEmpty";
-
+import {generateSize, getFormatedColor} from "../../utils/StyleGenerator";
 
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -24,13 +24,33 @@ export const Container = styled.div.attrs(props => ({
 `;
 
 
-export const BubbleContainer = styled.div`
-  display : flex;
-  position :absolute;
-  width : 24px;
-  height : 100%;
-  
-  
+export const BubbleContainer = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    svg: props.svg
+}))`
+    display : flex;
+    position :absolute;
+    width : 24px;
+    height : 100%;
+    ${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+         
+            ${ props.svg ? `
+                ${ generateSize(props.svg, size) }
+                & svg { 
+                   
+                    
+                    &   path{
+                    fill: ${ getFormatedColor(props.svg[size].fill, props.svg[size].opacityFill) } !important;
+                    }
+                }
+            ` : `
+               width : 24px;
+                
+            ` } 
+         }`
+    )};
+    
   &>svg{
     width : 100%;
   }  
@@ -274,23 +294,41 @@ export const Locale = styled.div`
 `;
 
 
-export const CurrentLocale = styled.div`
+export const CurrentLocale = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    svg: props.svg
+}))`
   display : flex;
   position: relative;
-  width : 24px;
   align-items : center;
   justify-content : center;
   cursor : pointer;
  
+    ${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+             ${ props.svg ? 
+                generateSize(props.svg, size) :
+            `width : 24px;`}
+         
+         
+            ${ props.svg ? `
+                 &>${Link}{
+                    color: ${ getFormatedColor(props.svg[size].color, props.svg[size].opacity) } !important;
+                    
+                    &:hover{
+                        color: ${ getFormatedColor(props.svg[size].color, props.svg[size].opacity) } !important;
+                    }
+                }
+            ` : '' } 
+         }`
+    )};
   
   &>${Link}{
     z-index : 2;
-    font-size : 12px;
+    //font-size : 12px;
     background-color : transparent;
-    color : black;
     
     &:hover{
-        color : black;
         background-color : transparent;
     }
   }
@@ -603,15 +641,14 @@ export const FixedContainer = styled.div.attrs(props => ({
 `;
 
 export const LineWrapper = styled.div`
-  width : 30px;
+  width : calc(100% - 100%/3 ) ;
   
   &>div{
-    width : 30px;
+    width : 100%;
     height : 2px;
     outline : 1px solid transparent;
     display : block;
     transform-origin : 50% 50%;
-    background : white;
     position: relative;
     transform : translateY(0);
     transition : transform .2s cubic-bezier(.25,.46,.45,.94) 0ms;
@@ -620,20 +657,31 @@ export const LineWrapper = styled.div`
         margin-top : 6px;
     }
   }
-  
-  
-
 `;
 
-export const Hamburger = styled.label`
+export const Hamburger = styled.label.attrs(props => ({
+    responsive: props.responsive,
+    burger: props.burger
+}))`
       display: none;
-      height: 50px;
-      width: 50px;
+      
       cursor: pointer;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       z-index : 5;
+      
+      ${ props => props.responsive.map(size => `
+         @media ${ device[size] } {
+            ${ props.burger ? `
+                ${ generateSize(props.burger, size) }
+            
+                & ${LineWrapper} div{
+                    background-color: ${ getFormatedColor(props.burger[size].fill, props.burger[size].opacityFill) };
+                }
+            ` : '' } 
+         }`)
+    }; 
       
       @media  ${ device.M } {
         display : flex;

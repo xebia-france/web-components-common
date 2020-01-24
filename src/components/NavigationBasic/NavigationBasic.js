@@ -220,6 +220,8 @@ class NavigationBasic extends Component {
                         </a></div>
 
                         <Hamburger className={this.state.open ? 'open' : ''}
+                                   responsive={fields['Bar'].responsiveSettings}
+                                   burger={fields['Bar'].settings.burger}
                                    onClick={() => this.setState({open: !this.state.open})}>
                             <LineWrapper>
                                 <div/>
@@ -238,7 +240,8 @@ class NavigationBasic extends Component {
                                 : null
                         }
                         <Locale>
-                            <CurrentLocale>
+                            <CurrentLocale responsive={fields['Bar'].responsiveSettings}
+                                           svg={fields['Bar'].settings.svg}>
                                 <Link responsive={this.props.fields['Links'].responsiveSettings}
                                       basis={this.props.fields['Links'].settings.basis}
                                       typography={this.props.fields['Links'].settings.typography}
@@ -247,7 +250,8 @@ class NavigationBasic extends Component {
                                 >
                                     {locale.split('-')[0]}
                                 </Link>
-                                <BubbleContainer>
+                                <BubbleContainer responsive={fields['Bar'].responsiveSettings}
+                                                 svg={fields['Bar'].settings.svg}>
                                     <SvgBubble/>
                                 </BubbleContainer>
                             </CurrentLocale>
