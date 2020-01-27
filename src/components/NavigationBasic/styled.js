@@ -273,7 +273,7 @@ export const LinkLanguage = styled.a.attrs(props => ({
             margin-left : ${ props.basis[size].margin.left }px;
             margin-right : ${ props.basis[size].margin.right }px;
             
-            color:${ props.typography[size].color.basic.rgb ? `rgba(${props.typography[size].color.basic.rgb},${props.typography[size].opacity.basic.value})` : props.typography[size].color.basic.hex};
+           // color:${ props.typography[size].color.basic.rgb ? `rgba(${props.typography[size].color.basic.rgb},${props.typography[size].opacity.basic.value})` : props.typography[size].color.basic.hex};
             font-size:${ props.typography[size].font.size }px;
             font-family : '${ props.typography[size].font.family }', ${props.typography[size].font.typeface };
             font-style: ${ props.typography[size].font.style || '' };
@@ -440,7 +440,7 @@ export const CurrentLocale = styled.div.attrs(props => ({
          
          
             ${ props.svg ? `
-                 &>${Link}{
+                 &>${LinkLanguage}{
                     color: ${ getFormatedColor(props.svg[size].color, props.svg[size].opacity) } !important;
                     
                     &:hover{
@@ -451,7 +451,7 @@ export const CurrentLocale = styled.div.attrs(props => ({
          }`
     )};
   
-  &>${Link}{
+  &>${LinkLanguage}{
     z-index : 2;
     //font-size : 12px;
     background-color : transparent;

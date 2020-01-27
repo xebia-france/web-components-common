@@ -16,6 +16,7 @@ export const CallToActions = styled.div.attrs(props => ({
     display : flex;
     align-items: center;
     z-index : 2;
+    flex-wrap : wrap;
     
     & p, & i{
        transition : all 0.25s ease;

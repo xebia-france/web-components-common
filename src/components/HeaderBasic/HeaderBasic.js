@@ -60,7 +60,7 @@ class HeaderBasic extends Component {
                     target={fields[field].settings.state.external ? '_blank' : ''}
                     className={fields[field].settings.state.disabled ? 'disabled' : ''}
                     onClick={(e) => {
-                        if(fields[field].settings.state.disabled) e.preventDefault();
+                        if (fields[field].settings.state.disabled) e.preventDefault();
                     }
                     }
                 >
@@ -113,16 +113,22 @@ class HeaderBasic extends Component {
                        basis={Template && Template.settings ? Template.settings.basis : {}}>
                 {
                     order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                        : ['Title','Tagline', 'Content', 'Image'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                        : ['Title', 'Tagline', 'Content', 'Image'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
-                <CallToActions
-                    responsive={fields['CTA'] ? fields['CTA'].responsiveSettings : null}
-                    basis={fields['CTA'] ? fields['CTA'].settings.basis : null}
-                >
-                    {
-                        ['CTA', 'CTA2'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                    }
-                </CallToActions>
+                {
+                    fields['CTA'] || fields['CTA2'] ?
+                        <CallToActions
+                            responsive={fields['CTA'] ? fields['CTA'].responsiveSettings : ( fields['CTA2'] ?  fields['CTA2'].responsiveSettings : null )}
+                            basis={fields['CTA'] ? fields['CTA'].settings.basis : ( fields['CTA2'] ?  fields['CTA2'].settings.basis : null )}
+                        >
+                            {
+                                ['CTA', 'CTA2'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                            }
+                        </CallToActions>
+
+                        : null
+                }
+
             </Container>
         );
     }
