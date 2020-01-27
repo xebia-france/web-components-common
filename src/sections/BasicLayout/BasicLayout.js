@@ -7,15 +7,12 @@ const BasicLayout = ({children, fields, name, assetsDirectory}) => {
     const Template = fields.Template;
     const FlexContainer = fields.FlexContainer;
 
-    console.log('name ', name)
-    console.log('Template ', Template)
-
     return (
         <Wrapper id={removeSpaces(name)}
                  asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
                  assetsDirectory={assetsDirectory}
                  responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : null}
-                 responsive={Template ? Template.responsiveSettings : []}
+                 responsive={Template ? Template.responsiveSettings : null}
                  basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                  border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
         >

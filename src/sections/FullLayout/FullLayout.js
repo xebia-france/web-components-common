@@ -1,16 +1,20 @@
 import React from 'react';
 import { Wrapper } from './styled';
-import { removeSpaces } from '../../utils/functions';
+import {getResponsiveKey, removeSpaces} from '../../utils/functions';
 import PropTypes from 'prop-types';
 
 
-const FullLayout = ({ children, fields, name }) => {
+const FullLayout = ({ children, fields, name, assetsDirectory }) => {
     const Template = fields.Template;
 
     return (
-        <Wrapper id={removeSpaces(name)} responsive={Template ? Template.responsiveSettings : []}
+        <Wrapper id={removeSpaces(name)} responsive={Template ? Template.responsiveSettings : null}
                  basis={Template.settings && Template.settings.basis ? Template.settings.basis : null}
                  border={Template.settings && Template.settings.border ? Template.settings.border : null}
+                 asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
+                 assetsDirectory={assetsDirectory}
+                 responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : null}
+
         >
             {children}
         </Wrapper>

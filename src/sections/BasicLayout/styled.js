@@ -47,9 +47,6 @@ export const Wrapper = styled.section.attrs(props => ({
          @media ${ device[size] } {
          ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}    
          }
-         
-            
-            
          }`)
     : ''  };
 `;
