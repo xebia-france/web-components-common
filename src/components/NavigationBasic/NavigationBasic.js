@@ -13,7 +13,8 @@ import {
     CurrentLocale,
     LanguageSelector,
     CheckContainer,
-    ArrowContainer
+    ArrowContainer,
+    LinkLanguage
 } from './styled'
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
@@ -97,11 +98,9 @@ class NavigationBasic extends Component {
                                 </ArrowContainer> : null
                             }
                         </Link>
-                        <ul>
                             {
-                                link.childrens ? this.getRenderLinks(link.childrens) : null
+                                link.childrens ? <ul>{ this.getRenderLinks(link.childrens) }</ul> : null
                             }
-                        </ul>
                     </NavigationLink>;
 
                 case 'external':
@@ -118,11 +117,9 @@ class NavigationBasic extends Component {
                                 </ArrowContainer> : null
                             }
                         </Link>
-                        <ul>
                             {
-                                link.childrens ? this.getRenderLinks(link.childrens) : null
+                                link.childrens ? <ul>{ this.getRenderLinks(link.childrens) }</ul> : null
                             }
-                        </ul>
                     </NavigationLink>;
 
                 case 'internal':
@@ -141,12 +138,9 @@ class NavigationBasic extends Component {
                                 </ArrowContainer> : null
                             }
                         </Link>
-
-                        <ul>
                             {
-                                link.childrens ? this.getRenderLinks(link.childrens, link.slug) : null
+                                link.childrens ? <ul>{ this.getRenderLinks(link.childrens, link.slug) }</ul> : null
                             }
-                        </ul>
                     </NavigationLink>;
 
                 case 'null':
@@ -163,11 +157,9 @@ class NavigationBasic extends Component {
                                 </ArrowContainer> : null
                             }
                         </Link>
-                        <ul>
                             {
-                                link.childrens ? this.getRenderLinks(link.childrens) : null
+                                link.childrens ? <ul>{ this.getRenderLinks(link.childrens) }</ul> : null
                             }
-                        </ul>
                     </NavigationLink>;
 
                 default :
@@ -206,6 +198,7 @@ class NavigationBasic extends Component {
                        basis={fields['Bar'].settings.basis}>
                 <FixedContainer responsive={fields['Bar'].responsiveSettings}
                                 basis={fields['Bar'].settings.basis}
+                                burger={fields['Bar'].settings.burger}
                                 className={[this.state.open ? 'open' : '', this.state.scrollY && this.state.scrollY > 100 ? 'scrolled' : '']}
 
                 >
@@ -242,20 +235,21 @@ class NavigationBasic extends Component {
                         <Locale>
                             <CurrentLocale responsive={fields['Bar'].responsiveSettings}
                                            svg={fields['Bar'].settings.svg}>
-                                <Link responsive={this.props.fields['Links'].responsiveSettings}
+                                <LinkLanguage responsive={this.props.fields['Links'].responsiveSettings}
                                       basis={this.props.fields['Links'].settings.basis}
                                       typography={this.props.fields['Links'].settings.typography}
                                       border={this.props.fields['Links'].settings.border}
 
                                 >
                                     {locale.split('-')[0]}
-                                </Link>
+                                </LinkLanguage>
                                 <BubbleContainer responsive={fields['Bar'].responsiveSettings}
                                                  svg={fields['Bar'].settings.svg}>
                                     <SvgBubble/>
                                 </BubbleContainer>
                             </CurrentLocale>
                             <LanguageSelector>
+
                                 {
                                     locales.map((l) => {
                                         return <Link key={l}

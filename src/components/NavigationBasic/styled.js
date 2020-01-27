@@ -107,7 +107,7 @@ export const Link = styled.a.attrs(props => ({
     typography: props.typography,
     border: props.border
 }))`
-    transition : all 0.25s ease;
+    transition : color 0.25s ease, border-color 0.25s ease;
     border-style : solid;
     display : flex;
     align-items: center;
@@ -229,11 +229,136 @@ export const Link = styled.a.attrs(props => ({
 `;
 
 
+export const LinkLanguage = styled.a.attrs(props => ({
+    responsive: props.responsive,
+    basis: props.basis,
+    typography: props.typography,
+    border: props.border
+}))`
+    transition : all 0.25s ease;
+    border-style : solid;
+    display : flex;
+    align-items: center;
+    z-index : 2;
+    
+  
+   ${ props => props.responsive.map(size => `
+         @media ${ device[size] } {
+             background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
+
+             width:${ isNumber(props.basis[size].size.width)
+    ? `${ props.basis[size].size.width }px`
+    : props.basis[size].size.width };
+    
+            height:${ isNumber(props.basis[size].size.height)
+    ? `${ props.basis[size].size.height }px`
+    : props.basis[size].size.height };
+            max-width: ${ isNumber(props.basis[size].size.maxWidth)
+    ? `${ props.basis[size].size.maxWidth }px`
+    : props.basis[size].size.maxWidth || '' };
+            max-height:${ isNumber(props.basis[size].size.maxHeight)
+    ? `${ props.basis[size].size.maxHeight }px`
+    :props.basis[size].size.maxHeight || '' };
+         
+            align-self:${ props.basis[size].alignment.horizontal || '' };
+            
+            padding-top : ${ props.basis[size].padding.top }px;
+            padding-bottom : ${ props.basis[size].padding.bottom }px;
+            padding-left : ${ props.basis[size].padding.left }px;
+            padding-right : ${ props.basis[size].padding.right }px;
+            
+             
+            margin-top : ${ props.basis[size].margin.top }px;
+            margin-bottom : ${ props.basis[size].margin.bottom }px;
+            margin-left : ${ props.basis[size].margin.left }px;
+            margin-right : ${ props.basis[size].margin.right }px;
+            
+            color:${ props.typography[size].color.basic.rgb ? `rgba(${props.typography[size].color.basic.rgb},${props.typography[size].opacity.basic.value})` : props.typography[size].color.basic.hex};
+            font-size:${ props.typography[size].font.size }px;
+            font-family : '${ props.typography[size].font.family }', ${props.typography[size].font.typeface };
+            font-style: ${ props.typography[size].font.style || '' };
+            font-weight: ${ props.typography[size].font.weight ? props.typography[size].font.weight[1] : '' } ;
+            letter-spacing: ${ props.typography[size].font.letterSpacing }px;
+            line-height: ${ props.typography[size].font.lineHeight }px;
+            text-align: ${ props.typography[size].text.align };
+            text-decoration: ${ props.typography[size].text.decoration || '' };
+            text-transform: ${props.typography[size].text.transform || '' }; 
+        
+            border-color : ${ props.border[size].color.basic.rgb ? `rgba(${props.border[size].color.basic.rgb},${props.border[size].opacity.basic.value})` : props.border[size].color.basic.hex };     
+            border-top-width : ${  isNumber(props.border[size].width.top) ? `${ props.border[size].width.top }px`
+    : `${ props.border[size].width.top }` || '' }; 
+            border-right-width : ${  isNumber(props.border[size].width.right) ? `${ props.border[size].width.right }px`
+    : `${ props.border[size].width.right }` || '' }; 
+            border-bottom-width : ${  isNumber(props.border[size].width.bottom) ? `${ props.border[size].width.bottom }px`
+    : `${ props.border[size].width.bottom }` || '' }; 
+            border-left-width : ${  isNumber(props.border[size].width.left) ? `${ props.border[size].width.left }px`
+    : `${ props.border[size].width.left }` || '' }; 
+            
+            border-top-left-radius :  ${  isNumber(props.border[size].radius.topLeft) ? `${ props.border[size].radius.topLeft }px`
+    : `${ props.border[size].radius.topLeft }` || '' };
+            border-top-right-radius :  ${  isNumber(props.border[size].radius.topRight) ? `${ props.border[size].radius.topRight }px`
+    : `${ props.border[size].radius.topRight }` || '' };  
+            border-bottom-right-radius :  ${  isNumber(props.border[size].radius.bottomRight) ? `${ props.border[size].radius.bottomRight }px`
+    : `${ props.border[size].radius.bottomRight }` || '' }; 
+            border-bottom-left-radius :  ${  isNumber(props.border[size].radius.bottomLeft) ? `${ props.border[size].radius.bottomLeft }px`
+    : `${ props.border[size].radius.bottomLeft }` || '' };                         
+        
+        
+         }`)
+    };
+    
+`;
+
+export const Links = styled.ul`
+  display : flex;
+  flex-wrap : no-wrap;
+  transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+ 
+  & li{
+    display : flex;
+    align-items : center;
+    flex-direction : column;
+    position : relative;
+    height : 100%;
+    justify-content : center;
+    
+    &>ul{
+        position : absolute;
+        top : 100%;
+        width : 100%;
+       // display : none;
+        
+        overflow : hidden;
+        
+        & li{
+            height : 0px;
+            transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+            
+            & a{
+                width : 100%;
+            }
+        }
+    }
+    
+     &:hover{
+        &>ul{
+         display : block;
+         height : auto; 
+        }
+       
+     }
+  }
+  
+`;
+
+
+
 export const LanguageSelector = styled.ul`
   position : absolute;
   top : 100%;
   right : 0;
   overflow : hidden;
+  
   
   & ${Link}{
         display : flex;
@@ -250,15 +375,13 @@ export const LanguageSelector = styled.ul`
     width : 100%;
     display : flex;
     background-color : transparent !important;
-    border-top : 1px solid rgba(255,255,255,0.3);
+    
     
     & ${Link}{
        height : 50px; 
        background-color : transparent;
        
-       &:not(:last-child){
-        border-right : 1px solid rgba(255,255,255,0.3);
-       }
+       
     }
     
    }
@@ -272,7 +395,12 @@ export const Locale = styled.div`
   position: relative;
   margin-left : 20px;
   
+  &:not(:hover){
+    & ${LanguageSelector} ${Link}{
+        border-width : 0px;
+    }
   
+  }
   &:hover{
     & ${LanguageSelector} ${Link}{
         height : 40px;
@@ -344,48 +472,6 @@ export const CurrentLocale = styled.div.attrs(props => ({
 
 
 
-export const Links = styled.ul`
-  display : flex;
-  flex-wrap : no-wrap;
-  transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
- 
-  & li{
-    display : flex;
-    align-items : center;
-    flex-direction : column;
-    position : relative;
-    height : 100%;
-    justify-content : center;
-    
-    &>ul{
-        position : absolute;
-        top : 100%;
-        width : 100%;
-       // display : none;
-        
-        overflow : hidden;
-        
-        & li{
-            height : 0px;
-            transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
-            
-            & a{
-                width : 100%;
-            }
-        }
-    }
-    
-     &:hover{
-        &>ul{
-         display : block;
-         height : auto; 
-        }
-       
-     }
-  }
-  
-`;
-
 
 export const Top = styled.div`
   display : flex;
@@ -399,7 +485,8 @@ export const Top = styled.div`
 
 export const FixedContainer = styled.div.attrs(props => ({
     responsive: props.responsive,
-    basis: props.basis
+    basis: props.basis,
+    burger : props.burger
 }))`
   display : flex;
   flex-direction : row;
@@ -544,10 +631,23 @@ export const FixedContainer = styled.div.attrs(props => ({
              &.open{
                 height : 100vh; 
                 
+                
+                
                  & ${Links}{
                     display : flex;
                     height : 100%;
+                    
+                    
                  }
+                 
+                 
+                 & li.open a{
+                    height:${props =>  isNumber(props.basis['M'].size.basic.height)
+                                    ? `${ props.basis['M'].size.basic.height }px`
+                                    : props.basis['M'].size.basic.height };
+                   // height : auto !important;
+                 }
+                 
              }
             
              
@@ -558,9 +658,9 @@ export const FixedContainer = styled.div.attrs(props => ({
                 display none;
                 
                 & >li{
-                 border-bottom : 1px solid rgba(255,255,255,0.3);
+                 border-bottom : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
                     &:first-child{
-                        border-top : 1px solid rgba(255,255,255,0.3);
+                        border-top : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
                     }
                 
                 }
@@ -572,22 +672,28 @@ export const FixedContainer = styled.div.attrs(props => ({
                             padding-right : 0;
                             width : 100%;
                             justify-content : space-between;
+                            height:${props =>  isNumber(props.basis['M'].size.basic.height)
+                                    ? `${ props.basis['M'].size.basic.height }px`
+                                    : props.basis['M'].size.basic.height };
                         }
                     
                     &>ul{
                        
                         position : initial;
-                        background-color : rgba(255,255,255, 0.1) !important;
+                        background-color : rgba(${ props => props.burger['M'].fill.rgb}, 0.05) !important;
                         
                         &>li{
                            padding-left : 40px;
                            padding-right : 40px;
+                           
                            & a{
                             padding-left : 0px;
+                            
+                            
                            }
                            
                            &:not(:last-child) a{
-                            border-bottom : 1px solid rgba(255,255,255, 0.3);
+                            border-bottom : 1px solid rgba(${ props => props.burger['M'].fill.rgb}, 0.3);
                            }
                             
                         }
@@ -604,19 +710,18 @@ export const FixedContainer = styled.div.attrs(props => ({
                     }
                     
                     &.open {
+                        /*height:${props =>  isNumber(props.basis['M'].size.basic.height)
+                                    ? `${ props.basis['M'].size.basic.height }px`
+                                    : props.basis['M'].size.basic.height };*/
+                    
                        & ${ArrowContainer}{
                         transform : rotate(0deg);
                        }
                     
                         &>ul{
                            position : initial;
-                           border-top : 1px solid rgba(255,255,255,0.3);
-                            & li{
-                                height:${props =>  isNumber(props.basis['M'].size.basic.height)
-                                    ? `${ props.basis['M'].size.basic.height }px`
-                                    : props.basis['M'].size.basic.height };
-                                
-                            }
+                           border-top : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
+                            
                         }
                     }
                     
@@ -635,6 +740,17 @@ export const FixedContainer = styled.div.attrs(props => ({
                 
                  
              }
+             
+             & ${ LanguageSelector}{
+                border-top : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
+                & ${Link}{
+                    &:not(:last-child){
+                        border-right : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
+                   }
+                }
+             }
+             
+             
      }
    
    
