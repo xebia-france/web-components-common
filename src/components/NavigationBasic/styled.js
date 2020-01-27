@@ -92,7 +92,7 @@ export const ArrowContainer = styled.div`
     width : 100%;
   } 
   
-  @media  ${ device.M } {
+  @media  ${ device.M }, ${ device.T } {
     display : flex;
   }
    
@@ -245,7 +245,7 @@ export const LanguageSelector = styled.ul`
         justify-content : space-between;
   }
   
-   @media  ${ device.M } {
+   @media  ${ device.M },  ${ device.T } {
     position : initial;
     width : 100%;
     display : flex;
@@ -282,7 +282,7 @@ export const Locale = styled.div`
   
   }
   
-  @media  ${ device.M } {
+  @media  ${ device.M } , ${ device.T } {
     margin-left : 0;
   
       &:hover{
@@ -336,7 +336,7 @@ export const CurrentLocale = styled.div.attrs(props => ({
     z-index : 1;
   }
   
-  @media  ${ device.M } {
+  @media  ${ device.M },  ${ device.T } {
     display : none;
   }
   
@@ -537,7 +537,7 @@ export const FixedContainer = styled.div.attrs(props => ({
          }`)
 };
 
-    @media  ${ device.M } {
+    @media  ${ device.M } , ${ device.T } {
              flex-direction : column;   
              overflow : hidden;
              
@@ -683,7 +683,7 @@ export const Hamburger = styled.label.attrs(props => ({
          }`)
     }; 
       
-      @media  ${ device.M } {
+      @media  ${ device.M },  ${ device.T } {
         display : flex;
         align-items : center;
       }
