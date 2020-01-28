@@ -194,6 +194,25 @@ const getFormatedColor = (color, opacity) => {
     }
 }
 
+const getFormatedSizeProperty = (property, value) => {
+    const camelProperty = toCamel(property);
+    return `
+        ${value[camelProperty] && value[camelProperty] !== '' ?
+                `${property} :${ isNumber(value[camelProperty])
+                    ? `${ value[camelProperty] }px;`
+                    : value[camelProperty] };`
+                : ''}
+    `
+}
+
+const toCamel = (s) => {
+    return s.replace(/([-_][a-z])/ig, ($1) => {
+        return $1.toUpperCase()
+            .replace('-', '')
+            .replace('_', '');
+    });
+};
+
 export {
     generatePadding,
     generateMargin,
@@ -201,5 +220,6 @@ export {
     generateFontProperties,
     generateBorder,
     generateBackgroundImage,
-    getFormatedColor
+    getFormatedColor,
+    getFormatedSizeProperty
 }
