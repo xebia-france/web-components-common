@@ -41,6 +41,7 @@ export const Link = styled.a.attrs(props => ({
             
             
             align-self:${ props.basis[size].alignment.horizontal || '' };
+            justify-content:${ props.basis[size].alignment.horizontal || '' };
             color:${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
             
             &:not(.disabledHover):hover{

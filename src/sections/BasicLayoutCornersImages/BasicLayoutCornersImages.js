@@ -19,11 +19,21 @@ class BasicLayoutCornersImages extends Component{// = ({children, fields, name, 
         const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
         return field.content.images.map((image, i) => {
             const file = image.asset[responsiveContent].fileName ? image.asset[responsiveContent].fileName : null;
-            if (!file) return <ImageCorner key={i} responsive={field.responsiveSettings} basis={field.settings.basis} index={i+1}/>;
+            if (!file) return <ImageCorner key={i}
+                                           responsive={field.responsiveSettings}
+                                           basis={field.settings.basis}
+                                           index={i+1}
+                                           responsiveContent={getResponsiveKey(field.content.images[0].asset)}
+                                           assetsDirectory={this.props.assetsDirectory}/>;
 
             return (
-                <ImageCorner key={i} responsive={field.responsiveSettings} basis={field.settings.basis} index={i+1}>
-                    <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
+                <ImageCorner key={i}
+                             responsive={field.responsiveSettings}
+                             basis={field.settings.basis}
+                             responsiveContent={getResponsiveKey(field.content.images[0].asset)}
+                             assetsDirectory={this.props.assetsDirectory}
+                             asset={image.asset? image.asset : null}
+                             index={i+1}>
                 </ImageCorner>);
         });
     }

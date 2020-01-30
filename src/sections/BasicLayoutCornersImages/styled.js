@@ -11,7 +11,10 @@ import {
 export const ImageCorner = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis,
-    index : props.index
+    index : props.index,
+    responsiveContent: props.responsiveContent,
+    asset : props.asset,
+    assetsDirectory : props.assetsDirectory
 }))`
     position : absolute;
     z-index : 0;
@@ -31,6 +34,16 @@ export const ImageCorner = styled.div.attrs(props => ({
             }
          }`)
     }; 
+    
+    ${ props =>  props.asset ?  props.responsiveContent.map((size, i) => `
+         @media ${ device[size] } {
+            ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+            background-size : 100% auto;  
+            background-position : top;
+            background-repeat : no-repeat;
+         }
+         }`)
+    : ''  };
          
    &>img{
         width : 100%; 

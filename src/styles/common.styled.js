@@ -150,6 +150,7 @@ export const CTACommon = styled.a.attrs(props => ({
     display : flex;
     align-items: center;
     z-index : 2;
+    cursor : pointer;
     
     & p, & i{
        transition : all 0.25s ease;
