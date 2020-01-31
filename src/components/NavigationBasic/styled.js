@@ -619,9 +619,25 @@ export const FixedContainer = styled.div.attrs(props => ({
             
             }
             
+          }
+          
+          @media  ${ device.M } , ${ device.T } {
+            &.open{
+                background-color:${ props.basis[size].color.basic.rgb ?  `rgb(${props.basis[size].color.basic.rgb})` : props.basis[size].color.basic.hex };
+
+                &.scrolled{
+                    background-color:${ props.basis[size].color.scroll.rgb ?  `rgb(${props.basis[size].color.scroll.rgb})` : props.basis[size].color.scroll.hex };
+
+                }
             
             
-         }`)
+            }
+          
+          
+          }
+          
+          
+          `)
 };
 
     @media  ${ device.M } , ${ device.T } {
@@ -630,6 +646,7 @@ export const FixedContainer = styled.div.attrs(props => ({
              
              &.open{
                 height : 100vh; 
+
                 
                 
                 
