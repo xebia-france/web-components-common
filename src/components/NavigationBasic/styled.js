@@ -635,9 +635,10 @@ export const FixedContainer = styled.div.attrs(props => ({
           }
           
           @media  ${ device.M } , ${ device.T } {
+          
             &.open{
                 background-color:${ props.basis[size].color.basic.rgb ?  `rgb(${props.basis[size].color.basic.rgb})` : props.basis[size].color.basic.hex };
-
+                overflow-y: scroll;
                 &.scrolled{
                     background-color:${ props.basis[size].color.scroll.rgb ?  `rgb(${props.basis[size].color.scroll.rgb})` : props.basis[size].color.scroll.hex };
 
@@ -770,6 +771,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                     //position : absolute;
                     bottom : 0;
                     width : 100%;
+                    margin-top : 20px;
                     
                     &>a{
                         width : 100%;
