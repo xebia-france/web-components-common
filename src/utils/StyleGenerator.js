@@ -171,6 +171,8 @@ const generateBorder = (prop, size) => {
             ? `${ prop[size].radius.bottomLeft }px;`
             : `${ prop[size].radius.bottomLeft };`}`
      : ''}
+     
+    
        
     `
 }

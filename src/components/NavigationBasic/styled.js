@@ -685,6 +685,16 @@ export const FixedContainer = styled.div.attrs(props => ({
                 & li{
                     height : auto;
                     
+                    &:hover{
+                        & ul li{
+                            height:${props =>  isNumber(props.basis['M'].size.basic.height)
+                                    ? `${ props.basis['M'].size.basic.height }px`
+                                    : props.basis['M'].size.basic.height } !important;
+                        }
+                    }
+                    
+                    
+                    
                         & ${Link}{
                             padding-right : 0;
                             width : 100%;
@@ -702,11 +712,12 @@ export const FixedContainer = styled.div.attrs(props => ({
                         &>li{
                            padding-left : 40px;
                            padding-right : 40px;
+                           height:${props =>  isNumber(props.basis['M'].size.basic.height)
+                                    ? `${ props.basis['M'].size.basic.height }px`
+                                    : props.basis['M'].size.basic.height } !important;;
                            
                            & a{
                             padding-left : 0px;
-                            
-                            
                            }
                            
                            &:not(:last-child) a{
@@ -727,10 +738,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                     }
                     
                     &.open {
-                        /*height:${props =>  isNumber(props.basis['M'].size.basic.height)
-                                    ? `${ props.basis['M'].size.basic.height }px`
-                                    : props.basis['M'].size.basic.height };*/
-                    
+                      
                        & ${ArrowContainer}{
                         transform : rotate(0deg);
                        }

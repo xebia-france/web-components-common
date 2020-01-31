@@ -23,7 +23,7 @@ export const ContainerCommon = styled.div.attrs(props => ({
    height :auto;
    display : flex;
    flex-direction : column;
-   align-items : center;
+   //align-items : center;
    //justify-content  : center;
    position : relative;
    overflow : hidden;
@@ -39,7 +39,7 @@ export const ContainerCommon = styled.div.attrs(props => ({
                 ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
             : ''}
              
-            &:before{
+            &:after{
                z-index : 1;
                position : absolute;
                width : 100%;
@@ -93,6 +93,10 @@ export const ContentCommon = styled.div.attrs(props => ({
             color:${ getFormatedColor(props.typography[size].color, props.typography[size].opacity) };
             ${ props.typography ?  generateFontProperties(props.typography, size) : '' }
             ${ props.basis ?  generatePadding(props.basis, size) : '' } 
+            
+            &>*{
+               ${ props.typography ?  generateFontProperties(props.typography, size) : '' }
+            }
             & a {
                color:${ getFormatedColor(props.typography[size].color, props.typography[size].opacity )};
             }
@@ -106,6 +110,7 @@ export const ImageContainerCommon = styled.div.attrs(props => ({
     border: props.border
 }))`
     overflow : hidden;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
     border-style : solid;
     z-index : 2;
    ${ props => props.responsive.map(size => `
