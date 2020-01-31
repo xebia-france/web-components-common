@@ -225,13 +225,14 @@ class NavigationBasic extends Component {
                     </Top>
 
                     <Links className={this.state.open ? 'open' : ''}>
-                        {
+                        <div>{
                             menu ?
 
                                 this.getRenderLinks(menu)
 
                                 : null
                         }
+                        </div>
                         <Locale>
                             <CurrentLocale responsive={fields['Bar'].responsiveSettings}
                                            svg={fields['Bar'].settings.svg}>

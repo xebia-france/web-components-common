@@ -10,6 +10,7 @@ export const Container = styled.div.attrs(props => ({
 }))`
   width : 100%;
   transition : all .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+  z-index : 50;
 
   ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
@@ -313,6 +314,18 @@ export const Links = styled.ul`
   display : flex;
   flex-wrap : no-wrap;
   transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+  
+  
+    &>div{
+        display : flex;
+    }
+  
+  
+  @media  ${ device.M },  ${ device.T } {
+    &>div{
+        flex-direction : column;
+    }
+  }
  
   & li{
     display : flex;
@@ -542,7 +555,7 @@ export const FixedContainer = styled.div.attrs(props => ({
             }
             
             & ${Links}{
-                & li{
+                & div li{
                     
                     
                     &>ul{
@@ -599,7 +612,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                 
                 
                 & ${Links}{
-                    & li{
+                    & div li{
                         
                         
                         &>ul{
@@ -653,7 +666,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                  & ${Links}{
                     display : flex;
                     height : 100%;
-                    
+                    justify-content : space-between;
                     
                  }
                  
@@ -674,7 +687,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                 //position : relative;
                 display none;
                 
-                & >li{
+                & div >li{
                  border-bottom : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
                     &:first-child{
                         border-top : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
@@ -754,7 +767,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                 }
                 
                 & ${ Locale}{
-                    position : absolute;
+                    //position : absolute;
                     bottom : 0;
                     width : 100%;
                     
