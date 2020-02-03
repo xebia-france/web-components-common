@@ -19,24 +19,8 @@ export const theme = {
     blueL: '#00C7D8'
 };
 
-// Can be used for other colors
-// const colors = {};
-// const sizes = {}
 
 // Breakpoints that are being used
-
-export const screen = {
-    S: 480,
-    M: 980,
-    L: 1280
-};
-/*
-export const brk = {
-    small: '50em',
-    S: (2 * gutter.S) + screen.S + 'px',
-    M: (2 * gutter.M) + screen.M + 'px',
-    L: (2 * gutter.L) + screen.L + 'px'
-};*/
 
 const size = {
     M: '425px',
@@ -50,12 +34,3 @@ export const device = {
     T: `(min-width: ${ size.T }) and (max-width: 1279px)`,
     D: `(min-width: ${ size.D })`
 };
-
-
-export const gutter = {
-    A: 20,
-    M: 15,
-    T: 20,
-    D: 20
-};
-
