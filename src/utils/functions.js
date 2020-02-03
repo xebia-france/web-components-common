@@ -18,7 +18,6 @@ const RGBtoString = rgb => {
 
 const RGBAtoString = (rgb, opacity) => {
     if (!rgb) return;
-    console.log('rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + opacity + ')');
     return 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + opacity + ')';
 };
 
@@ -31,11 +30,14 @@ const getResponsiveKey = props => {
 
 const isNumber = value => /^\d+$/.test(value);
 
+const removeSpaces = string => string.replace(/ /g, "");
+
 export {
     hexToRgb,
     RGBtoString,
     RGBAtoString,
     isResponsiveProps,
     getResponsiveKey,
-    isNumber
+    isNumber,
+    removeSpaces
 };

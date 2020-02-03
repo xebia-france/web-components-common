@@ -4,3 +4,6 @@
 // different tech like TypeScript
 export { default as FullLayout } from './FullLayout';
 export { default as BasicLayout } from './BasicLayout';
+export { default as BasicLayoutFirstFull } from './BasicLayoutFirstFull';
+export { default as BasicLayoutCornersImages } from './BasicLayoutCornersImages';
+export { default as ListSpeakersFlipCard } from './ListSpeakersFlipCard';

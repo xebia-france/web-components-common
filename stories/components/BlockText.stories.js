@@ -5,10 +5,10 @@ import {withInfo} from '@storybook/addon-info';
 import BlockText from '../../src/components/BlockText';
 import {Template, Text, Content} from '../../src/mock';
 
-storiesOf('Components.BlockText', module)
+storiesOf('Components.ListSpeakersFlipCard', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
-    .add('BlockText with title', () => {
+    .add('ListSpeakersFlipCard with title', () => {
         const language = number('Language', 0);
         const fieldsMock = object('Fields', {
             Template: Template,
@@ -16,7 +16,7 @@ storiesOf('Components.BlockText', module)
         });
         return <BlockText fields={fieldsMock} language={language}/>;
     })
-    .add('BlockText with title and content', () => {
+    .add('ListSpeakersFlipCard with title and content', () => {
         const language = number('Language', 0);
         const fieldsMock = object('Fields', {
             Template: Template,

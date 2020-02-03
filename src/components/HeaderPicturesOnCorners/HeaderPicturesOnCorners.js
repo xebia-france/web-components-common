@@ -1,52 +1,48 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import { Container, Title, Tagline, ImageCorner, Logo } from './styled';
-import { getResponsiveKey } from '../../utils/functions';
+import {Container, Text, ImageCorner, Logo} from './styled';
+import {getResponsiveKey} from '../../utils/functions';
 
 class HeaderPicturesOnCorners extends Component {
 
     buildComponent = (fields, field, key) => {
-        if(!fields[field]) return
+        if (!fields[field]) return
         switch (field) {
             case 'Title':
-                return <Title key={key}
+                return <Text key={key}
                               responsive={fields[field].responsiveSettings}
-                              color={fields[field].settings.color}
-                              font={fields[field].settings.font}
-                              text={fields[field].settings.text}
-                              opacity={fields[field].settings.opacity}
+                              typography={fields[field].settings.typography}
+                              basis={fields[field].settings.basis}
+                              border={fields[field].settings.border}
                               as={fields[field].settings.seo.tag || 'h2'}
-
                 >
                     {fields[field].content.text[this.props.language]}
-                </Title>;
+                </Text>;
 
             case 'CornerImages' :
                 return this.getCornerImages(fields[field]);
 
             case 'Tagline' :
-                return <Tagline key={key}
+                return <Text key={key}
                                 responsive={fields[field].responsiveSettings}
-                                opacity={fields[field].settings.opacity}
-                                color={fields[field].settings.color}
-                                font={fields[field].settings.font}
-                                text={fields[field].settings.text}
+                                typography={fields[field].settings.typography}
+                                basis={fields[field].settings.basis}
+                                border={fields[field].settings.border}
                                 as={fields[field].settings.seo.tag || 'h2'}
                 >
                     {fields[field].content.text[this.props.language]}
-                </Tagline>;
+                </Text>;
 
-            case 'Logo' :
+            case 'Image' :
                 return <Logo key={key}
                              role={'img'}
                              alt={fields[field].content.images[0].alt[this.props.language]}
                              responsive={fields[field].responsiveSettings}
                              responsiveContent={getResponsiveKey(fields[field].content.images[0].asset)}
                              asset={fields[field].content.images[0].asset}
-                             size={fields[field].settings.size}
-                             padding={fields[field].settings.padding}/>;
-
+                             assetsDirectory={this.props.assetsDirectory}
+                             basis={fields[field].settings.basis}/>;
             default :
                 return null;
         }
@@ -55,26 +51,27 @@ class HeaderPicturesOnCorners extends Component {
     getCornerImages = field => {
         const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
         return field.content.images.map((image, i) => {
-            const file = image.asset[responsiveContent].fields.file;
+            const file = image.asset[responsiveContent].fileName ? image.asset[responsiveContent].fileName : null;
+            if (!file) return <ImageCorner key={i} responsive={field.responsiveSettings} basis={field.settings.basis} index={i+1}/>;
+
             return (
-                <ImageCorner key={i} responsive={field.responsiveSettings} size={field.settings.size}>
-                    <img alt={image.alt[this.props.language]} src={`https:${ file[Object.keys(file)[0]].url }`}/>
+                <ImageCorner key={i} responsive={field.responsiveSettings} basis={field.settings.basis} index={i+1}>
+                    <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
                 </ImageCorner>);
         });
     }
 
-    render () {
-        const { fields } = this.props;
-
-        console.log('fields on headerPictures', fields);
+    render() {
+        const {fields, order} = this.props;
 
         const Template = fields.Template;
 
         return (
             <Container responsive={Template ? Template.responsiveSettings : []}
-                       color={Template ? Template.settings.color : ''}>
+                       basis={Template && Template.settings ? Template.settings.basis : {}}>
                 {
-                    ['CornerImages', 'Logo', 'Title', 'Tagline'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                    order ? ['CornerImages', ...order].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                    : ['CornerImages', 'Image', 'Title', 'Tagline'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
             </Container>
         );

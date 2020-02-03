@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import { device } from '../../styles/constants';
+import { generateSize, generatePadding, generateMargin, generateBorder, getFormatedColor } from '../../utils/StyleGenerator';
+import { TextCommon, ContentCommon } from "../../styles/common.styled";
 
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
-    color: props.color
+    basis : props.basis,
+    border : props.border
 
 }))`
    width : 100%;
@@ -11,67 +14,23 @@ export const Container = styled.div.attrs(props => ({
    display : flex;
    flex-direction : column;
    align-items : center;
-   justify-content  : center;
-   padding : 10px;
-   
+   justify-content  : center;   
+   overflow : hidden;
    
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-             background-color:${ props.color[size].hex };
+            background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) } ;
+            ${ props.basis ?  generateSize(props.basis, size) : '' }        
+            ${ props.basis ?  generatePadding(props.basis, size) : '' }        
+            ${ props.basis ?  generateMargin(props.basis, size) : '' }        
+            ${ props.border ?  generateBorder(props.border, size) : '' }   
+            ${ props.border ? 
+                    ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
+             : ''}  
          }`)
 }; 
 `;
 
-export const Text = styled.p.attrs(props => ({
-    responsive: props.responsive,
-    opacity: props.opacity,
-    color: props.color,
-    font: props.font,
-    text: props.text
+export const Text = styled(TextCommon)``;
 
-}))`
-   ${ props => props.responsive.map(size => `
-         @media ${ device[size] } {
-            opacity:${ props.opacity[size].value };
-            color:${ props.color[size].hex };
-            font-size:${ props.font[size].size }px;
-            font-family : '${ props.font[size].family }', ${ props.font[size].typeface };
-            font-style: ${ props.font[size].style || '' };
-            font-weight: ${ props.font[size].weight[1] } ;
-            letter-spacing: ${ props.font[size].letterSpacing }px;
-            line-height: ${ props.font[size].lineHeight }px;
-            text-align: ${ props.text[size].align };
-            text-decoration: ${ props.text[size].decoration || '' };
-            text-transform: ${ props.text[size].transform || '' };
-         }`)
-};
-    
-`;
-
-export const Title = styled(Text)``;
-
-export const Content = styled.div.attrs(props => ({
-    responsive: props.responsive,
-    opacity: props.opacity,
-    color: props.color,
-    font: props.font,
-    text: props.text
-
-}))`
-   ${ props => props.responsive.map(size => `
-         @media ${ device[size] } {
-            opacity:${ props.opacity[size].value };
-            color:${ props.color[size].hex };
-            font-size:${ props.font[size].size }px;
-            font-family : '${ props.font[size].family }', ${ props.font[size].typeface };
-            font-style: ${ props.font[size].style || '' };
-            font-weight: ${ props.font[size].weight[1] } ;
-            letter-spacing: ${ props.font[size].letterSpacing }px;
-            line-height: ${ props.font[size].lineHeight }px;
-            text-align: ${ props.text[size].align };
-            text-decoration: ${ props.text[size].decoration || '' };
-            text-transform: ${ props.text[size].transform || '' };
-         }`)
-    };
-    
-`;
+export const Content = styled(ContentCommon)``;

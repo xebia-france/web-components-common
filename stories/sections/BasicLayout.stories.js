@@ -12,7 +12,7 @@ const Child = styled.div`
     background: ${ theme.grey40};
 `
 
-storiesOf('Sections.BasicLayout', module)
+storiesOf('Sections.ListSpeakersFlipCard', module)
     .addDecorator(withKnobs)
     .addDecorator(withInfo)
     .add('default', () => <BasicLayout><div>BasicLayout sections</div></BasicLayout>)

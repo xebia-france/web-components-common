@@ -1,33 +1,46 @@
 import React, {Component} from 'react';
-import {Container, Title, Content} from './styled';
+import {Container, Text, Content} from './styled';
 import PropTypes from 'prop-types';
 
 class BlockText extends Component {
-    buildComponent = (fields, field) => {
-        console.log('fields', fields);
+    buildComponent = (fields, field, key) => {
         if (!fields[field]) return
         switch (field) {
             case 'Title':
-                return <Title
+                return <Text
+                    key={key}
                     responsive={fields[field].responsiveSettings}
-                    color={fields[field].settings.color}
-                    font={fields[field].settings.font}
-                    text={fields[field].settings.text}
-                    opacity={fields[field].settings.opacity}
+                    typography={fields[field].settings.typography}
+                    basis={fields[field].settings.basis}
+                    border={fields[field].settings.border}
                     as={fields[field].settings.seo.tag || 'h2'}
 
                 >
-                    {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
-                </Title>;
+                    {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}
+                </Text>;
+
+            case 'Tagline':
+                return <Text
+                    key={key}
+                    responsive={fields[field].responsiveSettings}
+                    typography={fields[field].settings.typography}
+                    basis={fields[field].settings.basis}
+                    border={fields[field].settings.border}
+                    as={fields[field].settings.seo.tag || 'h2'}
+
+                >
+                    {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}
+                </Text>;
 
             case 'Content':
                 return <Content
+                    key={key}
                     responsive={fields[field].responsiveSettings}
-                    color={fields[field].settings.color}
-                    font={fields[field].settings.font}
-                    text={fields[field].settings.text}
-                    opacity={fields[field].settings.opacity}
-                    dangerouslySetInnerHTML={{__html: fields[field].content.html ? fields[field].content.html[this.props.language] : <p>no content</p>}}
+                    typography={fields[field].settings.typography}
+                    basis={fields[field].settings.basis}
+                    dangerouslySetInnerHTML={{
+                        __html: fields[field].content.html ? fields[field].content.html[this.props.language] : <p></p>
+                    }}
                 />
 
             default :
@@ -36,17 +49,17 @@ class BlockText extends Component {
     }
 
     render() {
-        const {fields} = this.props;
-
-
+        const {fields, order} = this.props;
 
         const Template = fields.Template;
-
         return (
             <Container responsive={Template ? Template.responsiveSettings : []}
-                       color={Template && Template.settings ? Template.settings.color : ''}>
+                       basis={Template && Template.settings ? Template.settings.basis : null}
+                       border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
+            >
                 {
-                    ['Title', 'Content'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                    order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                        : ['Title', 'Tagline', 'Content'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
             </Container>
         );
@@ -54,80 +67,16 @@ class BlockText extends Component {
 }
 
 
-BlockText.defaultProps = {
-    fields: {
-        Template: {
-            content: {},
-            responsiveSettings: ['A'],
-            settings: {
-                color: {
-                    A: {
-                        hex: null,
-                        name: null,
-                        rgb: null,
-                        shade: null
-                    }
-                },
-                opacity: {
-                    A: {
-                        value: '1'
-                    }
-                }
-            }
-        },
-        Title: {
-            content: {
-                text: {
-                    0: 'Salut',
-                    1: 'Hello'
-                }
-            },
-            responsiveSettings: ['A'],
-            settings: {
-                color: {
-                    A: {
-                        hex: '#456677',
-                        name: 'Bleu',
-                        rgb: '69,102,119',
-                        shade: 'L'
-                    }
-                },
-                font: {
-                    A: {
-                        family: 'Arial',
-                        letterSpacing: '0',
-                        lineHeight: '80',
-                        size: '70',
-                        style: null,
-                        theme: 'Title1',
-                        typeface: 'sans-serif',
-                        weight: ['Regular', 400]
-                    }
-                },
-                text: {
-                    A: {
-                        align: 'center',
-                        decoration: null,
-                        transform: null
-                    }
-                },
-                opacity: {
-                    A: {
-                        value: '0.95'
-                    }
-                },
-                seo: {
-                    tag: 'h2'
-                }
-
-            }
-        }
-    },
-    language: 0
-};
+BlockText.defaultProps = {};
 
 BlockText.propTypes = {
-    fields: PropTypes.object.isRequired,
+    order: PropTypes.arrayOf(PropTypes.string),
+    fields: PropTypes.shape({
+        Template: PropTypes.object,
+        Title: PropTypes.object,
+        Tagline: PropTypes.object,
+        Content: PropTypes.object
+    }),
     language: PropTypes.number.isRequired
 };
 

@@ -11,7 +11,7 @@ export const Image = {
                         fields : {
                             file : {
                                 0 : {
-                                    url : '//cdn.pixabay.com/photo/2018/01/04/20/52/dark-3061610_960_720.jpg'
+                                    url : '///www.freeiconspng.com/uploads/rule-of-thirds-grid-png-24.png'
                                 }
                             }
                         }
