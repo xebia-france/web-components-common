@@ -38,14 +38,14 @@ class NavigationBasic extends Component {
             window.addEventListener("scroll", this.listener)
         }
 
-        if (localStorage.getItem('scrollPosition')) {
+        /*if (localStorage.getItem('scrollPosition')) {
             const localStorageScrollPosition = Number(localStorage.getItem('scrollPosition'));
 
             if (typeof window !== 'undefined' && (!this.props.location.hash || this.props.location.hash === '')) {
                 window.scrollTo(0, localStorageScrollPosition);
                 localStorage.removeItem('scrollPosition');
             }
-        }
+        }*/
 
         if (localStorage.getItem('reloadLanguage')) {
             const reloadLanguage = localStorage.getItem('reloadLanguage');

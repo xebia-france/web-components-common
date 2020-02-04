@@ -16,7 +16,7 @@ class NavigationLink extends Component {
                 this.setState({
                     open : !this.state.open
                 })
-                localStorage.removeItem('scrollPosition');
+                //localStorage.removeItem('scrollPosition');
                 //localStorage.setItem('scrollPosition', 0);
             }}>
                 { children }
