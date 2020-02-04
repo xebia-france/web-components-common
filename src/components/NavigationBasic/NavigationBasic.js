@@ -38,16 +38,15 @@ class NavigationBasic extends Component {
             window.addEventListener("scroll", this.listener)
         }
 
-        /*if (localStorage.getItem('scrollPosition')) {
+        if (localStorage.getItem('scrollPosition')) {
             const localStorageScrollPosition = Number(localStorage.getItem('scrollPosition'));
 
             if (typeof window !== 'undefined' && (!this.props.location.hash || this.props.location.hash === '')) {
                 window.scrollTo(0, localStorageScrollPosition);
-                localStorage.removeItem('scrollPosition');
             }
-        }*/
+        }
 
-        /*if (localStorage.getItem('reloadLanguage')) {
+        if (localStorage.getItem('reloadLanguage')) {
             const reloadLanguage = localStorage.getItem('reloadLanguage');
             if (reloadLanguage === 'true') {
                 this.setState({
@@ -56,7 +55,7 @@ class NavigationBasic extends Component {
                     localStorage.setItem('reloadLanguage', 'false');
                 })
             }
-        }*/
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -205,7 +204,7 @@ class NavigationBasic extends Component {
                 >
                     <Top>
                         <div><a href={`/${locale.split('-')[0]}`} onClick={() => {
-                           // localStorage.setItem('scrollPosition', 0);
+                            localStorage.setItem('scrollPosition', 0);
                         }}>
                             {
                                 fields['Image'] ?
@@ -262,8 +261,8 @@ class NavigationBasic extends Component {
                                                      className={l === locale ? 'selected' : ''}
                                                      href={this.getUrlWithLocale(l, location.pathname)}
                                                      onClick={() => {
-                                                         //localStorage.setItem('scrollPosition', this.state.scrollY);
-                                                         //localStorage.setItem('reloadLanguage', 'true');
+                                                         localStorage.setItem('scrollPosition', this.state.scrollY);
+                                                         localStorage.setItem('reloadLanguage', 'true');
                                                      }}
                                         >
                                             {l.split('-')[0]}
