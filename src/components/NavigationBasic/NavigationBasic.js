@@ -47,7 +47,7 @@ class NavigationBasic extends Component {
             }
         }
 
-        if (localStorage.getItem('reloadLanguage')) {
+        /*if (localStorage.getItem('reloadLanguage')) {
             const reloadLanguage = localStorage.getItem('reloadLanguage');
             if (reloadLanguage === 'true') {
                 this.setState({
@@ -56,7 +56,7 @@ class NavigationBasic extends Component {
                     localStorage.setItem('reloadLanguage', 'false');
                 })
             }
-        }
+        }*/
     }
 
     componentDidUpdate(prevProps) {
@@ -264,7 +264,7 @@ class NavigationBasic extends Component {
                                                      href={this.getUrlWithLocale(l, location.pathname)}
                                                      onClick={() => {
                                                          localStorage.setItem('scrollPosition', this.state.scrollY);
-                                                         localStorage.setItem('reloadLanguage', 'true');
+                                                        // localStorage.setItem('reloadLanguage', 'true');
                                                      }}
                                         >
                                             {l.split('-')[0]}
