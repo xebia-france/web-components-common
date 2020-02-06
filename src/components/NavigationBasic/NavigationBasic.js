@@ -91,6 +91,7 @@ class NavigationBasic extends Component {
                             basis={this.props.fields['Links'].settings.basis}
                             typography={this.props.fields['Links'].settings.typography}
                             border={this.props.fields['Links'].settings.border}
+                            onClick={() => this.setState({open: !this.state.open})}
                             href={slugParent ? `/${this.props.locale.split('-')[0]}/${slugParent}#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}
                             {
                                 link.childrens ? <ArrowContainer>
