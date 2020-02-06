@@ -692,7 +692,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                 & div >li{
                  border-bottom : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
                     &:first-child{
-                        border-top : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.7);
+                        border-top : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
                     }
                 
                 }
@@ -729,7 +729,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                            padding-right : 40px;
                            height:${props =>  isNumber(props.basis['M'].size.basic.height)
                                     ? `${ props.basis['M'].size.basic.height }px`
-                                    : props.basis['M'].size.basic.height } !important;;
+                                    : props.basis['M'].size.basic.height } !important;
                            
                            & a{
                             padding-left : 0px;
@@ -772,6 +772,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                     //position : absolute;
                     bottom : 0;
                     width : 100%;
+
                     //margin-top : 20px;
                     &>a{
                         width : 100%;
@@ -783,7 +784,12 @@ export const FixedContainer = styled.div.attrs(props => ({
              
              & ${ LanguageSelector}{
                 border-top : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
+                background-color : rgba(${ props => props.burger['M'].fill.rgb}, 0.05) !important;
+                
                 & ${Link}{
+                     height:${props =>  isNumber(props.basis['M'].size.basic.height)
+                                    ? `calc(${ props.basis['M'].size.basic.height }px - 10px);`
+                                    : props.basis['M'].size.basic.height } !important;
                     &:not(:last-child){
                         border-right : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
                    }
