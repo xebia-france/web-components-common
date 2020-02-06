@@ -788,7 +788,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                 
                 & ${Link}{
                      height:${props =>  isNumber(props.basis['M'].size.basic.height)
-                                    ? `calc(${ props.basis['M'].size.basic.height }px - 10px);`
+                                    ? `calc(${ props.basis['M'].size.basic.height }px - 10px)`
                                     : props.basis['M'].size.basic.height } !important;
                     &:not(:last-child){
                         border-right : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
