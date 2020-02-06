@@ -635,7 +635,6 @@ export const FixedContainer = styled.div.attrs(props => ({
           }
           
           @media  ${ device.M } , ${ device.T } {
-          
             &.open{
                 background-color:${ props.basis['M'].color.basic.rgb ?  `rgb(${props.basis['M'].color.basic.rgb})` : props.basis['M'].color.basic.hex };
                 overflow-y: scroll;
@@ -667,8 +666,6 @@ export const FixedContainer = styled.div.attrs(props => ({
                  & ${Links}{
                     display : flex;
                     height : 100%;
-                    flex-direction : column-reverse;
-                    justify-content :flex-end;
                     
                  }
                  
@@ -677,17 +674,16 @@ export const FixedContainer = styled.div.attrs(props => ({
                     height:${props =>  isNumber(props.basis['M'].size.basic.height)
                                     ? `${ props.basis['M'].size.basic.height }px`
                                     : props.basis['M'].size.basic.height };
-                   // height : auto !important;
+                  
                  }
                  
              }
             
              
              & ${Links}{
-                flex-direction : column; 
-                height : 0;
-                //position : relative;
-                display none;
+                flex-direction : column-reverse;
+                    justify-content :flex-end;
+                    height : 100%;
                 
                 & div >li{
                  border-bottom : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
