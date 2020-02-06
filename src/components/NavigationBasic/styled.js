@@ -637,10 +637,10 @@ export const FixedContainer = styled.div.attrs(props => ({
           @media  ${ device.M } , ${ device.T } {
           
             &.open{
-                background-color:${ props.basis[size].color.basic.rgb ?  `rgb(${props.basis[size].color.basic.rgb})` : props.basis[size].color.basic.hex };
+                background-color:${ props.basis['M'].color.basic.rgb ?  `rgb(${props.basis['M'].color.basic.rgb})` : props.basis['M'].color.basic.hex };
                 overflow-y: scroll;
                 &.scrolled{
-                    background-color:${ props.basis[size].color.scroll.rgb ?  `rgb(${props.basis[size].color.scroll.rgb})` : props.basis[size].color.scroll.hex };
+                    background-color:${ props.basis['M'].color.scroll.rgb ?  `rgb(${props.basis['M'].color.scroll.rgb})` : props.basis['M'].color.scroll.hex };
 
                 }
             
@@ -667,7 +667,8 @@ export const FixedContainer = styled.div.attrs(props => ({
                  & ${Links}{
                     display : flex;
                     height : 100%;
-                    justify-content : space-between;
+                    flex-direction : column-reverse;
+                    justify-content :flex-end;
                     
                  }
                  
@@ -691,7 +692,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                 & div >li{
                  border-bottom : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
                     &:first-child{
-                        border-top : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
+                        border-top : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.7);
                     }
                 
                 }
@@ -771,8 +772,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                     //position : absolute;
                     bottom : 0;
                     width : 100%;
-                    margin-top : 20px;
-                    
+                    //margin-top : 20px;
                     &>a{
                         width : 100%;
                     }
