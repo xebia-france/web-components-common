@@ -62,7 +62,7 @@ class ButtonScrollTop extends Component {
 
     scrollToTop = () => {
         if (typeof window !== 'undefined') {
-            window.scroll({top: 0, left: 0, behavior: 'smooth'});
+            window.scrollTo(0, 0);
             localStorage.removeItem('scrollPosition');
         }
     }
