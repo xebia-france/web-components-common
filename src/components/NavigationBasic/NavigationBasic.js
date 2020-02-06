@@ -43,6 +43,7 @@ class NavigationBasic extends Component {
 
             if (typeof window !== 'undefined' && (!this.props.location.hash || this.props.location.hash === '')) {
                 window.scrollTo(0, localStorageScrollPosition);
+                localStorage.removeItem('scrollPosition');
             }
         }
 
