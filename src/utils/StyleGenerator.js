@@ -1,6 +1,25 @@
 import {isNumber} from "./functions";
 
-const generatePadding = (prop, size) => {
+const generatePadding = (prop, size, subProp) => {
+    if(subProp){
+        return `
+            ${ prop[size].padding && prop[size].padding[subProp].top && prop[size].padding[subProp].top !== '0' ?
+                `padding-top : ${ prop[size].padding[subProp].top }px;`
+                : ''}
+        
+            ${ prop[size].padding && prop[size].padding[subProp].bottom && prop[size].padding[subProp].bottom !== '0' ?
+                `padding-bottom : ${ prop[size].padding[subProp].bottom }px;`
+                : ''}
+        
+            ${ prop[size].padding && prop[size].padding[subProp].left && prop[size].padding[subProp].left !== '0' ?
+                `padding-left : ${ prop[size].padding[subProp].left }px;`
+                : ''}
+        
+              ${ prop[size].padding && prop[size].padding[subProp].right && prop[size].padding[subProp].right !== '0' ?
+                `padding-right : ${ prop[size].padding[subProp].right }px;`
+                : ''}
+        `
+    }
     return `
     ${ prop[size].padding && prop[size].padding.top && prop[size].padding.top !== '0' ?
         `padding-top : ${ prop[size].padding.top }px;`
@@ -20,7 +39,26 @@ const generatePadding = (prop, size) => {
     `
 }
 
-const generateMargin = (prop, size) => {
+const generateMargin = (prop, size, subProp) => {
+    if(subProp){
+        return `
+            ${ prop[size].margin &&  prop[size].margin[subProp].top && prop[size].margin[subProp].top !== '0' ?
+                `margin-top : ${ prop[size].margin[subProp].top }px;`
+                : ''}
+            
+              ${ prop[size].margin && prop[size].margin[subProp].bottom && prop[size].margin[subProp].bottom !== '0' ?
+                `margin-bottom : ${ prop[size].margin[subProp].bottom }px;`
+                : ''}
+            
+              ${ prop[size].margin && prop[size].margin[subProp].left && prop[size].margin[subProp].left !== '0' ?
+                `margin-left : ${ prop[size].margin[subProp].left }px;`
+                : ''}
+            
+              ${ prop[size].margin && prop[size].margin[subProp].right && prop[size].margin[subProp].right !== '0' ?
+                `margin-right : ${ prop[size].margin[subProp].right }px;`
+                : ''}
+        `
+    }
     return `
     ${ prop[size].margin &&  prop[size].margin.top && prop[size].margin.top !== '0' ?
         `margin-top : ${ prop[size].margin.top }px;`
@@ -40,7 +78,46 @@ const generateMargin = (prop, size) => {
 `
 }
 
-const generateSize = (prop, size) => {
+const generateSize = (prop, size, subProp) => {
+    if(subProp){
+        return `
+            ${prop[size].size &&  prop[size].size[subProp].width && prop[size].size[subProp].width !== '' ?
+                    `width :${ isNumber(prop[size].size[subProp].width)
+                        ? `${ prop[size].size[subProp].width }px;`
+                        : prop[size].size[subProp].width };`
+                    : ''}
+            
+            ${ prop[size].size && prop[size].size[subProp].height && prop[size].size[subProp].height !== '' ?
+                    `height :${ isNumber(prop[size].size[subProp].height)
+                        ? `${ prop[size].size[subProp].height }px;`
+                        : prop[size].size[subProp].height };`
+                    : ''}
+                
+            ${ prop[size].size && prop[size].size[subProp].maxWidth && prop[size].size[subProp].maxWidth !== '' ?
+                    `max-width :${ isNumber(prop[size].size[subProp].maxWidth)
+                        ? `${ prop[size].size[subProp].maxWidth }px;`
+                        : prop[size].size[subProp].maxWidth };`
+                    : ''}
+                
+            ${ prop[size].size && prop[size].size[subProp].maxHeight && prop[size].size[subProp].maxHeight !== '' ?
+                    `max-height :${ isNumber(prop[size].size[subProp].maxHeight)
+                        ? `${ prop[size].size[subProp].maxHeight }px;`
+                        : prop[size].size[subProp].maxHeight };`
+                    : ''}
+                
+            ${ prop[size].size && prop[size].size[subProp].minWidth && prop[size].size[subProp].minWidth !== '' ?
+                    `min-width :${ isNumber(prop[size].size[subProp].minWidth)
+                        ? `${ prop[size].size[subProp].minWidth }px;`
+                        : prop[size].size[subProp].minWidth };`
+                    : ''}
+                
+            ${ prop[size].size && prop[size].size[subProp].minHeight && prop[size].size[subProp].minHeight !== '' ?
+                    `min-height :${ isNumber(prop[size].size[subProp].minHeight)
+                        ? `${ prop[size].size[subProp].minHeight }px;`
+                        : prop[size].size[subProp].minHeight };`
+                    : ''}
+            `
+    }
     return `
     ${prop[size].size &&  prop[size].size.width && prop[size].size.width !== '' ?
         `width :${ isNumber(prop[size].size.width)

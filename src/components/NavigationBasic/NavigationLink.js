@@ -24,9 +24,6 @@ class NavigationLink extends Component {
     }
 }
 
-
-NavigationLink.propTypes = {
-
-};
+NavigationLink.propTypes = {};
 
 export default NavigationLink;

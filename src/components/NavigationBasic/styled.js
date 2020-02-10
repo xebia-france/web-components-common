@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import {device} from "../../styles/constants";
 import {isNumber} from "../../utils/functions";
-import isEmpty from "lodash/isEmpty";
-import {generateSize, getFormatedColor} from "../../utils/StyleGenerator";
+import {generateSize,generatePadding, generateMargin, getFormatedColor} from "../../utils/StyleGenerator";
 
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -11,17 +10,6 @@ export const Container = styled.div.attrs(props => ({
   width : 100%;
   transition : all .2s cubic-bezier(.25,.46,.45,.94) 0ms;
   z-index : 50;
-
-  ${ props => props.responsive.map((size, i) => `
-         @media ${ device[size] } {
-          /* height:${ isNumber(props.basis[size].size.basic.height)
-                    ? `${ props.basis[size].size.basic.height }px`
-                    : props.basis[size].size.basic.height };
-                    
-          */        
-         }`)
-};
-  
 `;
 
 
@@ -39,8 +27,6 @@ export const BubbleContainer = styled.div.attrs(props => ({
             ${ props.svg ? `
                 ${ generateSize(props.svg, size) }
                 & svg { 
-                   
-                    
                     &   path{
                     fill: ${ getFormatedColor(props.svg[size].fill, props.svg[size].opacityFill) } !important;
                     }
@@ -75,12 +61,18 @@ export const CheckContainer = styled.div`
         width : 40px;
       } 
   }
- 
-   
+  
+  @media  ${ device.M },  ${ device.T } {
+    &>svg{
+        height : 100%;
+    }
+    &.selected{
+      &>svg{
+        width : 100%;
+      } 
+    }
+  }
 `;
-
-
-
 
 export const ArrowContainer = styled.div`
   display : none;
@@ -99,9 +91,6 @@ export const ArrowContainer = styled.div`
    
 `;
 
-
-
-
 export const Link = styled.a.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis,
@@ -117,8 +106,8 @@ export const Link = styled.a.attrs(props => ({
   
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-             background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
 
+            background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
              width:${ isNumber(props.basis[size].size.width)
     ? `${ props.basis[size].size.width }px`
     : props.basis[size].size.width };
@@ -147,6 +136,16 @@ export const Link = styled.a.attrs(props => ({
             margin-right : ${ props.basis[size].margin.right }px;
             
             color:${ props.typography[size].color.basic.rgb ? `rgba(${props.typography[size].color.basic.rgb},${props.typography[size].opacity.basic.value})` : props.typography[size].color.basic.hex};
+            font-size:${ props.typography[size].font.size }px;
+            font-family : '${ props.typography[size].font.family }', ${props.typography[size].font.typeface };
+            font-style: ${ props.typography[size].font.style || '' };
+            font-weight: ${ props.typography[size].font.weight ? props.typography[size].font.weight[1] : '' } ;
+            letter-spacing: ${ props.typography[size].font.letterSpacing }px;
+            line-height: ${ props.typography[size].font.lineHeight }px;
+            text-align: ${ props.typography[size].text.align };
+            text-decoration: ${ props.typography[size].text.decoration || '' };
+            text-transform: ${props.typography[size].text.transform || '' }; 
+            
             font-size:${ props.typography[size].font.size }px;
             font-family : '${ props.typography[size].font.family }', ${props.typography[size].font.typeface };
             font-style: ${ props.typography[size].font.style || '' };
@@ -310,8 +309,8 @@ export const LinkLanguage = styled.a.attrs(props => ({
     
 `;
 
-export const Links = styled.ul`
-  display : flex;
+export const Links = styled.div`
+  /*display : flex;
   flex-wrap : no-wrap;
   transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
   
@@ -339,7 +338,6 @@ export const Links = styled.ul`
         position : absolute;
         top : 100%;
         width : 100%;
-       // display : none;
         
         overflow : hidden;
         
@@ -353,15 +351,15 @@ export const Links = styled.ul`
         }
     }
     
-     &:hover{
+    &:hover{
         &>ul{
          display : block;
          height : auto; 
         }
        
-     }
+    }
   }
-  
+  */
 `;
 
 
@@ -389,16 +387,11 @@ export const LanguageSelector = styled.ul`
     display : flex;
     background-color : transparent !important;
     
-    
     & ${Link}{
-       height : 50px; 
+      // height : 50px; 
        background-color : transparent;
-       
-       
     }
-    
    }
-  
 `;
 
 
@@ -412,26 +405,11 @@ export const Locale = styled.div`
     & ${LanguageSelector} ${Link}{
         border-width : 0px;
     }
-  
-  }
-  &:hover{
-    & ${LanguageSelector} ${Link}{
-        height : 40px;
-        
-         
-    }
-  
   }
   
   @media  ${ device.M } , ${ device.T } {
     margin-left : 0;
-  
-      &:hover{
-        & ${LanguageSelector} ${Link}{
-            height : 50px;
-        }
   }
- 
 `;
 
 
@@ -450,8 +428,7 @@ export const CurrentLocale = styled.div.attrs(props => ({
              ${ props.svg ? 
                 generateSize(props.svg, size) :
             `width : 24px;`}
-         
-         
+            
             ${ props.svg ? `
                  &>${LinkLanguage}{
                     color: ${ getFormatedColor(props.svg[size].color, props.svg[size].opacity) } !important;
@@ -487,210 +464,455 @@ export const CurrentLocale = styled.div.attrs(props => ({
 
 
 export const Top = styled.div`
-  display : flex;
-  align-items : center;
-  justify-content : space-between;
-  & a{
-    color: white;
-  }  
 `;
 
+export const FixedContainer = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    basis: props.basis,
+    burger : props.burger,
+    basisLink : props.basisLink
+}))`
+    position : fixed;
+    display : flex;
+    width : 100%;
+    justify-content : space-between;
+    align-items : center;
+    
+    ${ Links }{
+        height : inherit;
+        &>nav{
+            display : flex;
+            height : inherit;
+            &>ul{
+                display : flex;
+            }
+        }
+    }
+    
+    
+    
+    ${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+            ${ props.basis ? generateSize(props.basis, size, 'basic') : ''}
+            ${ props.basis ? generatePadding(props.basis, size, 'basic') : ''}
+            ${ props.basis ? generateMargin(props.basis, size, 'basic') : ''}
+            
+            &.scrolled{
+                ${ props.basis ? generateSize(props.basis, size, 'scroll') : ''}
+                ${ props.basis ? generatePadding(props.basis, size, 'scroll') : ''}
+                ${ props.basis ? generateMargin(props.basis, size, 'scroll') : ''}
+            }
+            
+            ${ Links }{
+                &>nav{
+                    &>ul{
+                        & li{
+                            position :relative;
+                            
+                            &>ul{
+                                position : absolute;
+                                top : 100%;
+                                width : 100%;
+                                
+                                overflow : hidden;
+                                
+                                & li{
+                                    height : 0px;
+                                    transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+                                    
+                                    & a{
+                                        width : 100%;
+                                    }
+                                }
+                            }
+                            
+                            
+                            &:hover{
+                                & ul li{
+                                     display : block;
+                                     height:${ isNumber(props.basisLink[size].size.height)
+                                        ? `${ props.basisLink[size].size.height }px`
+                                        : props.basisLink[size].size.height };
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+           
+            
+              
+         }
+    `)}     
 
+ ${ props => ['D'].map((size, i) => `
+    @media ${ device[size] } {
+        background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
+        
+        ${ Links }{
+            &>nav>ul li ul, &>nav ${Locale} ${LanguageSelector} {
+                background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
+            }
+        } 
+        
+        &.scrolled{
+            background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
+            
+            ${ Links }{
+                &>nav>ul li ul, &>nav ${Locale} ${LanguageSelector} {
+                    background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
+                }
+            }
+        } 
+    
+       ${Locale}{
+            &:hover{
+                & ${LanguageSelector} a{
+                     height:${ isNumber(props.basisLink[size].size.height)
+                        ? `${ props.basisLink[size].size.height }px`
+                        : props.basisLink[size].size.height };
+                }
+            }
+        }
+    
+    }
+ 
+ `)}
+ 
+ ${ props => ['M', 'T'].map((size, i) => `
+    @media ${ device[size] } {
+        ${ Links }{
+            &>nav{
+                background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
+                padding-top:${ isNumber(props.basis[size].size.basic.height)
+                                    ? `${ props.basis[size].size.basic.height }px`
+                                    : props.basis[size].size.basic.height };
+                &>ul{
+                    & li{
+                        &.open{
+                            & ul li{
+                                 display : block;
+                                 height:${ isNumber(props.basisLink[size].size.height)
+                                    ? `${ props.basisLink[size].size.height }px`
+                                    : props.basisLink[size].size.height };
+                            }
+                            
+                             & ${ArrowContainer}{
+                                transform : rotate(0deg);
+                             }
+                            
+                            &>ul{
+                               position : initial;
+                               border-top : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
+                                
+                            }
+                        }
+                        &.closed{
+                            & ul li{
+                                height : 0px !important;
+                            }
+                        }     
+                    }
+                    
+                    &>li{
+                        border-bottom : 1px solid rgba(${ props.burger[size].fill.rgb},0.3);
+                        &:first-child{
+                            border-top : 1px solid rgba(${ props.burger[size].fill.rgb},0.3);
+                        }
+                        
+                        & ul{
+                            background-color : rgba(${ props.burger[size].fill.rgb}, 0.05) !important;
+                            
+                            & li {
+                                padding-left : 40px;
+                                padding-right : 40px;
+                                
+                                & a{
+                                    padding-left : 0px;
+                                }
+                                   
+                                &:not(:last-child) a{
+                                    border-bottom : 1px solid rgba(${ props.burger[size].fill.rgb}, 0.3);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+        
+        ${ Top }{
+            background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
+        }
+        
+        
+        .scrolled{
+             ${ Links }{
+                &>nav{
+                    background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
+                }
+             }
+             ${ Top }{
+                background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
+            }
+        }
+        
+         ${ArrowContainer}{
+                height:${props =>  isNumber(props.basis[size].size.basic.height)
+                                    ? `${ props.basis[size].size.basic.height }px`
+                                    : props.basis[size].size.basic.height } !important;
+         }
+         
+         & ${ LanguageSelector}{
+            border-top : 1px solid rgba(${ props.burger[size].fill.rgb},0.3);
+            background-color : rgba(${ props.burger[size].fill.rgb}, 0.05) !important;
+            
+            & ${Link}{
+                transition: height 0ms ease-in-out;
+                height:${ isNumber(props.basis[size].size.basic.height)
+                                ? `calc(${ props.basis[size].size.basic.height }px - 10px)`
+                                : props.basis[size].size.basic.height } !important;
+                &:not(:last-child){
+                    border-right : 1px solid rgba(${ props.burger[size].fill.rgb},0.3);
+               }
+               
+               ${CheckContainer}{
+                  width:${ isNumber(props.basis[size].size.basic.height)
+                                ? `calc(${ props.basis[size].size.basic.height }px - 10px)`
+                                : props.basis[size].size.basic.height } !important;
+                  height:${ isNumber(props.basis[size].size.basic.height)
+                                ? `calc(${ props.basis[size].size.basic.height }px - 10px)`
+                                : props.basis[size].size.basic.height } !important;
+               }
+            }
+         }
+    }
+ `)}
+
+ @media  ${ device.M } , ${ device.T } {
+    position : fixed;
+    z-index : 5;
+    display : block;
+    
+    ${ Top }{
+        overflow-x : hidden;
+        position : absolute;
+        display : flex;
+        align-items : center;
+        justify-content : space-between;
+        width : 100%;
+        top : 0;
+        left : 0;
+        z-index : 3;
+        overflow : hidden;
+        transition : background-color 500ms ease-in-out;
+        height :  inherit;
+    
+    }
+    
+    ${ Links }{
+        width : 100%;
+        transform : translateY(-100%);
+        transition : transform 700ms ease-in-out;
+        overflow-x : hidden;
+        height : auto;
+        
+        &>nav{
+            position : relative;
+            display : flex;
+            flex-direction : column;
+            height : 100vh;
+            top : -100vh;
+            transition : transform 700ms ease-in-out;
+            max-height : 100%;
+            
+            &>ul{
+                order : 2;
+                position : relative;
+                float : left;
+                z-index: 2;
+                width : 100%;
+                transition : transform 700ms ease-in-out, background-color 500ms ease-in-out;
+                overflow-x : hidden;
+                display : flex;
+                flex-direction : column;
+                align-items : flex-start;
+                align-content : flex-start;
+                height : calc(100% - 50px);
+                max-height : calc(100% - 50px);
+                
+                & li{
+                    width : 100%;
+                    
+                    & ${Link}{
+                        justify-content : space-between;
+                        padding-right : 0;
+                    }
+                    
+                    & ul{
+                        position : relative;
+                        top : 0;
+                    }  
+                }
+            }
+        }
+        
+    }
+    
+    ${ Locale }{
+        order : 1;
+        ${ LanguageSelector}{
+            ${ Link }{
+                height : auto;
+            }
+        }
+    }
+    
+    &.open{
+        ${ Links }{
+            transform : translateY(0%);
+            
+            &>nav{
+                transform : translateY(100%)
+            }
+        }
+    }
+ }
+`
+
+
+/*
 export const FixedContainer = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis,
     burger : props.burger
 }))`
-  display : flex;
+ /* display : flex;
   flex-direction : row;
   justify-content : space-between;
   position : fixed;
   width : 100%;
   z-index : 20;
-  transition : all .3s cubic-bezier(.25,.46,.45,.94) 0ms;
-  box-sizing : border-box;
+  //transition : all .3s cubic-bezier(.25,.46,.45,.94) 0ms;
+  box-sizing : border-box;*//*
   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
              
-            width:${ isNumber(props.basis[size].size.basic.width)
-                    ? `${ props.basis[size].size.basic.width }px`
-                    : props.basis[size].size.basic.width };
-    
-            height:${ isNumber(props.basis[size].size.basic.height)
-                    ? `${ props.basis[size].size.basic.height }px`
-                    : props.basis[size].size.basic.height };
-            max-width: ${ isNumber(props.basis[size].size.basic.maxWidth)
-                    ? `${ props.basis[size].size.basic.maxWidth }px`
-                    : props.basis[size].size.basic.maxWidth || '' };
-            max-height:${ isNumber(props.basis[size].size.basic.maxHeight)
-                    ? `${ props.basis[size].size.basic.maxHeight }px`
-                    :props.basis[size].size.basic.maxHeight || '' };
-            min-width: ${ isNumber(props.basis[size].size.basic.minWidth)
-                    ? `${ props.basis[size].size.basic.minWidth }px`
-                    : props.basis[size].size.basic.minWidth || '' };
-            min-height:${ isNumber(props.basis[size].size.basic.minHeight)
-                    ? `${ props.basis[size].size.basic.minHeight }px`
-                    : props.basis[size].size.basic.minHeight || '' };      
-                                
-            padding-top : ${ props.basis[size].padding.basic.top }px;
-            padding-bottom : ${ props.basis[size].padding.basic.bottom }px;
-            padding-left : ${ props.basis[size].padding.basic.left }px;
-            padding-right : ${ props.basis[size].padding.basic.right }px;
-             
-            margin-top : ${ props.basis[size].margin.basic.top }px;
-            margin-bottom : ${ props.basis[size].margin.basic.bottom }px;
-            margin-left : ${ props.basis[size].margin.basic.left }px;
-            margin-right : ${ props.basis[size].margin.basic.right }px;
+          /*
             
-            background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
 
-            & ${Top}{
-               height:${ isNumber(props.basis[size].size.basic.height)
-                    ? `${ props.basis[size].size.basic.height }px`
-                    : props.basis[size].size.basic.height };
-               min-height:${ isNumber(props.basis[size].size.basic.height)
-                    ? `${ props.basis[size].size.basic.height }px`
-                    : props.basis[size].size.basic.height };
-            }
-            
-            & ${Links}{
-                & div li{
-                    
-                    
-                    &>ul{
-                       background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
-                    }
-                    &:hover{
-                        &>ul li{
-                         height:${ isNumber(props.basis[size].size.basic.height)
-                                ? `${ props.basis[size].size.basic.height }px`
-                                : props.basis[size].size.basic.height };
-                               
-                        }
+
+
+         }
+          
+         @media  ${ device.M } , ${ device.T } {
+         
+
+
+            & ${Links}{ 
+                & nav > ul{
+                    /*padding-top : ${ isNumber(props.basis[size].size.basic.height)
+                        ? `${ props.basis[size].size.basic.height }px`
+                        : props.basis[size].size.basic.height };
+                        
                        
-                     }
-                  }
-            }            
-            & ${LanguageSelector}{
-                background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };   
-            }
-            
-            &.scrolled{
-                width:${ isNumber(props.basis[size].size.scroll.width)
-                    ? `${ props.basis[size].size.scroll.width }px`
-                    : props.basis[size].size.scroll.width };
-    
-                height:${ isNumber(props.basis[size].size.scroll.height)
+                    height : calc(100% - ${ isNumber(props.basis[size].size.basic.height)
+                        ? `${ props.basis[size].size.basic.height }px`
+                        : props.basis[size].size.basic.height });
+                    max-height : calc(100% - ${ isNumber(props.basis[size].size.basic.height)
+                        ? `${ props.basis[size].size.basic.height }px`
+                        : props.basis[size].size.basic.height });
+                        *//*
+                         
+                    &.scrolled{
+                        /* padding-top : ${ isNumber(props.basis[size].size.scroll.height)
                         ? `${ props.basis[size].size.scroll.height }px`
-                        : props.basis[size].size.scroll.height };
-                max-width: ${ isNumber(props.basis[size].size.scroll.maxWidth)
-                        ? `${ props.basis[size].size.scroll.maxWidth }px`
-                        : props.basis[size].size.scroll.maxWidth || '' };
-                max-height:${ isNumber(props.basis[size].size.scroll.maxHeight)
-                        ? `${ props.basis[size].size.scroll.maxHeight }px`
-                        :props.basis[size].size.scroll.maxHeight || '' };
-                min-width: ${ isNumber(props.basis[size].size.scroll.minWidth)
-                        ? `${ props.basis[size].size.scroll.minWidth }px`
-                        : props.basis[size].size.scroll.minWidth || '' };
-                min-height:${ isNumber(props.basis[size].size.scroll.minHeight)
-                        ? `${ props.basis[size].size.scroll.minHeight }px`
-                        : props.basis[size].size.scroll.minHeight || '' };      
-                                    
-                padding-top : ${ props.basis[size].padding.scroll.top }px;
-                padding-bottom : ${ props.basis[size].padding.scroll.bottom }px;
-                padding-left : ${ props.basis[size].padding.scroll.left }px;
-                padding-right : ${ props.basis[size].padding.scroll.right }px;
-                 
-                margin-top : ${ props.basis[size].margin.scroll.top }px;
-                margin-bottom : ${ props.basis[size].margin.scroll.bottom }px;
-                margin-left : ${ props.basis[size].margin.scroll.left }px;
-                margin-right : ${ props.basis[size].margin.scroll.right }px;
-                
-                background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
-    
-                
-                
-                & ${Links}{
-                    & div li{
-                        
-                        
-                        &>ul{
-                           background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
-                        }
-                        &:hover{
-                            &>ul li{
-                             height:${ isNumber(props.basis[size].size.scroll.height)
-                                    ? `${ props.basis[size].size.scroll.height }px`
-                                    : props.basis[size].size.scroll.height };
-                                   
-                            }
-                           
-                         }
-                      }
+                        : props.basis[size].size.scroll.height };*//*
+                    }
                 }
-            
-            }
-            
-          }
-          
-          @media  ${ device.M } , ${ device.T } {
-            &.open{
-                background-color:${ props.basis['M'].color.basic.rgb ?  `rgb(${props.basis['M'].color.basic.rgb})` : props.basis['M'].color.basic.hex };
-                overflow-y: scroll;
-                &.scrolled{
-                    background-color:${ props.basis['M'].color.scroll.rgb ?  `rgb(${props.basis['M'].color.scroll.rgb})` : props.basis['M'].color.scroll.hex };
-
                 }
-            
-            
-            }
-          
-          
-          }
-          
-          
-          `)
+         }
+         
+         & ${Locale}{
+            padding-top : ${ isNumber(props.basis[size].size.basic.height)
+                        ? `${ props.basis[size].size.basic.height }px`
+                        : props.basis[size].size.basic.height };
+         }
+     `)
 };
 
     @media  ${ device.M } , ${ device.T } {
-             flex-direction : column;   
-             overflow : hidden;
+             position : fixed;
+             display : flex;
+             flex-direction : column;
+             background-color : transparent;
+             width: 100%;
+             
+             &.scrolled{
+                background-color : transparent;
+             }
+             
+              & ${Links}{
+                width : 100%; 
+                transform: translateY(-100%);
+                transition: transform 700ms ease-in-out;
+                overflow-x : hidden;
+                
+                &>nav{
+                    position : relative;
+                    display : flex;
+                    flex-direction : column;
+                    height : 100vh;
+                    top: -100vh;
+                    transition: transform 700ms ease-in-out,  top 0ms ease-in-out;
+                    max-height : 100%;
+                    
+                    &>ul{
+                        position : relative;
+                        float : left;
+                        width : 100%;
+                        transition : transform 700ms ease-in-out, background-color 500ms ease-in-out;
+                        overflow-x : hidden;
+                        display : flex;
+                        flex-direction : column;
+                        flex-wrap : wrap;
+                        align-items : flex-start;
+                        align-content : flex-start;
+                        order : 2;
+                    }
+                }
+              }
              
              &.open{
-                height : 100vh; 
-
-                
-                
+                background-color : transparent;
                 
                  & ${Links}{
-                    display : flex;
-                    height : 100%;
+                   transform: translateY(0%);
+                   
+                   &>nav{
+                      transform: translateY(100%);
+                   }
+                   
                     
+
                  }
-                 
-                 
-                 & li.open a{
-                    height:${props =>  isNumber(props.basis['M'].size.basic.height)
-                                    ? `${ props.basis['M'].size.basic.height }px`
-                                    : props.basis['M'].size.basic.height };
-                  
-                 }
-                 
              }
-            
+             
+             & ${ArrowContainer}{
+                height:${props =>  isNumber(props.basis['M'].size.basic.height)
+                                    ? `${ props.basis['M'].size.basic.height }px`
+                                    : props.basis['M'].size.basic.height } !important;
+             }
              
              & ${Links}{
-                flex-direction : column-reverse;
-                    justify-content :flex-end;
-                    height : 100%;
-                
                 & div >li{
                  border-bottom : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
                     &:first-child{
                         border-top : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);
                     }
-                
                 }
                 
                 & li{
@@ -698,34 +920,35 @@ export const FixedContainer = styled.div.attrs(props => ({
                     
                     &:hover{
                         & ul li{
-                            height:${props =>  isNumber(props.basis['M'].size.basic.height)
+                            /*height:${props =>  isNumber(props.basis['M'].size.basic.height)
                                     ? `${ props.basis['M'].size.basic.height }px`
-                                    : props.basis['M'].size.basic.height } !important;
+                                    : props.basis['M'].size.basic.height } !important;*//*
                         }
                     }
                     
-                    
-                    
-                        & ${Link}{
+                    & ${Link}{
                             padding-right : 0;
                             width : 100%;
                             justify-content : space-between;
-                            height:${props =>  isNumber(props.basis['M'].size.basic.height)
+                            max-height:${props =>  isNumber(props.basis['M'].size.basic.height)
                                     ? `${ props.basis['M'].size.basic.height }px`
                                     : props.basis['M'].size.basic.height };
-                        }
+                    }
                     
                     &>ul{
-                       
+                       width : 100%;
                         position : initial;
                         background-color : rgba(${ props => props.burger['M'].fill.rgb}, 0.05) !important;
                         
                         &>li{
                            padding-left : 40px;
                            padding-right : 40px;
+                           transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms; 
+                           
                            height:${props =>  isNumber(props.basis['M'].size.basic.height)
                                     ? `${ props.basis['M'].size.basic.height }px`
                                     : props.basis['M'].size.basic.height } !important;
+                          
                            
                            & a{
                             padding-left : 0px;
@@ -744,6 +967,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                            position : initial;
                             & li{
                                 height : 0px !important;
+                                overflow:hidden;
                             }
                         }
                     }
@@ -760,22 +984,16 @@ export const FixedContainer = styled.div.attrs(props => ({
                             
                         }
                     }
-                    
-                    
                 }
                 
                 & ${ Locale}{
-                    //position : absolute;
-                    bottom : 0;
                     width : 100%;
+                    order : 1;
 
-                    //margin-top : 20px;
                     &>a{
                         width : 100%;
                     }
                 }
-                
-                 
              }
              
              & ${ LanguageSelector}{
@@ -783,7 +1001,8 @@ export const FixedContainer = styled.div.attrs(props => ({
                 background-color : rgba(${ props => props.burger['M'].fill.rgb}, 0.05) !important;
                 
                 & ${Link}{
-                     height:${props =>  isNumber(props.basis['M'].size.basic.height)
+                    transition: height 0ms ease-in-out;
+                    height:${props =>  isNumber(props.basis['M'].size.basic.height)
                                     ? `calc(${ props.basis['M'].size.basic.height }px - 10px)`
                                     : props.basis['M'].size.basic.height } !important;
                     &:not(:last-child){
@@ -791,12 +1010,8 @@ export const FixedContainer = styled.div.attrs(props => ({
                    }
                 }
              }
-             
-             
      }
-   
-   
-`;
+`;*/
 
 export const LineWrapper = styled.div`
   width : calc(100% - 100%/3 ) ;
@@ -893,72 +1108,5 @@ export const Hamburger = styled.label.attrs(props => ({
       
   
 
-`;
-
-
-export const ImageContainer = styled.div.attrs(props => ({
-    responsive: props.responsive,
-    basis: props.basis
-}))`
-
-    overflow : hidden;
-    border-style : solid;
-    z-index : 2;
-   ${ props => props.responsive.map(size => `
-         @media ${ device[size] } {
-             
-             width:${ isNumber(props.basis[size].size.width)
-    ? `${ props.basis[size].size.width }px`
-    : props.basis[size].size.width };
-    
-            height:${ isNumber(props.basis[size].size.height)
-    ? `${ props.basis[size].size.height }px`
-    : props.basis[size].size.height };
-            max-width: ${ isNumber(props.basis[size].size.maxWidth)
-    ? `${ props.basis[size].size.maxWidth }px`
-    : props.basis[size].size.maxWidth || '' };
-            max-height:${ isNumber(props.basis[size].size.maxHeight)
-    ? `${ props.basis[size].size.maxHeight }px`
-    :props.basis[size].size.maxHeight || '' };
-                                
-            padding-top : ${ props.basis[size].padding.top }px;
-            padding-bottom : ${ props.basis[size].padding.bottom }px;
-            padding-left : ${ props.basis[size].padding.left }px;
-            padding-right : ${ props.basis[size].padding.right }px;
-             
-            margin-top : ${ props.basis[size].margin.top }px;
-            margin-bottom : ${ props.basis[size].margin.bottom }px;
-            margin-left : ${ props.basis[size].margin.left }px;
-            margin-right : ${ props.basis[size].margin.right }px;
-                    
-            align-self:${ props.basis[size].alignment.horizontal || '' };
-                    
-                    
-                    
-            
-          
-        &>img{
-            ${  isEmpty(props.basis[size].size.width) ? `
-                width : auto;
-                height : 100%;    
-            
-            
-            ` : ( !isEmpty(props.basis[size].size.width) && !isEmpty(props.basis[size].size.height) ? `
-                width : 100%;
-                height : 100%;
-            ` : `
-                width : 100%;
-                height : auto;
-            `)   }
-        } 
-    
-    }
-         
-       
-         
-         
-   `) }; 
-         
-       
 `;
 
