@@ -151,7 +151,7 @@ class NavigationBasic extends Component {
                         </Hamburger>
                     </Top>
 
-                    <Links /*className={this.state.open ? 'open' : ''}*/>
+                    <Links>
                         <nav>
                             <ul>{menu ? this.getRenderLinks(menu) : null}</ul>
                             <Locale>
@@ -177,7 +177,7 @@ class NavigationBasic extends Component {
                                                          basis={this.props.fields['Links'].settings.basis}
                                                          typography={this.props.fields['Links'].settings.typography}
                                                          border={this.props.fields['Links'].settings.border}
-                                                         className={l === locale ? 'selected' : ''}
+                                                         className={l === locale ? '' : ''}
                                                          href={this.getUrlWithLocale(l, location.pathname)}
                                                          onClick={() => {
                                                              localStorage.setItem('scrollPosition', this.state.scrollY);
