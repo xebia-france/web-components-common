@@ -219,7 +219,6 @@ export const Locale = styled.div`
   }
 `;
 
-
 export const CurrentLocale = styled.div.attrs(props => ({
     responsive: props.responsive,
     svg: props.svg
@@ -263,11 +262,7 @@ export const CurrentLocale = styled.div.attrs(props => ({
   }
 `;
 
-
-
-
-export const Top = styled.div`
-`;
+export const Top = styled.div``;
 
 export const FixedContainer = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -434,14 +429,9 @@ export const FixedContainer = styled.div.attrs(props => ({
             }
         }
         
-        
-        
         ${ Top }{
             background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
         }
-        
-        
-        
         
         &.scrolled{
              ${ Links }{
@@ -467,10 +457,6 @@ export const FixedContainer = styled.div.attrs(props => ({
         }
         
          ${ArrowContainer}{
-               /* height:${isNumber(props.basis[size].size.basic.height)
-                                    ? `${ props.basis[size].size.basic.height }px`
-                                    : props.basis[size].size.basic.height } !important;*/
-                                    
                  ${ props.basisLink[size].padding && props.basisLink[size].padding.top && props.basisLink[size].padding.top !== '0' ?
                     `margin-top : -${ props.basisLink[size].padding.top }px;`
                  : ''}       
@@ -572,7 +558,6 @@ export const FixedContainer = styled.div.attrs(props => ({
                 }
             }
         }
-        
     }
     
     ${ Locale }{
@@ -660,7 +645,6 @@ export const Hamburger = styled.label.attrs(props => ({
                     transform : translateY(8px) rotate(45deg);
                 }
                 &>div:nth-child(2){
-                    //transform : rotate(45deg);
                     transform : scaleX(0);
                 }
                 &>div:nth-child(3){
