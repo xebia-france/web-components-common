@@ -230,3 +230,39 @@ export const CTACommon = styled.a.attrs(props => ({
             }
         }`)};
 `;
+export const IconCommon = styled.a.attrs(props => ({
+    responsive: props.responsive,
+    icon: props.icon
+}))`
+    transition : all 0.25s ease;
+    border-style : solid;
+    display : flex;
+    align-items: center;
+    z-index : 2;
+    cursor : pointer;
+    
+    & i{
+       transition : all 0.25s ease;
+    }
+    
+   ${ props => props.responsive.map(size => `
+         @media ${ device[size] } {
+
+
+            & i {
+                
+                ${ props.icon ? `color: ${ getFormatedColor(props.icon[size].color.basic, props.icon[size].opacity.basic) };` : ''}
+                ${ props.icon ? generateFontProperties(props.icon, size) : '' }
+            }
+         
+           
+         
+            &:hover{
+                & i {
+                    ${ props.icon ? `color:${ getFormatedColor(props.icon[size].color.hover, props.icon[size].opacity.hover )};` : ''}
+                }
+            }
+            
+            
+        }`)};
+`;
