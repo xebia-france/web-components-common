@@ -312,7 +312,7 @@ export const Contain = styled.div.attrs(props => ({
 
 }))`
    z-index : 3;
-    position:relative;
+    position:absolute;
     width : 100%;
     transition : width 0.5s ease;
     overflow : hidden;
@@ -394,6 +394,7 @@ export const Card = styled.div.attrs(props => ({
   transform : scale(1);
   opacity : 1;
   position : relative;
+  height : 530px;
   
   
   
@@ -532,16 +533,15 @@ export const Container = styled.div.attrs(props => ({
                 
               }
             ${ props.flex[size].properties.columns ? `
-                & ${Card}.selected{
-                    
-                   
+                & ${Card}{
+               
                      &:not(:nth-child(${props.flex[size].properties.columns }n)){
-                        & ${Content}{
+                        & ${Contain}{
                             left : 0;
                         }    
                      }
                      &:nth-child(${props.flex[size].properties.columns }n){
-                        & ${Content}{
+                        & ${Contain}{
                             right : 0;
                         }    
                      }
@@ -559,4 +559,13 @@ export const Container = styled.div.attrs(props => ({
             opacity : 0.5;
         }
     }
+    
+    ${ props => ['M'].map((size, i) => `
+    @media ${ device[size] } {
+       
+    }
+ `)}
+    
+    
+    
 `;
