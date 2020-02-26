@@ -87,7 +87,7 @@ export const Portrait = styled.div.attrs(props => ({
   background-color : white;
   
 
-  ${ props => ['D', 'T'].map((size, i) => `
+  ${ props => ['D', 'T','M'].map((size, i) => `
     @media ${ device[size] } {
         &:after{
              transition : all 0.5s ease;
@@ -314,9 +314,9 @@ export const Contain = styled.div.attrs(props => ({
    z-index : 3;
     position:absolute;
     width : 100%;
-    transition : width 0.5s ease;
+    transition : width 0.5s ease, height 0.5s ease;
     overflow : hidden;
-    min-height : 530px;
+    height : 530px;
     box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.0);
 
 
@@ -364,7 +364,7 @@ export const Below = styled.div.attrs(props => ({
   
   height : calc(100% - 150px);
   z-index : 1;
-  transition : width 0.5s ease;
+  transition : width 0.5s ease, height 0.5s ease;
   
   &>*{
     opacity : 0;
@@ -390,7 +390,7 @@ export const Card = styled.div.attrs(props => ({
     flex : props.flex
 }))`
   cursor : pointer;
-  transition : transform 0.5s ease, opacity 0.5s ease;
+  transition : transform 0.5s ease, opacity 0.5s ease, height 0.5s ease;
   transform : scale(1);
   opacity : 1;
   position : relative;
@@ -407,6 +407,15 @@ export const Card = styled.div.attrs(props => ({
     }
   }
   
+  ${ props => ['M'].map((size, i) => `
+    @media ${ device[size] } {
+        max-width : 400px;
+        margin : auto:
+    }
+ `)}
+    
+
+  
   
     
   
@@ -414,7 +423,8 @@ export const Card = styled.div.attrs(props => ({
 
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
-    flex: props.flex
+    flex: props.flex,
+    nbrSlides : props.nbrSlides
 
 }))`
   max-width : 1280px;
@@ -475,7 +485,7 @@ export const Container = styled.div.attrs(props => ({
              & ${Card}{
                 &:not(.selected){
                     z-index : 1;
-                    transition : z-index 0.5s step-end, transform 0.5s ease, opacity 0.5s ease;
+                    transition : z-index 0.5s step-end, transform 0.5s ease, opacity 0.5s ease, height 0.5s ease;
                 }
                 & ${Content}{
                      width : 100%;
@@ -562,6 +572,36 @@ export const Container = styled.div.attrs(props => ({
     
     ${ props => ['M'].map((size, i) => `
     @media ${ device[size] } {
+        max-width : none;
+        width : calc(100% * ${props.nbrSlides});
+        justify-content : flex-start;
+    
+    
+    
+        & ${Card}{
+            & ${ Contain }{
+                width : 100%;
+                
+                & ${Below}{
+                    width  100%;
+                }
+            }
+       }
+       & ${Card}.selected{
+            height : 700px;
+            & ${ Contain }{
+                width : 100%;
+                height : 700px;
+                
+                & ${Below}{
+                    width  100%;
+                }
+            }
+       }
+       
+       
+       
+       
        
     }
  `)}

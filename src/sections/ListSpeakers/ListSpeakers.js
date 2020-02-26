@@ -76,8 +76,6 @@ class ListSpeakers extends Component {
                 {talk.Pitch}
             </Text>
         )
-
-
     }
 
     render() {
@@ -102,11 +100,11 @@ class ListSpeakers extends Component {
                      border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
             >
                 <Container
+                    nbrSlides={speakers.length}
                     responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
                     flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}
                     className={this.state.active ? 'active' : ''}
                 >
-
                     {
                         speakers.map((s, i) => {
                             console.log('S ---->', s)
