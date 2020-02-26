@@ -83,7 +83,8 @@ export const Portrait = styled.div.attrs(props => ({
   height : 400px;
   position : relative;
   transition : height 0.5s ease;
-  
+  overflow : hidden;
+  background-color : white;
   
 
   ${ props => ['D', 'T'].map((size, i) => `
@@ -171,15 +172,13 @@ export const Miniature = styled.div.attrs(props => ({
     assetsDirectory : props.assetsDirectory
 }))`
   width : 100px;
-  height :100px;
+  height : 150px;
   position : absolute;
-  top : 25px;
-  right : 25px;
-  z-index : 3;
-  transform : scale(0);
-  transform-origin : center;
-  transition : transform 0.5s ease;
-  transition-delay : 0s;
+  bottom:0;
+  right :0;
+  z-index: 10;
+  opacity : 0;
+  transition : all 0.5s ease;
 
   ${ props => ['D', 'T'].map((size, i) => `
     @media ${ device[size] } {
@@ -195,9 +194,11 @@ export const Miniature = styled.div.attrs(props => ({
              content : ''; 
              top : 0;
              left : 0;
-             border : 2px solid white;
+             //border : 2px solid white;
              overflow : hidden;
-             border-radius : 100%;
+             //border-radius : 100%;
+             transform : translateY(150px);
+             transition : transform 0.5s ease;
 
          }
     }
@@ -299,7 +300,6 @@ export const Content = styled.div.attrs(props => ({
   height : 100%;
   background : white;
   transition : all 0.5s ease;
-  box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.07);
   display : flex;
   flex-direction : column;
   align-items : flex-end;
@@ -316,8 +316,8 @@ export const Contain = styled.div.attrs(props => ({
     width : 100%;
     transition : width 0.5s ease;
     overflow : hidden;
-    min-height : 550px;
-    box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.07);
+    min-height : 530px;
+    box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.0);
 
 
 
@@ -380,7 +380,6 @@ export const Above = styled.div.attrs(props => ({
     position:relative;
     width : 100%;
     transition : width 0.4s ease;
-
 
 `;
 
@@ -465,7 +464,7 @@ export const Container = styled.div.attrs(props => ({
                 position: relative;
                 z-index : 5;
                 transition : transform 0.5s ease;
-                height : 150px;
+                height : 130px;
                 display : flex;
                 flex-direction : column;
                 justify-content : center;
@@ -485,28 +484,41 @@ export const Container = styled.div.attrs(props => ({
              }
              
              & ${Card}.selected{
+             
+              
                 z-index : 2;
                  & ${ Contain }{
                     width : 200%;
-                    
+                    -webkit-box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
+                    -moz-box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
+                    box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
                     
                     & ${ Above }{
                         ${ Portrait}{
                             height : 150px;
+                            
+                            
+                            &:after{
+                                filter : blur(10px);
+                            }
+                            
+                            
                             
                             &:before{
                                background-color : rgba(0,0,0,0.5);
                             }
                         }
                         ${ TextContent}{
-                            transform: translateY(-100%);
+                            transform: translateY(calc(-100% - 10px));
                             &>p{
                                 color : white;
                             }
                         }
                         ${ Miniature }{
-                            transform : scale(1);
-
+                           opacity : 1;
+                            &:after{
+                                transform : translateY(0);
+                            }
                         }
                     }
                     

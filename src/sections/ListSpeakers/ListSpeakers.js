@@ -153,7 +153,9 @@ class ListSpeakers extends Component {
                                 }}>
                                 <Contain>
                                     <Above>
-                                        <Portrait asset={s.Photo} assetsDirectory={assetsDirectory}/>
+                                        <Portrait asset={s.Photo} assetsDirectory={assetsDirectory}>
+                                            <Miniature asset={s.Photo} assetsDirectory={assetsDirectory}/>
+                                        </Portrait>
                                         <TextContent>
                                             <Text
                                                 responsive={fields['Speakers'].responsiveSettings}
@@ -174,7 +176,7 @@ class ListSpeakers extends Component {
                                                 {s.Company || ''}
                                             </Text>
                                         </TextContent>
-                                        <Miniature asset={s.Photo} assetsDirectory={assetsDirectory}/>
+
                                     </Above>
                                     <Below elementWidth={this.state.widthCard}>
                                         <TextContent>
