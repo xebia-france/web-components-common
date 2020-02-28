@@ -29,7 +29,6 @@ class MobileView extends Component {
     }
 
     selectCard = (i) => {
-       
         if (this.state.selectedCard === i) {
             this.setState(prevState => ({
                 active: false,//!prevState.active,
@@ -55,24 +54,7 @@ class MobileView extends Component {
                 selectedCard: i
             }))
         }
-
     }
-
-
-    getTalk(ref) {
-        const {talks, fields} = this.props;
-        const id = ref.split(" ")[0];
-        const talk = talks.find(s => s.ID === Number(id));
-        return (
-            <Text
-                responsive={fields['Speakers'].responsiveSettings}
-                typography={fields['Speakers'].settings.text}
-            >
-                {talk.Pitch}
-            </Text>
-        )
-    }
-
 
     render() {
         const {fields, speakers, talks, assetsDirectory} = this.props;
@@ -85,8 +67,6 @@ class MobileView extends Component {
                 flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}
                 className={this.state.active ? 'active' : ''}
             >
-
-
                 {
                     speakers.map((s, i) => {
                         return <CardSpeaker selectCard={this.selectCard} s={s} i={i} fields={fields} talks={talks}
@@ -113,7 +93,7 @@ class CardSpeaker extends Component {
     componentDidMount() {
         var x = setTimeout(() => {
             this.getHeightCard();
-        }, 200);
+        }, 100);
 
         window.addEventListener('resize', () => {
             this.getHeightCard();

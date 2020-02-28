@@ -8,9 +8,9 @@ export const Portrait = styled.div.attrs(props => ({
     assetsDirectory : props.assetsDirectory
 }))`
   width : 100%;
-  height : 400px;
+  padding-top : 400px;
   position : relative;
-  transition : height 0.5s ease;
+  transition : all 0.5s ease;
   overflow : hidden;
   background-color : white;
   
@@ -25,7 +25,7 @@ export const Portrait = styled.div.attrs(props => ({
              z-index : 1;
              position : absolute;
              width : 100%;
-             height : 100%;
+             height : 400px;
              content : ''; 
              top : 0;
              left : 0;
@@ -51,8 +51,7 @@ export const Portrait = styled.div.attrs(props => ({
   
 `;
 
-export const Text = styled(TextCommon)`
--`;
+export const Text = styled(TextCommon)``;
 
 
 export const Miniature = styled.div.attrs(props => ({
@@ -60,13 +59,14 @@ export const Miniature = styled.div.attrs(props => ({
     assetsDirectory : props.assetsDirectory
 }))`
   width : 100px;
-  height : 150px;
+  height : 100%;
   position : absolute;
-  bottom:0;
+  top:0;
   right :0;
   z-index: 10;
   opacity : 0;
-  transition : all 0.5s ease;
+  min-height : 150px;
+  transition : all 0.5s ease, opacity 0.3s ease;
 
   ${ props => ['D', 'T'].map((size, i) => `
     @media ${ device[size] } {
@@ -78,12 +78,13 @@ export const Miniature = styled.div.attrs(props => ({
              z-index : 1;
              position : absolute;
              width : 100%;
+             min-width : 100px;
              height : 100%;
              content : ''; 
              top : 0;
              left : 0;
              overflow : hidden;
-             transform : translateY(150px);
+             transform : translateY(100%);
              transition : transform 0.5s ease;
          }
     }
@@ -99,8 +100,10 @@ export const Contain = styled.div.attrs(props => ({
     width : 100%;
     transition : width 0.5s ease, height 0.5s ease;
     overflow : hidden;
-    height : 530px;
+    height : 550px;
     box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.0);
+    background-color : white;
+    
 `;
 
 export const IconContent = styled.div.attrs(props => ({
@@ -115,7 +118,6 @@ export const TextContent = styled.div.attrs(props => ({
 
 }))`
   width : 100%;
-  padding : 20px;
   
   &>p{
     transition : color 0.5s ease;
@@ -129,17 +131,16 @@ export const Icon = styled(IconCommon).attrs(props => ({
 `;
 
 export const Below = styled.div.attrs(props => ({
-    elementWidth : props.elementWidth
+    widthCard : props.widthCard
 }))`
   background: white;
-  position : absolute;
-  top : 150px;
-  left : 0;
-  ${props => props.elementWidth ? `width : calc(${props.elementWidth}px * 2);` : `width : 200%;`}
+  position : relative;
+  //position : absolute;
+  ${props => props.widthCard ? `width : calc(${props.widthCard}px * 2);` : `width : 200%;`}
   
-  height : calc(100% - 150px);
   z-index : 1;
-  transition : width 0.5s ease, height 0.5s ease;
+  transition :all 0.5s ease;
+  padding : 40px 20px;
   
   &>*{
     opacity : 0;
@@ -154,19 +155,59 @@ export const Above = styled.div.attrs(props => ({
     z-index : 3;
     position:relative;
     width : 100%;
-    transition : width 0.4s ease;
+    transition : all 0.4s ease;
 `;
 
 export const Card = styled.div.attrs(props => ({
     responsive: props.responsive,
-    flex : props.flex
+    flex : props.flex,
+    heightAbove : props.heightAbove,
+    heightBelow : props.heightBelow
 }))`
   cursor : pointer;
-  transition : transform 0.5s ease, opacity 0.5s ease, height 0.5s ease;
+  transition : all 0.5s ease;
   transform : scale(1);
   opacity : 1;
   position : relative;
-  height : 530px;
+ // overflow : hidden;
+
+  ${ props => props.heightAbove ? `height : ${props.heightAbove}px;` : ''}
+  
+  & ${ Contain } ${Below} ${Miniature}{
+    ${ props => props.heightAbove ? `height : ${props.heightAbove}px;` : ''}
+  }
+  
+  &.selected{
+    ${props => props.heightBelow ? `max-height : ${props.heightAbove + props.heightBelow}px;` : ''}
+  }
+  
+  &:not(.selected){
+    ${Contain}{
+         // ${ props => props.heightAbove ? `height : ${props.heightAbove}px;` : ''}
+          //${ props => props.heightAbove ? `max-height : ${props.heightAbove}px;` : ''}
+          
+          
+    }
+  }
+  &.selected{
+    ${props => props.heightBelow ? `max-height : ${props.heightAbove + props.heightBelow}px;` : ''}
+    
+    ${Contain}{
+         //${props => props.heightBelow ? `max-height : ${props.heightAbove + props.heightBelow}px;` : ''}
+         
+        
+    }
+    
+    & ${ Contain } ${Below} ${Miniature}{
+        ${ props => props.heightAbove ? `height : ${props.heightAbove}px;` : ''}
+      }
+  
+  }
+  
+ // &:not(.selected){
+    
+//  }
+  
   
 `;
 
@@ -190,10 +231,11 @@ export const Container = styled.div.attrs(props => ({
              align-content: ${ props.flex[size].properties.alignContent };
              margin-bottom : -${ props.flex[size].properties.gutterVertical }px;
              
-             
-             
              &>*{
                 width: calc(100% / ${ props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px );
+                
+                
+                
                 margin-bottom : ${ props.flex[size].properties.gutterVertical }px;
                 
                 ${props.flex[size].properties.justify === 'flex-start' ? `
@@ -223,16 +265,19 @@ export const Container = styled.div.attrs(props => ({
                 position: relative;
                 z-index : 5;
                 transition : transform 0.5s ease;
-                height : 130px;
+                //height : 130px;
                 display : flex;
                 flex-direction : column;
                 justify-content : center;
+                margin-top : 0;
+                padding : 40px 20px;
+
              }
              
              & ${Card}{
                 &:not(.selected){
                     z-index : 1;
-                    transition : z-index 0.5s step-end, transform 0.5s ease, opacity 0.5s ease, height 0.5s ease;
+                    transition : all 0.5s ease;
                 }
              }
              
@@ -246,7 +291,8 @@ export const Container = styled.div.attrs(props => ({
                     
                     & ${ Above }{
                         ${ Portrait}{
-                            height : 150px;
+                            //height : 150px;
+                            padding-top : 0px;
                             
                             &:after{
                                 filter : blur(10px);
@@ -257,20 +303,22 @@ export const Container = styled.div.attrs(props => ({
                             }
                         }
                         ${ TextContent}{
-                            transform: translateY(calc(-100% - 10px));
+                            //transform: translateY(calc(-100% - 10px));
                             &>p{
                                 color : white;
                             }
                         }
                         ${ Miniature }{
                            opacity : 1;
+                           max-height : 100%;
                             &:after{
-                                transform : translateY(0);
+                                transform : translateY(0%);
                             }
                         }
                     }
                     
                     & ${ Below }{
+                        //min-height : 400px;
                        & >*{
                             opacity : 1;
                         }
