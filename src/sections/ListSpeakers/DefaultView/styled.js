@@ -66,7 +66,7 @@ export const Miniature = styled.div.attrs(props => ({
   z-index: 10;
   opacity : 0;
   min-height : 150px;
-  transition : all 0.5s ease, opacity 0.3s ease;
+  transition : all 0.5s ease, opacity 0.5s ease;
 
   ${ props => ['D', 'T'].map((size, i) => `
     @media ${ device[size] } {
@@ -165,7 +165,7 @@ export const Card = styled.div.attrs(props => ({
     heightBelow : props.heightBelow
 }))`
   cursor : pointer;
-  transition : all 0.5s ease;
+  transition : transform 0.5s ease, opacity 0.5s ease, height 0.5s ease, max-height 0.5s ease;
   transform : scale(1);
   opacity : 1;
   position : relative;
@@ -277,7 +277,7 @@ export const Container = styled.div.attrs(props => ({
              & ${Card}{
                 &:not(.selected){
                     z-index : 1;
-                    transition : all 0.5s ease;
+                    transition : z-index 0.5s step-end, transform 0.5s ease, opacity 0.5s ease, height 0.5s ease, max-height 0.5s ease;
                 }
              }
              
