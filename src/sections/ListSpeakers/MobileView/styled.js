@@ -8,11 +8,12 @@ export const Portrait = styled.div.attrs(props => ({
     assetsDirectory : props.assetsDirectory
 }))`
   width : 100%;
-  height : 400px;
+  padding-top : 400px;
   position : relative;
-  transition : height 0.5s ease;
+  transition : all 0.5s ease;
   overflow : hidden;
   background-color : white;
+  
   
 
   ${ props => ['D', 'T','M'].map((size, i) => `
@@ -25,7 +26,7 @@ export const Portrait = styled.div.attrs(props => ({
              z-index : 1;
              position : absolute;
              width : 100%;
-             height : 100%;
+             height : 400px;
              content : ''; 
              top : 0;
              left : 0;
@@ -41,7 +42,7 @@ export const Portrait = styled.div.attrs(props => ({
              z-index : 3;
              position : absolute;
              width : 100%;
-             height : 100%;
+             height : 400px;
              content : ''; 
              top : 0;
              left : 0;
@@ -52,7 +53,7 @@ export const Portrait = styled.div.attrs(props => ({
 `;
 
 export const Text = styled(TextCommon)`
--`;
+`;
 
 
 export const Miniature = styled.div.attrs(props => ({
@@ -60,15 +61,18 @@ export const Miniature = styled.div.attrs(props => ({
     assetsDirectory : props.assetsDirectory
 }))`
   width : 100px;
-  height : 150px;
+  height : 100px;
   position : absolute;
-  bottom:0;
-  right :0;
+  top:-50px;
+  left :calc(50% - 50px);
   z-index: 10;
   opacity : 0;
   transition : all 0.5s ease;
+  transform : scale(0);
+  transform-origin : center;
+  
 
-  ${ props => ['D', 'T'].map((size, i) => `
+  ${ props => ['D', 'T', 'M'].map((size, i) => `
     @media ${ device[size] } {
         &:after{
              transition : all 0.5s ease;
@@ -83,7 +87,7 @@ export const Miniature = styled.div.attrs(props => ({
              top : 0;
              left : 0;
              overflow : hidden;
-             transform : translateY(150px);
+             border-radius : 100%;
              transition : transform 0.5s ease;
          }
     }
@@ -115,7 +119,7 @@ export const TextContent = styled.div.attrs(props => ({
 
 }))`
   width : 100%;
-  padding : 20px;
+  padding : 40px 20px;
   
   &>p{
     transition : color 0.5s ease;
@@ -132,14 +136,14 @@ export const Below = styled.div.attrs(props => ({
     elementWidth : props.elementWidth
 }))`
   background: white;
- // position : absolute;
-  //top : 150px;
-  left : 0;
+  position : relative;
   width : 100%;
-  z-index : 1;
+  z-index : 3;
   transition : width 0.5s ease, height 0.5s ease;
-  overflow : hidden;
-  &>*{
+  overflow : visible;
+  padding-top : 50px;
+  
+  &>*:not(${Miniature}){
     //opacity : 0;
     transition : opacity 0.5s ease;
   }
@@ -149,7 +153,7 @@ export const Below = styled.div.attrs(props => ({
 export const Above = styled.div.attrs(props => ({
 
 }))`
-    z-index : 3;
+    z-index : 1;
     position:relative;
     width : 100%;
     transition : width 0.4s ease;
@@ -157,16 +161,25 @@ export const Above = styled.div.attrs(props => ({
 
 export const Card = styled.div.attrs(props => ({
     responsive: props.responsive,
-    flex : props.flex
+    flex : props.flex,
+    heightAbove : props.heightAbove,
+    heightBelow : props.heightBelow
+
 }))`
   cursor : pointer;
-  transition : transform 0.5s ease, opacity 0.5s ease, height 0.5s ease, max-height 0.5s ease;
+  transition : all 0.5s ease;
   transform : scale(1);
   opacity : 1;
   position : relative;
   max-height : 530px;
   overflow : hidden;
   background : white;
+  
+  ${props => props.heightAbove ? `max-height : ${props.heightAbove}px;` : ''}
+  
+  &.selected{
+    ${props => props.heightBelow ? `max-height : ${props.heightAbove + props.heightBelow}px;` : ''}
+  }
   
 `;
 
@@ -223,7 +236,7 @@ export const Container = styled.div.attrs(props => ({
                 position: relative;
                 z-index : 5;
                 transition : all 0.5s ease;
-                height : 130px;
+                //height : 130px;
                 display : flex;
                 flex-direction : column;
                 justify-content : center;
@@ -234,14 +247,14 @@ export const Container = styled.div.attrs(props => ({
                 
                 &:not(.selected){
                     z-index : 1;
-                    transition : z-index 0.5s step-end, transform 0.5s ease, opacity 0.5s ease, height 0.5s ease, max-height 0.5s ease;
+                    transition :all 0.5s ease;
                 }
                 
              }
              
              & ${Card}.selected{
                 z-index : 2;
-                max-height : 1200px;
+                //max-height : 1200px;
                  & ${ Contain }{
                     -webkit-box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
                     -moz-box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
@@ -249,7 +262,9 @@ export const Container = styled.div.attrs(props => ({
                     
                     & ${ Above }{
                         ${ Portrait}{
-                            height : 150px;
+                            //height : 230px;
+                            padding-top : 0px;
+                            padding-bottom : 30px;
                             
                             &:after{
                                 filter : blur(10px);
@@ -260,20 +275,19 @@ export const Container = styled.div.attrs(props => ({
                             }
                         }
                         ${ TextContent}{
-                            margin-top: -130px;
+                            //margin-top: -50%;
+                            //height : 230px;
                             &>p{
                                 color : white;
                             }
                         }
-                        ${ Miniature }{
-                           opacity : 1;
-                            &:after{
-                                transform : translateY(0);
-                            }
-                        }
+                        
                     }
                     
                     & ${ Below }{
+                        ${ Miniature }{
+                         transform : scale(1);
+                        }
                        & >*{
                             opacity : 1;
                         }
@@ -300,7 +314,7 @@ export const Container = styled.div.attrs(props => ({
     
     &.active{
         &>${Card}:not(.selected){
-            transform : scale(0.9);
+            transform : scale(1);
             opacity : 0.5;
         }
     }
