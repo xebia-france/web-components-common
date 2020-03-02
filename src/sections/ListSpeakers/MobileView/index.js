@@ -76,29 +76,29 @@ class CardSpeaker extends Component {
             heightAbove: null,
             heightBelow: null
         };
-        this.above = React.createRef()
-        this.below = React.createRef()
+       // this.above = React.createRef()
+       // this.below = React.createRef()
 
     }
 
     componentDidMount() {
-        var x = setTimeout(() => {
+       /* var x = setTimeout(() => {
             this.getHeightCard();
-        }, 100);
+        }, 100);*/
 
-        window.addEventListener('resize', () => {
+       /* window.addEventListener('resize', () => {
             this.getHeightCard();
-        })
+        })*/
     }
 
-    getHeightCard = () => {
+ /*   getHeightCard = () => {
         if (this.above.current) {
             this.setState({heightAbove: this.above.current.offsetHeight});
         }
         if (this.below.current) {
             this.setState({heightBelow: this.below.current.offsetHeight});
         }
-    }
+    }*/
 
     getTalk(ref) {
         const {talks, fields} = this.props;
@@ -119,15 +119,14 @@ class CardSpeaker extends Component {
         const FlexContainer = fields.FlexContainer;
 
         return <Card
-            heightAbove={this.state.heightAbove}
-            heightBelow={this.state.heightBelow}
+
             onClick={() => this.props.selectCard(i)}
             responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
             flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}
             className={selected ? 'selected' : ''}>
             <Contain>
 
-                <Above ref={this.above}>
+                <Above >
                     <Portrait asset={s.Photo} assetsDirectory={assetsDirectory}>
 
                     </Portrait>
@@ -154,8 +153,7 @@ class CardSpeaker extends Component {
                     <Miniature asset={s.Photo} assetsDirectory={assetsDirectory}/>
 
                 </Above>
-                <Below ref={this.below}>
-
+                <Below>
                     <TextContent>
                         <Text
                             responsive={fields['Speakers'].responsiveSettings}
