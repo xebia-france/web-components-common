@@ -120,7 +120,10 @@ class CardSpeaker extends Component {
 
         return <Card
 
-            onClick={() => this.props.selectCard(i)}
+            onClick={(e) => {
+                e.preventDefault();
+                this.props.selectCard(i)
+            }}
             responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
             flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}
             className={selected ? 'selected' : ''}>
