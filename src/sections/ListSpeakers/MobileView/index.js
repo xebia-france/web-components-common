@@ -126,6 +126,7 @@ class CardSpeaker extends Component {
             flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}
             className={selected ? 'selected' : ''}>
             <Contain>
+
                 <Above ref={this.above}>
                     <Portrait asset={s.Photo} assetsDirectory={assetsDirectory}>
 
@@ -150,9 +151,10 @@ class CardSpeaker extends Component {
                             {s.Company || ''}
                         </Text>
                     </TextContent>
+                    <Miniature asset={s.Photo} assetsDirectory={assetsDirectory}/>
+
                 </Above>
                 <Below ref={this.below}>
-                    <Miniature asset={s.Photo} assetsDirectory={assetsDirectory}/>
 
                     <TextContent>
                         <Text

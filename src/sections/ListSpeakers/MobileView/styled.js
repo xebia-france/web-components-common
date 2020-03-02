@@ -10,17 +10,17 @@ export const Portrait = styled.div.attrs(props => ({
   width : 100%;
   min-height : 400px;
   position : relative;
-  transition : all 0.9s ease;
+  transition : all 0.5s ease;
   overflow : hidden;
   background-color : white;
-  transition-delay : 0.4s;
+  transition-delay : 0.2s;
   
   
 
   ${ props => ['D', 'T','M'].map((size, i) => `
     @media ${ device[size] } {
         &:after{
-             transition : all 0.9s ease;
+             transition : all 0.5s ease;
              background-image : url('${  `${props.assetsDirectory  || ''}${  props.asset }`}');
              background-size : cover;
              background-position : center;
@@ -38,7 +38,7 @@ export const Portrait = styled.div.attrs(props => ({
          }
          
          &:before{
-             transition : all 0.9s ease;
+             transition : all 0.5s ease;
              background-color : rgba(0,0,0,0.0);
              z-index : 3;
              position : absolute;
@@ -64,11 +64,11 @@ export const Miniature = styled.div.attrs(props => ({
   width : 100px;
   height : 100px;
   position : absolute;
-  top:-50px;
+  bottom:-50px;
   left :calc(50% - 50px);
   z-index: 10;
-  opacity : 0;
-  transition : all 0.9s ease;
+  opacity : 1;
+  transition : all 0.5s ease;
   transform : scale(0);
   transform-origin : center;
   
@@ -76,7 +76,7 @@ export const Miniature = styled.div.attrs(props => ({
   ${ props => ['D', 'T', 'M'].map((size, i) => `
     @media ${ device[size] } {
         &:after{
-             transition : all 0.9s ease;
+             transition : all 0.5s ease;
              background-image : url('${  `${props.assetsDirectory  || ''}${  props.asset }`}');
              background-size : cover;
              background-position : center;
@@ -89,7 +89,7 @@ export const Miniature = styled.div.attrs(props => ({
              left : 0;
              overflow : hidden;
              border-radius : 100%;
-             transition : transform 0.9s ease;
+             transition : transform 0.5s ease;
          }
     }
  `)}
@@ -102,7 +102,7 @@ export const Contain = styled.div.attrs(props => ({
    z-index : 3;
     //position:absolute;
     width : 100%;
-    transition : width 0.9s ease, height 0.9s ease;
+    transition : width 0.5s ease, height 0.5s ease;
     overflow : hidden;
     min-height : 560px;
    // height : 530px;
@@ -126,7 +126,7 @@ export const TextContent = styled.div.attrs(props => ({
   width : 100%;
   
   &>p{
-    transition : color 0.9s ease;
+    transition : color 0.5s ease;
   }
 `;
 
@@ -143,8 +143,8 @@ export const Below = styled.div.attrs(props => ({
   position : relative;
   width : 100%;
   z-index : 3;
-  transition : all 0.9s ease;
-  //transition : width 0.9s ease, height 0.9s ease, max-height 0.9s ease, padding 0.9s ease;
+  transition : all 0.5s ease;
+  //transition : width 0.5s ease, height 0.5s ease, max-height 0.5s ease, padding 0.5s ease;
   overflow : hidden;
   max-height : 160px;
   padding : 0 20px;
@@ -153,7 +153,7 @@ export const Below = styled.div.attrs(props => ({
   
   &>*:not(${Miniature}){
     opacity : 0;
-    transition : opacity 0.9s ease;
+    transition : opacity 0.5s ease;
     transition-delay : 0.0s;
   }
 `;
@@ -165,7 +165,7 @@ export const Above = styled.div.attrs(props => ({
     z-index : 5;
     position:relative;
     width : 100%;
-    transition : width 0.4s ease;
+    transition : all 0.5s ease;
     background : white;
   
     
@@ -182,7 +182,7 @@ export const Card = styled.div.attrs(props => ({
 
 }))`
   cursor : pointer;
-  transition : all 0.9s ease;
+  transition : all 0.5s ease;
   transform : scale(1);
   opacity : 1;
   position : relative;
@@ -251,7 +251,7 @@ export const Container = styled.div.attrs(props => ({
              & ${ Card } ${ Contain } ${ Above } ${ TextContent}{
                 position: relative;
                 z-index : 5;
-                transition : all 0.9s ease;
+                transition : all 0.5s ease;
                 height : 160px;
                 display : flex;
                 flex-direction : column;
@@ -259,10 +259,11 @@ export const Container = styled.div.attrs(props => ({
                 margin-top : 0px;
                // max-height : 300px;
                 overflow : hidden;
-                transition-delay : 0.4s;
+                transition-delay : 0.2s;
                 
                 &>p{
                     transition-delay : 0.5s;
+                    text-align : center;
                 }  
              }
              
@@ -270,7 +271,7 @@ export const Container = styled.div.attrs(props => ({
                 
                 &:not(.selected){
                     z-index : 1;
-                    transition :all 0.9s ease;
+                    transition :all 0.5s ease;
                 }
                 
              }
@@ -284,6 +285,7 @@ export const Container = styled.div.attrs(props => ({
                     box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
                     
                     & ${ Above }{
+                        
                         & ${ Portrait}{
                             min-height : 200px;
                             transition-delay : 0.0s;
@@ -305,7 +307,8 @@ export const Container = styled.div.attrs(props => ({
                            // max-height : 0px;
                             padding : 0px 20px;
                            // height : 0;
-                           margin-top : -200px;
+                           margin-top : -160px;
+                           padding-bottom : 50px;
                             transition-delay : 0.0s;
                             
                             &>p{
@@ -320,16 +323,21 @@ export const Container = styled.div.attrs(props => ({
                         margin-top : 0;
                         padding : 0px 20px;
                         padding-top : 50px;
+                        padding-bottom : 40px;
                         max-height : 800px;
-                          transition-delay : 0.4s;
+                          transition-delay : 0.2s;
 
-                        ${ Miniature }{
-                         transform : scale(1);
-                        }
+                        
                        &>*{
                             opacity : 1;
-                            transition-delay : 0.4s;
+                            transition-delay : 0.2s;
                        }
+                    }
+                    
+                    ${ Miniature }{
+                         transform : scale(1);
+                         opacity : 1;
+                         transition-delay : 0.2s;
                     } 
                  }
                 
