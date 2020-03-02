@@ -8,25 +8,26 @@ export const Portrait = styled.div.attrs(props => ({
     assetsDirectory : props.assetsDirectory
 }))`
   width : 100%;
-  padding-top : 400px;
+  min-height : 400px;
   position : relative;
-  transition : all 0.5s ease;
+  transition : all 0.9s ease;
   overflow : hidden;
   background-color : white;
+  transition-delay : 0.4s;
   
   
 
   ${ props => ['D', 'T','M'].map((size, i) => `
     @media ${ device[size] } {
         &:after{
-             transition : all 0.5s ease;
+             transition : all 0.9s ease;
              background-image : url('${  `${props.assetsDirectory  || ''}${  props.asset }`}');
              background-size : cover;
              background-position : center;
              z-index : 1;
              position : absolute;
              width : 100%;
-             height : 400px;
+             height : 100%;
              content : ''; 
              top : 0;
              left : 0;
@@ -37,12 +38,12 @@ export const Portrait = styled.div.attrs(props => ({
          }
          
          &:before{
-             transition : all 0.5s ease;
+             transition : all 0.9s ease;
              background-color : rgba(0,0,0,0.0);
              z-index : 3;
              position : absolute;
              width : 100%;
-             height : 400px;
+             height : 100%;
              content : ''; 
              top : 0;
              left : 0;
@@ -67,7 +68,7 @@ export const Miniature = styled.div.attrs(props => ({
   left :calc(50% - 50px);
   z-index: 10;
   opacity : 0;
-  transition : all 0.5s ease;
+  transition : all 0.9s ease;
   transform : scale(0);
   transform-origin : center;
   
@@ -75,7 +76,7 @@ export const Miniature = styled.div.attrs(props => ({
   ${ props => ['D', 'T', 'M'].map((size, i) => `
     @media ${ device[size] } {
         &:after{
-             transition : all 0.5s ease;
+             transition : all 0.9s ease;
              background-image : url('${  `${props.assetsDirectory  || ''}${  props.asset }`}');
              background-size : cover;
              background-position : center;
@@ -88,7 +89,7 @@ export const Miniature = styled.div.attrs(props => ({
              left : 0;
              overflow : hidden;
              border-radius : 100%;
-             transition : transform 0.5s ease;
+             transition : transform 0.9s ease;
          }
     }
  `)}
@@ -101,8 +102,9 @@ export const Contain = styled.div.attrs(props => ({
    z-index : 3;
     //position:absolute;
     width : 100%;
-    transition : width 0.5s ease, height 0.5s ease;
+    transition : width 0.9s ease, height 0.9s ease;
     overflow : hidden;
+    min-height : 560px;
    // height : 530px;
     box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.0);
 `;
@@ -124,7 +126,7 @@ export const TextContent = styled.div.attrs(props => ({
   width : 100%;
   
   &>p{
-    transition : color 0.5s ease;
+    transition : color 0.9s ease;
   }
 `;
 
@@ -141,14 +143,18 @@ export const Below = styled.div.attrs(props => ({
   position : relative;
   width : 100%;
   z-index : 3;
-  transition : width 0.5s ease, height 0.5s ease;
-  overflow : visible;
-  padding : 20px;
-  padding-top : 50px;
+  transition : all 0.9s ease;
+  //transition : width 0.9s ease, height 0.9s ease, max-height 0.9s ease, padding 0.9s ease;
+  overflow : hidden;
+  max-height : 160px;
+  padding : 0 20px;
+  margin-top : -160px;
+  transition-delay : 0s;
   
   &>*:not(${Miniature}){
-    //opacity : 0;
-    transition : opacity 0.5s ease;
+    opacity : 0;
+    transition : opacity 0.9s ease;
+    transition-delay : 0.0s;
   }
 `;
 
@@ -156,10 +162,12 @@ export const Below = styled.div.attrs(props => ({
 export const Above = styled.div.attrs(props => ({
 
 }))`
-    z-index : 1;
+    z-index : 5;
     position:relative;
     width : 100%;
     transition : width 0.4s ease;
+    background : white;
+  
     
     & ${ TextContent}{
         padding :40px 20px;
@@ -174,18 +182,19 @@ export const Card = styled.div.attrs(props => ({
 
 }))`
   cursor : pointer;
-  transition : all 0.5s ease;
+  transition : all 0.9s ease;
   transform : scale(1);
   opacity : 1;
   position : relative;
-  max-height : 530px;
+  //min-height : 550px;
+  //max-height : 530px;
   overflow : hidden;
   background : white;
   
-  ${props => props.heightAbove ? `max-height : ${props.heightAbove}px;` : ''}
+ // ${props => props.heightAbove ? `max-height : ${props.heightAbove}px;` : ''}
   
   &.selected{
-    ${props => props.heightBelow ? `max-height : ${props.heightAbove + props.heightBelow}px;` : ''}
+   // ${props => props.heightBelow ? `max-height : ${props.heightAbove + props.heightBelow}px;` : ''}
   }
   
 `;
@@ -242,19 +251,26 @@ export const Container = styled.div.attrs(props => ({
              & ${ Card } ${ Contain } ${ Above } ${ TextContent}{
                 position: relative;
                 z-index : 5;
-                transition : all 0.5s ease;
-                //height : 130px;
+                transition : all 0.9s ease;
+                height : 160px;
                 display : flex;
                 flex-direction : column;
                 justify-content : center;
                 margin-top : 0px;
+               // max-height : 300px;
+                overflow : hidden;
+                transition-delay : 0.4s;
+                
+                &>p{
+                    transition-delay : 0.5s;
+                }  
              }
              
              & ${Card}{
                 
                 &:not(.selected){
                     z-index : 1;
-                    transition :all 0.5s ease;
+                    transition :all 0.9s ease;
                 }
                 
              }
@@ -268,10 +284,11 @@ export const Container = styled.div.attrs(props => ({
                     box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
                     
                     & ${ Above }{
-                        ${ Portrait}{
-                            //height : 230px;
-                            padding-top : 0px;
-                            padding-bottom : 30px;
+                        & ${ Portrait}{
+                            min-height : 200px;
+                            transition-delay : 0.0s;
+                            //padding-top : 0px;
+                            //padding-bottom : 30px;
                             
                             &:after{
                                 filter : blur(10px);
@@ -281,23 +298,38 @@ export const Container = styled.div.attrs(props => ({
                                background-color : rgba(0,0,0,0.5);
                             }
                         }
-                        ${ TextContent}{
-                            //margin-top: -50%;
-                            //height : 230px;
+                        
+                        & ${ TextContent}{
+                            //min-height : 0px;
+                            //padding : 0px 20px;
+                           // max-height : 0px;
+                            padding : 0px 20px;
+                           // height : 0;
+                           margin-top : -200px;
+                            transition-delay : 0.0s;
+                            
                             &>p{
                                 color : white;
+                                transition-delay : 0.0s;
                             }
                         }
                         
                     }
                     
                     & ${ Below }{
+                        margin-top : 0;
+                        padding : 0px 20px;
+                        padding-top : 50px;
+                        max-height : 800px;
+                          transition-delay : 0.4s;
+
                         ${ Miniature }{
                          transform : scale(1);
                         }
-                       & >*{
+                       &>*{
                             opacity : 1;
-                        }
+                            transition-delay : 0.4s;
+                       }
                     } 
                  }
                 
@@ -322,7 +354,7 @@ export const Container = styled.div.attrs(props => ({
     &.active{
         &>${Card}:not(.selected){
             transform : scale(1);
-            opacity : 0.5;
+            //opacity : 0.5;
         }
     }
 `;

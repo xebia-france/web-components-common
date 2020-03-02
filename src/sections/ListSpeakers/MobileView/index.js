@@ -128,31 +128,32 @@ class CardSpeaker extends Component {
             <Contain>
                 <Above ref={this.above}>
                     <Portrait asset={s.Photo} assetsDirectory={assetsDirectory}>
-                        <TextContent>
-                            <Text
-                                responsive={fields['Speakers'].responsiveSettings}
-                                typography={fields['Speakers'].settings.name}
-                            >
-                                {s.FirstName || ''} {s.LastName || ''}
-                            </Text>
-                            <Text
-                                responsive={fields['Speakers'].responsiveSettings}
-                                typography={fields['Speakers'].settings.job}
-                            >
-                                {s.Job || ''}
-                            </Text>
-                            <Text
-                                responsive={fields['Speakers'].responsiveSettings}
-                                typography={fields['Speakers'].settings.company}
-                            >
-                                {s.Company || ''}
-                            </Text>
-                        </TextContent>
-                    </Portrait>
 
+                    </Portrait>
+                    <TextContent>
+                        <Text
+                            responsive={fields['Speakers'].responsiveSettings}
+                            typography={fields['Speakers'].settings.name}
+                        >
+                            {s.FirstName || ''} {s.LastName || ''}
+                        </Text>
+                        <Text
+                            responsive={fields['Speakers'].responsiveSettings}
+                            typography={fields['Speakers'].settings.job}
+                        >
+                            {s.Job || ''}
+                        </Text>
+                        <Text
+                            responsive={fields['Speakers'].responsiveSettings}
+                            typography={fields['Speakers'].settings.company}
+                        >
+                            {s.Company || ''}
+                        </Text>
+                    </TextContent>
                 </Above>
                 <Below ref={this.below}>
                     <Miniature asset={s.Photo} assetsDirectory={assetsDirectory}/>
+
                     <TextContent>
                         <Text
                             responsive={fields['Speakers'].responsiveSettings}
