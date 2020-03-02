@@ -30,29 +30,19 @@ class MobileView extends Component {
 
     selectCard = (i) => {
         if (this.state.selectedCard === i) {
-            this.setState(prevState => ({
-                active: false,//!prevState.active,
-                selectedCard: null
-            }))
+            this.setState({active: false, selectedCard: null})
         } else if (this.state.selectedCard !== null) {
-            this.setState(prevState => ({
-                active: false,//!prevState.active,
-                selectedCard: null
-            }), () => {
+            this.setState({
+                active: false, selectedCard: null
+            }, () => {
                 var x = setTimeout(() => {
-                    this.setState(prevState => ({
-                        active: true,
-                        selectedCard: i
-                    }), () => {
+                    this.setState({active: true, selectedCard: i}, () => {
                         clearTimeout(x);
                     })
                 }, 400);
             })
         } else {
-            this.setState(prevState => ({
-                active: true,
-                selectedCard: i
-            }))
+            this.setState({ active: true, selectedCard: i })
         }
     }
 
@@ -83,13 +73,14 @@ class CardSpeaker extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            heightAbove : null,
-            heightBelow : null
+            heightAbove: null,
+            heightBelow: null
         };
         this.above = React.createRef()
         this.below = React.createRef()
 
     }
+
     componentDidMount() {
         var x = setTimeout(() => {
             this.getHeightCard();
@@ -100,11 +91,11 @@ class CardSpeaker extends Component {
         })
     }
 
-    getHeightCard = () =>  {
-        if(this.above.current){
+    getHeightCard = () => {
+        if (this.above.current) {
             this.setState({heightAbove: this.above.current.offsetHeight});
         }
-        if(this.below.current){
+        if (this.below.current) {
             this.setState({heightBelow: this.below.current.offsetHeight});
         }
     }
@@ -130,7 +121,7 @@ class CardSpeaker extends Component {
         return <Card
             heightAbove={this.state.heightAbove}
             heightBelow={this.state.heightBelow}
-            onClick={ () => this.props.selectCard(i)}
+            onClick={() => this.props.selectCard(i)}
             responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
             flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}
             className={selected ? 'selected' : ''}>

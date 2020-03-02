@@ -111,15 +111,17 @@ export const IconContent = styled.div.attrs(props => ({
 
 }))`
   width : 100%;
-  padding : 20px;
   display : flex;
+  
+  &>*:not(:first-child),  &>*:not(:last-child){
+    margin-right : 20px;
+  }
 `;
 
 export const TextContent = styled.div.attrs(props => ({
 
 }))`
   width : 100%;
-  padding : 40px 20px;
   
   &>p{
     transition : color 0.5s ease;
@@ -141,6 +143,7 @@ export const Below = styled.div.attrs(props => ({
   z-index : 3;
   transition : width 0.5s ease, height 0.5s ease;
   overflow : visible;
+  padding : 20px;
   padding-top : 50px;
   
   &>*:not(${Miniature}){
@@ -157,6 +160,10 @@ export const Above = styled.div.attrs(props => ({
     position:relative;
     width : 100%;
     transition : width 0.4s ease;
+    
+    & ${ TextContent}{
+        padding :40px 20px;
+    }
 `;
 
 export const Card = styled.div.attrs(props => ({

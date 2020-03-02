@@ -29,10 +29,6 @@ export const Portrait = styled.div.attrs(props => ({
              content : ''; 
              top : 0;
              left : 0;
-            /* -webkit-filter: grayscale(0%) brightness(100%) blur(0px);
-            filter: grayscale(0%) brightness(100%) blur(0px);
-            backface-visibility: hidden;*/
-
          }
          
          &:before{
@@ -103,15 +99,17 @@ export const Contain = styled.div.attrs(props => ({
     height : 550px;
     box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.0);
     background-color : white;
-    
 `;
 
 export const IconContent = styled.div.attrs(props => ({
 
 }))`
   width : 100%;
-  padding : 20px;
   display : flex;
+  
+  &>*:not(:first-child),  &>*:not(:last-child){
+    margin-right : 20px;
+  }
 `;
 
 export const TextContent = styled.div.attrs(props => ({
@@ -135,12 +133,10 @@ export const Below = styled.div.attrs(props => ({
 }))`
   background: white;
   position : relative;
-  //position : absolute;
-  ${props => props.widthCard ? `width : calc(${props.widthCard}px * 2);` : `width : 200%;`}
-  
   z-index : 1;
   transition :all 0.5s ease;
   padding : 40px 20px;
+  ${props => props.widthCard ? `width : calc(${props.widthCard}px * 2);` : `width : 200%;`}
   
   &>*{
     opacity : 0;
@@ -169,7 +165,7 @@ export const Card = styled.div.attrs(props => ({
   transform : scale(1);
   opacity : 1;
   position : relative;
- // overflow : hidden;
+  min-height : 550px;
 
   ${ props => props.heightAbove ? `height : ${props.heightAbove}px;` : ''}
   
@@ -179,36 +175,11 @@ export const Card = styled.div.attrs(props => ({
   
   &.selected{
     ${props => props.heightBelow ? `max-height : ${props.heightAbove + props.heightBelow}px;` : ''}
-  }
-  
-  &:not(.selected){
-    ${Contain}{
-         // ${ props => props.heightAbove ? `height : ${props.heightAbove}px;` : ''}
-          //${ props => props.heightAbove ? `max-height : ${props.heightAbove}px;` : ''}
-          
-          
-    }
-  }
-  &.selected{
-    ${props => props.heightBelow ? `max-height : ${props.heightAbove + props.heightBelow}px;` : ''}
-    
-    ${Contain}{
-         //${props => props.heightBelow ? `max-height : ${props.heightAbove + props.heightBelow}px;` : ''}
-         
-        
-    }
     
     & ${ Contain } ${Below} ${Miniature}{
         ${ props => props.heightAbove ? `height : ${props.heightAbove}px;` : ''}
       }
-  
   }
-  
- // &:not(.selected){
-    
-//  }
-  
-  
 `;
 
 export const Container = styled.div.attrs(props => ({
@@ -224,7 +195,7 @@ export const Container = styled.div.attrs(props => ({
   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-             flex-direction : ${ props.flex[size].properties.direction };
+           /*  flex-direction : ${ props.flex[size].properties.direction };
              flex-wrap: ${ props.flex[size].properties.wrap };
              justify-content: ${ props.flex[size].properties.justify };
              align-items: ${ props.flex[size].properties.alignItems };
@@ -233,8 +204,6 @@ export const Container = styled.div.attrs(props => ({
              
              &>*{
                 width: calc(100% / ${ props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px );
-                
-                
                 
                 margin-bottom : ${ props.flex[size].properties.gutterVertical }px;
                 
@@ -259,19 +228,18 @@ export const Container = styled.div.attrs(props => ({
                     `  : ''
     }
                 
-             }
+             }*/
              
              & ${ Card } ${ Contain } ${ Above } ${ TextContent}{
                 position: relative;
                 z-index : 5;
                 transition : transform 0.5s ease;
-                //height : 130px;
                 display : flex;
                 flex-direction : column;
                 justify-content : center;
                 margin-top : 0;
-                padding : 40px 20px;
-
+                padding : 20px;
+                min-height : 150px;
              }
              
              & ${Card}{
@@ -291,7 +259,6 @@ export const Container = styled.div.attrs(props => ({
                     
                     & ${ Above }{
                         ${ Portrait}{
-                            //height : 150px;
                             padding-top : 0px;
                             
                             &:after{
@@ -303,7 +270,6 @@ export const Container = styled.div.attrs(props => ({
                             }
                         }
                         ${ TextContent}{
-                            //transform: translateY(calc(-100% - 10px));
                             &>p{
                                 color : white;
                             }
@@ -318,7 +284,6 @@ export const Container = styled.div.attrs(props => ({
                     }
                     
                     & ${ Below }{
-                        //min-height : 400px;
                        & >*{
                             opacity : 1;
                         }
@@ -326,7 +291,7 @@ export const Container = styled.div.attrs(props => ({
                  }
                 
               }
-            ${ props.flex[size].properties.columns ? `
+            /*${ props.flex[size].properties.columns ? `
                 & ${Card}{
                      &:not(:nth-child(${props.flex[size].properties.columns }n)){
                         & ${Contain}{
@@ -338,10 +303,108 @@ export const Container = styled.div.attrs(props => ({
                             right : 0;
                         }    
                      }
-                  }
-            ` : '' }
+                }
+            ` : '' }*/
          }`)
-    }; 
+    };
+    
+    
+    
+    
+    @media (min-width: 768px) and (max-width : 1023px) {
+        flex-direction : row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items:flex-start;
+        align-content: flex-start;
+        margin-bottom : -20px;
+        
+        &>*{
+            width: calc(100% / 2 - ${   ((2 - 1) * 20) / 2 }px );
+            margin-bottom :20px;
+                &:not(:nth-child(2n + 1)){
+                      margin-left : 20px;
+                     
+                          & ${Contain}{
+                                right : 0;
+                          }
+                }
+        }
+    }
+   
+    @media (min-width : 1024px) and (max-width : 1279px) {
+        flex-direction : row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items:flex-start;
+        align-content: flex-start;
+        margin-bottom : -20px;
+        
+        &>*{
+        width: calc(100% / 3 - ${   ((3 - 1) * 20) / 3 }px );
+        margin-bottom :20px;
+        &:not(:nth-child(3n + 1)){
+              margin-left : 20px;
+        }
+        }
+        
+        &>*{
+        width: calc(100% / 3 - ${   ((3 - 1) * 20) / 3 }px );
+        
+        & ${Card}{
+             &:not(:nth-child(3n)){
+                & ${Contain}{
+                    left : 0;
+                }    
+             }
+             &:nth-child(3n){
+                & ${Contain}{
+                    right : 0;
+                }    
+             }
+          }
+        }
+    }
+   
+    
+    @media (min-width : 1278px) {
+        flex-direction : row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items:flex-start;
+        align-content: flex-start;
+        margin-bottom : -20px;
+        
+        &>*{
+        width: calc(100% / 3 - ${   ((3 - 1) * 20) / 3 }px );
+        margin-bottom :20px;
+        &:not(:nth-child(3n + 1)){
+              margin-left : 20px;
+        }
+        }
+        
+        &>*{
+        width: calc(100% / 4 - ${   ((3 - 1) * 20) / 3 }px );
+        
+        & ${Card}{
+             &:not(:nth-child(4n)){
+                & ${Contain}{
+                    left : 0;
+                }    
+             }
+             &:nth-child(4n){
+                & ${Contain}{
+                    right : 0;
+                }    
+             }
+          }
+        }
+    }
+   
+    
+   
+    
+     
     
     &.active{
         &>${Card}:not(.selected){

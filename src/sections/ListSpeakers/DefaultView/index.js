@@ -23,21 +23,6 @@ class DefaultView extends Component {
         })
     }
 
-
-    getTalk(ref) {
-        const {talks, fields} = this.props;
-        const id = ref.split(" ")[0];
-        const talk = talks.find(s => s.ID === Number(id));
-        return (
-            <Text
-                responsive={fields['Speakers'].responsiveSettings}
-                typography={fields['Speakers'].settings.text}
-            >
-                {talk.Pitch}
-            </Text>
-        )
-    }
-
     getWidthCard = () =>  {
         if(this.myInput.current){
             this.setState({widthCard: this.myInput.current.offsetWidth});
@@ -45,29 +30,19 @@ class DefaultView extends Component {
     }
     selectCard = (i) => {
         if (this.state.selectedCard === i) {
-            this.setState(prevState => ({
-                active: false,//!prevState.active,
-                selectedCard: null
-            }))
+            this.setState({active: false, selectedCard: null})
         } else if (this.state.selectedCard !== null) {
-            this.setState(prevState => ({
-                active: false,//!prevState.active,
-                selectedCard: null
-            }), () => {
+            this.setState({
+                active: false, selectedCard: null
+            }, () => {
                 var x = setTimeout(() => {
-                    this.setState(prevState => ({
-                        active: true,
-                        selectedCard: i
-                    }), () => {
+                    this.setState({active: true, selectedCard: i}, () => {
                         clearTimeout(x);
                     })
                 }, 400);
             })
         } else {
-            this.setState(prevState => ({
-                active: true,
-                selectedCard: i
-            }))
+            this.setState({ active: true, selectedCard: i })
         }
     }
 
@@ -229,7 +204,6 @@ class CardSpeaker extends Component {
                             >
                                 <i>{fields['Speakers'].content.icon1}</i>
                             </Icon>
-
                             : null}
                         {s.Linkedin && s.Linkedin !== '' ?
                             <Icon
