@@ -20,7 +20,7 @@ export const Portrait = styled.div.attrs(props => ({
   ${ props => ['D', 'T','M'].map((size, i) => `
     @media ${ device[size] } {
         &:after{
-             transition : all 0.5s ease;
+             transition : all 0.5s 0.2s ease;
              background-image : url('${  `${props.assetsDirectory  || ''}${  props.asset }`}');
              background-size : cover;
              background-position : center top;
@@ -38,7 +38,7 @@ export const Portrait = styled.div.attrs(props => ({
          }
          
          &:before{
-             transition : all 0.5s ease;
+             transition : all 0.5s 0.2s ease;
              background-color : rgba(0,0,0,0.0);
              z-index : 3;
              position : absolute;
@@ -314,10 +314,13 @@ export const Container = styled.div.attrs(props => ({
                             
                             &:after{
                                 filter : blur(10px);
+                                transition : all 0.5s 0.0s ease;
+
                             }
                             
                             &:before{
                                background-color : rgba(0,0,0,0.5);
+                               transition : all 0.5s 0.0s ease;
                             }
                         }
                         
