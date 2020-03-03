@@ -348,8 +348,7 @@ export const Container = styled.div.attrs(props => ({
         }
         }
         
-        &>*{
-        width: calc(100% / 3 - ${   ((3 - 1) * 20) / 3 }px );
+        
         
         & ${Card}{
              &:not(:nth-child(3n)){
@@ -363,7 +362,7 @@ export const Container = styled.div.attrs(props => ({
                 }    
              }
           }
-        }
+        
     }
    
     
@@ -376,18 +375,19 @@ export const Container = styled.div.attrs(props => ({
         margin-bottom : -20px;
         
         &>*{
-        width: calc(100% / 3 - ${   ((3 - 1) * 20) / 3 }px );
+        width: calc(100% / 4 - ${   ((4 - 1) * 20) / 4 }px );
         margin-bottom :20px;
-        &:not(:nth-child(3n + 1)){
-              margin-left : 20px;
-        }
+            &:not(:nth-child(4n + 1)){
+                  margin-left : 20px;
+            }
         }
         
-        &>*{
-        width: calc(100% / 4 - ${   ((3 - 1) * 20) / 3 }px );
+       
+        
+        
         
         & ${Card}{
-             &:not(:nth-child(4n)){
+            &:not(:nth-child(4n)){
                 & ${Contain}{
                     left : 0;
                 }    
@@ -396,9 +396,11 @@ export const Container = styled.div.attrs(props => ({
                 & ${Contain}{
                     right : 0;
                 }    
-             }
+            }
+        
+             
           }
-        }
+        
     }
    
     

@@ -23,7 +23,7 @@ export const Portrait = styled.div.attrs(props => ({
              transition : all 0.5s ease;
              background-image : url('${  `${props.assetsDirectory  || ''}${  props.asset }`}');
              background-size : cover;
-             background-position : center;
+             background-position : center top;
              z-index : 1;
              position : absolute;
              width : 100%;
