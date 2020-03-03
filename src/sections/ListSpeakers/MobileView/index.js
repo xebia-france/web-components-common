@@ -73,32 +73,34 @@ class CardSpeaker extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            heightAbove: null,
+           // heightAbove: null,
             heightBelow: null
         };
        // this.above = React.createRef()
-       // this.below = React.createRef()
+        this.below = React.createRef()
 
     }
 
     componentDidMount() {
-       /* var x = setTimeout(() => {
+        var x = setTimeout(() => {
             this.getHeightCard();
-        }, 100);*/
+        }, 500);
 
        /* window.addEventListener('resize', () => {
             this.getHeightCard();
         })*/
     }
 
- /*   getHeightCard = () => {
-        if (this.above.current) {
+    getHeightCard = () => {
+       /* if (this.above.current) {
             this.setState({heightAbove: this.above.current.offsetHeight});
-        }
+        }*/
         if (this.below.current) {
-            this.setState({heightBelow: this.below.current.offsetHeight});
+            this.setState({heightBelow: this.below.current.clientHeight}, () => {
+                console.log('STATE GETHEIGHT', this.state);
+            });
         }
-    }*/
+    }
 
     getTalk(ref) {
         const {talks, fields} = this.props;
@@ -124,14 +126,14 @@ class CardSpeaker extends Component {
                 e.preventDefault();
                 this.props.selectCard(i)
             }}
+
+            heightBelow={this.state.heightBelow}
             responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
             flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}
             className={selected ? 'selected' : ''}>
             <Contain>
-
-                <Above >
+                <Above>
                     <Portrait asset={s.Photo} assetsDirectory={assetsDirectory}>
-
                     </Portrait>
                     <TextContent>
                         <Text
@@ -156,7 +158,7 @@ class CardSpeaker extends Component {
                     <Miniature asset={s.Photo} assetsDirectory={assetsDirectory}/>
 
                 </Above>
-                <Below>
+                <Below ref={this.below}>
                     <TextContent>
                         <Text
                             responsive={fields['Speakers'].responsiveSettings}

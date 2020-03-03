@@ -68,7 +68,7 @@ export const Miniature = styled.div.attrs(props => ({
   left :calc(50% - 50px);
   z-index: 10;
   opacity : 1;
-  transition : all 0.5s ease;
+  transition : all 0.3s ease;
   transform : scale(0);
   transform-origin : center;
   
@@ -97,14 +97,14 @@ export const Miniature = styled.div.attrs(props => ({
 `;
 
 export const Contain = styled.div.attrs(props => ({
-
 }))`
    z-index : 3;
     //position:absolute;
     width : 100%;
-    transition : width 0.5s ease, height 0.5s ease;
+    transition : all 0.5s ease;
     overflow : hidden;
     min-height : 560px;
+    height : 560px;
    // height : 530px;
     box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.0);
 `;
@@ -143,18 +143,26 @@ export const Below = styled.div.attrs(props => ({
   position : relative;
   width : 100%;
   z-index : 3;
-  transition : all 0.5s ease;
-  //transition : width 0.5s ease, height 0.5s ease, max-height 0.5s ease, padding 0.5s ease;
+  transition : all 0.5s 0.0s ease;
+  //transition : width 0.5s ease, height 0.5s ease, max-height 0.6s ease, padding 0.5s ease;
   overflow : hidden;
-  max-height : 160px;
-  padding : 0 20px;
-  margin-top : -160px;
+  //max-height : 160px;
+  padding : 0px 20px;
+ // height : 0;
+ // margin-bottom : -160px;
   transition-delay : 0s;
   
   &>*:not(${Miniature}){
     opacity : 0;
     transition : opacity 0.5s ease;
     transition-delay : 0.0s;
+    
+    &:first-child{
+        margin-top : 50px;
+    }
+    &:last-child{
+        margin-bottom : 30px;
+    }
   }
 `;
 
@@ -202,7 +210,11 @@ export const Card = styled.div.attrs(props => ({
  // ${props => props.heightAbove ? `max-height : ${props.heightAbove}px;` : ''}
   
   &.selected{
-   // ${props => props.heightBelow ? `max-height : ${props.heightAbove + props.heightBelow}px;` : ''}
+    ${ Contain }{
+        ${props => props.heightBelow ? `height :  calc(200px + ${ props.heightBelow}px);` : ''}
+    }
+    
+    //${props => props.heightBelow ? `max-height : ${props.heightAbove + props.heightBelow}px;` : ''}
   }
   
 `;
@@ -328,12 +340,11 @@ export const Container = styled.div.attrs(props => ({
                     }
                     
                     & ${ Below }{
-                        margin-top : 0;
+                        //margin-bottom : 0;
                         padding : 0px 20px;
-                        padding-top : 50px;
-                        padding-bottom : 40px;
-                        max-height : 800px;
-                          transition-delay : 0.2s;
+                        //height : auto;
+                        //max-height : 800px;
+                        transition-delay : 0.2s;
 
                         
                        &>*{
