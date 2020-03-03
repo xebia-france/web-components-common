@@ -15,7 +15,6 @@ export const Portrait = styled.div.attrs(props => ({
   background-color : white;
   transition-delay : 0.2s;
   
-  
 
   ${ props => ['D', 'T','M'].map((size, i) => `
     @media ${ device[size] } {
@@ -31,9 +30,7 @@ export const Portrait = styled.div.attrs(props => ({
              content : ''; 
              top : 0;
              left : 0;
-            /* -webkit-filter: grayscale(0%) brightness(100%) blur(0px);
-            filter: grayscale(0%) brightness(100%) blur(0px);
-            backface-visibility: hidden;*/
+             filter : blur(0px);
 
          }
          
