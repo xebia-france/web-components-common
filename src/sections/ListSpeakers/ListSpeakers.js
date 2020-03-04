@@ -40,22 +40,22 @@ class ListSpeakers extends Component {
 
 
         this.orderSpeakers();
-        this.getMediaQueryView();
+        /*this.getMediaQueryView();
 
         if (typeof window !== 'undefined') {
             window.addEventListener('resize', () => {
                 this.getMediaQueryView();
             })
-        }
+        }*/
     }
 
     componentDidUpdate(prevProps, prevState){
-        if(this.state.orderedSpeakers !== prevState.orderedSpeakers ){
+       /* if(this.state.orderedSpeakers !== prevState.orderedSpeakers ){
             this.getMediaQueryView();
-        }
+        }*/
     }
 
-    getMediaQueryView = () => {
+    /*getMediaQueryView = () => {
         const { fields, talks, assetsDirectory} = this.props
         if(typeof window !== 'undefined'  && window.matchMedia(device.M).matches){
             this.setState({
@@ -68,7 +68,7 @@ class ListSpeakers extends Component {
                                 assetsDirectory={assetsDirectory}/>
             })
         }
-    }
+    }*/
 
     orderSpeakers = () => {
         const {fields, speakers} = this.props;
