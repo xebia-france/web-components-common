@@ -25,11 +25,11 @@ import DefaultView from './DefaultView';
 class ListSpeakers extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            orderedSpeakers: [],
+        /*this.state = {
+            orderedSpeakers: this.props.speaker,
             view : <DefaultView fields={props.fields} speakers={props.speakers} talks={props.talks}
                                 assetsDirectory={props.assetsDirectory}/>
-        };
+        };*/
     }
 
     componentDidMount() {
@@ -39,7 +39,7 @@ class ListSpeakers extends Component {
         console.log('PROPS TALKS', this.props.talks);
 
 
-        this.orderSpeakers();
+       // this.orderSpeakers();
         /*this.getMediaQueryView();
 
         if (typeof window !== 'undefined') {
@@ -70,7 +70,7 @@ class ListSpeakers extends Component {
         }
     }*/
 
-    orderSpeakers = () => {
+   /* orderSpeakers = () => {
         const {fields, speakers} = this.props;
         let orderedSpeakers = [];
         fields.Speakers.content.speakers.map(id => {
@@ -79,7 +79,7 @@ class ListSpeakers extends Component {
         this.setState({
             orderedSpeakers: orderedSpeakers
         })
-    }
+    }*/
 
     render() {
         const {children, fields, name, assetsDirectory, speakers, talks} = this.props;
@@ -87,7 +87,7 @@ class ListSpeakers extends Component {
         const FlexContainer = fields.FlexContainer;
 
 
-        if(this.state.orderedSpeakers.length  === 0) return null
+       // if(this.state.orderedSpeakers.length  === 0) return null
         return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
@@ -97,7 +97,7 @@ class ListSpeakers extends Component {
                      basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                      border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
             >
-                <MobileView fields={fields} speakers={this.state.orderedSpeakers} talks={talks}
+                <MobileView fields={fields} speakers={speakers} talks={talks}
                             assetsDirectory={assetsDirectory}/>
             </Wrapper>
         );
