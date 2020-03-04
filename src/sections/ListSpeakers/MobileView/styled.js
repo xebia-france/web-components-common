@@ -51,6 +51,12 @@ export const Portrait = styled.div.attrs(props => ({
          }
     }
  `)}
+ 
+ @media (min-width: 768px){
+    &:after{
+     background-position : center;
+    }
+ }
   
 `;
 
@@ -119,6 +125,8 @@ export const Contain = styled.div.attrs(props => ({}))`
     min-height : 560px;
     height : 560px;
     box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.0);
+    
+   
 `;
 
 export const IconContent = styled.div.attrs(props => ({}))`
@@ -172,6 +180,7 @@ export const Below = styled.div.attrs(props => ({
   
   @media (min-width: 768px){
     height : calc(100% - 160px);
+    max-width : 630px;
   }
 `;
 
@@ -504,14 +513,14 @@ export const Container = styled.div.attrs(props => ({
         & ${Card}{
             & ${ Contain}{
                 & ${Below}{
-                    width: calc(((100vw - (2 * 20px)) / 4 - ${   ((4 - 1) * 20) / 4 }px ) * 2);
+                    width: calc(((1278px - (2 * 20px)) / 4 - ${   ((4 - 1) * 20) / 4 }px ) * 2);
                 }
             }
         }
         
         & ${Card}.selected{
             & ${ Contain}{
-               width: calc(((100vw - (2 * 20px)) / 4 - ${   ((4 - 1) * 20) / 4 }px ) * 2);             
+               width: calc(((1278px - (2 * 20px)) / 4 - ${   ((4 - 1) * 20) / 4 }px ) * 2);             
             }
         } 
         

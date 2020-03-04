@@ -24,7 +24,8 @@ class MobileView extends Component {
         };
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+    }
 
     selectCard = (i) => {
         if (this.state.selectedCard === i) {
@@ -40,7 +41,7 @@ class MobileView extends Component {
                 }, 500);
             })
         } else {
-            this.setState({ active: true, selectedCard: i })
+            this.setState({active: true, selectedCard: i})
         }
     }
 
@@ -77,9 +78,7 @@ class CardSpeaker extends Component {
     }
 
     componentDidMount() {
-       setTimeout(() => {
-            this.getHeightCard();
-        }, 100);
+        setTimeout(() => { this.getHeightCard(); }, 100);
     }
 
     getHeightCard = () => {

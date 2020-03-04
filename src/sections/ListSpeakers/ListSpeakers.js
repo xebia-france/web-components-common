@@ -25,11 +25,6 @@ import DefaultView from './DefaultView';
 class ListSpeakers extends Component {
     constructor(props) {
         super(props);
-        /*this.state = {
-            orderedSpeakers: this.props.speaker,
-            view : <DefaultView fields={props.fields} speakers={props.speakers} talks={props.talks}
-                                assetsDirectory={props.assetsDirectory}/>
-        };*/
     }
 
     componentDidMount() {
@@ -37,57 +32,13 @@ class ListSpeakers extends Component {
         console.log('SETTINGS SPEAKER', this.props.fields['Speakers'].settings);
         console.log('CONTENT SPEAKER', this.props.fields['Speakers'].content);
         console.log('PROPS TALKS', this.props.talks);
-
-
-       // this.orderSpeakers();
-        /*this.getMediaQueryView();
-
-        if (typeof window !== 'undefined') {
-            window.addEventListener('resize', () => {
-                this.getMediaQueryView();
-            })
-        }*/
     }
-
-    componentDidUpdate(prevProps, prevState){
-       /* if(this.state.orderedSpeakers !== prevState.orderedSpeakers ){
-            this.getMediaQueryView();
-        }*/
-    }
-
-    /*getMediaQueryView = () => {
-        const { fields, talks, assetsDirectory} = this.props
-        if(typeof window !== 'undefined'  && window.matchMedia(device.M).matches){
-            this.setState({
-                view : <MobileView fields={fields} speakers={this.state.orderedSpeakers} talks={talks}
-                                   assetsDirectory={assetsDirectory}/>
-            })
-        }else{
-            this.setState({
-                view :  <DefaultView fields={fields} speakers={this.state.orderedSpeakers} talks={talks}
-                                assetsDirectory={assetsDirectory}/>
-            })
-        }
-    }*/
-
-   /* orderSpeakers = () => {
-        const {fields, speakers} = this.props;
-        let orderedSpeakers = [];
-        fields.Speakers.content.speakers.map(id => {
-            orderedSpeakers.push(speakers.find(s => s.ID === id));
-        })
-        this.setState({
-            orderedSpeakers: orderedSpeakers
-        })
-    }*/
 
     render() {
         const {children, fields, name, assetsDirectory, speakers, talks} = this.props;
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
 
-
-       // if(this.state.orderedSpeakers.length  === 0) return null
         return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
