@@ -97,9 +97,8 @@ class ListSpeakers extends Component {
                      basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                      border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
             >
-                {
-                    this.state.view
-                }
+                <MobileView fields={fields} speakers={this.state.orderedSpeakers} talks={talks}
+                            assetsDirectory={assetsDirectory}/>
             </Wrapper>
         );
     }

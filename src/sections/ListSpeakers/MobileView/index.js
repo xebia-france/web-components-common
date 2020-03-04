@@ -24,9 +24,7 @@ class MobileView extends Component {
         };
     }
 
-    componentDidMount() {
-
-    }
+    componentDidMount() {}
 
     selectCard = (i) => {
         if (this.state.selectedCard === i) {
@@ -39,7 +37,7 @@ class MobileView extends Component {
                     this.setState({active: true, selectedCard: i}, () => {
                         clearTimeout(x);
                     })
-                }, 400);
+                }, 500);
             })
         } else {
             this.setState({ active: true, selectedCard: i })
@@ -73,28 +71,18 @@ class CardSpeaker extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           // heightAbove: null,
-            heightBelow: null
+            heightBelow: null,
         };
-       // this.above = React.createRef()
         this.below = React.createRef()
-
     }
 
     componentDidMount() {
-        var x = setTimeout(() => {
+       setTimeout(() => {
             this.getHeightCard();
-        }, 500);
-
-       /* window.addEventListener('resize', () => {
-            this.getHeightCard();
-        })*/
+        }, 100);
     }
 
     getHeightCard = () => {
-       /* if (this.above.current) {
-            this.setState({heightAbove: this.above.current.offsetHeight});
-        }*/
         if (this.below.current) {
             this.setState({heightBelow: this.below.current.clientHeight}, () => {
                 console.log('STATE GETHEIGHT', this.state);
@@ -123,15 +111,13 @@ class CardSpeaker extends Component {
         return <Card
 
             onClick={(e) => {
-                e.preventDefault();
                 this.props.selectCard(i)
             }}
-
             heightBelow={this.state.heightBelow}
             responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
             flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}
             className={selected ? 'selected' : ''}>
-            <Contain>
+            <Contain widthCard={this.state.widthCard}>
                 <Above>
                     <Portrait asset={s.Photo} assetsDirectory={assetsDirectory}>
                     </Portrait>
