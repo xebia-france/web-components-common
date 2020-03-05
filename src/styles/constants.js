@@ -22,7 +22,7 @@ export const theme = {
 
 // Breakpoints that are being used
 
-const size = {
+export const size = {
     M: '425px',
     T: '768px',
     D: '1280px'

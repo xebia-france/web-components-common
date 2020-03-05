@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {device} from "../../../styles/constants";
+import {device, size} from "../../../styles/constants";
 import {TextCommon} from "../../../styles/common.styled";
 import { IconCommon } from "../../../styles/common.styled";
 
@@ -15,7 +15,6 @@ export const Portrait = styled.div.attrs(props => ({
   background-color : white;
   transition-delay : 0.2s;
   
-
   ${ props => ['D', 'T','M'].map((size, i) => `
     @media ${ device[size] } {
         &:after{
@@ -125,8 +124,6 @@ export const Contain = styled.div.attrs(props => ({}))`
     min-height : 560px;
     height : 560px;
     box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.0);
-    
-   
 `;
 
 export const IconContent = styled.div.attrs(props => ({}))`
@@ -161,7 +158,7 @@ export const Below = styled.div.attrs(props => ({
   width : 100%;
   z-index : 3;
   transition : all 0.5s 0.0s ease;
-  overflow : hidden;
+  overflow : hidden; 
   padding : 0px 20px;
   transition-delay : 0s;
   
@@ -219,11 +216,11 @@ export const Card = styled.div.attrs(props => ({
   overflow : hidden;
   background : white;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
- -webkit-tap-highlight-color: transparent;
- -webkit-user-select: none;
- -khtml-user-select: none;
- -moz-user-select: none;
- -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   
   &.selected{
@@ -279,22 +276,50 @@ export const Container = styled.div.attrs(props => ({
                     }
                     
                     `  : ''
-    }
+                }
                 ${props.flex[size].properties.justify === 'flex-end' ? `
                     &:not(:nth-child(${ props.flex[size].properties.columns }n + 1)){
                       margin-left : ${props.flex[size].properties.gutterHorizontal}px;
                     }
                     `  : ''
-    }
+                }
                 
                 ${props.flex[size].properties.justify === 'center' ? `
                     &:not(:nth-child(${ props.flex[size].properties.columns }n + 1)){
                       margin-left : ${props.flex[size].properties.gutterHorizontal}px;
                     }
                     `  : ''
-    }
-                
+                }
              }
+             
+             ${ props.flex[size].properties.columns ? `
+                & ${Card}{
+                     &:not(:nth-child(${props.flex[size].properties.columns }n)){
+                        & ${Contain}{
+                            left : 0;
+                        }    
+                     }
+                     &:nth-child(${props.flex[size].properties.columns }n){
+                        & ${Contain}{
+                            right : 0;
+                        }    
+                     }
+                }
+                  
+                & ${Card}{
+                    & ${ Contain}{
+                        & ${Below}{
+                            width: calc(((100vw - (2 * ${props.flex[size].properties.gutterHorizontal}px)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
+                        }
+                    }
+                }
+                
+                & ${Card}.selected{
+                    & ${ Contain}{
+                         width: calc(((100vw - (2 * ${props.flex[size].properties.gutterHorizontal}px)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
+                    }
+                }
+            ` : '' }
              
              & ${ Card } ${ Contain } ${ Above } ${ TextContent}{
                 position: relative;
@@ -307,6 +332,8 @@ export const Container = styled.div.attrs(props => ({
                 margin-top : 0px;
                 overflow : hidden;
                 transition-delay : 0.2s;
+                padding-top : 0;
+                padding-bottom : 0;
                 
                 &>p{
                     transition-delay : 0.5s;
@@ -315,7 +342,6 @@ export const Container = styled.div.attrs(props => ({
              }
              
              & ${Card}{
-                
                 &:not(.selected){
                     z-index : 1;
                     transition :all 0.5s ease;
@@ -350,7 +376,8 @@ export const Container = styled.div.attrs(props => ({
                         
                         & ${ TextContent}{
                            padding : 0px 20px;
-                           margin-top : -160px;
+                           height : 200px;
+                           margin-top : -200px;
                            padding-bottom : 50px;
                             transition-delay : 0.0s;
                             
@@ -380,150 +407,137 @@ export const Container = styled.div.attrs(props => ({
                  }
                 
               }
-            /*${ props.flex[size].properties.columns ? `
-                & ${Card}{
-                     &:not(:nth-child(${props.flex[size].properties.columns }n)){
-                        & ${Contain}{
-                            left : 0;
-                        }    
-                     }
-                     &:nth-child(${props.flex[size].properties.columns }n){
-                        & ${Contain}{
-                            right : 0;
-                        }    
-                     }
-                  }
-            ` : '' }*/
+            
          }`)
     }; 
     
-    
+    @media (max-width: 768px){
+        & ${Card}{
+            & ${ Contain}{
+                & ${Below}{
+                    width: 100%;
+                }
+            }
+        }
+        
+        & ${Card}.selected{
+            & ${ Contain}{
+              width : 100%;
+            }
+        }
+    }
     
     @media (min-width: 768px) and (max-width : 1023px) {
-        flex-direction : row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        align-items:flex-start;
-        align-content: flex-start;
-        margin-bottom : -20px;
-        
-        &>*{
-            width: calc(100% / 2 - ${   ((2 - 1) * 20) / 2 }px );
-            margin-bottom :20px;
-                &:not(:nth-child(2n + 1)){
-                      margin-left : 20px;
-                     
-                          & ${Contain}{
-                                right : 0;
-                          }
+        ${ props => `
+             flex-direction : ${ props.flex['T'].properties.direction };
+             flex-wrap: ${ props.flex['T'].properties.wrap };
+             justify-content: ${ props.flex['T'].properties.justify };
+             align-items: ${ props.flex['T'].properties.alignItems };
+             align-content: ${ props.flex['T'].properties.alignContent };
+             margin-bottom : -${ props.flex['T'].properties.gutterVertical }px;
+             
+             &>*{
+                width: calc(100% / ${ (props.flex['T'].properties.columns - 1 ) } - ${   (((props.flex['T'].properties.columns - 1 ) - 1) * props.flex['T'].properties.gutterHorizontal) / (props.flex['T'].properties.columns - 1 ) }px );
+                margin-bottom : ${ props.flex['T'].properties.gutterVertical }px;
+                
+                
+                
+                ${props.flex['T'].properties.justify === 'flex-start' ? `
+                    &:not(:nth-child(${ props.flex['T'].properties.columns }n) ){
+                        margin-right : 0;
+                    }
+                    
+                    `  : ''
                 }
-        }
-        
-        & ${Card}{
-            & ${ Contain}{
-                & ${Below}{
-                    width: calc(((100vw - (2 * 20px)) / 2 - ${   ((2 - 1) * 20) / 2 }px ) * 2);
+                ${props.flex['T'].properties.justify === 'flex-end' ? `
+                    &:not(:nth-child(${ props.flex['T'].properties.columns }n + 1)){
+                      margin-left :0;
+                    }
+                    `  : ''
                 }
-            }
-        }
+                
+                ${props.flex['T'].properties.justify === 'center' ? `
+                    &:not(:nth-child(${ props.flex['T'].properties.columns }n + 1)){
+                      margin-left : 0;
+                    }
+                    `  : ''
+                }
+                
+                ${props.flex['T'].properties.justify === 'flex-start' ? `
+                    &:not(:nth-child(${ (props.flex['T'].properties.columns - 1 ) }n) ){
+                        margin-right : ${props.flex['T'].properties.gutterHorizontal}px;
+                    }
+                    
+                    `  : ''
+                }
+                ${props.flex['T'].properties.justify === 'flex-end' ? `
+                    &:not(:nth-child(${ (props.flex['T'].properties.columns - 1 ) }n + 1)){
+                      margin-left : ${props.flex['T'].properties.gutterHorizontal}px;
+                    }
+                    `  : ''
+                }
+                
+                ${props.flex['T'].properties.justify === 'center' ? `
+                    &:not(:nth-child(${ (props.flex['T'].properties.columns - 1 ) }n + 1)){
+                      margin-left : ${props.flex['T'].properties.gutterHorizontal}px;
+                    }
+                    `  : ''
+                }
+             }
         
-        & ${Card}.selected{
-            & ${ Contain}{
-                    width: calc(((100vw - (2 * 20px)) / 2 - ${   ((2 - 1) * 20) / 2 }px ) * 2);                
-            }
-        }  
         
+        `}    
         
+        ${ props => props.flex['T'].properties.columns ? `
+                & ${Card}{
+                     &:not(:nth-child(${( props.flex['T'].properties.columns - 1)  }n)){
+                        & ${Contain}{
+                            left : 0;
+                            right : auto;
+                        }    
+                     }
+                     &:nth-child(${( props.flex['T'].properties.columns - 1)  }n){
+                        & ${Contain}{
+                            right : 0;
+                            left : auto;
+                        }    
+                     }
+                  }
+                  
+                & ${Card}{
+                    & ${ Contain}{
+                        & ${Below}{
+                            width: calc(((100vw - (2 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
+                        }
+                    }
+                }
+                
+                & ${Card}.selected{
+                    & ${ Contain}{
+                         width: calc(((100vw - (2 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
+                    }
+                }
+                  
+                  
+            ` : '' }
     }
    
-    @media (min-width : 1024px) and (max-width : 1279px) {
-        flex-direction : row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        align-items:flex-start;
-        align-content: flex-start;
-        margin-bottom : -20px;
-        
-        &>*{
-            width: calc(100% / 3 - ${   ((3 - 1) * 20) / 3 }px );
-            margin-bottom :20px;
-            
-            &:not(:nth-child(3n + 1)){
-                  margin-left : 20px;
-            }
-        }
-        
-        & ${Card}{
-             &:not(:nth-child(3n)){
-                & ${Contain}{
-                    left : 0;
-                }    
-             }
-             &:nth-child(3n){
-                & ${Contain}{
-                    right : 0;
-                }    
-             }
-        }
-        & ${Card}{
-            & ${ Contain}{
-                & ${Below}{
-                    width: calc(((100vw - (2 * 20px)) / 3 - ${   ((3 - 1) * 20) / 3 }px ) * 2);
+    @media ${ device.D } {
+        ${ props => `
+            & ${Card}{
+                    & ${ Contain}{
+                        & ${Below}{
+                            width: calc(((${ size.D } - (2 * ${props.flex['D'].properties.gutterHorizontal})) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
+                        }
+                    }
                 }
-            }
-        }
-        
-        & ${Card}.selected{
-            & ${ Contain}{
-               width: calc(((100vw - (2 * 20px)) / 3 - ${   ((3 - 1) * 20) / 3 }px ) * 2);             
-            }
-        } 
-        
-    }
-   
-    
-    @media (min-width : 1278px) {
-        flex-direction : row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        align-items:flex-start;
-        align-content: flex-start;
-        margin-bottom : -20px;
-        
-        &>*{
-            width: calc(100% / 4 - ${   ((4 - 1) * 20) / 4 }px );
-            margin-bottom :20px;
-            &:not(:nth-child(4n + 1)){
-                  margin-left : 20px;
-            }
-        }
-        
-        & ${Card}{
-            &:not(:nth-child(4n)){
-                & ${Contain}{
-                    left : 0;
-                }    
-             }
-             &:nth-child(4n){
-                & ${Contain}{
-                    right : 0;
-                }    
-            }
-        }
-        & ${Card}{
-            & ${ Contain}{
-                & ${Below}{
-                    width: calc(((1278px - (2 * 20px)) / 4 - ${   ((4 - 1) * 20) / 4 }px ) * 2);
+                
+                & ${Card}.selected{
+                    & ${ Contain}{
+                         width: calc(((${ size.D } - (2 * ${props.flex['D'].properties.gutterHorizontal})) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
+                    }
                 }
-            }
-        }
-        
-        & ${Card}.selected{
-            & ${ Contain}{
-               width: calc(((1278px - (2 * 20px)) / 4 - ${   ((4 - 1) * 20) / 4 }px ) * 2);             
-            }
-        } 
-        
+        `}
     }
     
     @media (min-width: 768px){
@@ -533,8 +547,14 @@ export const Container = styled.div.attrs(props => ({
                 transition : z-index 0.5s step-end, transform 0.5s ease, opacity 0.5s ease, height 0.5s ease, max-height 0.5s ease;
             }
             
-            
-            
+            & ${ Contain }{
+                & ${ Above }{
+                    & ${ TextContent}{
+                        height : 160px;
+        
+                     }           
+                }
+            }
         }
         
         & ${Card}.selected{
@@ -548,6 +568,8 @@ export const Container = styled.div.attrs(props => ({
                         }
                         & ${ TextContent}{
                             padding-bottom : 0px;
+                            height : 160px;
+                            margin-top : -160px;
                         }
                     } 
                     

@@ -225,30 +225,33 @@ const generateBorder = (prop, size) => {
             : `${ prop[size].width.left };`}`
      : ''}
      
-    ${ prop[size].radius.topLeft && prop[size].radius.topLeft !== '0'  ?
-        `border-top-left-radius :${ isNumber(prop[size].radius.topLeft)
-            ? `${ prop[size].radius.topLeft }px;`
-            : `${ prop[size].radius.topLeft };`}`
-     : ''}
+     ${ prop[size].radius ? `
      
-    ${ prop[size].radius.topRight && prop[size].radius.topRight !== '0'  ?
-        `border-top-right-radius :${ isNumber(prop[size].radius.topRight)
-            ? `${ prop[size].radius.topRight }px;`
-            : `${ prop[size].radius.topRight };`}`
-     : ''}
+        ${ prop[size].radius.topLeft && prop[size].radius.topLeft !== '0'  ?
+            `border-top-left-radius :${ isNumber(prop[size].radius.topLeft)
+                ? `${ prop[size].radius.topLeft }px;`
+                : `${ prop[size].radius.topLeft };`}`
+         : ''}
+         
+        ${ prop[size].radius.topRight && prop[size].radius.topRight !== '0'  ?
+            `border-top-right-radius :${ isNumber(prop[size].radius.topRight)
+                ? `${ prop[size].radius.topRight }px;`
+                : `${ prop[size].radius.topRight };`}`
+         : ''}
+         
+        ${ prop[size].radius.bottomRight && prop[size].radius.bottomRight !== '0'  ?
+            `border-bottom-right-radius :${ isNumber(prop[size].radius.bottomRight)
+                ? `${ prop[size].radius.bottomRight }px;`
+                : `${ prop[size].radius.bottomRight };`}`
+         : ''}
+         
+        ${ prop[size].radius.bottomLeft && prop[size].radius.bottomLeft !== '0'  ?
+            `border-bottom-left-radius :${ isNumber(prop[size].radius.bottomLeft)
+                ? `${ prop[size].radius.bottomLeft }px;`
+                : `${ prop[size].radius.bottomLeft };`}`
+         : ''}
      
-    ${ prop[size].radius.bottomRight && prop[size].radius.bottomRight !== '0'  ?
-        `border-bottom-right-radius :${ isNumber(prop[size].radius.bottomRight)
-            ? `${ prop[size].radius.bottomRight }px;`
-            : `${ prop[size].radius.bottomRight };`}`
-     : ''}
-     
-    ${ prop[size].radius.bottomLeft && prop[size].radius.bottomLeft !== '0'  ?
-        `border-bottom-left-radius :${ isNumber(prop[size].radius.bottomLeft)
-            ? `${ prop[size].radius.bottomLeft }px;`
-            : `${ prop[size].radius.bottomLeft };`}`
-     : ''}
-     
+     ` : ''}
     
        
     `
