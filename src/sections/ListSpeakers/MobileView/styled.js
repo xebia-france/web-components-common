@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import {device, size} from "../../../styles/constants";
 import {TextCommon} from "../../../styles/common.styled";
 import { IconCommon } from "../../../styles/common.styled";
+import { getFormatedColor, generateBorder} from "../../../utils/StyleGenerator";
+import { isNumber } from "../../../utils/functions";
 
 export const Portrait = styled.div.attrs(props => ({
     asset: props.asset,
@@ -12,7 +14,6 @@ export const Portrait = styled.div.attrs(props => ({
   position : relative;
   transition : all 0.5s ease;
   overflow : hidden;
-  background-color : white;
   transition-delay : 0.2s;
   
   ${ props => ['D', 'T','M'].map((size, i) => `
@@ -39,7 +40,6 @@ export const Portrait = styled.div.attrs(props => ({
          
          &:before{
              transition : all 0.5s 0.2s ease;
-             background-color : rgba(0,0,0,0.0);
              z-index : 3;
              position : absolute;
              width : 100%;
@@ -123,7 +123,6 @@ export const Contain = styled.div.attrs(props => ({}))`
     overflow : hidden;
     min-height : 560px;
     height : 560px;
-    box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.0);
 `;
 
 export const IconContent = styled.div.attrs(props => ({}))`
@@ -131,7 +130,7 @@ export const IconContent = styled.div.attrs(props => ({}))`
   display : flex;
   
   &>*:not(:first-child),  &>*:not(:last-child){
-    margin-right : 20px;
+   // margin-right : 20px;
   }
 `;
 
@@ -153,7 +152,7 @@ export const Icon = styled(IconCommon).attrs(props => ({}))``;
 
 export const Below = styled.div.attrs(props => ({
 }))`
-  background: white;
+ // background: blue;
   position : relative;
   width : 100%;
   z-index : 3;
@@ -177,7 +176,7 @@ export const Below = styled.div.attrs(props => ({
   
   @media (min-width: 768px){
     height : calc(100% - 160px);
-    max-width : 630px;
+    //max-width : 630px;
   }
 `;
 
@@ -187,7 +186,7 @@ export const Above = styled.div.attrs(props => ({}))`
     position:relative;
     width : 100%;
     transition : all 0.5s ease;
-    background : white;
+   // background : red;
     
     & ${ TextContent}{
         padding :40px 20px;
@@ -204,17 +203,20 @@ export const Above = styled.div.attrs(props => ({}))`
 
 export const Card = styled.div.attrs(props => ({
     responsive: props.responsive,
-    flex : props.flex,
+    basis : props.basis,
+    border : props.border,
+    photo : props.photo,
     heightBelow : props.heightBelow
 
 }))`
   cursor : pointer;
   transition : all 0.5s ease;
+    -webkit-transform: translate3d(0,0,0);
   transform : scale(1);
   opacity : 1;
   position : relative;
   overflow : hidden;
-  background : white;
+  //background : white;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
   -webkit-user-select: none;
@@ -223,26 +225,147 @@ export const Card = styled.div.attrs(props => ({
   -ms-user-select: none;
   user-select: none;
   
+    
+  
   &.selected{
     ${ Contain }{
         ${props => props.heightBelow ? `height :  calc(200px + ${ props.heightBelow}px);` : ''}
     }
  }
+ 
+ &:not(.selected){
+    z-index : 1;
+    transition :all 0.5s ease;
+ }
   
+ 
+ 
+ ${ props => props.responsive.map((size, i) => `
+     @media ${ device[size] } {
+       // background-color: rgba(255,255,255,0);
+    
+        ${ props.border[size].radius ? `
+     
+        ${ props.border[size].radius.topLeft && props.border[size].radius.topLeft !== '0'  ?
+            `border-top-left-radius :${ isNumber(props.border[size].radius.topLeft)
+                ? `${ props.border[size].radius.topLeft }px;`
+                : `${ props.border[size].radius.topLeft };`}`
+         : ''}
+         
+        ${ props.border[size].radius.topRight && props.border[size].radius.topRight !== '0'  ?
+            `border-top-right-radius :${ isNumber(props.border[size].radius.topRight)
+                ? `${ props.border[size].radius.topRight }px;`
+                : `${ props.border[size].radius.topRight };`}`
+         : ''}
+         
+        ${ props.border[size].radius.bottomRight && props.border[size].radius.bottomRight !== '0'  ?
+            `border-bottom-right-radius :${ isNumber(props.border[size].radius.bottomRight)
+                ? `${ props.border[size].radius.bottomRight }px;`
+                : `${ props.border[size].radius.bottomRight };`}`
+         : ''}
+         
+        ${ props.border[size].radius.bottomLeft && props.border[size].radius.bottomLeft !== '0'  ?
+            `border-bottom-left-radius :${ isNumber(props.border[size].radius.bottomLeft)
+                ? `${ props.border[size].radius.bottomLeft }px;`
+                : `${ props.border[size].radius.bottomLeft };`}`
+         : ''}
+     
+     ` : ''}
+
+        & ${Contain}{
+            background-color: rgba(0,0,0,0.0);
+            ${ props.border ?  generateBorder(props.border, size) : '' }    
+            ${ props.border ?
+                ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
+            : ''}
+            box-shadow : ${ props.basis[size].shadow.value || '0px 5px 5px 5px rgba(0, 0, 0, 0.0)' };
+            
+            & ${Above}{
+                 & ${TextContent}{
+                            background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(255,255,255,1)' };
+                 }   
+                & ${Portrait}{
+                    //background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(0,0,0,0.0)' };
+
+                    &:before{
+                       background-color: ${ props.photo && props.photo[size].color ? getFormatedColor(props.photo[size].color, { value : 0}) : 'rgba(255,0,0,0.0)' };
+
+                    }
+                }
+            }
+            
+            & ${Below}{
+                background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(255,255,255,1)' };
+            }
+        }
+        &.selected{
+            z-index : 2;
+            background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(255,255,255,1)' };
+
+             & ${Contain}{
+                 background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(0,0,0,0.0)' };
+                 
+                & ${Above}{
+                    & ${TextContent}{
+                        background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, { value : 0 }) : 'rgba(255,255,255,1)' };
+                    }
+                
+                    & ${Portrait}{
+                        min-height : 200px;
+                        transition-delay : 0.0s;
+                    
+                        &:before{
+                           background-color: ${ props.photo && props.photo[size].color ? getFormatedColor(props.photo[size].color, props.photo[size].opacity) : 'rgba(0,0,0,0.5)' };
+                           transition : all 0.5s 0.0s ease;
+                        }
+                        &:after{
+                            filter : blur(10px);
+                            -webkit-filter: blur(10px);
+                        }
+                    }
+                }
+            }
+        }  
+     }
+ 
+ 
+ 
+ ` )}
+ 
+ 
  @media (min-width: 768px){
     min-height : 560px;
     overflow : visible;
     ${ Contain }{
         position : absolute;
-        background : white;
-        transition-delay : 0.2s;
+        //background : white;
+        transition : all 0.5s 0.2s ease, background-color 0.0s 0.7s ease;
+
+       // transition-delay : 0.2s;
     }
     &.selected{
         ${ Contain }{
             height : 100%;
-            transition-delay : 0.0s;
+            transition : all 0.5s 0.0s ease, background-color 0.0s 0.0s ease;
+
+            //transition-delay : 0.0s;
+            
+            
         }
      }
+ }
+ @media (max-width: 767px){
+    box-shadow : ${props =>  props.basis.M.shadow.value || '0px 5px 5px 5px rgba(0, 0, 0, 0.0)' };
+
+    & ${ Contain }{
+        background-color: ${ props =>  props.basis && props.basis.M.color ? getFormatedColor(props.basis.M.color, props.basis.M.opacity) : 'rgba(255,255,255,1)' };
+
+        & ${Below}{
+            min-height : calc(100% - 200px);
+            //background-color: ${ props =>  props.basis && props.basis.M.color ? getFormatedColor(props.basis.M.color, props.basis.M.opacity) : 'rgba(255,255,255,1)' };
+        }
+    }
+     
  }
 `;
 
@@ -324,14 +447,13 @@ export const Container = styled.div.attrs(props => ({
              & ${ Card } ${ Contain } ${ Above } ${ TextContent}{
                 position: relative;
                 z-index : 5;
-                transition : all 0.5s ease;
+                transition : all 0.5s 0.2s ease, background-color 0.0s 0.5s;
                 height : 160px;
                 display : flex;
                 flex-direction : column;
                 justify-content : center;
                 margin-top : 0px;
                 overflow : hidden;
-                transition-delay : 0.2s;
                 padding-top : 0;
                 padding-bottom : 0;
                 
@@ -342,14 +464,11 @@ export const Container = styled.div.attrs(props => ({
              }
              
              & ${Card}{
-                &:not(.selected){
-                    z-index : 1;
-                    transition :all 0.5s ease;
-                }
+                
              }
              
              & ${Card}.selected{
-                z-index : 2;
+                
 
                 & ${ Contain }{
                     -webkit-box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
@@ -359,19 +478,10 @@ export const Container = styled.div.attrs(props => ({
                     & ${ Above }{
                         
                         & ${ Portrait}{
-                            min-height : 200px;
-                            transition-delay : 0.0s;
                             
-                            &:after{
-                                filter : blur(10px);
-                                -webkit-filter: blur(10px);
-
-                            }
                             
-                            &:before{
-                               background-color : rgba(0,0,0,0.5);
-                               transition : all 0.5s 0.0s ease;
-                            }
+                            
+                            
                         }
                         
                         & ${ TextContent}{
@@ -379,7 +489,8 @@ export const Container = styled.div.attrs(props => ({
                            height : 200px;
                            margin-top : -200px;
                            padding-bottom : 50px;
-                            transition-delay : 0.0s;
+                           transition : all 0.5s 0.0s ease, background-color 0.0s 0.0s;
+
                             
                             &>p{
                                 color : white;
@@ -527,14 +638,14 @@ export const Container = styled.div.attrs(props => ({
             & ${Card}{
                     & ${ Contain}{
                         & ${Below}{
-                            width: calc(((${ size.D } - (2 * ${props.flex['D'].properties.gutterHorizontal})) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
+                            width: calc(((${ size.D } - (2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
                         }
                     }
                 }
                 
                 & ${Card}.selected{
                     & ${ Contain}{
-                         width: calc(((${ size.D } - (2 * ${props.flex['D'].properties.gutterHorizontal})) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
+                         width: calc(((${ size.D } - (2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
                     }
                 }
         `}

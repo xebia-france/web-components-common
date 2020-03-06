@@ -247,6 +247,7 @@ export const IconCommon = styled.a.attrs(props => ({
     
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
+            ${ props.icon ? generateMargin(props.icon, size) : '' }    
 
 
             & i {

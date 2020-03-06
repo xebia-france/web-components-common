@@ -47,7 +47,7 @@ class MobileView extends Component {
 
     render() {
         const {fields, speakers, talks, assetsDirectory} = this.props;
-
+        console.log('FIELDS VIEW CARD ----> ', fields);
         const FlexContainer = fields.FlexContainer;
 
         return (
@@ -97,6 +97,7 @@ class CardSpeaker extends Component {
             <Text
                 responsive={fields['Speakers'].responsiveSettings}
                 typography={fields['Speakers'].settings.text}
+                basis={fields['Speakers'].settings.text}
             >
                 {talk.Pitch}
             </Text>
@@ -106,36 +107,41 @@ class CardSpeaker extends Component {
     render() {
         const {s, i, fields, selected, talks, assetsDirectory} = this.props;
         const FlexContainer = fields.FlexContainer;
+        const TemplateCard = fields.TemplateCard;
 
         return <Card
-
+            basis={TemplateCard && TemplateCard.settings ? TemplateCard.settings.basis : {} }
+            border={TemplateCard && TemplateCard.settings ? TemplateCard.settings.border : {} }
+            photo={fields['Speakers'].settings.photo}
             onClick={(e) => {
                 this.props.selectCard(i)
             }}
             heightBelow={this.state.heightBelow}
             responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-            flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}
             className={selected ? 'selected' : ''}>
             <Contain widthCard={this.state.widthCard}>
                 <Above>
-                    <Portrait asset={s.Photo} assetsDirectory={assetsDirectory}>
+                    <Portrait asset={s.Photo} assetsDirectory={assetsDirectory} >
                     </Portrait>
                     <TextContent>
                         <Text
                             responsive={fields['Speakers'].responsiveSettings}
                             typography={fields['Speakers'].settings.name}
+                            basis={fields['Speakers'].settings.name}
                         >
                             {s.FirstName || ''} {s.LastName || ''}
                         </Text>
                         <Text
                             responsive={fields['Speakers'].responsiveSettings}
                             typography={fields['Speakers'].settings.job}
+                            basis={fields['Speakers'].settings.job}
                         >
                             {s.Job || ''}
                         </Text>
                         <Text
                             responsive={fields['Speakers'].responsiveSettings}
                             typography={fields['Speakers'].settings.company}
+                            basis={fields['Speakers'].settings.company}
                         >
                             {s.Company || ''}
                         </Text>
@@ -148,12 +154,14 @@ class CardSpeaker extends Component {
                         <Text
                             responsive={fields['Speakers'].responsiveSettings}
                             typography={fields['Speakers'].settings.title}
+                            basis={fields['Speakers'].settings.title}
                         >
                             Bio
                         </Text>
                         <Text
                             responsive={fields['Speakers'].responsiveSettings}
                             typography={fields['Speakers'].settings.text}
+                            basis={fields['Speakers'].settings.text}
                         >
                             {s.Bio || ''}
                         </Text>
@@ -163,6 +171,7 @@ class CardSpeaker extends Component {
                             <Text
                                 responsive={fields['Speakers'].responsiveSettings}
                                 typography={fields['Speakers'].settings.title}
+                                basis={fields['Speakers'].settings.title}
                             >
                                 Talk
                             </Text>
