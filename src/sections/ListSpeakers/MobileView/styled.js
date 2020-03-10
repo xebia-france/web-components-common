@@ -71,8 +71,8 @@ export const Miniature = styled.div.attrs(props => ({
   bottom:-50px;
   left :calc(50% - 50px);
   z-index: 10;
-  opacity : 1;
-  transition : all 0.3s ease;
+  opacity : 0;
+  transition : all 0.3s 0.0s ease, opacity 0.0s 0.3s ease ;
   transform : scale(0);
   transform-origin : center;
 
@@ -104,13 +104,12 @@ export const Miniature = styled.div.attrs(props => ({
     bottom : 0px;
     right : 0px;
     transform : scale(1);
-    transition-delay : 0.0s;
+    //transition-delay : 0.0s;
     
     &:after{
         border-radius : 0%;
         top : 100%;
         transition : all 0.3s ease;
-
     }
  }
   
@@ -128,10 +127,6 @@ export const Contain = styled.div.attrs(props => ({}))`
 export const IconContent = styled.div.attrs(props => ({}))`
   width : 100%;
   display : flex;
-  
-  &>*:not(:first-child),  &>*:not(:last-child){
-   // margin-right : 20px;
-  }
 `;
 
 export const TextContent = styled.div.attrs(props => ({
@@ -141,14 +136,6 @@ export const TextContent = styled.div.attrs(props => ({
   
   &>p{
     transition : color 0.5s ease;
-    
-    
-  }
-  
-  @media (min-width: 768px){
-    &>p{
-        //text-align : left !important;
-    }
   }
 `;
 
@@ -156,7 +143,6 @@ export const Icon = styled(IconCommon).attrs(props => ({}))``;
 
 export const Below = styled.div.attrs(props => ({
 }))`
- // background: blue;
   position : relative;
   width : 100%;
   z-index : 3;
@@ -180,11 +166,8 @@ export const Below = styled.div.attrs(props => ({
   
   @media (min-width: 768px){
     height : calc(100% - 160px);
-    //max-width : 630px;
     
     &>*:not(${Miniature}){
-       
-        
         &:first-child{
             margin-top : 30px;
         }
@@ -201,7 +184,6 @@ export const Above = styled.div.attrs(props => ({}))`
     position:relative;
     width : 100%;
     transition : all 0.5s ease;
-   // background : red;
     
     & ${ TextContent}{
         padding :40px 20px;
@@ -226,12 +208,11 @@ export const Card = styled.div.attrs(props => ({
 }))`
   cursor : pointer;
   transition : all 0.5s ease;
-    -webkit-transform: translate3d(0,0,0);
+  -webkit-transform: translate3d(0,0,0);
   transform : scale(1);
   opacity : 1;
   position : relative;
   overflow : hidden;
-  //background : white;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
   -webkit-user-select: none;
@@ -239,8 +220,6 @@ export const Card = styled.div.attrs(props => ({
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  
-    
   
   &.selected{
     ${ Contain }{
@@ -257,8 +236,6 @@ export const Card = styled.div.attrs(props => ({
  
  ${ props => props.responsive.map((size, i) => `
      @media ${ device[size] } {
-       // background-color: rgba(255,255,255,0);
-    
         ${ props.border[size].radius ? `
      
         ${ props.border[size].radius.topLeft && props.border[size].radius.topLeft !== '0'  ?
@@ -300,11 +277,8 @@ export const Card = styled.div.attrs(props => ({
                    background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(255,255,255,1)' };
                  }   
                 & ${Portrait}{
-                    //background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(0,0,0,0.0)' };
-
                     &:before{
                        background-color: ${ props.photo && props.photo[size].color ? getFormatedColor(props.photo[size].color, { value : 0}) : 'rgba(255,0,0,0.0)' };
-
                     }
                 }
             }
@@ -318,11 +292,9 @@ export const Card = styled.div.attrs(props => ({
             background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(255,255,255,1)' };
 
              & ${Contain}{
-                 background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(0,0,0,0.0)' };
-                 
+                 background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(0,0,0,0.0)' };              
                  box-shadow : ${(props.basis[size].shadow2 && props.basis[size].shadow2.value !== 'none' ) ? props.basis[size].shadow2.value : '0px 5px 5px 5px rgba(0, 0, 0, 0.0)' };
 
-                 
                 & ${Above}{
                     & ${TextContent}{
                         background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, { value : 0 }) : 'rgba(255,255,255,1)' };
@@ -345,9 +317,6 @@ export const Card = styled.div.attrs(props => ({
             }
         }  
      }
- 
- 
- 
  ` )}
  
  
@@ -356,34 +325,23 @@ export const Card = styled.div.attrs(props => ({
     overflow : visible;
     ${ Contain }{
         position : absolute;
-        //background : white;
         transition : all 0.5s 0.2s ease, background-color 0.0s 0.7s ease, width 0.5s 0.0s ease;
-
-       // transition-delay : 0.2s;
     }
     &.selected{
         ${ Contain }{
             height : 100%;
             transition : all 0.5s 0.0s ease, background-color 0.0s 0.0s ease, width 0.5s 0.0s ease;
-
-            //transition-delay : 0.0s;
-            
-            
         }
      }
  }
  @media (max-width: 767px){
-    //box-shadow : ${props =>  props.basis.M.shadow.value || '0px 5px 5px 5px rgba(0, 0, 0, 0.0)' };
-
     & ${ Contain }{
         background-color: ${ props =>  props.basis && props.basis.M.color ? getFormatedColor(props.basis.M.color, props.basis.M.opacity) : 'rgba(255,255,255,1)' };
 
         & ${Below}{
             min-height : calc(100% - 200px);
-            //background-color: ${ props =>  props.basis && props.basis.M.color ? getFormatedColor(props.basis.M.color, props.basis.M.opacity) : 'rgba(255,255,255,1)' };
         }
     }
-     
  }
 `;
 
@@ -450,7 +408,6 @@ export const Container = styled.div.attrs(props => ({
                 & ${Card}{
                     & ${ Contain}{
                         & ${Below}{
-                            //width: calc(((100vw - (2 * ${props.flex[size].properties.gutterHorizontal}px)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
                             width: calc(((100vw - ( 1 * ${props.flex[size].properties.gutterHorizontal}px / 2)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
                         }
                     }
@@ -458,7 +415,6 @@ export const Container = styled.div.attrs(props => ({
                 
                 & ${Card}.selected{
                     & ${ Contain}{
-                         //width: calc(((100vw - (2 * ${props.flex[size].properties.gutterHorizontal}px)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
                          width: calc(((100vw - ( 1 * ${props.flex[size].properties.gutterHorizontal}px / 2)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
                     }
                 }
@@ -482,27 +438,10 @@ export const Container = styled.div.attrs(props => ({
                     text-align : center;
                 }  
              }
-             
-             & ${Card}{
-                
-             }
-             
              & ${Card}.selected{
-                
-
                 & ${ Contain }{
-                    //-webkit-box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
-                    //-moz-box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
-                    //box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
-                    
                     & ${ Above }{
-                        
-                        & ${ Portrait}{
-                            
-                            
-                            
-                            
-                        }
+                        & ${ Portrait}{}
                         
                         & ${ TextContent}{
                            padding : 0px 20px;
@@ -511,13 +450,11 @@ export const Container = styled.div.attrs(props => ({
                            padding-bottom : 50px;
                            transition : all 0.5s 0.0s ease, background-color 0.0s 0.0s;
 
-                            
                             &>p{
                                 color : white;
                                 transition-delay : 0.0s;
                             }
                         }
-                        
                     }
                     
                     & ${ Below }{
@@ -536,9 +473,7 @@ export const Container = styled.div.attrs(props => ({
                          transition-delay : 0.2s;
                     } 
                  }
-                
               }
-            
          }`)
     }; 
     
@@ -613,8 +548,6 @@ export const Container = styled.div.attrs(props => ({
                     `  : ''
                 }
              }
-        
-        
         `}    
         
         ${ props => props.flex['T'].properties.columns ? `
@@ -636,7 +569,6 @@ export const Container = styled.div.attrs(props => ({
                 & ${Card}{
                     & ${ Contain}{
                         & ${Below}{
-                           // width: calc(((100vw - (2 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
                             width: calc(((100vw - ( 1 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
                         }
                     }
@@ -644,12 +576,9 @@ export const Container = styled.div.attrs(props => ({
                 
                 & ${Card}.selected{
                     & ${ Contain}{
-                         //width: calc(((100vw - (1 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
                          width: calc(((100vw - ( 1 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
                     }
                 }
-                  
-                  
             ` : '' }
     }
    
@@ -658,7 +587,6 @@ export const Container = styled.div.attrs(props => ({
             & ${Card}{
                     & ${ Contain}{
                         & ${Below}{
-                            //width: calc(((${ size.D } - (2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
                             width: calc(((${ size.D } + ( 2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
                         }
                     }
@@ -666,7 +594,6 @@ export const Container = styled.div.attrs(props => ({
                 
                 & ${Card}.selected{
                     & ${ Contain}{
-                         //width: calc(((${ size.D } - (2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
                          width: calc(((${ size.D } + (2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
                     }
                 }
