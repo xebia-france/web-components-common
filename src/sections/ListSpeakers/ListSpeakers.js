@@ -50,6 +50,7 @@ class ListSpeakers extends Component {
             >
                 <MobileView fields={fields} speakers={speakers} talks={talks}
                             assetsDirectory={assetsDirectory}/>
+
             </Wrapper>
         );
     }

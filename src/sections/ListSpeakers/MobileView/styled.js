@@ -181,6 +181,17 @@ export const Below = styled.div.attrs(props => ({
   @media (min-width: 768px){
     height : calc(100% - 160px);
     //max-width : 630px;
+    
+    &>*:not(${Miniature}){
+       
+        
+        &:first-child{
+            margin-top : 30px;
+        }
+        &:last-child{
+            margin-bottom : 20px;
+        }
+      }
   }
 `;
 
@@ -282,11 +293,11 @@ export const Card = styled.div.attrs(props => ({
             ${ props.border ?
                 ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
             : ''}
-            box-shadow : ${ props.basis[size].shadow.value || '0px 5px 5px 5px rgba(0, 0, 0, 0.0)' };
+            box-shadow : ${ (props.basis[size].shadow && props.basis[size].shadow.value !== 'none' )  ? props.basis[size].shadow.value : '0px 5px 5px 5px rgba(0, 0, 0, 0.0)' };
             
             & ${Above}{
                  & ${TextContent}{
-                            background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(255,255,255,1)' };
+                   background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(255,255,255,1)' };
                  }   
                 & ${Portrait}{
                     //background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(0,0,0,0.0)' };
@@ -308,6 +319,9 @@ export const Card = styled.div.attrs(props => ({
 
              & ${Contain}{
                  background-color: ${ props.basis && props.basis[size].color ? getFormatedColor(props.basis[size].color, props.basis[size].opacity) : 'rgba(0,0,0,0.0)' };
+                 
+                 box-shadow : ${(props.basis[size].shadow2 && props.basis[size].shadow2.value !== 'none' ) ? props.basis[size].shadow2.value : '0px 5px 5px 5px rgba(0, 0, 0, 0.0)' };
+
                  
                 & ${Above}{
                     & ${TextContent}{
@@ -359,7 +373,7 @@ export const Card = styled.div.attrs(props => ({
      }
  }
  @media (max-width: 767px){
-    box-shadow : ${props =>  props.basis.M.shadow.value || '0px 5px 5px 5px rgba(0, 0, 0, 0.0)' };
+    //box-shadow : ${props =>  props.basis.M.shadow.value || '0px 5px 5px 5px rgba(0, 0, 0, 0.0)' };
 
     & ${ Contain }{
         background-color: ${ props =>  props.basis && props.basis.M.color ? getFormatedColor(props.basis.M.color, props.basis.M.opacity) : 'rgba(255,255,255,1)' };
@@ -477,9 +491,9 @@ export const Container = styled.div.attrs(props => ({
                 
 
                 & ${ Contain }{
-                    -webkit-box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
-                    -moz-box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
-                    box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
+                    //-webkit-box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
+                    //-moz-box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
+                    //box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
                     
                     & ${ Above }{
                         
@@ -556,8 +570,6 @@ export const Container = styled.div.attrs(props => ({
              &>*{
                 width: calc(100% / ${ (props.flex['T'].properties.columns - 1 ) } - ${   (((props.flex['T'].properties.columns - 1 ) - 1) * props.flex['T'].properties.gutterHorizontal) / (props.flex['T'].properties.columns - 1 ) }px );
                 margin-bottom : ${ props.flex['T'].properties.gutterVertical }px;
-                
-                
                 
                 ${props.flex['T'].properties.justify === 'flex-start' ? `
                     &:not(:nth-child(${ props.flex['T'].properties.columns }n) ){
