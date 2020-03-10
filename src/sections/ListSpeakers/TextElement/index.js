@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {TextCommon} from "../../../styles/common.styled";
 
 const TextElement = ({ field, property, content }) => {
-
     return (
         <TextCommon
             responsive={field.responsiveSettings}
@@ -12,7 +11,6 @@ const TextElement = ({ field, property, content }) => {
         >
             {content}
         </TextCommon>
-
     );
 };
 

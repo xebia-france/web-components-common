@@ -41,6 +41,19 @@ class ListSpeakers extends Component {
         }
     }
 
+    getTalks(speaker) {
+        const {talks} = this.props;
+
+        return ['Talk1', 'Talk2']
+            .map(field => {
+                if (speaker[field] && speaker[field] !== '') {
+                    const id = Number(speaker[field].split(" ")[0]);
+                    return talks.find(talk => talk.ID === id)
+                }
+            })
+            .filter(el => el)
+    }
+
     render() {
         const {children, fields, name, assetsDirectory, speakers, talks} = this.props;
         const Template = fields.Template;
@@ -61,12 +74,16 @@ class ListSpeakers extends Component {
                     className={this.state.active ? 'active' : ''}
                 >
                     {
-                        speakers.map((s, i) => {
-                            return <CardSpeaker selectCard={this.selectCard} s={s} i={i} fields={fields} talks={talks}
-                                                selected={i === this.state.selectedCard} assetsDirectory={assetsDirectory}/>
+                        speakers.map((speaker, i) => {
+                            return <CardSpeaker
+                                key={i}
+                                configSpeakers={fields.Speakers}
+                                configCard={fields.TemplateCard}
+                                selectCard={this.selectCard} speaker={speaker} i={i} talks={this.getTalks(speaker)}
+                                selected={i === this.state.selectedCard} assetsDirectory={assetsDirectory}/>
                         })
                     }
-                    { children }
+                    {children}
                 </Container>
             </Wrapper>
         );

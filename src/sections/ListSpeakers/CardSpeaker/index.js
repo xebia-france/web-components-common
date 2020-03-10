@@ -6,12 +6,11 @@ import {
     TextContent,
     Above,
     Portrait,
-    Text,
     Card,
-    Icon,
     IconContent
 } from './styled';
 import TextElement from '../TextElement'
+import IconElement from '../IconElement'
 
 class CardSpeaker extends Component {
     constructor(props) {
@@ -23,7 +22,9 @@ class CardSpeaker extends Component {
     }
 
     componentDidMount() {
-        setTimeout(() => { this.getHeightCard(); }, 100);
+        setTimeout(() => {
+            this.getHeightCard();
+        }, 100);
     }
 
     getHeightCard = () => {
@@ -32,146 +33,72 @@ class CardSpeaker extends Component {
         }
     }
 
-    getTalk(ref) {
-        const {talks, fields} = this.props;
-        const id = ref.split(" ")[0];
-        const talk = talks.find(s => s.ID === Number(id));
-        return (
-            <Text
-                responsive={fields['Speakers'].responsiveSettings}
-                typography={fields['Speakers'].settings.text}
-                basis={fields['Speakers'].settings.text}
-            >
-                {talk.Pitch}
-            </Text>
-        )
-    }
-
     render() {
-        const {s, i, fields, selected, talks, assetsDirectory} = this.props;
-        const FlexContainer = fields.FlexContainer;
-        const TemplateCard = fields.TemplateCard;
+        const {speaker, i, selected, talks, assetsDirectory, configSpeakers, configCard} = this.props;
+
+        const Settings = configCard && configCard.settings ? configCard.settings : null;
+        const Responsive = configCard && configCard.responsiveSettings ? configCard.responsiveSettings : [];
 
         return <Card
-            basis={TemplateCard && TemplateCard.settings ? TemplateCard.settings.basis : {} }
-            border={TemplateCard && TemplateCard.settings ? TemplateCard.settings.border : {} }
-            photo={fields['Speakers'].settings.photo}
-            onClick={(e) => {
+            responsive={Responsive}
+            basis={Settings ? Settings.basis : {}}
+            border={Settings ? Settings.border : {}}
+            photo={configSpeakers.settings.photo}
+            onClick={() => {
                 this.props.selectCard(i)
             }}
             heightBelow={this.state.heightBelow}
-            responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
             className={selected ? 'selected' : ''}>
             <Contain>
                 <Above>
-                    <Portrait asset={s.Photo} assetsDirectory={assetsDirectory} >
+                    <Portrait asset={speaker.Photo} assetsDirectory={assetsDirectory}>
                     </Portrait>
                     <TextContent>
-                        <TextElement field={fields['Speakers']}
-                                     property={'name'}
-                                     content={`${s.FirstName || ''} ${s.LastName || ''}`}
-
-                        />
-                        <Text
-                            responsive={fields['Speakers'].responsiveSettings}
-                            typography={fields['Speakers'].settings.name}
-                            basis={fields['Speakers'].settings.name}
-                        >
-                            {s.FirstName || ''} {s.LastName || ''}
-                        </Text>
-                        <Text
-                            responsive={fields['Speakers'].responsiveSettings}
-                            typography={fields['Speakers'].settings.job}
-                            basis={fields['Speakers'].settings.job}
-                        >
-                            {s.Job || ''}
-                        </Text>
-                        <Text
-                            responsive={fields['Speakers'].responsiveSettings}
-                            typography={fields['Speakers'].settings.company}
-                            basis={fields['Speakers'].settings.company}
-                        >
-                            {s.Company || ''}
-                        </Text>
+                        <TextElement field={configSpeakers} property={'name'}
+                                     content={`${speaker.FirstName || ''} ${speaker.LastName || ''}`}/>
+                        <TextElement field={configSpeakers} property={'job'} content={speaker.Job || ''}/>
+                        <TextElement field={configSpeakers} property={'company'} content={speaker.Company || ''}/>
                     </TextContent>
-                    <Miniature asset={s.Photo} assetsDirectory={assetsDirectory}/>
+                    <Miniature asset={speaker.Photo} assetsDirectory={assetsDirectory}/>
                 </Above>
                 <Below ref={this.below}>
-                    { s.Bio && s.Bio !== '' ?
+                    {speaker.Bio && speaker.Bio !== '' ?
                         <TextContent>
-                            <Text
-                                responsive={fields['Speakers'].responsiveSettings}
-                                typography={fields['Speakers'].settings.title}
-                                basis={fields['Speakers'].settings.title}
-                            >
-                                Bio
-                            </Text>
-                            <Text
-                                responsive={fields['Speakers'].responsiveSettings}
-                                typography={fields['Speakers'].settings.text}
-                                basis={fields['Speakers'].settings.text}
-                            >
-                                {s.Bio || ''}
-                            </Text>
+                            <TextElement field={configSpeakers} property={'title'} content={'Bio'}/>
+                            <TextElement field={configSpeakers} property={'text'} content={speaker.Bio || ''}/>
                         </TextContent>
                         : null
                     }
 
-                    <TextContent>
-                        {(s.Talk1 && s.Talk1 !== '') || (s.Talk2 && s.Talk2 !== '') ?
-                            <Text
-                                responsive={fields['Speakers'].responsiveSettings}
-                                typography={fields['Speakers'].settings.title}
-                                basis={fields['Speakers'].settings.title}
-                            >
-                                Talk
-                            </Text>
-                            : null
-                        }
-                        {
-                            s.Talk1 && s.Talk1 !== '' ?
-                                this.getTalk(s.Talk1)
-                                : null
-                        }
-                        {
-                            s.Talk2 && s.Talk2 !== '' ?
-                                this.getTalk(s.Talk2)
-                                : null
-                        }
-                    </TextContent>
+                    {talks.length !== 0 ?
+                        <TextContent>
+                            <TextElement field={configSpeakers} property={'title'} content={'Talk'}/>
+                            {talks.map((talk, i) => <TextElement key={i} field={configSpeakers} property={'text'}
+                                                            content={talk.Pitch}/>)}
+                        </TextContent>
+                        : null
+                    }
                     <IconContent>
-                        {s.Twitter && s.Twitter !== '' ?
-                            <Icon
-                                responsive={fields['Speakers'].responsiveSettings}
-                                icon={fields['Speakers'].settings.icon}
-                                target={'_blank'}
-                                href={`https://twitter.com/${s.Twitter}`}
-                            >
-                                <i>{fields['Speakers'].content.icon1}</i>
-                            </Icon>
+                        {speaker.Twitter && speaker.Twitter !== '' ?
+                            <IconElement field={configSpeakers} property={'icon'}
+                                         content={configSpeakers.content.icon1}
+                                         link={`https://twitter.com/${speaker.Twitter}`}
 
+                            />
                             : null}
-                        {s.Linkedin && s.Linkedin !== '' ?
-                            <Icon
-                                responsive={fields['Speakers'].responsiveSettings}
-                                icon={fields['Speakers'].settings.icon}
-                                target={'_blank'}
-                                href={`https://www.linkedin.com/in/${s.Linkedin}`}
-                            >
-                                <i>{fields['Speakers'].content.icon2}</i>
-                            </Icon>
+                        {speaker.Linkedin && speaker.Linkedin !== '' ?
+                            <IconElement field={configSpeakers} property={'icon'}
+                                         content={configSpeakers.content.icon2}
+                                         link={`https://www.linkedin.com/in/${speaker.Linkedin}`}
 
+                            />
                             : null}
-                        {s.Github && s.Github !== '' ?
-                            <Icon
-                                responsive={fields['Speakers'].responsiveSettings}
-                                icon={fields['Speakers'].settings.icon}
-                                target={'_blank'}
-                                href={`https://github.com/${s.Github}`}
-                            >
-                                <i>{fields['Speakers'].content.icon3}</i>
-                            </Icon>
+                        {speaker.Github && speaker.Github !== '' ?
+                            <IconElement field={configSpeakers} property={'icon'}
+                                         content={configSpeakers.content.icon3}
+                                         link={`https://github.com/${speaker.Github}`}
 
+                            />
                             : null}
                     </IconContent>
                 </Below>

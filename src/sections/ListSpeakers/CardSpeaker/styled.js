@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import {device, size} from "../../../styles/constants";
-import {TextCommon} from "../../../styles/common.styled";
-import { IconCommon } from "../../../styles/common.styled";
 import { getFormatedColor, generateBorder} from "../../../utils/StyleGenerator";
 import { isNumber } from "../../../utils/functions";
 
@@ -59,7 +57,6 @@ export const Portrait = styled.div.attrs(props => ({
   
 `;
 
-export const Text = styled(TextCommon)``;
 
 export const Miniature = styled.div.attrs(props => ({
     asset: props.asset,
@@ -139,7 +136,6 @@ export const TextContent = styled.div.attrs(props => ({
   }
 `;
 
-export const Icon = styled(IconCommon).attrs(props => ({}))``;
 
 export const Below = styled.div.attrs(props => ({
 }))`
