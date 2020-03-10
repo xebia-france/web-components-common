@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-
 import {
-    Container,
     Below,
     Miniature,
     Contain,
@@ -13,60 +11,7 @@ import {
     Icon,
     IconContent
 } from './styled';
-
-class MobileView extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            active: false,
-            selectedCard: null,
-            widthCard: null
-        };
-    }
-
-    componentDidMount() {
-    }
-
-    selectCard = (i) => {
-        if (this.state.selectedCard === i) {
-            this.setState({active: false, selectedCard: null})
-        } else if (this.state.selectedCard !== null) {
-            this.setState({
-                active: false, selectedCard: null
-            }, () => {
-                var x = setTimeout(() => {
-                    this.setState({active: true, selectedCard: i}, () => {
-                        clearTimeout(x);
-                    })
-                }, 500);
-            })
-        } else {
-            this.setState({active: true, selectedCard: i})
-        }
-    }
-
-    render() {
-        const {fields, speakers, talks, assetsDirectory} = this.props;
-        console.log('FIELDS VIEW CARD ----> ', fields);
-        const FlexContainer = fields.FlexContainer;
-
-        return (
-            <Container
-                responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}
-                className={this.state.active ? 'active' : ''}
-            >
-                {
-                    speakers.map((s, i) => {
-                        return <CardSpeaker selectCard={this.selectCard} s={s} i={i} fields={fields} talks={talks}
-                                            selected={i === this.state.selectedCard} assetsDirectory={assetsDirectory}/>
-                    })
-                }
-            </Container>
-        );
-    }
-}
-
+import TextElement from '../TextElement'
 
 class CardSpeaker extends Component {
     constructor(props) {
@@ -83,9 +28,7 @@ class CardSpeaker extends Component {
 
     getHeightCard = () => {
         if (this.below.current) {
-            this.setState({heightBelow: this.below.current.clientHeight}, () => {
-                console.log('STATE GETHEIGHT', this.state);
-            });
+            this.setState({heightBelow: this.below.current.clientHeight});
         }
     }
 
@@ -119,11 +62,16 @@ class CardSpeaker extends Component {
             heightBelow={this.state.heightBelow}
             responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
             className={selected ? 'selected' : ''}>
-            <Contain widthCard={this.state.widthCard}>
+            <Contain>
                 <Above>
                     <Portrait asset={s.Photo} assetsDirectory={assetsDirectory} >
                     </Portrait>
                     <TextContent>
+                        <TextElement field={fields['Speakers']}
+                                     property={'name'}
+                                     content={`${s.FirstName || ''} ${s.LastName || ''}`}
+
+                        />
                         <Text
                             responsive={fields['Speakers'].responsiveSettings}
                             typography={fields['Speakers'].settings.name}
@@ -147,25 +95,28 @@ class CardSpeaker extends Component {
                         </Text>
                     </TextContent>
                     <Miniature asset={s.Photo} assetsDirectory={assetsDirectory}/>
-
                 </Above>
                 <Below ref={this.below}>
-                    <TextContent>
-                        <Text
-                            responsive={fields['Speakers'].responsiveSettings}
-                            typography={fields['Speakers'].settings.title}
-                            basis={fields['Speakers'].settings.title}
-                        >
-                            Bio
-                        </Text>
-                        <Text
-                            responsive={fields['Speakers'].responsiveSettings}
-                            typography={fields['Speakers'].settings.text}
-                            basis={fields['Speakers'].settings.text}
-                        >
-                            {s.Bio || ''}
-                        </Text>
-                    </TextContent>
+                    { s.Bio && s.Bio !== '' ?
+                        <TextContent>
+                            <Text
+                                responsive={fields['Speakers'].responsiveSettings}
+                                typography={fields['Speakers'].settings.title}
+                                basis={fields['Speakers'].settings.title}
+                            >
+                                Bio
+                            </Text>
+                            <Text
+                                responsive={fields['Speakers'].responsiveSettings}
+                                typography={fields['Speakers'].settings.text}
+                                basis={fields['Speakers'].settings.text}
+                            >
+                                {s.Bio || ''}
+                            </Text>
+                        </TextContent>
+                        : null
+                    }
+
                     <TextContent>
                         {(s.Talk1 && s.Talk1 !== '') || (s.Talk2 && s.Talk2 !== '') ?
                             <Text
@@ -229,6 +180,6 @@ class CardSpeaker extends Component {
     }
 }
 
-MobileView.propTypes = {};
+CardSpeaker.propTypes = {};
 
-export default MobileView;
+export default CardSpeaker;

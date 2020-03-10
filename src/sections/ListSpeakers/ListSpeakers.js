@@ -1,30 +1,19 @@
 import React, {Component} from 'react';
 import {
     Wrapper,
-    Container,
-    Card,
-    Portrait,
-    Image,
-    Text,
-    Miniature,
-    Banner,
-    Below,
-    Above,
-    TextContent,
-    IconContent,
-    Icon,
-    Contain
-
-
+    Container
 } from './styled';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
-import {device} from '../../styles/constants';
-import MobileView from './MobileView';
-import DefaultView from './DefaultView';
+import CardSpeaker from './CardSpeaker';
 
 class ListSpeakers extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            active: false,
+            selectedCard: null,
+        };
     }
 
     componentDidMount() {
@@ -32,6 +21,24 @@ class ListSpeakers extends Component {
         console.log('SETTINGS SPEAKER', this.props.fields['Speakers'].settings);
         console.log('CONTENT SPEAKER', this.props.fields['Speakers'].content);
         console.log('PROPS TALKS', this.props.talks);
+    }
+
+    selectCard = (i) => {
+        if (this.state.selectedCard === i) {
+            this.setState({active: false, selectedCard: null})
+        } else if (this.state.selectedCard !== null) {
+            this.setState({
+                active: false, selectedCard: null
+            }, () => {
+                var x = setTimeout(() => {
+                    this.setState({active: true, selectedCard: i}, () => {
+                        clearTimeout(x);
+                    })
+                }, 500);
+            })
+        } else {
+            this.setState({active: true, selectedCard: i})
+        }
     }
 
     render() {
@@ -48,9 +55,19 @@ class ListSpeakers extends Component {
                      basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                      border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
             >
-                <MobileView fields={fields} speakers={speakers} talks={talks}
-                            assetsDirectory={assetsDirectory}/>
-
+                <Container
+                    responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                    flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}
+                    className={this.state.active ? 'active' : ''}
+                >
+                    {
+                        speakers.map((s, i) => {
+                            return <CardSpeaker selectCard={this.selectCard} s={s} i={i} fields={fields} talks={talks}
+                                                selected={i === this.state.selectedCard} assetsDirectory={assetsDirectory}/>
+                        })
+                    }
+                    { children }
+                </Container>
             </Wrapper>
         );
     }
@@ -111,236 +128,3 @@ ListSpeakers.defaultProps = {
 }
 
 export default ListSpeakers;
-
-
-/*
-
-<Content>
-    <Portrait asset={s.Photo} assetsDirectory={assetsDirectory}>
-        <Image asset={s.Photo} assetsDirectory={assetsDirectory}/>
-        <Banner>
-            <Miniature asset={s.Photo} assetsDirectory={assetsDirectory}/>
-            <div>
-                <Text
-                    responsive={fields['Speakers'].responsiveSettings}
-                    typography={fields['Speakers'].settings.name}
-                >
-                    {s.FirstName || ''} {s.LastName || ''}
-                </Text>
-                <Text
-                    responsive={fields['Speakers'].responsiveSettings}
-                    typography={fields['Speakers'].settings.job}
-                >
-                    {s.Job || ''}
-                </Text>
-                <Text
-                    responsive={fields['Speakers'].responsiveSettings}
-                    typography={fields['Speakers'].settings.company}
-                >
-                    {s.Company || ''}
-                </Text>
-            </div>
-        </Banner>
-    </Portrait>
-
-    <Information>
-        <Main>
-            <BasicInfo>
-                <Text
-                    responsive={fields['Speakers'].responsiveSettings}
-                    typography={fields['Speakers'].settings.name}
-                >
-                    {s.FirstName || ''} {s.LastName || ''}
-                </Text>
-                <Text
-                    responsive={fields['Speakers'].responsiveSettings}
-                    typography={fields['Speakers'].settings.job}
-                >
-                    {s.Job || ''}
-                </Text>
-                <Text
-                    responsive={fields['Speakers'].responsiveSettings}
-                    typography={fields['Speakers'].settings.company}
-                >
-                    {s.Company || ''}
-                </Text>
-            </BasicInfo>
-        </Main>
-        <Second>
-            <SecondaryInfo>
-                <Text
-                    responsive={fields['Speakers'].responsiveSettings}
-                    typography={fields['Speakers'].settings.text}
-                >
-                    {s.Bio || ''}
-                </Text>
-            </SecondaryInfo>
-        </Second>
-
-    </Information>
-</Content>
-
-
-
-
-
-
-
- */
-
-
-/*
-
-<Container
-    nbrSlides={speakers.length}
-    responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-    flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}
-    className={this.state.active ? 'active' : ''}
->
-    {
-        speakers.map((s, i) => {
-            console.log('S ---->', s)
-            return <Card
-                ref={i === 0 ? this.myInput : null}
-                responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}
-                className={i === this.state.selectedCard ? 'selected' : ''}
-
-                onClick={() => {
-                    if (this.state.selectedCard === i) {
-                        this.setState(prevState => ({
-                            active: false,//!prevState.active,
-                            selectedCard: null
-                        }))
-                    } else if (this.state.selectedCard !== null) {
-                        this.setState(prevState => ({
-                            active: false,//!prevState.active,
-                            selectedCard: null
-                        }), () => {
-                            var x = setTimeout(() => {
-                                this.setState(prevState => ({
-                                    active: true,
-                                    selectedCard: i
-                                }), () => {
-                                    clearTimeout(x);
-                                })
-                            }, 400);
-                        })
-                    } else {
-                        this.setState(prevState => ({
-                            active: true,
-                            selectedCard: i
-                        }))
-                    }
-                }}>
-                <Contain>
-                    <Above>
-                        <Portrait asset={s.Photo} assetsDirectory={assetsDirectory}>
-                            <Miniature asset={s.Photo} assetsDirectory={assetsDirectory}/>
-                        </Portrait>
-                        <TextContent>
-                            <Text
-                                responsive={fields['Speakers'].responsiveSettings}
-                                typography={fields['Speakers'].settings.name}
-                            >
-                                {s.FirstName || ''} {s.LastName || ''}
-                            </Text>
-                            <Text
-                                responsive={fields['Speakers'].responsiveSettings}
-                                typography={fields['Speakers'].settings.job}
-                            >
-                                {s.Job || ''}
-                            </Text>
-                            <Text
-                                responsive={fields['Speakers'].responsiveSettings}
-                                typography={fields['Speakers'].settings.company}
-                            >
-                                {s.Company || ''}
-                            </Text>
-                        </TextContent>
-
-                    </Above>
-                    <Below elementWidth={this.state.widthCard}>
-                        <TextContent>
-                            <Text
-                                responsive={fields['Speakers'].responsiveSettings}
-                                typography={fields['Speakers'].settings.title}
-                            >
-                                Bio
-                            </Text>
-                            <Text
-                                responsive={fields['Speakers'].responsiveSettings}
-                                typography={fields['Speakers'].settings.text}
-                            >
-                                {s.Bio || ''}
-                            </Text>
-
-
-                        </TextContent>
-                        <TextContent>
-                            {(s.Talk1 && s.Talk1 !== '') || (s.Talk2 && s.Talk2 !== '') ?
-                                <Text
-                                    responsive={fields['Speakers'].responsiveSettings}
-                                    typography={fields['Speakers'].settings.title}
-                                >
-                                    Talk
-                                </Text>
-                                : null
-                            }
-                            {
-                                s.Talk1 && s.Talk1 !== '' ?
-                                    this.getTalk(s.Talk1)
-                                    : null
-                            }
-                            {
-                                s.Talk2 && s.Talk2 !== '' ?
-                                    this.getTalk(s.Talk2)
-                                    : null
-                            }
-                        </TextContent>
-                        <IconContent>
-                            {s.Twitter && s.Twitter !== '' ?
-                                <Icon
-                                    responsive={fields['Speakers'].responsiveSettings}
-                                    icon={fields['Speakers'].settings.icon}
-                                    target={'_blank'}
-                                    href={`https://twitter.com/${s.Twitter}`}
-                                >
-                                    <i>{fields['Speakers'].content.icon1}</i>
-                                </Icon>
-
-                                : null}
-                            {s.Linkedin && s.Linkedin !== '' ?
-                                <Icon
-                                    responsive={fields['Speakers'].responsiveSettings}
-                                    icon={fields['Speakers'].settings.icon}
-                                    target={'_blank'}
-                                    href={`https://www.linkedin.com/in/${s.Linkedin}`}
-                                >
-                                    <i>{fields['Speakers'].content.icon2}</i>
-                                </Icon>
-
-                                : null}
-                            {s.Github && s.Github !== '' ?
-                                <Icon
-                                    responsive={fields['Speakers'].responsiveSettings}
-                                    icon={fields['Speakers'].settings.icon}
-                                    target={'_blank'}
-                                    href={`https://github.com/${s.Github}`}
-                                >
-                                    <i>{fields['Speakers'].content.icon3}</i>
-                                </Icon>
-
-                                : null}
-                        </IconContent>
-                    </Below>
-                </Contain>
-            </Card>
-        })
-    }
-</Container>
-
-
-
-
- */

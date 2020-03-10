@@ -1,14 +1,11 @@
 import styled from 'styled-components';
-import {device} from "../../styles/constants";
+import {device, size} from "../../styles/constants";
 import {
     generatePadding,
     generateBorder,
     generateBackgroundImage
 } from "../../utils/StyleGenerator";
-import {LanguageSelector, Links, Locale} from "../../components/NavigationBasic/styled";
-import {isNumber} from "../../utils/functions";
-import {TextCommon} from "../../styles/common.styled";
-import { IconCommon } from "../../styles/common.styled";
+import {Above, Below, Card, Contain, Miniature, Portrait, TextContent} from "./CardSpeaker/styled";
 
 export const Wrapper = styled.section.attrs(props => ({
     responsive: props.responsive,
@@ -55,376 +52,9 @@ export const Wrapper = styled.section.attrs(props => ({
     : ''  };
 `;
 
-
-
-
-export const Information = styled.div.attrs(props => ({
-
-}))`
-  z-index : 1;
-   position : relative; 
-   width : 100%;
-`;
-
-export const BluredBackground = styled.div.attrs(props => ({
-
-}))`
-  padding : 20px 5px;
-  
-  
-`;
-
-
-export const Portrait = styled.div.attrs(props => ({
-    asset: props.asset,
-    assetsDirectory : props.assetsDirectory
-}))`
-  width : 100%;
-  height : 400px;
-  position : relative;
-  transition : height 0.5s ease;
-  overflow : hidden;
-  background-color : white;
-  
-
-  ${ props => ['D', 'T','M'].map((size, i) => `
-    @media ${ device[size] } {
-        &:after{
-             transition : all 0.5s ease;
-             background-image : url('${  `${props.assetsDirectory  || ''}${  props.asset }`}');
-             background-size : cover;
-             background-position : center;
-             z-index : 1;
-             position : absolute;
-             width : 100%;
-             height : 100%;
-             content : ''; 
-             top : 0;
-             left : 0;
-            /* -webkit-filter: grayscale(0%) brightness(100%) blur(0px);
-            filter: grayscale(0%) brightness(100%) blur(0px);
-            backface-visibility: hidden;*/
-
-         }
-         
-         &:before{
-             transition : all 0.5s ease;
-             background-color : rgba(0,0,0,0.0);
-             z-index : 3;
-             position : absolute;
-             width : 100%;
-             height : 100%;
-             content : ''; 
-             top : 0;
-             left : 0;
-            
-
-         }
-    }
- `)}
-  
-`;
-
-export const Image = styled.div.attrs(props => ({
-    asset: props.asset,
-    assetsDirectory : props.assetsDirectory
-}))`
-  width : 150px;
-  height :150px;
-  border-radius : 100%;
-  overflow : hidden;
-  z-index : 10;
-  transition : all 0.5s ease;
-  position  : relative;
-  display: none; 
-  
-
-  ${ props => ['D', 'T'].map((size, i) => `
-    @media ${ device[size] } {
-        &:after{
-             transition : all 0.5s ease;
-             background-image : url('${  `${props.assetsDirectory  || ''}${  props.asset }`}');
-             background-size : cover;
-             background-position : center;
-             z-index : 1;
-             position : absolute;
-             width : 100%;
-             height : 100%;
-             content : ''; 
-             top : 0%;
-             left : 0%;
-             -webkit-filter: grayscale(0%)/* brightness(100%)*/ blur(0px);
-            filter: grayscale(0%)/* brightness(100%)*/ blur(0px);
-            backface-visibility: hidden;
-
-         }
-    }
- `)}
-  
-`;
-
-export const Text = styled(TextCommon)`
--`;
-
-
-export const Miniature = styled.div.attrs(props => ({
-    asset: props.asset,
-    assetsDirectory : props.assetsDirectory
-}))`
-  width : 100px;
-  height : 150px;
-  position : absolute;
-  bottom:0;
-  right :0;
-  z-index: 10;
-  opacity : 0;
-  transition : all 0.5s ease;
-
-  ${ props => ['D', 'T'].map((size, i) => `
-    @media ${ device[size] } {
-        &:after{
-             transition : all 0.5s ease;
-             background-image : url('${  `${props.assetsDirectory  || ''}${  props.asset }`}');
-             background-size : cover;
-             background-position : center;
-             z-index : 1;
-             position : absolute;
-             width : 100%;
-             height : 100%;
-             content : ''; 
-             top : 0;
-             left : 0;
-             //border : 2px solid white;
-             overflow : hidden;
-             //border-radius : 100%;
-             transform : translateY(150px);
-             transition : transform 0.5s ease;
-
-         }
-    }
- `)}
-  
-`;
-
-export const BasicInfo = styled.div.attrs(props => ({
-
-}))`
-    transition : all 0.5s ease;
-    height : 150px;
-    width : 100%;
-    padding : 20px;
-    display : flex;
-    flex-direction : column;
-    align-items : center;
-    justify-content : center;
-    margin-top : 0;
-    align-self : flex-end;
-    
-    &>p{
-        transition : all 0.5s ease;
-    }
-    
-`;
-
-export const Second = styled.div.attrs(props => ({
-
-}))`
-    position : relative;
-  
-    
-`;
-
-
-export const SecondaryInfo = styled.div.attrs(props => ({
-
-}))`
-    transition : all 0.5s ease;
-   
-    padding : 20px;
-    position : absolute;
-    opacity : 0;
-`;
-
-
-export const Main = styled.div.attrs(props => ({
-
-}))`
-    transition : all 0.5s ease;
-    z-index : 6;
-    display : flex;
-    background: white;
-    position : relative;
-   // overflow : hidden;
-    flex-direction : column;
-    transform : translateY(calc(100% - 150px));
- 
-`;
-
-
-export const Banner = styled.div.attrs(props => ({
-
-}))`
-  width : 100%;
-  height : 150px;
-  background-color : rgba(0,0,0,0.8);
-  transition : all 0.5s ease;
-  box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.07);
-  transform : translateY(100%);
-  display : flex;
-  position : absolute;
-  display : none;
-  bottom : 0;
-  left: 0;
-  align-items : center;
-  z-index: 3;
-  //opacity : 0;
-  
-  &>div:nth-child(2){
-    width : 100%;
-    padding-left : 20px;
-
-    
-     &>p{
-        color : white;
-        text-align : left;
-    }
-  }
-
-`;
-
-export const Content = styled.div.attrs(props => ({
-
-}))`
-  position : relative;
-  width : 100%;
-  height : 100%;
-  background : white;
-  transition : all 0.5s ease;
-  display : flex;
-  flex-direction : column;
-  align-items : flex-end;
-  overflow : hidden;
-
-
-`;
-
-export const Contain = styled.div.attrs(props => ({
-
-}))`
-   z-index : 3;
-    position:absolute;
-    width : 100%;
-    transition : width 0.5s ease, height 0.5s ease;
-    overflow : hidden;
-    height : 530px;
-    box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.0);
-
-
-
-
-`;
-
-export const IconContent = styled.div.attrs(props => ({
-
-}))`
-  width : 100%;
-  padding : 20px;
-  display : flex;
-
-
-`;
-
-export const TextContent = styled.div.attrs(props => ({
-
-}))`
-  width : 100%;
-  padding : 20px;
-  
-  &>p{
-    transition : color 0.5s ease;
-  }
-
-
-`;
-
-export const Icon = styled(IconCommon).attrs(props => ({
-
-}))`
- 
-`;
-
-export const Below = styled.div.attrs(props => ({
-    elementWidth : props.elementWidth
-}))`
-  background: white;
-  position : absolute;
-  top : 150px;
-  left : 0;
-  ${props => props.elementWidth ? `width : calc(${props.elementWidth}px * 2);` : `width : 200%;`}
-  
-  height : calc(100% - 150px);
-  z-index : 1;
-  transition : width 0.5s ease, height 0.5s ease;
-  
-  &>*{
-    opacity : 0;
-    transition : opacity 0.5s ease;
-  }
-`;
-
-
-export const Above = styled.div.attrs(props => ({
-
-}))`
-    z-index : 3;
-    position:relative;
-    width : 100%;
-    transition : width 0.4s ease;
-
-`;
-
-
-
-export const Card = styled.div.attrs(props => ({
-    responsive: props.responsive,
-    flex : props.flex
-}))`
-  cursor : pointer;
-  transition : transform 0.5s ease, opacity 0.5s ease, height 0.5s ease;
-  transform : scale(1);
-  opacity : 1;
-  position : relative;
-  height : 530px;
-  
-  
-  
-  
-  &.selected{
-    z-index : 2;
-    & ${Content}{
-        position : absolute;
-        width : 200%;
-    }
-  }
-  
-  ${ props => ['M'].map((size, i) => `
-    @media ${ device[size] } {
-        max-width : 400px;
-        margin : auto:
-    }
- `)}
-    
-
-  
-  
-    
-  
-`;
-
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
-    flex: props.flex,
-    nbrSlides : props.nbrSlides
+    flex: props.flex
 
 }))`
   max-width : 1280px;
@@ -441,8 +71,6 @@ export const Container = styled.div.attrs(props => ({
              align-items: ${ props.flex[size].properties.alignItems };
              align-content: ${ props.flex[size].properties.alignContent };
              margin-bottom : -${ props.flex[size].properties.gutterVertical }px;
-             
-             
              
              &>*{
                 width: calc(100% / ${ props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px );
@@ -468,83 +96,10 @@ export const Container = styled.div.attrs(props => ({
                     }
                     `  : ''
     }
-                
              }
              
-             & ${ Card } ${ Contain } ${ Above } ${ TextContent}{
-                position: relative;
-                z-index : 5;
-                transition : transform 0.5s ease;
-                height : 130px;
-                display : flex;
-                flex-direction : column;
-                justify-content : center;
-                
-             }
-             
-             & ${Card}{
-                &:not(.selected){
-                    z-index : 1;
-                    transition : z-index 0.5s step-end, transform 0.5s ease, opacity 0.5s ease, height 0.5s ease;
-                }
-                & ${Content}{
-                     width : 100%;
-                   
-                }
-                
-             }
-             
-             & ${Card}.selected{
-             
-              
-                z-index : 2;
-                 & ${ Contain }{
-                    width : 200%;
-                    -webkit-box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
-                    -moz-box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
-                    box-shadow: 0px 20px 40px 0px rgba(45,69,112,0.4);
-                    
-                    & ${ Above }{
-                        ${ Portrait}{
-                            height : 150px;
-                            
-                            
-                            &:after{
-                                filter : blur(10px);
-                            }
-                            
-                            
-                            
-                            &:before{
-                               background-color : rgba(0,0,0,0.5);
-                            }
-                        }
-                        ${ TextContent}{
-                            transform: translateY(calc(-100% - 10px));
-                            &>p{
-                                color : white;
-                            }
-                        }
-                        ${ Miniature }{
-                           opacity : 1;
-                            &:after{
-                                transform : translateY(0);
-                            }
-                        }
-                    }
-                    
-                    & ${ Below }{
-                       
-                       & >*{
-                            opacity : 1;
-                        }
-                    } 
-                 }
-                
-              }
-            ${ props.flex[size].properties.columns ? `
+             ${ props.flex[size].properties.columns ? `
                 & ${Card}{
-               
                      &:not(:nth-child(${props.flex[size].properties.columns }n)){
                         & ${Contain}{
                             left : 0;
@@ -555,57 +110,255 @@ export const Container = styled.div.attrs(props => ({
                             right : 0;
                         }    
                      }
-                  }
-            
+                }
+                  
+                & ${Card}{
+                    & ${ Contain}{
+                        & ${Below}{
+                            width: calc(((100vw - ( 1 * ${props.flex[size].properties.gutterHorizontal}px / 2)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
+                        }
+                    }
+                }
+                
+                & ${Card}.selected{
+                    & ${ Contain}{
+                         width: calc(((100vw - ( 1 * ${props.flex[size].properties.gutterHorizontal}px / 2)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
+                    }
+                }
             ` : '' }
+             
+             & ${ Card } ${ Contain } ${ Above } ${ TextContent}{
+                position: relative;
+                z-index : 5;
+                transition : all 0.5s 0.2s ease, background-color 0.0s 0.7s;
+                height : 160px;
+                display : flex;
+                flex-direction : column;
+                justify-content : center;
+                margin-top : 0px;
+                overflow : hidden;
+                padding-top : 0;
+                padding-bottom : 0;
+                
+                &>p{
+                    transition-delay : 0.5s;
+                    text-align : center;
+                }  
+             }
+             & ${Card}.selected{
+                & ${ Contain }{
+                    & ${ Above }{
+                        & ${ Portrait}{}
+                        
+                        & ${ TextContent}{
+                           padding : 0px 20px;
+                           height : 200px;
+                           margin-top : -200px;
+                           padding-bottom : 50px;
+                           transition : all 0.5s 0.0s ease, background-color 0.0s 0.0s;
+
+                            &>p{
+                                color : white;
+                                transition-delay : 0.0s;
+                            }
+                        }
+                    }
+                    
+                    & ${ Below }{
+                        padding : 0px 20px;
+                        transition-delay : 0.2s;
+                      
+                       &>*{
+                            opacity : 1;
+                            transition-delay : 0.2s;
+                       }
+                    }
+                    
+                    ${ Miniature }{
+                         transform : scale(1);
+                         opacity : 1;
+                         transition-delay : 0.2s;
+                    } 
+                 }
+              }
          }`)
     }; 
     
-    
-    
-    &.active{
-        &>${Card}:not(.selected){
-            transform : scale(0.8);
-            opacity : 0.5;
+    @media (max-width: 768px){
+        & ${Card}{
+            & ${ Contain}{
+                & ${Below}{
+                    width: 100%;
+                }
+            }
+        }
+        
+        & ${Card}.selected{
+            & ${ Contain}{
+              width : 100%;
+            }
         }
     }
     
-    ${ props => ['M'].map((size, i) => `
-    @media ${ device[size] } {
-        max-width : none;
-        width : calc(100% * ${props.nbrSlides});
-        justify-content : flex-start;
-    
-    
-    
-        & ${Card}{
-            & ${ Contain }{
-                width : 100%;
+    @media (min-width: 768px) and (max-width : 1023px) {
+        ${ props => `
+             flex-direction : ${ props.flex['T'].properties.direction };
+             flex-wrap: ${ props.flex['T'].properties.wrap };
+             justify-content: ${ props.flex['T'].properties.justify };
+             align-items: ${ props.flex['T'].properties.alignItems };
+             align-content: ${ props.flex['T'].properties.alignContent };
+             margin-bottom : -${ props.flex['T'].properties.gutterVertical }px;
+             
+             &>*{
+                width: calc(100% / ${ (props.flex['T'].properties.columns - 1 ) } - ${   (((props.flex['T'].properties.columns - 1 ) - 1) * props.flex['T'].properties.gutterHorizontal) / (props.flex['T'].properties.columns - 1 ) }px );
+                margin-bottom : ${ props.flex['T'].properties.gutterVertical }px;
                 
-                & ${Below}{
-                    width  100%;
-                }
-            }
-       }
-       & ${Card}.selected{
-            height : 700px;
-            & ${ Contain }{
-                width : 100%;
-                height : 700px;
-                
-                & ${Below}{
-                    width  100%;
-                }
-            }
-       }
-       
-       
-       
-       
-       
+                ${props.flex['T'].properties.justify === 'flex-start' ? `
+                    &:not(:nth-child(${ props.flex['T'].properties.columns }n) ){
+                        margin-right : 0;
+                    }
+                    
+                    `  : ''
     }
- `)}
+                ${props.flex['T'].properties.justify === 'flex-end' ? `
+                    &:not(:nth-child(${ props.flex['T'].properties.columns }n + 1)){
+                      margin-left :0;
+                    }
+                    `  : ''
+    }
+                
+                ${props.flex['T'].properties.justify === 'center' ? `
+                    &:not(:nth-child(${ props.flex['T'].properties.columns }n + 1)){
+                      margin-left : 0;
+                    }
+                    `  : ''
+    }
+                
+                ${props.flex['T'].properties.justify === 'flex-start' ? `
+                    &:not(:nth-child(${ (props.flex['T'].properties.columns - 1 ) }n) ){
+                        margin-right : ${props.flex['T'].properties.gutterHorizontal}px;
+                    }
+                    
+                    `  : ''
+    }
+                ${props.flex['T'].properties.justify === 'flex-end' ? `
+                    &:not(:nth-child(${ (props.flex['T'].properties.columns - 1 ) }n + 1)){
+                      margin-left : ${props.flex['T'].properties.gutterHorizontal}px;
+                    }
+                    `  : ''
+    }
+                
+                ${props.flex['T'].properties.justify === 'center' ? `
+                    &:not(:nth-child(${ (props.flex['T'].properties.columns - 1 ) }n + 1)){
+                      margin-left : ${props.flex['T'].properties.gutterHorizontal}px;
+                    }
+                    `  : ''
+    }
+             }
+        `}    
+        
+        ${ props => props.flex['T'].properties.columns ? `
+                & ${Card}{
+                     &:not(:nth-child(${( props.flex['T'].properties.columns - 1)  }n)){
+                        & ${Contain}{
+                            left : 0;
+                            right : auto;
+                        }    
+                     }
+                     &:nth-child(${( props.flex['T'].properties.columns - 1)  }n){
+                        & ${Contain}{
+                            right : 0;
+                            left : auto;
+                        }    
+                     }
+                  }
+                  
+                & ${Card}{
+                    & ${ Contain}{
+                        & ${Below}{
+                            width: calc(((100vw - ( 1 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
+                        }
+                    }
+                }
+                
+                & ${Card}.selected{
+                    & ${ Contain}{
+                         width: calc(((100vw - ( 1 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
+                    }
+                }
+            ` : '' }
+    }
+   
+    @media ${ device.D } {
+        ${ props => `
+            & ${Card}{
+                    & ${ Contain}{
+                        & ${Below}{
+                            width: calc(((${ size.D } + ( 2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
+                        }
+                    }
+                }
+                
+                & ${Card}.selected{
+                    & ${ Contain}{
+                         width: calc(((${ size.D } + (2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
+                    }
+                }
+        `}
+    }
     
-    
-    
+    @media (min-width: 768px){
+        & ${Card}{
+            &:not(.selected){
+                z-index : 1;
+                transition : z-index 0.5s step-end, transform 0.5s ease, opacity 0.5s ease, height 0.5s ease, max-height 0.5s ease;
+            }
+            
+            & ${ Contain }{
+                & ${ Above }{
+                    & ${ TextContent}{
+                        height : 160px;
+        
+                     }           
+                }
+            }
+        }
+        
+        & ${Card}.selected{
+            z-index : 2;
+            transition : z-index 0.0s step-end, transform 0.5s ease, opacity 0.5s ease, height 0.5s ease, max-height 0.5s ease;
+            
+            & ${ Contain }{
+                    & ${ Above }{
+                        & ${ Portrait}{
+                            min-height : 160px;
+                        }
+                        & ${ TextContent}{
+                            padding-bottom : 0px;
+                            height : 160px;
+                            margin-top : -160px;
+                        }
+                    } 
+                    
+                    & ${ Below}{
+                        transition-delay : 0.0s;
+                    }
+                    
+                    ${ Miniature}{
+                        transition-delay : 0.3s;
+                        &:after{
+                            top : 0px;
+                            transition-delay : 0.3s;
+                        }
+                    }
+            }   
+        } 
+        
+        &.active{
+            &>${Card}:not(.selected){
+                transform : scale(0.8);
+                opacity : 0.5;
+            }
+        }
+     }
 `;
