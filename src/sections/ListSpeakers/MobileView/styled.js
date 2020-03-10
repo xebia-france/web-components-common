@@ -134,16 +134,20 @@ export const IconContent = styled.div.attrs(props => ({}))`
   }
 `;
 
-export const TextContent = styled.div.attrs(props => ({}))`
+export const TextContent = styled.div.attrs(props => ({
+    basis : props.basis
+}))`
   width : 100%;
   
   &>p{
     transition : color 0.5s ease;
+    
+    
   }
   
   @media (min-width: 768px){
     &>p{
-        text-align : left !important;
+        //text-align : left !important;
     }
   }
 `;
@@ -339,14 +343,14 @@ export const Card = styled.div.attrs(props => ({
     ${ Contain }{
         position : absolute;
         //background : white;
-        transition : all 0.5s 0.2s ease, background-color 0.0s 0.7s ease;
+        transition : all 0.5s 0.2s ease, background-color 0.0s 0.7s ease, width 0.5s 0.0s ease;
 
        // transition-delay : 0.2s;
     }
     &.selected{
         ${ Contain }{
             height : 100%;
-            transition : all 0.5s 0.0s ease, background-color 0.0s 0.0s ease;
+            transition : all 0.5s 0.0s ease, background-color 0.0s 0.0s ease, width 0.5s 0.0s ease;
 
             //transition-delay : 0.0s;
             
@@ -432,14 +436,16 @@ export const Container = styled.div.attrs(props => ({
                 & ${Card}{
                     & ${ Contain}{
                         & ${Below}{
-                            width: calc(((100vw - (2 * ${props.flex[size].properties.gutterHorizontal}px)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
+                            //width: calc(((100vw - (2 * ${props.flex[size].properties.gutterHorizontal}px)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
+                            width: calc(((100vw - ( 1 * ${props.flex[size].properties.gutterHorizontal}px / 2)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
                         }
                     }
                 }
                 
                 & ${Card}.selected{
                     & ${ Contain}{
-                         width: calc(((100vw - (2 * ${props.flex[size].properties.gutterHorizontal}px)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
+                         //width: calc(((100vw - (2 * ${props.flex[size].properties.gutterHorizontal}px)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
+                         width: calc(((100vw - ( 1 * ${props.flex[size].properties.gutterHorizontal}px / 2)) / ${props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px ) * 2);
                     }
                 }
             ` : '' }
@@ -447,7 +453,7 @@ export const Container = styled.div.attrs(props => ({
              & ${ Card } ${ Contain } ${ Above } ${ TextContent}{
                 position: relative;
                 z-index : 5;
-                transition : all 0.5s 0.2s ease, background-color 0.0s 0.5s;
+                transition : all 0.5s 0.2s ease, background-color 0.0s 0.7s;
                 height : 160px;
                 display : flex;
                 flex-direction : column;
@@ -618,14 +624,16 @@ export const Container = styled.div.attrs(props => ({
                 & ${Card}{
                     & ${ Contain}{
                         & ${Below}{
-                            width: calc(((100vw - (2 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
+                           // width: calc(((100vw - (2 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
+                            width: calc(((100vw - ( 1 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
                         }
                     }
                 }
                 
                 & ${Card}.selected{
                     & ${ Contain}{
-                         width: calc(((100vw - (2 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
+                         //width: calc(((100vw - (1 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
+                         width: calc(((100vw - ( 1 * ${props.flex['T'].properties.gutterHorizontal}px)) / ${( props.flex['T'].properties.columns - 1)  } - ${   ((( props.flex['T'].properties.columns - 1)  - 1) * props.flex['T'].properties.gutterHorizontal) / ( props.flex['T'].properties.columns - 1)  }px ) * 2);
                     }
                 }
                   
@@ -638,14 +646,16 @@ export const Container = styled.div.attrs(props => ({
             & ${Card}{
                     & ${ Contain}{
                         & ${Below}{
-                            width: calc(((${ size.D } - (2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
+                            //width: calc(((${ size.D } - (2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
+                            width: calc(((${ size.D } + ( 2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
                         }
                     }
                 }
                 
                 & ${Card}.selected{
                     & ${ Contain}{
-                         width: calc(((${ size.D } - (2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
+                         //width: calc(((${ size.D } - (2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
+                         width: calc(((${ size.D } + (2 * ${props.flex['D'].properties.gutterHorizontal}px)) / ${props.flex['D'].properties.columns } - ${   ((props.flex['D'].properties.columns - 1) * props.flex['D'].properties.gutterHorizontal) / props.flex['D'].properties.columns }px ) * 2);
                     }
                 }
         `}
