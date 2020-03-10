@@ -16,13 +16,6 @@ class ListSpeakers extends Component {
         };
     }
 
-    componentDidMount() {
-        console.log('PROPS SPEAKERS', this.props.speakers);
-        console.log('SETTINGS SPEAKER', this.props.fields['Speakers'].settings);
-        console.log('CONTENT SPEAKER', this.props.fields['Speakers'].content);
-        console.log('PROPS TALKS', this.props.talks);
-    }
-
     selectCard = (i) => {
         if (this.state.selectedCard === i) {
             this.setState({active: false, selectedCard: null})
@@ -55,18 +48,22 @@ class ListSpeakers extends Component {
     }
 
     render() {
-        const {children, fields, name, assetsDirectory, speakers, talks} = this.props;
+        const {children, fields, name, assetsDirectory, speakers} = this.props;
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
 
+        const AssetBackground = Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null;
+        const Settings = Template && Template.settings ? Template.settings : null;
+
+
         return (
             <Wrapper id={removeSpaces(name)}
-                     asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
+                     asset={AssetBackground}
                      assetsDirectory={assetsDirectory}
-                     responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : null}
+                     responsiveContent={AssetBackground ? getResponsiveKey(AssetBackground) : null}
                      responsive={Template ? Template.responsiveSettings : null}
-                     basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
-                     border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
+                     basis={Settings && Settings.basis ? Settings.basis : null}
+                     border={Settings && Settings.border ? Settings.border : null}
             >
                 <Container
                     responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
@@ -90,58 +87,6 @@ class ListSpeakers extends Component {
     }
 };
 
-ListSpeakers.defaultProps = {
-    fields: {
-        Template: {
-            content: {},
-            responsiveSettings: ['A'],
-            settings: {
-                basis: {
-                    A: {
-                        padding: {
-                            top: '0',
-                            right: '0',
-                            bottom: '0',
-                            left: '0'
-                        },
-                        color: {
-                            hex: '#000000',
-                            rgb: '0,0,0',
-                            name: 'black',
-                            shade: null
-                        },
-                        opacity: {
-                            value: '1'
-                        }
-                    }
-                }
-
-            }
-        },
-        FlexContainer: {
-            content: {},
-            responsiveSettings: ['A'],
-            settings: {
-                flex: {
-                    A: {
-                        properties: {
-                            columns: '1',
-                            gutterHorizontal: '0',
-                            gutterVertical: '0',
-                            direction: 'row',
-                            wrap: 'wrap',
-                            justify: 'flex-start',
-                            alignItems: 'flex-start',
-                            alignContent: 'flex-start'
-                        }
-                    }
-                }
-            }
-
-
-        }
-
-    }
-}
+ListSpeakers.defaultProps = {}
 
 export default ListSpeakers;
