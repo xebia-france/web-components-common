@@ -16,6 +16,10 @@ class ListSpeakers extends Component {
         };
     }
 
+    componentDidMount(){
+        console.log('SPEAKERS ', this.props.speakers)
+    }
+
     selectCard = (i) => {
         if (this.state.selectedCard === i) {
             this.setState({active: false, selectedCard: null})

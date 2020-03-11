@@ -51,56 +51,60 @@ class CardSpeaker extends Component {
             className={selected ? 'selected' : ''}>
             <Contain>
                 <Above>
-                    <Portrait asset={speaker.Photo} assetsDirectory={assetsDirectory}>
+                    <Portrait asset={speaker.imageURL} assetsDirectory={assetsDirectory}>
                     </Portrait>
                     <TextContent>
                         <TextElement field={configSpeakers} property={'name'}
-                                     content={`${speaker.FirstName || ''} ${speaker.LastName || ''}`}/>
+                                     content={`${speaker.firstName || ''} ${speaker.lastName || ''}`}/>
                         <TextElement field={configSpeakers} property={'job'} content={speaker.Job || ''}/>
                         <TextElement field={configSpeakers} property={'company'} content={speaker.Company || ''}/>
                     </TextContent>
-                    <Miniature asset={speaker.Photo} assetsDirectory={assetsDirectory}/>
+                    <Miniature asset={speaker.imageURL} assetsDirectory={assetsDirectory}/>
                 </Above>
                 <Below ref={this.below}>
-                    {speaker.Bio && speaker.Bio !== '' ?
+                    {speaker.bio && speaker.bio !== '' ?
                         <TextContent>
                             <TextElement field={configSpeakers} property={'title'} content={'Bio'}/>
-                            <TextElement field={configSpeakers} property={'text'} content={speaker.Bio || ''}/>
+                            <TextElement field={configSpeakers} property={'text'} content={speaker.bio || ''}/>
                         </TextContent>
                         : null
                     }
 
-                    {talks.length !== 0 ?
+                    {speaker.talks.length !== 0 ?
                         <TextContent>
                             <TextElement field={configSpeakers} property={'title'} content={'Talk'}/>
-                            {talks.map((talk, i) => <TextElement key={i} field={configSpeakers} property={'text'}
-                                                            content={talk.Pitch}/>)}
+                            {speaker.talks.map((talk, i) => <TextElement key={i} field={configSpeakers} property={'text'}
+                                                                 content={talk.title}/>)}
                         </TextContent>
                         : null
                     }
-                    <IconContent>
-                        {speaker.Twitter && speaker.Twitter !== '' ?
-                            <IconElement field={configSpeakers} property={'icon'}
-                                         content={configSpeakers.content.icon1}
-                                         link={`https://twitter.com/${speaker.Twitter}`}
+                    {
+                        speaker.tweetHandle || speaker.Linkedin || speaker.Github ?
 
-                            />
-                            : null}
-                        {speaker.Linkedin && speaker.Linkedin !== '' ?
-                            <IconElement field={configSpeakers} property={'icon'}
-                                         content={configSpeakers.content.icon2}
-                                         link={`https://www.linkedin.com/in/${speaker.Linkedin}`}
+                            <IconContent>
+                                {speaker.tweetHandle && speaker.tweetHandle !== '' ?
+                                    <IconElement field={configSpeakers} property={'icon'}
+                                                 content={configSpeakers.content.icon1}
+                                                 link={`https://twitter.com/${speaker.tweetHandle}`}
 
-                            />
-                            : null}
-                        {speaker.Github && speaker.Github !== '' ?
-                            <IconElement field={configSpeakers} property={'icon'}
-                                         content={configSpeakers.content.icon3}
-                                         link={`https://github.com/${speaker.Github}`}
+                                    />
+                                    : null}
+                                {speaker.Linkedin && speaker.Linkedin !== '' ?
+                                    <IconElement field={configSpeakers} property={'icon'}
+                                                 content={configSpeakers.content.icon2}
+                                                 link={`https://www.linkedin.com/in/${speaker.Linkedin}`}
 
-                            />
-                            : null}
-                    </IconContent>
+                                    />
+                                    : null}
+                                {speaker.Github && speaker.Github !== '' ?
+                                    <IconElement field={configSpeakers} property={'icon'}
+                                                 content={configSpeakers.content.icon3}
+                                                 link={`https://github.com/${speaker.Github}`}
+
+                                    />
+                                    : null}
+                            </IconContent> : null
+                    }
                 </Below>
             </Contain>
         </Card>;
