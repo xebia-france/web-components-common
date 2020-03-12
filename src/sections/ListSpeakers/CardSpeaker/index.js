@@ -34,11 +34,11 @@ class CardSpeaker extends Component {
     }
 
     render() {
-        const {speaker, i, selected, talks, assetsDirectory, configSpeakers, configCard} = this.props;
+        const {speaker, i, selected, assetsDirectory, configSpeakers, configCard} = this.props;
 
         const Settings = configCard && configCard.settings ? configCard.settings : null;
         const Responsive = configCard && configCard.responsiveSettings ? configCard.responsiveSettings : [];
-
+        if(!speaker) return null
         return <Card
             responsive={Responsive}
             basis={Settings ? Settings.basis : {}}

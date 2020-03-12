@@ -38,19 +38,6 @@ class ListSpeakers extends Component {
         }
     }
 
-    getTalks(speaker) {
-        const {talks} = this.props;
-
-        return ['Talk1', 'Talk2']
-            .map(field => {
-                if (speaker[field] && speaker[field] !== '') {
-                    const id = Number(speaker[field].split(" ")[0]);
-                    return talks.find(talk => talk.ID === id)
-                }
-            })
-            .filter(el => el)
-    }
-
     render() {
         const {children, fields, name, assetsDirectory, speakers} = this.props;
         const Template = fields.Template;
@@ -80,7 +67,7 @@ class ListSpeakers extends Component {
                                 key={i}
                                 configSpeakers={fields.Speakers}
                                 configCard={fields.TemplateCard}
-                                selectCard={this.selectCard} speaker={speaker} i={i} talks={this.getTalks(speaker)}
+                                selectCard={this.selectCard} speaker={speaker} i={i}
                                 selected={i === this.state.selectedCard} assetsDirectory={assetsDirectory}/>
                         })
                     }

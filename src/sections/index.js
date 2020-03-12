@@ -8,3 +8,4 @@ export { default as BasicLayoutFirstFull } from './BasicLayoutFirstFull';
 export { default as BasicLayoutCornersImages } from './BasicLayoutCornersImages';
 export { default as ListSpeakersFlipCard } from './ListSpeakersFlipCard';
 export { default as ListSpeakers } from './ListSpeakers';
+export { default as BasicSchedule } from './BasicSchedule';
