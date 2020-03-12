@@ -6,6 +6,10 @@ import {
     generateBackgroundImage
 } from "../../utils/StyleGenerator";
 
+let grey80 = '#666666';
+let grey50 = '#A2A2A2';
+let red = '#FE414D';
+
 export const Wrapper = styled.section.attrs(props => ({
     responsive: props.responsive,
     responsiveContent: props.responsiveContent,
@@ -112,4 +116,138 @@ export const Test = styled.div.attrs(props => ({
   height : 100%;
   background : yellow;
   position : relative;
+`;
+
+
+
+export const Dash = styled.div.attrs(props => ({
+
+}))`
+   width : 10px;
+   border-bottom : 1px solid grey;
+   margin-top : 50px;
+`;
+
+
+export const Head = styled.div.attrs(props => ({
+
+}))`
+    background-color : ${grey80};
+    padding : 20px 10px;
+    text-align : center;
+`;
+
+export const Column = styled.div.attrs(props => ({
+
+}))`
+    
+`;
+
+
+export const HoursLine = styled.div.attrs(props => ({
+
+}))`
+  width : 35px;
+  min-width : 35px;
+  height : auto;
+  display : flex;
+  flex-direction : column;
+  background : white;
+  border-right : 1px solid grey;
+  
+  &>div{
+  
+    height : 200px;
+    position : relative;
+    display : flex;
+    flex-direction : column; 
+    align-items : flex-end;
+    
+    &:first-child{
+        margin-top : 10px;
+    }
+    
+    &>p{
+        position : absolute;
+        top : -8px;
+        right : 10px;
+    }
+    
+  }
+`;
+
+
+export const HeadSchedule = styled.div.attrs(props => ({
+
+}))`
+  display : flex;
+`;
+
+export const BodySchedule = styled.div.attrs(props => ({
+
+}))`
+  display : flex;
+  
+  & ${Column}{
+
+        & ${Head}{
+            border-right: 1px solid rgba(255,255,255,0.5);
+        }
+    
+  
+  
+  }
+`;
+
+
+export const Schedule = styled.div.attrs(props => ({
+
+}))`
+  display : flex;
+  flex-direction : column;
+  
+  
+`;
+
+
+
+
+export const Label = styled.div.attrs(props => ({
+
+}))`
+  width : 35px;
+  background : black;
+  
+  & p{
+    color : white;
+    transform : rotate(-90deg);
+    margin-top : 18px;
+  }
+`;
+
+
+
+
+export const Days = styled.div.attrs(props => ({
+
+}))`
+  width : 100%;
+  background : black;
+  display : flex;
+`;
+
+
+export const Day = styled.div.attrs(props => ({
+
+}))`
+  background-color : ${grey50};
+  border-right: 1px solid rgba(255,255,255,0.5);
+  padding : 20px;
+  color : white;
+  cursor : pointer;
+  
+  &.active{
+    background-color : ${red};
+  }
+  
 `;
