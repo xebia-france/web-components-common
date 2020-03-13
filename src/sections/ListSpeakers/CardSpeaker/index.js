@@ -56,8 +56,8 @@ class CardSpeaker extends Component {
                     <TextContent>
                         <TextElement field={configSpeakers} property={'name'}
                                      content={`${speaker.firstName || ''} ${speaker.lastName || ''}`}/>
-                        <TextElement field={configSpeakers} property={'job'} content={speaker.Job || ''}/>
-                        <TextElement field={configSpeakers} property={'company'} content={speaker.Company || ''}/>
+                        <TextElement field={configSpeakers} property={'job'} content={speaker.job || ''}/>
+                        <TextElement field={configSpeakers} property={'company'} content={speaker.company || ''}/>
                     </TextContent>
                     <Miniature asset={speaker.imageURL} assetsDirectory={assetsDirectory}/>
                 </Above>
