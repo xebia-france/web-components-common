@@ -9,23 +9,112 @@ class BasicSchedule extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            startTime: '',
-            endTime: '',
+            startTime: this.initStartTime(),
+            endTime: this.initEndTime(),
             rooms: [],
-            formatedSchedule: [],
-            currentDay: '',
+            formatedSchedule: this.formatSchedule(),
+            scheduleOfDay: this.formatSchedule()[0],
+            currentDay: this.formatSchedule()[0].date,
             days : []
         };
     }
 
 
+
+    initStartTime = () => {
+        const min = this.props.schedule.reduce((prev, current) => {
+            return (this.getHourFromTime(prev.fromTime)) < (this.getHourFromTime(current.fromTime)) ? prev : current
+        })
+        return  Number(this.getHourFromTime(min.fromTime).slice(0, -3));
+    }
+
+    initEndTime = () => {
+        const max = this.props.schedule.reduce((prev, current) => {
+            return (this.getHourFromTime(prev.toTime)) > (this.getHourFromTime(current.toTime)) ? prev : current
+        })
+        return Number(this.getHourFromTime(max.toTime).slice(0, -3))
+    }
+    formatSchedule = () => {
+        const schedule = [];
+
+        const days = this.props.schedule.map(slot => {
+            return this.getDayFromTime(slot.fromTime);
+        })
+        console.log('DAYS : ', [...new Set(days)]);
+
+        [...new Set(days)].forEach(day => {
+            schedule.push({
+                date: day,
+                rooms: []
+            })
+        })
+
+        schedule.forEach(item => {
+            const slotsOfDay = this.props.schedule.map(slot => {
+                return this.getDayFromTime(slot.fromTime) === item.date ? slot : null
+            }).filter(el => el);
+
+            console.log('SLOT OF DAY', slotsOfDay);
+
+            const rooms = slotsOfDay.map((item) => {
+                return item.room ? item.room : null
+            })
+
+            let unique = [...new Set(rooms)];
+            console.log('ROOMS', unique);
+
+
+            Object.assign(item.rooms, unique.filter(el => el).map(el => {
+                const room = {
+                    name: el,
+                    slots: []
+                }
+                return room;
+            }))
+
+            item.rooms.forEach(room => {
+                const slots = slotsOfDay.map((item) => {
+                    return (item.room === room.name ? item : null)
+                }).filter(el => el)
+                console.log("SLOTS", slots)
+                Object.assign(room.slots, slots)
+            })
+
+            console.log('--------------------------->', slotsOfDay);
+        })
+
+        console.log('SCHEDULE INIT', schedule)
+
+        return schedule;
+
+
+
+        /*this.setState({
+            days: [...new Set(days)],
+            formatedSchedule: schedule,
+            currentDay: schedule[0].date
+        }, () => {
+            console.log('STATE SHEDULE', this.state)
+
+            console.log('NEW SCHEDULE : ', schedule);
+            this.setState({
+                formatedSchedule: schedule
+            }, () => {
+                console.log('STATE FORMATED', this.state)
+            })
+        }*/
+
+
+    }
+
+
     componentDidMount() {
-        console.log('SCHEDULE : ', this.props.schedule);
+        //console.log('SCHEDULE : ', this.props.schedule);
 
-        console.log('Test : ', this.props.schedule[0])
-        console.log('Test : ', this.getHourFromTime(this.props.schedule[0].fromTime))
+       // console.log('Test : ', this.props.schedule[0])
+       // console.log('Test : ', this.getHourFromTime(this.props.schedule[0].fromTime))
 
-        const lastHour = Math.max.apply(Math, this.props.schedule.map((item) => {
+        /*const lastHour = Math.max.apply(Math, this.props.schedule.map((item) => {
             return this.getHourFromTime(item.toTime);
         }))
 
@@ -34,9 +123,9 @@ class BasicSchedule extends Component {
         })
         const min = this.props.schedule.reduce((prev, current) => {
             return (this.getHourFromTime(prev.fromTime)) < (this.getHourFromTime(current.fromTime)) ? prev : current
-        })
+        })*/
 
-        const rooms = this.props.schedule.map((item) => {
+        /*const rooms = this.props.schedule.map((item) => {
             return item.room ? item.room : null
         })
 
@@ -47,9 +136,9 @@ class BasicSchedule extends Component {
         console.log('ROOMS', rooms);
         console.log('UNIQUE', unique.filter(el => el));
         this.setState({
-            startTime: Number(this.getHourFromTime(min.fromTime).slice(0, -3)),
-            endTime: Number(this.getHourFromTime(max.toTime).slice(0, -3)),
-            rooms: unique.filter(el => el)
+            //startTime: Number(this.getHourFromTime(min.fromTime).slice(0, -3)),
+           // endTime: Number(this.getHourFromTime(max.toTime).slice(0, -3)),
+            //rooms: unique.filter(el => el)
         }, () => {
             console.log('STATE', this.state);
 
@@ -63,7 +152,7 @@ class BasicSchedule extends Component {
         const schedule = [];
         [...new Set(days)].forEach(day => {
             schedule.push({
-                day: day,
+                date: day,
                 rooms: []
             })
         })
@@ -71,12 +160,12 @@ class BasicSchedule extends Component {
         this.setState({
             days: [...new Set(days)],
             formatedSchedule: schedule,
-            currentDay: schedule[0].day
+            currentDay: schedule[0].date
         }, () => {
             console.log('STATE SHEDULE', this.state)
             schedule.forEach(item => {
                 const slotsOfDay = this.props.schedule.map(slot => {
-                    return this.getDayFromTime(slot.fromTime) === item.day ? slot : null
+                    return this.getDayFromTime(slot.fromTime) === item.date ? slot : null
                 }).filter(el => el);
 
                 console.log('SLOT OF DAY', slotsOfDay);
@@ -108,7 +197,12 @@ class BasicSchedule extends Component {
                 console.log('--------------------------->', slotsOfDay);
             })
             console.log('NEW SCHEDULE : ', schedule);
-        });
+            this.setState({
+                formatedSchedule: schedule
+            }, () => {
+                console.log('STATE FORMATED', this.state)
+            })
+        });*/
 
 
     }
@@ -128,6 +222,12 @@ class BasicSchedule extends Component {
                 </div>);
         }
         return rows;
+    }
+
+    getScheduleOfDay = () => {
+        const scheduleOfDay = this.state.formatedSchedule.find(day => day.date === this.state.currentDay);
+        console.log('SCHEDULE OF DAY', scheduleOfDay);
+        return scheduleOfDay;
     }
 
     render() {
@@ -179,12 +279,12 @@ class BasicSchedule extends Component {
                             <Label><p>DAY</p></Label>
                             <Days>
                                 {
-                                    this.state.days.map( day => {
-                                        return <Day className={ day === this.state.currentDay ? 'active' : ''} onClick={() => {
+                                    this.formatSchedule().map( day => {
+                                        return <Day className={ day.date === this.state.currentDay ? 'active' : ''} onClick={() => {
                                             this.setState({
-                                                currentDay : day
+                                                currentDay : day.date
                                             })
-                                        }}>{ day }</Day>
+                                        }}>{ day.date }</Day>
                                     })
                                 }
                             </Days>
@@ -193,17 +293,17 @@ class BasicSchedule extends Component {
                             <HoursLine>
                                 {this.getHoursTimeLine(this.state.startTime, this.state.endTime)}
                             </HoursLine>
-                            <SwipeableViews enableMouseEvents style={styles.root} slideStyle={styles.slideContainer}>
+                            <SwipeableViews enableMouseEvents disableLazyLoading style={styles.root} slideStyle={styles.slideContainer}>
                                 {
-                                    this.state.rooms.map(room => {
+
+                                    this.getScheduleOfDay() ? this.getScheduleOfDay().rooms.map(room => {
                                         return (
                                             <Column style={Object.assign({}, styles.slide, styles.slide1)}>
-                                                <Head>{room}</Head>
+                                                <Head>{room.name}</Head>
                                             </Column>
                                         )
-                                    })
+                                    }) : null
                                 }
-
                             </SwipeableViews>
                         </BodySchedule>
                     </Schedule>
