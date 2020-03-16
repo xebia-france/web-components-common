@@ -134,7 +134,10 @@ export const DashContainer = styled.div.attrs(props => ({
 
 }))`
    &>div:nth-child(2){
-    border-top : 1px solid grey;
+   // border-top : 1px solid grey;
+   }
+   &>div:last-child{
+       width : 5px;
    }
    
 `;
@@ -168,7 +171,7 @@ export const HoursLine = styled.div.attrs(props => ({
   
   &>div{
   
-   height : calc(${baseHeight}px * 4);
+   //eight : calc(${baseHeight}px * 4);
     position : relative;
     display : flex;
     flex-direction : column; 
@@ -191,7 +194,7 @@ export const HoursLine = styled.div.attrs(props => ({
     
     &>p{
         position : absolute;
-        top : -8px;
+        top : -12px;
         right : 10px;
     }
     
@@ -292,17 +295,26 @@ export const Tag = styled.div.attrs(props => ({
     
    &>div{
         height : 20px;
+        line-height : 20px;
         border-radius : 2px;
         padding-left : 4px;
         padding-right : 4px;
-        background : rgba(0,0,0,0.25);
         font-size : 12px;
         display : flex;
         align-items: center;
         color : white;
         
+        &:first-child{
+            text-transform  : uppercase;
+            background : rgba(0,0,0,0.8);
+
+        }
+        
+        
         &:not(first-child){
-            margin-right : 3px;
+            margin-left : 3px;
+            background : rgba(0,0,0,0.25);
+
         }
    }
  
@@ -346,9 +358,6 @@ export const Informations = styled.div.attrs(props => ({
  
   & h4{
     font-size : 14px;
-    //color : black;
-    //text-transform : uppercase;
-   
   }
   
 `;
@@ -364,6 +373,7 @@ export const SlotContent = styled.div.attrs(props => ({
   padding : 6px;
   color : black;
   
+  
 `;
 
 export const Slot = styled.div.attrs(props => ({
@@ -374,7 +384,7 @@ export const Slot = styled.div.attrs(props => ({
 }))`
   ${ props => `
     height : calc((${baseHeight}px / 15) * ${ props.duration});
-    top : calc((${baseHeight}px * 4) * ${ props.hours} + (${baseHeight}px / 15) * ${props.minutes});
+    top : calc( (${baseHeight}px / 15) * ${props.minutes});
   
   
   `}
@@ -383,28 +393,22 @@ export const Slot = styled.div.attrs(props => ({
   position : absolute;
   z-index: 3;
   
-  
-`;
+  &.other{
+    z-index : 1;
 
-
-
-export const OthersContent = styled(SlotContent)`
-  background : ${red};
-  color : white;
-  
-  & ${Informations}{
-      h4{
-        //color : white;
-      }
-  } 
-  
-`;
-
-export const Others = styled(Slot)`
-  z-index : 1;
-  & ${Clock} svg path{
-    fill : white !important;
+    & ${SlotContent}{
+        background : ${red};
+        color : white;
+        
+        & ${Clock} svg path{
+            fill : white !important;
+        }
+        
+        & ${ Informations}{
+        
+        }
+    }
   }
-  
 `;
+
 

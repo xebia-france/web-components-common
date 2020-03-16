@@ -17,8 +17,7 @@ import {
     Slot,
     SlotContent,
     DashContainer,
-    Informations,
-    Others, OthersContent, Header, Tag, Time, Clock
+    Informations, Header, Tag, Time, Clock
 } from './styled';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
 import SwipeableViews from 'react-swipeable-views';
@@ -67,6 +66,8 @@ class BasicSchedule extends Component {
         daysUnique.forEach(day => {
             schedule.push({
                 date: day,
+                startTime: '',
+                endTime: '',
                 rooms: [],
                 others: []
             })
@@ -76,6 +77,18 @@ class BasicSchedule extends Component {
             const slotsOfDay = this.props.schedule.map(slot => {
                 return this.getDayFromTime(slot.fromTime) === item.date ? slot : null
             }).filter(el => el);
+
+            //min
+
+            const min = slotsOfDay.reduce((prev, current) => {
+                return (this.getHourFromTime(prev.fromTime)) < (this.getHourFromTime(current.fromTime)) ? prev : current
+            })
+            item.startTime = min.fromTime;
+
+            const max = slotsOfDay.reduce((prev, current) => {
+                return (this.getHourFromTime(prev.toTime)) > (this.getHourFromTime(current.toTime)) ? prev : current
+            })
+            item.endTime = max.toTime;
 
             const rooms = slotsOfDay.map((item) => {
                 return item.room ? item.room : null
@@ -118,17 +131,47 @@ class BasicSchedule extends Component {
     getHourFromTime = (time) => time.split(' ')[1];
     getDayFromTime = (time) => time.split(' ')[0];
 
-    getHoursTimeLine = (min, max) => {
+    getHoursTimeLine = (start, end) => {
+        const hourStart = Number((start.split(' ')[1]).split(':')[0]);
+        const minutesStart = Number((start.split(' ')[1]).split(':')[1]);
+        const hourEnd = Number((end.split(' ')[1]).split(':')[0]);
         let rows = [];
-        for (let i = min; i <= max; i++) {
+
+        if (minutesStart !== 0) {
+            console.log('divide', (minutesStart / 15));
+
             rows.push(
                 <DashContainer>
-                    <p>{i}</p>
-                    <Dash/>
-                    <Dash/>
-                    <Dash/>
+                    {
+                        Array.from(Array((minutesStart / 15)), (e, i) => {
+                            return <Dash/>
+                        })
+                    }
                 </DashContainer>);
+
+            for (let i = (hourStart + 1); i <= hourEnd; i++) {
+                rows.push(
+                    <DashContainer>
+                        <p>{i}</p>
+                        <Dash/>
+                        <Dash/>
+                        <Dash/>
+                        <Dash/>
+                    </DashContainer>);
+            }
+        }else{
+            for (let i = (hourStart); i <= hourEnd; i++) {
+                rows.push(
+                    <DashContainer>
+                        <p>{i}</p>
+                        <Dash/>
+                        <Dash/>
+                        <Dash/>
+                        <Dash/>
+                    </DashContainer>);
+            }
         }
+
         return rows;
     }
 
@@ -144,27 +187,17 @@ class BasicSchedule extends Component {
         console.log('SCHEDULE OF DAY', scheduleOfDay);
         return scheduleOfDay;
     }
-    getSlots = (slots) => {
+    getSlots = (slots, notTalk = false) => {
         console.log(slots)
         return slots.map(slot => {
 
-            console.log('DURATION', this.getDuration(slot.fromTime, slot.toTime));
-
-            console.log('this.state.startTime', this.state.startTime);
-
-            const slotStart = this.getHourFromTime(slot.fromTime);
-            const hours = Number(slotStart.split(':')[0])
-            const minutes = Number(slotStart.split(':')[1])
-            console.log('SLOTSTART', slotStart)
-            console.log('SLOTSTART 2', slotStart.split(':'))
-
-            return <Slot duration={this.getDuration(slot.fromTime, slot.toTime)} hours={(hours - this.state.startTime)}
-                         minutes={minutes}>
+            const startDay = this.getScheduleOfDay().startTime
+            return <Slot duration={this.getDuration(slot.fromTime, slot.toTime)} minutes={this.getDuration(startDay, slot.fromTime)} className={notTalk ? 'other' : ''}>
                 <SlotContent>
                     <Header>
                         <Tag>
-                            <div>Talk</div>
-                            <div>Kotlin</div>
+                            { slot.type ? <div>{ slot.type }</div> : null }
+                            { slot.track ? <div>{ slot.track }</div> : null }
                         </Tag>
                         <Time>
                             <Clock><SvgClock/></Clock>
@@ -178,36 +211,7 @@ class BasicSchedule extends Component {
             </Slot>
         })
     }
-    getOthers = (slots) => {
-        console.log(slots)
-        return slots.map(slot => {
 
-            console.log('SLOT INFO', slot);
-
-            const slotStart = this.getHourFromTime(slot.fromTime);
-            const hours = Number(slotStart.split(':')[0])
-            const minutes = Number(slotStart.split(':')[1])
-
-            return <Others duration={this.getDuration(slot.fromTime, slot.toTime)}
-                           hours={(hours - this.state.startTime)} minutes={minutes}>
-                <OthersContent>
-                    <Header>
-                        <Tag>
-                            <div>Talk</div>
-                            <div>Kotlin</div>
-                        </Tag>
-                        <Time>
-                            <Clock><SvgClock/></Clock>
-                            {this.getHourFromTime(slot.fromTime)} - {this.getHourFromTime(slot.toTime)}
-                        </Time>
-                    </Header>
-                    <Informations>
-                        <h4>{slot.title}</h4>
-                    </Informations>
-                </OthersContent>
-            </Others>
-        })
-    }
 
     render() {
         const {children, fields, name, assetsDirectory, schedule} = this.props;
@@ -231,13 +235,14 @@ class BasicSchedule extends Component {
 
             },
             slide1: {
-                backgroundColor: '#FEA900'
+                backgroundColor: 'none'
             },
             slide2: {
-                backgroundColor: '#B3DC4A'
+                backgroundColor: 'none'
             },
             slide3: {
-                backgroundColor: '#6AC0FF'
+
+                backgroundColor: 'none'
             },
         };
 
@@ -273,7 +278,8 @@ class BasicSchedule extends Component {
                         <BodySchedule>
                             <HoursLine>
                                 <Label><p>ROOM</p></Label>
-                                {this.getHoursTimeLine(this.state.startTime, this.state.endTime)}
+
+                                {this.getHoursTimeLine(this.getScheduleOfDay().startTime, this.getScheduleOfDay().endTime)}
                             </HoursLine>
                             <SwipeableViews enableMouseEvents disableLazyLoading style={styles.root}
                                             slideStyle={styles.slideContainer}>
@@ -285,7 +291,7 @@ class BasicSchedule extends Component {
                                                 <Head>{room.name}</Head>
                                                 <Slots>
                                                     {this.getSlots(room.slots)}
-                                                    {this.getOthers(this.getScheduleOfDay().others)}
+                                                    {this.getSlots(this.getScheduleOfDay().others, true)}
                                                 </Slots>
                                             </Column>
                                         )
@@ -304,59 +310,7 @@ class BasicSchedule extends Component {
 
 };
 
-BasicSchedule.defaultProps = {
-    fields: {
-        Template: {
-            content: {},
-            responsiveSettings: ['A'],
-            settings: {
-                basis: {
-                    A: {
-                        padding: {
-                            top: '0',
-                            right: '0',
-                            bottom: '0',
-                            left: '0'
-                        },
-                        color: {
-                            hex: '#000000',
-                            rgb: '0,0,0',
-                            name: 'black',
-                            shade: null
-                        },
-                        opacity: {
-                            value: '1'
-                        }
-                    }
-                }
-
-            }
-        },
-        FlexContainer: {
-            content: {},
-            responsiveSettings: ['A'],
-            settings: {
-                flex: {
-                    A: {
-                        properties: {
-                            columns: '1',
-                            gutterHorizontal: '0',
-                            gutterVertical: '0',
-                            direction: 'row',
-                            wrap: 'wrap',
-                            justify: 'flex-start',
-                            alignItems: 'flex-start',
-                            alignContent: 'flex-start'
-                        }
-                    }
-                }
-            }
-
-
-        }
-
-    }
-}
+BasicSchedule.defaultProps = {}
 
 export default BasicSchedule;
 
