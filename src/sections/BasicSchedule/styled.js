@@ -9,6 +9,7 @@ import {
 let grey80 = '#666666';
 let grey50 = '#A2A2A2';
 let red = '#FE414D';
+let baseHeight = 60;
 
 export const Wrapper = styled.section.attrs(props => ({
     responsive: props.responsive,
@@ -124,8 +125,18 @@ export const Dash = styled.div.attrs(props => ({
 
 }))`
    width : 10px;
+   height : ${baseHeight}px;
    border-bottom : 1px solid grey;
-   margin-top : 50px;
+   
+`;
+
+export const DashContainer = styled.div.attrs(props => ({
+
+}))`
+   &>div:nth-child(2){
+    border-top : 1px solid grey;
+   }
+   
 `;
 
 
@@ -157,13 +168,24 @@ export const HoursLine = styled.div.attrs(props => ({
   
   &>div{
   
-    height : 200px;
+   height : calc(${baseHeight}px * 4);
     position : relative;
     display : flex;
     flex-direction : column; 
     align-items : flex-end;
     
     &:first-child{
+         height : 65px;
+         align-items : center;
+        
+        &>p{
+            position : relative;
+            top : 0;
+            right : 0;
+        }
+    }
+    
+    &:nth-child(2){
         margin-top : 10px;
     }
     
@@ -172,6 +194,8 @@ export const HoursLine = styled.div.attrs(props => ({
         top : -8px;
         right : 10px;
     }
+    
+    
     
   }
 `;
@@ -216,6 +240,7 @@ export const Label = styled.div.attrs(props => ({
 
 }))`
   width : 35px;
+  min-width: 35px;
   background : black;
   
   & p{
@@ -251,3 +276,135 @@ export const Day = styled.div.attrs(props => ({
   }
   
 `;
+
+
+
+export const Header = styled.div.attrs(props => ({
+}))`
+ display : flex;
+ justify-content : space-between;
+ align-items : center;
+`;
+
+export const Tag = styled.div.attrs(props => ({
+}))`
+    display : flex;
+    
+   &>div{
+        height : 20px;
+        border-radius : 2px;
+        padding-left : 4px;
+        padding-right : 4px;
+        background : rgba(0,0,0,0.25);
+        font-size : 12px;
+        display : flex;
+        align-items: center;
+        color : white;
+        
+        &:not(first-child){
+            margin-right : 3px;
+        }
+   }
+ 
+`;
+
+export const Time = styled.div.attrs(props => ({
+}))`
+ font-size : 12px;
+ line-height : 16px;
+ display : flex;
+ 
+`;
+
+export const Clock = styled.div.attrs(props => ({
+}))`
+ width : 10px;
+ height : 10px;
+ margin-right : 4px;
+ 
+ &>svg{
+    width : 100%;
+    height : 100%;
+ }
+ 
+`;
+
+
+export const Slots = styled.div.attrs(props => ({
+
+}))`
+  margin-top : 10px;
+  position : relative;
+  
+`;
+
+export const Informations = styled.div.attrs(props => ({
+}))`
+ display : flex;
+ flex-direction : column;
+ padding-top : 8px;
+ 
+  & h4{
+    font-size : 14px;
+    //color : black;
+    //text-transform : uppercase;
+   
+  }
+  
+`;
+export const SlotContent = styled.div.attrs(props => ({
+    duration: props.duration,
+}))`
+ 
+  background : white;
+  display : flex;
+  flex-direction : column; 
+  height : 100%;
+  border-radius : 4px;
+  padding : 6px;
+  color : black;
+  
+`;
+
+export const Slot = styled.div.attrs(props => ({
+    duration: props.duration,
+    hours: props.hours,
+    minutes: props.minutes,
+
+}))`
+  ${ props => `
+    height : calc((${baseHeight}px / 15) * ${ props.duration});
+    top : calc((${baseHeight}px * 4) * ${ props.hours} + (${baseHeight}px / 15) * ${props.minutes});
+  
+  
+  `}
+  width : 100%;
+  padding : 4px;
+  position : absolute;
+  z-index: 3;
+  
+  
+`;
+
+
+
+export const OthersContent = styled(SlotContent)`
+  background : ${red};
+  color : white;
+  
+  & ${Informations}{
+      h4{
+        //color : white;
+      }
+  } 
+  
+`;
+
+export const Others = styled(Slot)`
+  z-index : 1;
+  & ${Clock} svg path{
+    fill : white !important;
+  }
+  
+`;
+
