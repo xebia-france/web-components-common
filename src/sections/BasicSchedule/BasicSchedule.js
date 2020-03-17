@@ -78,17 +78,15 @@ class BasicSchedule extends Component {
                 return this.getDayFromTime(slot.fromTime) === item.date ? slot : null
             }).filter(el => el);
 
-            //min
-
             const min = slotsOfDay.reduce((prev, current) => {
                 return (this.getHourFromTime(prev.fromTime)) < (this.getHourFromTime(current.fromTime)) ? prev : current
             })
-            item.startTime = min.fromTime;
+            item.startTime = this.roundTimeQuarterHour(min.fromTime);
 
             const max = slotsOfDay.reduce((prev, current) => {
                 return (this.getHourFromTime(prev.toTime)) > (this.getHourFromTime(current.toTime)) ? prev : current
             })
-            item.endTime = max.toTime;
+            item.endTime = this.roundTimeQuarterHour(max.toTime);
 
             const rooms = slotsOfDay.map((item) => {
                 return item.room ? item.room : null
@@ -117,7 +115,6 @@ class BasicSchedule extends Component {
 
 
         })
-        console.log('SCHEDULE INIT', schedule)
         return schedule;
 
     }
@@ -138,12 +135,12 @@ class BasicSchedule extends Component {
         let rows = [];
 
         if (minutesStart !== 0) {
-            console.log('divide', (minutesStart / 15));
+            console.log('divide', Math.ceil(minutesStart / 15));
 
             rows.push(
                 <DashContainer>
                     {
-                        Array.from(Array((minutesStart / 15)), (e, i) => {
+                        Array.from(Array((Math.ceil(minutesStart / 15))), (e, i) => {
                             return <Dash/>
                         })
                     }
@@ -159,7 +156,7 @@ class BasicSchedule extends Component {
                         <Dash/>
                     </DashContainer>);
             }
-        }else{
+        } else {
             for (let i = (hourStart); i <= hourEnd; i++) {
                 rows.push(
                     <DashContainer>
@@ -187,17 +184,27 @@ class BasicSchedule extends Component {
         console.log('SCHEDULE OF DAY', scheduleOfDay);
         return scheduleOfDay;
     }
+
+    roundTimeQuarterHour = (time) => {
+        var minutes = Number((time.split(' ')[1]).split(':')[1]);
+        var m = (Math.round(minutes / 15) * 15) % 60;
+        return time.slice(0, -2) + String(m);
+    }
+
     getSlots = (slots, notTalk = false) => {
         console.log(slots)
         return slots.map(slot => {
 
-            const startDay = this.getScheduleOfDay().startTime
-            return <Slot duration={this.getDuration(slot.fromTime, slot.toTime)} minutes={this.getDuration(startDay, slot.fromTime)} className={notTalk ? 'other' : ''}>
+            const startDay = this.getScheduleOfDay().startTime;
+
+
+            return <Slot duration={this.getDuration(slot.fromTime, slot.toTime)}
+                         minutes={this.getDuration(startDay, slot.fromTime)} className={notTalk ? 'other' : ''}>
                 <SlotContent>
                     <Header>
                         <Tag>
-                            { slot.type ? <div>{ slot.type }</div> : null }
-                            { slot.track ? <div>{ slot.track }</div> : null }
+                            {slot.type ? <div>{slot.type}</div> : null}
+                            {slot.track ? <div>{slot.track}</div> : null}
                         </Tag>
                         <Time>
                             <Clock><SvgClock/></Clock>
@@ -205,11 +212,21 @@ class BasicSchedule extends Component {
                         </Time>
                     </Header>
                     <Informations>
-                        <h4>{slot.title}</h4>
+                        <h4 className={this.getDuration(slot.fromTime, slot.toTime) <= 30 ? 'cropped' : ''}>{slot.title}</h4>
+                        {
+                            slot.speakers && slot.speakers.length !== 0 && this.getDuration(slot.fromTime, slot.toTime) >= 30 ?
+                                <h5>{slot.speakers.map((speaker) => speaker.name).join(', ')}</h5>
+                                : null
+                        }
+
                     </Informations>
                 </SlotContent>
             </Slot>
         })
+    }
+
+    overlap = (a, b) => {
+
     }
 
 

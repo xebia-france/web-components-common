@@ -358,6 +358,18 @@ export const Informations = styled.div.attrs(props => ({
  
   & h4{
     font-size : 14px;
+    
+    &.cropped{
+        overflow:hidden; 
+        white-space:nowrap; 
+        text-overflow:ellipsis; 
+    }
+   
+  }
+  & h5{
+    font-size : 14px;
+    opacity : 0.4;
+    text-transform : uppercase;
   }
   
 `;
@@ -372,6 +384,7 @@ export const SlotContent = styled.div.attrs(props => ({
   border-radius : 4px;
   padding : 6px;
   color : black;
+  overflow : hidden;
   
   
 `;
