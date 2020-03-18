@@ -181,7 +181,7 @@ class BasicSchedule extends Component {
 
     getScheduleOfDay = () => {
         const scheduleOfDay = this.state.formatedSchedule.find(day => day.date === this.state.currentDay);
-       // console.log('SCHEDULE OF DAY', scheduleOfDay);
+        // console.log('SCHEDULE OF DAY', scheduleOfDay);
         return scheduleOfDay;
     }
 
@@ -200,10 +200,10 @@ class BasicSchedule extends Component {
         const startTransverse = new Date(transverse.fromTime);
         const endTransverse = new Date(transverse.toTime);
 
-        if( (startSlot >= startTransverse && startSlot < endTransverse) || (endSlot > startTransverse && endSlot <= endTransverse)  ){
+        if ((startSlot >= startTransverse && startSlot < endTransverse) || (endSlot > startTransverse && endSlot <= endTransverse)) {
             console.log('OVERLAP !!!!')
             return true
-        }else{
+        } else {
             console.log('NOT OVERLAPED');
             return false
         }
@@ -213,8 +213,8 @@ class BasicSchedule extends Component {
 
     searchOverlap = (slots, transverse) => {
         let nbrOverlap = 0;
-        slots.forEach( slot => {
-            if(this.overlaped(slot, transverse)){
+        slots.forEach(slot => {
+            if (this.overlaped(slot, transverse)) {
                 nbrOverlap++
             }
             console.log('nbrOverlap', nbrOverlap);
@@ -223,19 +223,15 @@ class BasicSchedule extends Component {
     }
 
 
-
     getSlots = (slots, transverses) => {
-        console.log('getSlots slots',slots)
-        console.log('getSlots transverse',transverses)
+        console.log('getSlots slots', slots)
+        console.log('getSlots transverse', transverses)
 
-        const filtered = transverses.length !== 0 ? transverses.filter( (trans) => !this.searchOverlap(slots , trans)) : []
+        const filtered = transverses.length !== 0 ? transverses.filter((trans) => !this.searchOverlap(slots, trans)) : []
         console.log('FILTERED', filtered)
 
 
-
-
-
-       // return slots.concat(filtered).map(slot => {
+        // return slots.concat(filtered).map(slot => {
         return slots.concat(transverses).map(slot => {
 
             const startDay = this.getScheduleOfDay().startTime;
@@ -269,8 +265,6 @@ class BasicSchedule extends Component {
     }
 
 
-
-
     render() {
         const {children, fields, name, assetsDirectory, schedule} = this.props;
 
@@ -280,7 +274,9 @@ class BasicSchedule extends Component {
         const styles = {
             root: {
                 width: '100%',
-                padding: '0 50% 0 0',
+                padding: '0 20px',
+                //marginLeft : '-50%'
+                //padding: '0 50% 0 0',
             },
             slideContainer: {
                 padding: '0px 0px',
@@ -304,32 +300,30 @@ class BasicSchedule extends Component {
             },
         };
 
-        const styles2 = {
+        const stylesB = {
             root: {
                 width: '100%',
-
-                padding: '0 25% 0 0',
+                overflowX: 'visible',
+                padding: '0 70% 0 0',
+                marginLeft: '0%'
             },
             slideContainer: {
-                padding: '0 10px',
-                overflow: 'visible'
+                padding: '0',
+                width: '100%',
+                overflow: 'visible',
+                //overflow: 'visible'
             },
-            slide: {
-                padding: 15,
-                minHeight: 100,
-                color: '#fff',
-            },
+            slide: {},
             slide1: {
-                backgroundColor: '#FEA900',
+                backgroundColor: 'transparent',
             },
             slide2: {
-                backgroundColor: '#B3DC4A',
+                backgroundColor: '#transparent',
             },
             slide3: {
-                backgroundColor: '#6AC0FF',
+                backgroundColor: '#transparent',
             },
         };
-
 
 
         return (
@@ -366,13 +360,27 @@ class BasicSchedule extends Component {
 
                                 {this.getHoursTimeLine(this.getScheduleOfDay().startTime, this.getScheduleOfDay().endTime)}
                             </HoursLine>
-                            <SwipeableViews enableMouseEvents disableLazyLoading style={styles.root}
-                                            slideStyle={styles.slideContainer}>
+                            <SwipeableViews
+                                onSwitching={(index, type) => {
+
+                                    console.log('index switch: ', index)
+                                    console.log('type switch: ', type)
+                                }}
+                                onChangeIndex={(index, indexLatest, meta) => {
+                                    console.log('index change: ', index)
+                                    console.log('indexLatest change: ', indexLatest)
+                                    console.log('meta change: ', meta)
+                                    if(index === 1 ) {
+
+                                    }
+                                }}
+                                resistance enableMouseEvents disableLazyLoading style={stylesB.root}
+                                slideStyle={styles.slideContainer}>
                                 {
 
                                     this.getScheduleOfDay() ? this.getScheduleOfDay().rooms.map(room => {
                                         return (
-                                            <Column style={Object.assign({}, styles.slide, styles.slide1)}>
+                                            <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
                                                 <Head>{room.name}</Head>
                                                 <Slots>
                                                     {this.getSlots(room.slots, this.getScheduleOfDay().others)}
@@ -381,6 +389,19 @@ class BasicSchedule extends Component {
                                         )
                                     }) : null
                                 }
+                                <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
+                                    <Head>Test 1</Head>
+                                    <Slots>
+                                        {this.getSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
+                                    </Slots>
+                                </Column>
+                                <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
+                                    <Head>Test 2</Head>
+                                    <Slots>
+                                        {this.getSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
+                                    </Slots>
+                                </Column>
+
                             </SwipeableViews>
                         </BodySchedule>
                     </Schedule>

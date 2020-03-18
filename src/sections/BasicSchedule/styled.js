@@ -147,8 +147,13 @@ export const Head = styled.div.attrs(props => ({
 
 }))`
     background-color : ${grey80};
-    padding : 20px 10px;
-    text-align : center;
+    padding-left : 20px;
+    padding-right : 20px;
+    height : 40px;
+    display : flex;
+    align-items : center;
+    justify-content : center;
+    color : white;
 `;
 
 export const Column = styled.div.attrs(props => ({
@@ -168,6 +173,7 @@ export const HoursLine = styled.div.attrs(props => ({
   flex-direction : column;
   background : white;
   border-right : 1px solid grey;
+  z-index: 20;
   
   &>div{
   
@@ -178,14 +184,17 @@ export const HoursLine = styled.div.attrs(props => ({
     align-items : flex-end;
     
     &:first-child{
-         height : 65px;
+         height : 40px;
+         
          align-items : center;
         
         &>p{
             position : relative;
-            top : 0;
-            right : 0;
-        }
+            top : auto;
+            right : auto;
+            line-height : 35px;
+            margin-top : 0px;
+        }s
     }
     
     &:nth-child(2){
@@ -210,35 +219,6 @@ export const HeadSchedule = styled.div.attrs(props => ({
   display : flex;
 `;
 
-export const BodySchedule = styled.div.attrs(props => ({
-    responsive: props.responsive,
-
-}))`
-  display : flex;
-  
-  & ${Column}{
-
-        & ${Head}{
-            border-right: 1px solid rgba(255,255,255,0.5);
-        }
-    
-  
-  
-  }
-  
-  ${ props => props.responsive.map((size, i) => `
-         @media ${ device[size] } {
-             /*&>div:nth-child(2){
-                ${ size === 'M' ? `padding : 0 5% 0 0 !important;` : `padding : 0 50% 0 0 !important;`}
-               
-              }*/
-             
-         }`)
-    }; 
-  
-  
-`;
-
 
 export const Schedule = styled.div.attrs(props => ({
 
@@ -257,12 +237,17 @@ export const Label = styled.div.attrs(props => ({
 }))`
   width : 35px;
   min-width: 35px;
+  height : 40px;
   background : black;
   
   & p{
     color : white;
     transform : rotate(-90deg);
-    margin-top : 18px;
+    //height : 35px;
+    //width : 40px;
+    text-align : center;
+    font-size : 11px;
+    margin-top : 5px;
   }
 `;
 
@@ -283,9 +268,15 @@ export const Day = styled.div.attrs(props => ({
 }))`
   background-color : ${grey50};
   border-right: 1px solid rgba(255,255,255,0.5);
-  padding : 20px;
+  padding-left : 20px;
+  padding-right : 20px;
+  height : 40px;
   color : white;
   cursor : pointer;
+  display : flex;
+  width : 100%;
+  align-items : center;
+  justify-content : center;
   
   &.active{
     background-color : ${red};
@@ -325,8 +316,9 @@ export const Tag = styled.div.attrs(props => ({
         
         
         &:not(first-child){
-            margin-left : 3px;
+            //margin-left : 3px;
             background : rgba(0,0,0,0.25);
+            
 
         }
    }
@@ -438,3 +430,101 @@ export const Slot = styled.div.attrs(props => ({
 `;
 
 
+
+export const BodySchedule = styled.div.attrs(props => ({
+    responsive: props.responsive,
+
+}))`
+  display : flex;
+  overflow : hidden;
+  
+  & ${Column}{
+
+        & ${Head}{
+            border-right: 1px solid rgba(255,255,255,0.5);
+        }
+    
+  
+  
+  }
+  
+  &>div:nth-child(2){    
+    &>div>div {
+        & ${ Column }{
+           & ${ Slots }{
+              & ${ Slot }{
+                  &.other{
+                        padding-left : 0px;
+                        padding-right : 0px;
+                       & ${SlotContent}{
+                           border-radius : 0px;
+                           
+                           & ${ Tag }>div, & ${ Time }, & ${ Informations }{
+                                display : none;
+                           }
+                       } 
+                  }
+               }
+            } 
+         }
+    
+        &:first-child{
+           & ${ Column }{
+                    & ${ Slots }{
+                        & ${ Slot }{
+                            padding-left : 4px;
+                            padding-right : 0px;
+                            
+                            &.other{
+                                & ${SlotContent}{
+                                   border-radius :4px 0px 0px 4px;
+                                   
+                                   & ${Tag}>div, & ${Informations}{
+                                        display : flex;
+                                   }
+                               } 
+                            }
+                        }
+                    } 
+            }
+        }
+        &:last-child{
+           & ${ Column }{
+                    & ${ Slots }{
+                        & ${ Slot }{
+                            padding-left : 0px;
+                            padding-right : 4px;
+                            
+                            &.other{
+                                & ${SlotContent}{
+                                   border-radius :0px 4px 4px 0px;
+                                   
+                                   & ${Time}{
+                                        display : flex;
+                                   }
+                               } 
+                            }
+                        }
+                    } 
+            }
+        }
+    }
+    
+    
+             
+  }
+  
+  ${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+             /*&>div:nth-child(2){
+                ${ size === 'M' ? `padding : 0 5% 0 0 !important;` : `padding : 0 50% 0 0 !important;`}
+               
+              }*/
+             
+         }`)
+    }; 
+    
+    
+  
+  
+`;
