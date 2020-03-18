@@ -211,6 +211,7 @@ export const HeadSchedule = styled.div.attrs(props => ({
 `;
 
 export const BodySchedule = styled.div.attrs(props => ({
+    responsive: props.responsive,
 
 }))`
   display : flex;
@@ -224,6 +225,18 @@ export const BodySchedule = styled.div.attrs(props => ({
   
   
   }
+  
+  ${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+             /*&>div:nth-child(2){
+                ${ size === 'M' ? `padding : 0 5% 0 0 !important;` : `padding : 0 50% 0 0 !important;`}
+               
+              }*/
+             
+         }`)
+    }; 
+  
+  
 `;
 
 

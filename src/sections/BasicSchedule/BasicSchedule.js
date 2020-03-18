@@ -181,7 +181,7 @@ class BasicSchedule extends Component {
 
     getScheduleOfDay = () => {
         const scheduleOfDay = this.state.formatedSchedule.find(day => day.date === this.state.currentDay);
-        console.log('SCHEDULE OF DAY', scheduleOfDay);
+       // console.log('SCHEDULE OF DAY', scheduleOfDay);
         return scheduleOfDay;
     }
 
@@ -191,15 +191,58 @@ class BasicSchedule extends Component {
         return time.slice(0, -2) + String(m);
     }
 
-    getSlots = (slots, notTalk = false) => {
-        console.log(slots)
-        return slots.map(slot => {
+    overlaped = (slot, transverse) => {
+        //console.log('overlap SLOT', slot);
+        //console.log('overlap TRANSVERSE', transverse);
+
+        const startSlot = new Date(slot.fromTime);
+        const endSlot = new Date(slot.toTime);
+        const startTransverse = new Date(transverse.fromTime);
+        const endTransverse = new Date(transverse.toTime);
+
+        if( (startSlot >= startTransverse && startSlot < endTransverse) || (endSlot > startTransverse && endSlot <= endTransverse)  ){
+            console.log('OVERLAP !!!!')
+            return true
+        }else{
+            console.log('NOT OVERLAPED');
+            return false
+        }
+
+
+    }
+
+    searchOverlap = (slots, transverse) => {
+        let nbrOverlap = 0;
+        slots.forEach( slot => {
+            if(this.overlaped(slot, transverse)){
+                nbrOverlap++
+            }
+            console.log('nbrOverlap', nbrOverlap);
+        })
+        return nbrOverlap !== 0 ? true : false
+    }
+
+
+
+    getSlots = (slots, transverses) => {
+        console.log('getSlots slots',slots)
+        console.log('getSlots transverse',transverses)
+
+        const filtered = transverses.length !== 0 ? transverses.filter( (trans) => !this.searchOverlap(slots , trans)) : []
+        console.log('FILTERED', filtered)
+
+
+
+
+
+       // return slots.concat(filtered).map(slot => {
+        return slots.concat(transverses).map(slot => {
 
             const startDay = this.getScheduleOfDay().startTime;
 
 
             return <Slot duration={this.getDuration(slot.fromTime, slot.toTime)}
-                         minutes={this.getDuration(startDay, slot.fromTime)} className={notTalk ? 'other' : ''}>
+                         minutes={this.getDuration(startDay, slot.fromTime)} className={!slot.room ? 'other' : ''}>
                 <SlotContent>
                     <Header>
                         <Tag>
@@ -225,9 +268,7 @@ class BasicSchedule extends Component {
         })
     }
 
-    overlap = (a, b) => {
 
-    }
 
 
     render() {
@@ -263,6 +304,33 @@ class BasicSchedule extends Component {
             },
         };
 
+        const styles2 = {
+            root: {
+                width: '100%',
+
+                padding: '0 25% 0 0',
+            },
+            slideContainer: {
+                padding: '0 10px',
+                overflow: 'visible'
+            },
+            slide: {
+                padding: 15,
+                minHeight: 100,
+                color: '#fff',
+            },
+            slide1: {
+                backgroundColor: '#FEA900',
+            },
+            slide2: {
+                backgroundColor: '#B3DC4A',
+            },
+            slide3: {
+                backgroundColor: '#6AC0FF',
+            },
+        };
+
+
 
         return (
             <Wrapper id={removeSpaces(name)}
@@ -292,7 +360,7 @@ class BasicSchedule extends Component {
                                 }
                             </Days>
                         </HeadSchedule>
-                        <BodySchedule>
+                        <BodySchedule responsive={FlexContainer ? FlexContainer.responsiveSettings : []}>
                             <HoursLine>
                                 <Label><p>ROOM</p></Label>
 
@@ -307,16 +375,12 @@ class BasicSchedule extends Component {
                                             <Column style={Object.assign({}, styles.slide, styles.slide1)}>
                                                 <Head>{room.name}</Head>
                                                 <Slots>
-                                                    {this.getSlots(room.slots)}
-                                                    {this.getSlots(this.getScheduleOfDay().others, true)}
+                                                    {this.getSlots(room.slots, this.getScheduleOfDay().others)}
                                                 </Slots>
                                             </Column>
                                         )
                                     }) : null
                                 }
-                                <Column style={Object.assign({}, styles.slide, styles.slide1)}>
-                                    <Head>Room Test</Head>
-                                </Column>
                             </SwipeableViews>
                         </BodySchedule>
                     </Schedule>
