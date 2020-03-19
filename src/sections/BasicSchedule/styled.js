@@ -174,6 +174,7 @@ export const HoursLine = styled.div.attrs(props => ({
   background : white;
   border-right : 1px solid grey;
   z-index: 20;
+  transition : margin-right 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
   
   &>div{
   
@@ -431,12 +432,44 @@ export const Slot = styled.div.attrs(props => ({
 
 
 
+export const ShadowLeft = styled.div.attrs(props => ({
+
+
+}))`
+    position : absolute;
+    top : 0;
+    left : 35px;
+    width : 25px;
+    height : 100%;
+    box-shadow: inset 180px 0px 10px -173px rgba(0,0,0,0.51);
+    opacity : 0;
+    transition : opacity 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
+
+`;
+export const ShadowRight = styled.div.attrs(props => ({
+
+
+}))`
+    position : absolute;
+    top : 0;
+    right : 0;
+    width : 25px;
+    height : 100%;
+    transform : scaleX(-1);
+    box-shadow: inset 180px 0px 10px -173px rgba(0,0,0,0.51);
+    opacity : 0;
+    transition : opacity 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
+`;
+
 export const BodySchedule = styled.div.attrs(props => ({
     responsive: props.responsive,
+    nbrColumn : props.nbrColumn,
+    index : props.index
 
 }))`
   display : flex;
   overflow : hidden;
+  position : relative;
   
   & ${Column}{
 
@@ -523,6 +556,74 @@ export const BodySchedule = styled.div.attrs(props => ({
              
          }`)
     }; 
+    
+   @media (min-width: 1024px)/* and (max-width : 1279px) */{
+   
+        ${ props => props.index > 0 ? `
+            & ${ShadowLeft}{
+                opacity : 1;
+            }
+        ` : ``}
+   
+        ${ props => props.nbrColumn > 3 ? `
+            ${ (props.nbrColumn - props.index) > 3 ? `
+                & ${ShadowRight}{
+                    opacity : 1;
+                }
+        ` : ``}
+            
+           & ${ HoursLine}{
+             margin-right : ${ props.index === 0 ? ' -50px' : '0'};
+           }  
+        ` : ''}
+        
+        
+        &>div:nth-child(2){
+        
+            ${ props => props.nbrColumn > 3 ? `
+            
+                ${ props.index === 0 ? `
+                  padding :0 calc((100% - 35px - 0px) * (2/3) ) 0 50px !important;
+                ` : `
+                  padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 50px !important`
+                }
+                
+                ${ (props.nbrColumn - props.index) <= 3  ? `
+                    &>div{
+                        transform : translate(-${(props.nbrColumn - 3) * 100}%, 0px) !important;
+                    }
+                    
+                    
+                ` : ``}
+                  
+                
+            ` 
+            : ''}
+            ${ props => props.nbrColumn === 3 ? `
+                padding :0 calc((100% - 35px) * (2/3)) 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            ${ props => props.nbrColumn === 2 ? `
+                padding :0 calc((100% - 35px) * (1/2)) 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            ${ props => props.nbrColumn === 1 ? `
+                padding :0 0 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            
+            
+            
+        }
+        
+             
+    }
     
     
   

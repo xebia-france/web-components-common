@@ -17,7 +17,7 @@ import {
     Slot,
     SlotContent,
     DashContainer,
-    Informations, Header, Tag, Time, Clock
+    Informations, Header, Tag, Time, Clock, ShadowLeft, ShadowRight
 } from './styled';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
 import SwipeableViews from 'react-swipeable-views';
@@ -35,7 +35,9 @@ class BasicSchedule extends Component {
             formatedSchedule: this.formatSchedule(),
             scheduleOfDay: this.formatSchedule()[0],
             currentDay: this.formatSchedule()[0].date,
-            days: []
+            days: [],
+            index: 0,
+            nbrColumn: 5
         };
     }
 
@@ -135,7 +137,7 @@ class BasicSchedule extends Component {
         let rows = [];
 
         if (minutesStart !== 0) {
-            console.log('divide', Math.ceil(minutesStart / 15));
+            // console.log('divide', Math.ceil(minutesStart / 15));
 
             rows.push(
                 <DashContainer>
@@ -201,10 +203,10 @@ class BasicSchedule extends Component {
         const endTransverse = new Date(transverse.toTime);
 
         if ((startSlot >= startTransverse && startSlot < endTransverse) || (endSlot > startTransverse && endSlot <= endTransverse)) {
-            console.log('OVERLAP !!!!')
+            //console.log('OVERLAP !!!!')
             return true
         } else {
-            console.log('NOT OVERLAPED');
+            //console.log('NOT OVERLAPED');
             return false
         }
 
@@ -217,18 +219,18 @@ class BasicSchedule extends Component {
             if (this.overlaped(slot, transverse)) {
                 nbrOverlap++
             }
-            console.log('nbrOverlap', nbrOverlap);
+            //console.log('nbrOverlap', nbrOverlap);
         })
         return nbrOverlap !== 0 ? true : false
     }
 
 
-    getSlots = (slots, transverses) => {
-        console.log('getSlots slots', slots)
-        console.log('getSlots transverse', transverses)
+    renderSlots = (slots, transverses) => {
+        //console.log('renderSlots slots', slots)
+        // console.log('renderSlots transverse', transverses)
 
         const filtered = transverses.length !== 0 ? transverses.filter((trans) => !this.searchOverlap(slots, trans)) : []
-        console.log('FILTERED', filtered)
+        //console.log('FILTERED', filtered)
 
 
         // return slots.concat(filtered).map(slot => {
@@ -264,9 +266,23 @@ class BasicSchedule extends Component {
         })
     }
 
+    handleChange = (event, value) => {
+        this.setState({
+            index: value,
+        });
+    };
+
+    handleChangeIndex = index => {
+        console.log('handleChangeIndex index', index)
+        this.setState({
+            index,
+        });
+    };
+
 
     render() {
         const {children, fields, name, assetsDirectory, schedule} = this.props;
+        const {index, nbrColumn} = this.state;
 
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
@@ -354,25 +370,19 @@ class BasicSchedule extends Component {
                                 }
                             </Days>
                         </HeadSchedule>
-                        <BodySchedule responsive={FlexContainer ? FlexContainer.responsiveSettings : []}>
+                        <BodySchedule responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                                      nbrColumn={nbrColumn} index={index}>
                             <HoursLine>
                                 <Label><p>ROOM</p></Label>
 
                                 {this.getHoursTimeLine(this.getScheduleOfDay().startTime, this.getScheduleOfDay().endTime)}
                             </HoursLine>
                             <SwipeableViews
+                                index={index} onChangeIndex={this.handleChangeIndex}
                                 onSwitching={(index, type) => {
 
-                                    console.log('index switch: ', index)
-                                    console.log('type switch: ', type)
-                                }}
-                                onChangeIndex={(index, indexLatest, meta) => {
-                                    console.log('index change: ', index)
-                                    console.log('indexLatest change: ', indexLatest)
-                                    console.log('meta change: ', meta)
-                                    if(index === 1 ) {
-
-                                    }
+                                    //console.log('index switch: ', index)
+                                    //console.log('type switch: ', type)
                                 }}
                                 resistance enableMouseEvents disableLazyLoading style={stylesB.root}
                                 slideStyle={styles.slideContainer}>
@@ -383,7 +393,7 @@ class BasicSchedule extends Component {
                                             <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
                                                 <Head>{room.name}</Head>
                                                 <Slots>
-                                                    {this.getSlots(room.slots, this.getScheduleOfDay().others)}
+                                                    {this.renderSlots(room.slots, this.getScheduleOfDay().others)}
                                                 </Slots>
                                             </Column>
                                         )
@@ -392,17 +402,24 @@ class BasicSchedule extends Component {
                                 <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
                                     <Head>Test 1</Head>
                                     <Slots>
-                                        {this.getSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
+                                        {this.renderSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
                                     </Slots>
                                 </Column>
                                 <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
                                     <Head>Test 2</Head>
                                     <Slots>
-                                        {this.getSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
+                                        {this.renderSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
                                     </Slots>
                                 </Column>
-
+                                <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
+                                    <Head>Test 3</Head>
+                                    <Slots>
+                                        {this.renderSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
+                                    </Slots>
+                                </Column>
                             </SwipeableViews>
+                            <ShadowLeft/>
+                            <ShadowRight/>
                         </BodySchedule>
                     </Schedule>
                 </Container>
@@ -417,6 +434,10 @@ BasicSchedule.defaultProps = {}
 export default BasicSchedule;
 
 /*
+
+
+
+
 
 <div style={Object.assign({}, styles.slide, styles.slide1)}>slide n°1</div>
 <div style={Object.assign({}, styles.slide, styles.slide2)}>slide n°2</div>
