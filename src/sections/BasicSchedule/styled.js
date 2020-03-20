@@ -546,18 +546,8 @@ export const BodySchedule = styled.div.attrs(props => ({
     
              
   }
-  
-  ${ props => props.responsive.map((size, i) => `
-         @media ${ device[size] } {
-             /*&>div:nth-child(2){
-                ${ size === 'M' ? `padding : 0 5% 0 0 !important;` : `padding : 0 50% 0 0 !important;`}
-               
-              }*/
-             
-         }`)
-    }; 
     
-   @media (min-width: 1024px)/* and (max-width : 1279px) */{
+   @media (min-width: 1024px) {
    
         ${ props => props.index > 0 ? `
             & ${ShadowLeft}{

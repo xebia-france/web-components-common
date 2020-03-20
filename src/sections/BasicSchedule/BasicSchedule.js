@@ -1,62 +1,21 @@
 import React, {Component} from 'react';
-import {
-    Wrapper,
-    Container,
-    Test,
-    Schedule,
-    HoursLine,
-    Dash,
-    Head,
-    Column,
-    Days,
-    Day,
-    BodySchedule,
-    HeadSchedule,
-    Label,
-    Slots,
-    Slot,
-    SlotContent,
-    DashContainer,
-    Informations, Header, Tag, Time, Clock, ShadowLeft, ShadowRight
-} from './styled';
-import {getResponsiveKey, removeSpaces} from "../../utils/functions";
 import SwipeableViews from 'react-swipeable-views';
+import {getResponsiveKey, removeSpaces} from "../../utils/functions";
+import { Wrapper, Container, ShadowRight, ShadowLeft, HoursLine, Informations, SlotContent, Slot, Column, Dash, Clock, Time, Tag, Header, Label, HeadSchedule, BodySchedule, DashContainer, Day, Days, Head, Schedule, Slots} from "./styled";
 import SvgClock from '../../assets/svg/SvgClock';
 
-
 class BasicSchedule extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
-            startTime: this.initStartTime(),
-            endTime: this.initEndTime(),
-            rooms: [],
             formatedSchedule: this.formatSchedule(),
             scheduleOfDay: this.formatSchedule()[0],
             currentDay: this.formatSchedule()[0].date,
-            days: [],
-            index: 0,
-            nbrColumn: 5
+            nbrColumn: 5,
+            index : 0
         };
     }
 
-
-    initStartTime = () => {
-        const min = this.props.schedule.reduce((prev, current) => {
-            return (this.getHourFromTime(prev.fromTime)) < (this.getHourFromTime(current.fromTime)) ? prev : current
-        })
-        return Number(this.getHourFromTime(min.fromTime).slice(0, -3));
-    }
-
-    initEndTime = () => {
-        const max = this.props.schedule.reduce((prev, current) => {
-            return (this.getHourFromTime(prev.toTime)) > (this.getHourFromTime(current.toTime)) ? prev : current
-        })
-        console.log('MAX', max)
-        console.log('INIT NED TIME', Number(this.getHourFromTime(max.toTime).slice(0, -3)))
-        return Number(this.getHourFromTime(max.toTime).slice(0, -3))
-    }
     formatSchedule = () => {
         const schedule = [];
 
@@ -120,13 +79,6 @@ class BasicSchedule extends Component {
         return schedule;
 
     }
-
-
-    componentDidMount() {
-
-
-    }
-
     getHourFromTime = (time) => time.split(' ')[1];
     getDayFromTime = (time) => time.split(' ')[0];
 
@@ -193,43 +145,11 @@ class BasicSchedule extends Component {
         return time.slice(0, -2) + String(m);
     }
 
-    overlaped = (slot, transverse) => {
-        //console.log('overlap SLOT', slot);
-        //console.log('overlap TRANSVERSE', transverse);
-
-        const startSlot = new Date(slot.fromTime);
-        const endSlot = new Date(slot.toTime);
-        const startTransverse = new Date(transverse.fromTime);
-        const endTransverse = new Date(transverse.toTime);
-
-        if ((startSlot >= startTransverse && startSlot < endTransverse) || (endSlot > startTransverse && endSlot <= endTransverse)) {
-            //console.log('OVERLAP !!!!')
-            return true
-        } else {
-            //console.log('NOT OVERLAPED');
-            return false
-        }
-
-
-    }
-
-    searchOverlap = (slots, transverse) => {
-        let nbrOverlap = 0;
-        slots.forEach(slot => {
-            if (this.overlaped(slot, transverse)) {
-                nbrOverlap++
-            }
-            //console.log('nbrOverlap', nbrOverlap);
-        })
-        return nbrOverlap !== 0 ? true : false
-    }
-
-
     renderSlots = (slots, transverses) => {
         //console.log('renderSlots slots', slots)
         // console.log('renderSlots transverse', transverses)
 
-        const filtered = transverses.length !== 0 ? transverses.filter((trans) => !this.searchOverlap(slots, trans)) : []
+       // const filtered = transverses.length !== 0 ? transverses.filter((trans) => !this.searchOverlap(slots, trans)) : []
         //console.log('FILTERED', filtered)
 
 
@@ -266,13 +186,7 @@ class BasicSchedule extends Component {
         })
     }
 
-    handleChange = (event, value) => {
-        this.setState({
-            index: value,
-        });
-    };
-
-    handleChangeIndex = index => {
+    updateIndex = index => {
         console.log('handleChangeIndex index', index)
         this.setState({
             index,
@@ -282,41 +196,10 @@ class BasicSchedule extends Component {
 
     render() {
         const {children, fields, name, assetsDirectory, schedule} = this.props;
-        const {index, nbrColumn} = this.state;
-
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
 
         const styles = {
-            root: {
-                width: '100%',
-                padding: '0 20px',
-                //marginLeft : '-50%'
-                //padding: '0 50% 0 0',
-            },
-            slideContainer: {
-                padding: '0px 0px',
-                overflow: 'visible'
-            },
-            slide: {
-                padding: 0,
-                minHeight: 100,
-                color: '#fff'
-
-            },
-            slide1: {
-                backgroundColor: 'none'
-            },
-            slide2: {
-                backgroundColor: 'none'
-            },
-            slide3: {
-
-                backgroundColor: 'none'
-            },
-        };
-
-        const stylesB = {
             root: {
                 width: '100%',
                 overflowX: 'visible',
@@ -326,8 +209,7 @@ class BasicSchedule extends Component {
             slideContainer: {
                 padding: '0',
                 width: '100%',
-                overflow: 'visible',
-                //overflow: 'visible'
+                overflow: 'visible'
             },
             slide: {},
             slide1: {
@@ -341,7 +223,6 @@ class BasicSchedule extends Component {
             },
         };
 
-
         return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
@@ -350,103 +231,80 @@ class BasicSchedule extends Component {
                      responsive={Template ? Template.responsiveSettings : null}
                      basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                      border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
-            >
-                <Container
-                    responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                    flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
-                    <Schedule>
-                        <HeadSchedule>
-                            <Label><p>DAY</p></Label>
-                            <Days>
-                                {
-                                    this.formatSchedule().map(day => {
-                                        return <Day className={day.date === this.state.currentDay ? 'active' : ''}
-                                                    onClick={() => {
-                                                        this.setState({
-                                                            currentDay: day.date
-                                                        })
-                                                    }}>{day.date}</Day>
-                                    })
-                                }
-                            </Days>
-                        </HeadSchedule>
-                        <BodySchedule responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                                      nbrColumn={nbrColumn} index={index}>
-                            <HoursLine>
-                                <Label><p>ROOM</p></Label>
+            ><Container
+                responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
+                <div>Programme</div>
+                <Schedule>
+                    <HeadSchedule>
+                        <Label><p>DAY</p></Label>
+                        <Days>
+                            {
+                                this.formatSchedule().map(day => {
+                                    return <Day className={day.date === this.state.currentDay ? 'active' : ''}
+                                                onClick={() => {
+                                                    this.setState({
+                                                        currentDay: day.date
+                                                    })
+                                                }}>{day.date}</Day>
+                                })
+                            }
+                        </Days>
+                    </HeadSchedule>
+                    <BodySchedule responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                                  nbrColumn={this.state.nbrColumn} index={this.state.index}>
+                        <HoursLine>
+                            <Label><p>ROOM</p></Label>
 
-                                {this.getHoursTimeLine(this.getScheduleOfDay().startTime, this.getScheduleOfDay().endTime)}
-                            </HoursLine>
-                            <SwipeableViews
-                                index={index} onChangeIndex={this.handleChangeIndex}
-                                onSwitching={(index, type) => {
+                            {this.getHoursTimeLine(this.getScheduleOfDay().startTime, this.getScheduleOfDay().endTime)}
+                        </HoursLine>
+                        <SwipeableViews
+                            index={this.state.index} onChangeIndex={this.updateIndex}
+                            resistance enableMouseEvents disableLazyLoading style={styles.root}
+                            slideStyle={styles.slideContainer}>
+                            {
 
-                                    //console.log('index switch: ', index)
-                                    //console.log('type switch: ', type)
-                                }}
-                                resistance enableMouseEvents disableLazyLoading style={stylesB.root}
-                                slideStyle={styles.slideContainer}>
-                                {
-
-                                    this.getScheduleOfDay() ? this.getScheduleOfDay().rooms.map(room => {
-                                        return (
-                                            <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
-                                                <Head>{room.name}</Head>
-                                                <Slots>
-                                                    {this.renderSlots(room.slots, this.getScheduleOfDay().others)}
-                                                </Slots>
-                                            </Column>
-                                        )
-                                    }) : null
-                                }
-                                <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
-                                    <Head>Test 1</Head>
-                                    <Slots>
-                                        {this.renderSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
-                                    </Slots>
-                                </Column>
-                                <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
-                                    <Head>Test 2</Head>
-                                    <Slots>
-                                        {this.renderSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
-                                    </Slots>
-                                </Column>
-                                <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
-                                    <Head>Test 3</Head>
-                                    <Slots>
-                                        {this.renderSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
-                                    </Slots>
-                                </Column>
-                            </SwipeableViews>
-                            <ShadowLeft/>
-                            <ShadowRight/>
-                        </BodySchedule>
-                    </Schedule>
-                </Container>
+                                this.getScheduleOfDay() ? this.getScheduleOfDay().rooms.map(room => {
+                                    return (
+                                        <Column style={Object.assign({}, styles.slide, styles.slide1)}>
+                                            <Head>{room.name}</Head>
+                                            <Slots>
+                                                {this.renderSlots(room.slots, this.getScheduleOfDay().others)}
+                                            </Slots>
+                                        </Column>
+                                    )
+                                }) : null
+                            }
+                            <Column style={Object.assign({}, styles.slide, styles.slide1)}>
+                                <Head>Test 1</Head>
+                                <Slots>
+                                    {this.renderSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
+                                </Slots>
+                            </Column>
+                            <Column style={Object.assign({}, styles.slide, styles.slide1)}>
+                                <Head>Test 2</Head>
+                                <Slots>
+                                    {this.renderSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
+                                </Slots>
+                            </Column>
+                            <Column style={Object.assign({}, styles.slide, styles.slide1)}>
+                                <Head>Test 3</Head>
+                                <Slots>
+                                    {this.renderSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
+                                </Slots>
+                            </Column>
+                        </SwipeableViews>
+                        <ShadowLeft/>
+                        <ShadowRight/>
+                    </BodySchedule>
+                </Schedule>
+            </Container>
             </Wrapper>
-        );
-    }
 
-};
+        )
+
+    }
+}
 
 BasicSchedule.defaultProps = {}
-
 export default BasicSchedule;
-
-/*
-
-
-
-
-
-<div style={Object.assign({}, styles.slide, styles.slide1)}>slide n°1</div>
-<div style={Object.assign({}, styles.slide, styles.slide2)}>slide n°2</div>
-<div style={Object.assign({}, styles.slide, styles.slide3)}>slide n°3</div>
-<div style={Object.assign({}, styles.slide, styles.slide1)}>slide n°1</div>
-<div style={Object.assign({}, styles.slide, styles.slide2)}>slide n°2</div>
-<div style={Object.assign({}, styles.slide, styles.slide3)}>slide n°3</div>
-<div style={Object.assign({}, styles.slide, styles.slide1)}>slide n°1</div>
-<div style={Object.assign({}, styles.slide, styles.slide2)}>slide n°2</div>
-<div style={Object.assign({}, styles.slide, styles.slide3)}>slide n°3</div>
-
- */
