@@ -9,6 +9,9 @@ export const Container = styled(ContainerCommon)`
         flex-direction : column;
      }
 `;
+export const RightContent = styled.div`
+   z-index : 2;
+`;
 
 export const Text = styled(TextCommon)``;
 

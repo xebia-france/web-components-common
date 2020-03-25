@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Text, Content, ImageContainer, CTA} from './styled';
+import {Container, Text, Content, ImageContainer, CTA,  RightContent} from './styled';
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
 
@@ -110,12 +110,12 @@ class CardImageLeft extends Component {
                 {
                     fields.Image ? this.getImages(fields.Image) : null
                 }
-                <div>
+                <RightContent>
                     {
                         order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                             : ['Title', 'Tagline', 'Content', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                     }
-                </div>
+                </RightContent>
             </Container>
         );
     }
