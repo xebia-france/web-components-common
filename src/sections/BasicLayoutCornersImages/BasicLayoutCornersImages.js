@@ -17,32 +17,34 @@ class BasicLayoutCornersImages extends Component{// = ({children, fields, name, 
 
     getCornerImages = field => {
         const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
-        return field.content.images.map((image, i) => {
-            const file = image.asset[responsiveContent].fileName ? image.asset[responsiveContent].fileName : null;
-            if (!file) return <ImageCorner key={i}
-                                           responsive={field.responsiveSettings}
-                                           basis={field.settings.basis}
-                                           index={i+1}
-                                           responsiveContent={getResponsiveKey(field.content.images[0].asset)}
-                                           assetsDirectory={this.props.assetsDirectory}/>;
+            return field.content.images.map((image, i) => {
 
-            return (
-                <ImageCorner key={i}
-                             responsive={field.responsiveSettings}
-                             basis={field.settings.basis}
-                             responsiveContent={getResponsiveKey(field.content.images[0].asset)}
-                             assetsDirectory={this.props.assetsDirectory}
-                             asset={image.asset? image.asset : null}
-                             index={i+1}>
-                </ImageCorner>);
-        });
+                const file = image.asset[responsiveContent].fileName ? image.asset[responsiveContent].fileName : null;
+                if (!file) return <ImageCorner key={i}
+                                               responsive={getResponsiveKey(field.settings.basis)}
+                                               basis={field.settings.basis}
+                                               index={i+1}
+                                               responsiveContent={getResponsiveKey(field.content.images[0].asset)}
+                                               assetsDirectory={this.props.assetsDirectory}/>;
+
+                return (
+                    <ImageCorner key={i}
+                                 responsive={getResponsiveKey(field.settings.basis)}
+                                 basis={field.settings.basis}
+                                 responsiveContent={getResponsiveKey(field.content.images[0].asset)}
+                                 assetsDirectory={this.props.assetsDirectory}
+                                 asset={image.asset? image.asset : null}
+                                 index={i+1}>
+                    </ImageCorner>);
+            });
+
+
     }
 
     render() {
         const {children, fields, name, assetsDirectory} = this.props;
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
-
 
         return (
             <Wrapper id={removeSpaces(name)}

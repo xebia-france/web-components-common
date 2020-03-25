@@ -38,6 +38,9 @@ export const ContainerCommon = styled.div.attrs(props => ({
             ${ props.border ?
                 ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
             : ''}
+            ${ props.shadow ?
+                (  props.basis[size].shadow.value !== 'none' ? `box-shadow : ${ props.basis[size].shadow.value }; ` : '' )
+            : ''}
              
             &:after{
                z-index : 1;
