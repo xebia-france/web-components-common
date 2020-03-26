@@ -55,12 +55,13 @@ class BasicLayoutCornersImages extends Component{// = ({children, fields, name, 
                      basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                      border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
             >
+                {
+                    ['CornerImages'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                }
                 <Container
                     responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
                     flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
-                    {
-                        ['CornerImages'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                    }
+
                     {children}
                 </Container>
             </Wrapper>
