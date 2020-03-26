@@ -137,11 +137,18 @@ export const FooterContainer = styled.div.attrs(props => ({
             ${ props.basis ? generateMargin(props.basis, size) : '' }   
             
             background-color:${ props.basis[size].color.rgb ?  `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` : props.basis[size].color.hex };
+            ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+                  background:${ props.basis[size].color.gradient  };
 
+               ` : ''}
             & ${Links}{
                 & li{
                     &>div{
                        background-color:${ props.basis[size].color.rgb ?  `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` : props.basis[size].color.hex };
+                    ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+                      background-color: transparent;
+    
+                   ` : ''}
                     }
                     &:hover{
                         &>div li{

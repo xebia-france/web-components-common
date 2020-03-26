@@ -66,6 +66,10 @@ export const Container = styled.div.attrs(props => ({
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
             background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+            ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+                  background:${ props.basis[size].color.gradient  };
+
+               ` : ''}
          }`)
     }; 
 `;

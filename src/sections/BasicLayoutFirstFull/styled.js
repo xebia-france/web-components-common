@@ -39,7 +39,10 @@ export const Wrapper = styled.section.attrs(props => ({
                top : 0;
                left : 0;
                background-color:${ props.basis[size].color.rgb ?  `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` : props.basis[size].color.hex };
+                ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+                  background:${ props.basis[size].color.gradient  };
 
+               ` : ''}
             }
             
             
