@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Text, Content, ImageContainer, CTA,  RightContent} from './styled';
+import {Container, Text, Content, ImageContainer, CTA, RightContent, ImageBackground} from './styled';
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
 
@@ -84,15 +84,26 @@ class CardImageLeft extends Component {
                 return null
             } else {
                 return (
-                    <ImageContainer key={i}
+                    <ImageBackground
+                        key={i}
+                        responsive={field.responsiveSettings}
+                        basis={field.settings.basis}
+                        border={field.settings.border}
+                        alt={image.alt[this.props.language]}
+                        assetsDirectory={this.props.assetsDirectory}
+                        asset={file}
+                    />
+                )
+            }
+        });
+    }
+
+    /*<ImageContainer key={i}
                                     responsive={field.responsiveSettings}
                                     basis={field.settings.basis}
                                     border={field.settings.border}>
                         <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
-                    </ImageContainer>);
-            }
-        });
-    }
+                    </ImageContainer>);*/
 
     render() {
         const {fields, order, assetsDirectory} = this.props;
