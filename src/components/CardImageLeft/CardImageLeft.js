@@ -43,9 +43,6 @@ class CardImageLeft extends Component {
                     }}
                 />
 
-            case 'Image':
-                return this.getImages(fields[field]);
-
             case 'CTA':
                 return <CTA
                     key={key}
@@ -98,12 +95,7 @@ class CardImageLeft extends Component {
         });
     }
 
-    /*<ImageContainer key={i}
-                                    responsive={field.responsiveSettings}
-                                    basis={field.settings.basis}
-                                    border={field.settings.border}>
-                        <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
-                    </ImageContainer>);*/
+
 
     render() {
         const {fields, order, assetsDirectory} = this.props;
@@ -121,7 +113,9 @@ class CardImageLeft extends Component {
                 {
                     fields.Image ? this.getImages(fields.Image) : null
                 }
+
                 <RightContent>
+                    salut
                     {
                         order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                             : ['Title', 'Tagline', 'Content', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
@@ -149,3 +143,10 @@ CardImageLeft.propTypes = {
     assetsDirectory: PropTypes.string
 };
 export default CardImageLeft;
+
+/*<ImageContainer key={i}
+                                  responsive={field.responsiveSettings}
+                                  basis={field.settings.basis}
+                                  border={field.settings.border}>
+                      <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
+                  </ImageContainer>);*/
