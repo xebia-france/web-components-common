@@ -115,7 +115,6 @@ class CardImageLeft extends Component {
                 }
 
                 <RightContent>
-                    salut
                     {
                         order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                             : ['Title', 'Tagline', 'Content', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
