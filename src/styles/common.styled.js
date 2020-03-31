@@ -48,7 +48,9 @@ export const ContainerCommon = styled.div.attrs(props => ({
                width : 100%;
                height : 100%;
                content : ''; 
-               top : 0;
+               ${ props.basis[size].background &&  props.basis[size].background.top ? `
+                  top:${ props.basis[size].background.top  }px;
+                ` : 'top : 0;'}
                left : 0;
                background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
            ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `

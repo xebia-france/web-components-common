@@ -63,6 +63,7 @@ export const Wrapper = styled.section.attrs(props => ({
   flex-direction : column;
   width: 100%;  
   position : relative;
+  overflow : hidden;
   & ${ ImageCorner }{
        &:nth-child(1){
            top : 0;
@@ -99,7 +100,9 @@ export const Wrapper = styled.section.attrs(props => ({
                width : 100%;
                height : 100%;
                content : ''; 
-               top : 0;
+               ${ props.basis[size].background &&  props.basis[size].background.top ? `
+                  top:${ props.basis[size].background.top  }px;
+                ` : 'top : 0;'}
                left : 0;
                background-color:${ props.basis[size].color.rgb ?  `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` : props.basis[size].color.hex };
                ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
