@@ -100,6 +100,8 @@ class CardImageLeft extends Component {
     render() {
         const {fields, order, assetsDirectory} = this.props;
 
+        console.log('PROPS ON CARD IMAGE LEFT',  this.props)
+
         const Template = fields.Template;
 
         return (
