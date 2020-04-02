@@ -3,7 +3,7 @@ import {
    Formation, ImageContainer, RightContent, ImageBackground
 
 } from './styled';
-import { TextCommon } from '../../../styles/common.styled'
+import { TextCommon, ContentCommon, CTACommon } from '../../../styles/common.styled'
 import { fileNameFromUrl } from '../../../utils/functions'
 
 class CardFormation extends Component {
@@ -17,7 +17,7 @@ class CardFormation extends Component {
     }
 
     render() {
-        const {data, i, assetsDirectory, config, configCard} = this.props;
+        const {data, i, assetsDirectory, config, configCard, CTA} = this.props;
 
         console.log('PROPS ON CARDFORMATION', this.props)
 
@@ -44,7 +44,6 @@ class CardFormation extends Component {
 
             <RightContent>
                 <TextCommon
-                    key={i}
                     responsive={config.responsiveSettings}
                     typography={config.settings.category}
                     basis={config.settings.category}
@@ -53,6 +52,45 @@ class CardFormation extends Component {
                 >
                     { data.category.name }
                 </TextCommon>
+                <TextCommon
+                    responsive={config.responsiveSettings}
+                    typography={config.settings.title}
+                    basis={config.settings.title}
+                    border={null}
+                    as={'h4'}
+                >
+                    { data.name }
+                </TextCommon>
+                <ContentCommon
+                    responsive={config.responsiveSettings}
+                    typography={config.settings.text}
+                    basis={config.settings.text}
+                    dangerouslySetInnerHTML={{
+                        __html: data.description.childMarkdownRemark ? data.description.childMarkdownRemark.html :
+                            <p></p>
+                    }}
+                />
+                <CTACommon
+                    responsive={CTA.responsiveSettings}
+                    basis={CTA.settings.basis}
+                    typography={CTA.settings.typography}
+                    border={CTA.settings.border}
+                    icon={CTA.settings.icon}
+                    href={data.slug && !CTA.settings.state.disabled ? `/${data.category.slug}/${data.slug}` : ''}
+                    target={CTA.settings.state.external ? '_blank' : ''}
+                    className={CTA.settings.state.disabled ? 'disabled' : ''}
+                    onClick={(e) => {
+                        if (CTA.settings.state.disabled) e.preventDefault();
+                    }}
+                >
+                    {
+                        CTA.content.icon && CTA.content.icon[this.props.language] ?
+                            <i>{CTA.content.icon[this.props.language]}</i>
+                            : null
+                    }
+                    <p> {CTA.content.text ? CTA.content.text[this.props.language] : ''}</p>
+
+                </CTACommon>
 
 
             </RightContent>

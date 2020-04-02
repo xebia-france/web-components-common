@@ -25,6 +25,7 @@ class ListFormations extends Component {
         const {children, fields, name, assetsDirectory, data} = this.props;
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
+        const CTA = fields.CTA;
 
         console.log('data', data)
         console.log('children', children)
@@ -51,6 +52,8 @@ class ListFormations extends Component {
                                 configCard={fields.TemplateCard}
                                 data={formation} i={i}
                                 assetsDirectory={assetsDirectory}
+                                CTA={CTA}
+                                language={this.props.language}
                             />
                         })
                     }

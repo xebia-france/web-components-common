@@ -8,6 +8,7 @@ import {
     generateSize, generateBackgroundImage
 } from "../../../utils/StyleGenerator";
 import {ImageContainerCommon} from "../../../styles/common.styled";
+import { isNumber} from "../../../utils/functions";
 
 export const Formation = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -92,7 +93,13 @@ export const ImageBackground = styled.div.attrs(props => ({
     
     ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-            ${ props.basis ? generateSize(props.basis, size) : '' }      
+            ${ props.basis ? generateSize(props.basis, size) : '' }    
+            ${props.basis[size] && props.basis[size].size.width && props.basis[size].size.width !== '' ?
+        `min-width :${ isNumber(props.basis[size].size.width)
+            ? `${ props.basis[size].size.width }px;`
+            : props.basis[size].size.width };`
+        : ''}
+              
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' }   
             ${ props.border ? generateBorder(props.border, size) : '' } 
@@ -110,7 +117,7 @@ export const ImageBackground = styled.div.attrs(props => ({
             background-image : url(${ `${ props.assetsDirectory  || ''}${  props.asset }`});    
             background-size : cover;
             background-position : center;
-            background-position : top left;
+            background-position : center;
             background-repeat : no-repeat;
          }
          }`

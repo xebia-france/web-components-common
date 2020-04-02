@@ -3,7 +3,7 @@ import {Container, Text, Content, ImageContainer, CTA} from './styled';
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
 
-class CardMultiCTA extends Component {
+class CardDuplicableCTA extends Component {
     buildComponent = (fields, field, key) => {
         if (!fields[field]) return
         switch (field) {
@@ -45,7 +45,7 @@ class CardMultiCTA extends Component {
 
             case 'Image':
                 return this.getImages(fields[field]);
-
+/*
             case 'CTA' :
             case 'CTA2' :
             case 'CTA3' :
@@ -73,11 +73,46 @@ class CardMultiCTA extends Component {
                                 : null
                         }
                         {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}</p>
-                </CTA>;
+                </CTA>;*/
+
+            case 'CTA' :
+
+                return this.getAllCTA();
 
             default :
                 return null;
         }
+    }
+
+    getAllCTA = () => {
+        return Object.keys(this.props.fields).map( (key, i) => {
+            if(key.includes('CTA')){
+                return Object.assign(this.props.fields[key])
+            }
+        }).filter(el => el)
+            .map((cta, i) => <CTA
+                key={i}
+                responsive={cta.responsiveSettings}
+                basis={cta.settings.basis}
+                typography={cta.settings.typography}
+                border={cta.settings.border}
+                icon={cta.settings.icon}
+                href={cta.content.link && !cta.settings.state.disabled ? cta.content.link[this.props.language] : ''}
+                target={cta.settings.state.external ? '_blank' : ''}
+                className={cta.settings.state.disabled ? 'disabled' : ''}
+                onClick={(e) => {
+                    if (cta.settings.state.disabled) e.preventDefault();
+                }
+                }
+            >
+                <p>
+                    {
+                        cta.content.icon && cta.content.icon[this.props.language] ?
+                            <i>{cta.content.icon[this.props.language]}</i>
+                            : null
+                    }
+                    {cta.content.text ? cta.content.text[this.props.language] : ''}</p>
+            </CTA>)
     }
 
     getImages = field => {
@@ -114,7 +149,7 @@ class CardMultiCTA extends Component {
             >
                 {
                     order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                        : ['Title', 'Tagline', 'Content', 'Image', 'CTA', 'CTA2', 'CTA3', 'CTA4'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                        : ['Title', 'Tagline', 'Content', 'Image', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
             </Container>
         );
@@ -122,11 +157,11 @@ class CardMultiCTA extends Component {
 }
 
 
-CardMultiCTA.defaultProps = {};
+CardDuplicableCTA.defaultProps = {};
 
-CardMultiCTA.propTypes = {
+CardDuplicableCTA.propTypes = {
     fields: PropTypes.object.isRequired,
     language: PropTypes.number.isRequired
 };
 
-export default CardMultiCTA;
+export default CardDuplicableCTA;
