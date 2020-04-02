@@ -4,7 +4,7 @@ import {
     Container
 } from './styled';
 import {getResponsiveKey, removeSpaces, fileNameFromUrl} from "../../utils/functions";
-import CardImageLeft from '../../components/CardImageLeft';
+import CardFormation from './CardFormation';
 
 class ListFormations extends Component {
     constructor(props) {
@@ -20,31 +20,11 @@ class ListFormations extends Component {
         console.log('SPEAKERS ', this.props.speakers)
     }
 
-    selectCard = (i) => {
-        if (this.state.selectedCard === i) {
-            this.setState({active: false, selectedCard: null})
-        } else if (this.state.selectedCard !== null) {
-            this.setState({
-                active: false, selectedCard: null
-            }, () => {
-                var x = setTimeout(() => {
-                    this.setState({active: true, selectedCard: i}, () => {
-                        clearTimeout(x);
-                    })
-                }, 500);
-            })
-        } else {
-            this.setState({active: true, selectedCard: i})
-        }
-    }
 
     render() {
         const {children, fields, name, assetsDirectory, data} = this.props;
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
-
-        const AssetBackground = Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null;
-        const Settings = Template && Template.settings ? Template.settings : null;
 
         console.log('data', data)
         console.log('children', children)
@@ -64,6 +44,15 @@ class ListFormations extends Component {
                     responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
                     flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
                     {
+                        data.map((formation, i) => {
+                            return <CardFormation
+                                key={i}
+                                config={fields.Formations}
+                                configCard={fields.TemplateCard}
+                                data={formation} i={i}
+                                assetsDirectory={assetsDirectory}
+                            />
+                        })
                     }
                 </Container>
             </Wrapper>
