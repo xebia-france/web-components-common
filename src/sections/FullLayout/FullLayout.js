@@ -1,11 +1,12 @@
 import React from 'react';
-import { Wrapper } from './styled';
+import { Wrapper, Container } from './styled';
 import {getResponsiveKey, removeSpaces} from '../../utils/functions';
 import PropTypes from 'prop-types';
 
 
 const FullLayout = ({ children, fields, name, assetsDirectory }) => {
     const Template = fields.Template;
+    const FlexContainer = fields.FlexContainer;
 
     return (
         <Wrapper id={removeSpaces(name)} responsive={Template ? Template.responsiveSettings : null}
@@ -16,7 +17,11 @@ const FullLayout = ({ children, fields, name, assetsDirectory }) => {
                  responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : null}
 
         >
-            {children}
+            <Container
+                responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
+                {children}
+            </Container>
         </Wrapper>
     );
 };

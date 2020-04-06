@@ -31,7 +31,7 @@ export const ImageBackground = styled.div.attrs(props => ({
     assetsDirectory : props.assetsDirectory
 }))`
     overflow : hidden;
-    -webkit-mask-image: -webkit-radial-gradient(white, black);
+   // -webkit-mask-image: -webkit-radial-gradient(white, black);
     border-style : solid;
     z-index : 2;
     

@@ -53,10 +53,11 @@ class FooterBasic extends Component {
                         basis={settings.basis}
                         typography={settings.typography}
                         border={settings.border}
-                        className={ this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
+                        className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
                         href={`/${this.props.locale.split('-')[0]}/${link.slug}`}>{link.name}</Link>
                         {
-                            link.childrens ? <div> {this.getRenderLinks(link.childrens, `/${this.props.locale.split('-')[0]}/${link.slug}` )}</div> : null
+                            link.childrens ?
+                                <div> {this.getRenderLinks(link.childrens, `/${this.props.locale.split('-')[0]}/${link.slug}`)}</div> : null
                         }
                         {
                             i !== (links.length - 1) ? <Bullet responsive={fieldLinks.responsiveSettings}
@@ -76,8 +77,8 @@ class FooterBasic extends Component {
                             link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null
                         }
                         {
-                             i !== (links.length - 1) ? <Bullet responsive={fieldLinks.responsiveSettings}
-                                                                typography={settings.typography}>&#8226;</Bullet> : null
+                            i !== (links.length - 1) ? <Bullet responsive={fieldLinks.responsiveSettings}
+                                                               typography={settings.typography}>&#8226;</Bullet> : null
                         }
                     </li>;
 
@@ -91,17 +92,25 @@ class FooterBasic extends Component {
 
     render() {
         const {fields, menu} = this.props;
+        const Template = fields.Template;
+        const Links = fields.Links;
 
         return (
             <Container>
-                <FooterContainer responsive={fields['Template'].responsiveSettings}
-                                 basis={fields['Template'].settings.basis}
+                <FooterContainer responsive={Template ? Template.responsiveSettings : []}
+                                 basis={Template && Template.settings ? Template.settings.basis : null}
+
                 >
-                    <Links>
-                        {
-                            menu ? this.getRenderLinks(menu) : null
-                        }
-                    </Links>
+                    {
+                        Links && menu ?
+                            <Links>
+                                {
+                                    this.getRenderLinks(menu)
+                                }
+                            </Links>
+                            : null
+                    }
+
                 </FooterContainer>
             </Container>
         );

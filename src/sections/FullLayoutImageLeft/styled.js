@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {device} from "../../styles/constants";
 import {
     generatePadding,
-    generateBorder, generateBackgroundImage
+    generateBorder, generateBackgroundImage, generateSize, generateMargin, getFormatedColor
 } from "../../utils/StyleGenerator";
 
 export const Wrapper = styled.section.attrs(props => ({
@@ -15,14 +15,18 @@ export const Wrapper = styled.section.attrs(props => ({
 
 }))`
   display : flex;
-  flex-direction : column;
+  flex-direction : row;
+  flex-wrap:nowrap;
   width: 100%;  
   position : relative;
   overflow : hidden;
+  justify-content : flex-start;
+  align-items : stretch;
+  align-content : flex-start;
+  
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
              
-            ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
             ${ props.border ?
     ( props.border[size].color ?
@@ -60,6 +64,7 @@ export const Wrapper = styled.section.attrs(props => ({
 
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
+    basis: props.basis,
     flex: props.flex
 
 }))`
@@ -75,7 +80,8 @@ export const Container = styled.div.attrs(props => ({
              align-items: ${ props.flex[size].properties.alignItems };
              align-content: ${ props.flex[size].properties.alignContent };
              margin-bottom : -${ props.flex[size].properties.gutterVertical }px;
-             
+             ${ props.basis ? generatePadding(props.basis, size) : '' }
+
              
              
              &>*{
@@ -107,4 +113,47 @@ export const Container = styled.div.attrs(props => ({
              
          }`)
     }; 
+`;
+
+export const ImageBackground = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    basis: props.basis,
+    responsiveContent: props.responsiveContent,
+    asset : props.asset,
+    assetsDirectory : props.assetsDirectory
+}))`
+    overflow : hidden;
+    border-style : solid;
+    z-index : 2;
+    display : flex;
+    
+    ${ props => props.responsive.map(size => `
+         @media ${ device[size] } {
+            ${ props.basis ? generateSize(props.basis, size) : '' }      
+            ${ props.basis ? generatePadding(props.basis, size) : '' }       
+            ${ props.basis ? generateMargin(props.basis, size) : '' }   
+            ${ props.border ? generateBorder(props.border, size) : '' } 
+            ${ props.border ?
+    ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
+    : ''}
+               
+          
+         }`)
+    }; 
+    
+    ${ props =>  `
+        
+            background-image : url(${ `${ props.assetsDirectory  || ''}${  props.asset }`});    
+            background-size : cover;
+            background-position : center;
+            background-position : top left;
+            background-repeat : no-repeat;
+            
+            
+         `
+    };
+         
+   &>img{
+        width : 100%; 
+   }     
 `;

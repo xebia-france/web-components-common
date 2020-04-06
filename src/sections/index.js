@@ -3,6 +3,7 @@
 // allows for simpler scaling when your library grows in size, and even adds
 // different tech like TypeScript
 export { default as FullLayout } from './FullLayout';
+export { default as FullLayoutImageLeft } from './FullLayoutImageLeft';
 export { default as BasicLayout } from './BasicLayout';
 export { default as BasicLayoutFirstFull } from './BasicLayoutFirstFull';
 export { default as BasicLayoutCornersImages } from './BasicLayoutCornersImages';

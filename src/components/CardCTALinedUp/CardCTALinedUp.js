@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Container, Text, Content, ImageContainer, CTA} from './styled';
+import {Container, Text, Content, ImageContainer, CTA, LinedCTA} from './styled';
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
 
-class CardDuplicableCTA extends Component {
+class CardCTALinedUp extends Component {
     buildComponent = (fields, field, key) => {
         if (!fields[field]) return
         switch (field) {
@@ -85,35 +85,43 @@ class CardDuplicableCTA extends Component {
     }
 
     getAllCTA = () => {
-        return Object.keys(this.props.fields).map((key, i) => {
-            if (key.includes('DupCTA')) {
-                return Object.assign(this.props.fields[key])
-            }
-        }).filter(el => el)
-            .map((cta, i) => <CTA
-                key={i}
-                responsive={cta.responsiveSettings}
-                basis={cta.settings.basis}
-                typography={cta.settings.typography}
-                border={cta.settings.border}
-                icon={cta.settings.icon}
-                href={cta.content.link && !cta.settings.state.disabled ? cta.content.link[this.props.language] : ''}
-                target={cta.settings.state.external ? '_blank' : ''}
-                className={cta.settings.state.disabled ? 'disabled' : ''}
-                onClick={(e) => {
-                    if (cta.settings.state.disabled) e.preventDefault();
-                }
-                }
-            >
-                {
-                    cta.content.icon && cta.content.icon[this.props.language] ?
-                        <i>{cta.content.icon[this.props.language]}</i>
-                        : null
-                }
-                <p>
+        return (<LinedCTA>
+            {
 
-                    {cta.content.text ? cta.content.text[this.props.language] : ''}</p>
-            </CTA>)
+                Object.keys(this.props.fields).map((key, i) => {
+                    if (key.includes('DupCTA')) {
+                        return Object.assign(this.props.fields[key])
+                    }
+                }).filter(el => el)
+                    .map((cta, i) => <CTA
+                        key={i}
+                        responsive={cta.responsiveSettings}
+                        basis={cta.settings.basis}
+                        typography={cta.settings.typography}
+                        border={cta.settings.border}
+                        icon={cta.settings.icon}
+                        href={cta.content.link && !cta.settings.state.disabled ? cta.content.link[this.props.language] : ''}
+                        target={cta.settings.state.external ? '_blank' : ''}
+                        className={cta.settings.state.disabled ? 'disabled' : ''}
+                        onClick={(e) => {
+                            if (cta.settings.state.disabled) e.preventDefault();
+                        }
+                        }
+                    >
+                        {
+                            cta.content.icon && cta.content.icon[this.props.language] ?
+                                <i>{cta.content.icon[this.props.language]}</i>
+                                : null
+                        }
+                        <p>
+
+                            {cta.content.text ? cta.content.text[this.props.language] : ''}</p>
+                    </CTA>)
+
+
+            }
+        </LinedCTA>)
+
     }
 
     getImages = field => {
@@ -158,11 +166,11 @@ class CardDuplicableCTA extends Component {
 }
 
 
-CardDuplicableCTA.defaultProps = {};
+CardCTALinedUp.defaultProps = {};
 
-CardDuplicableCTA.propTypes = {
+CardCTALinedUp.propTypes = {
     fields: PropTypes.object.isRequired,
     language: PropTypes.number.isRequired
 };
 
-export default CardDuplicableCTA;
+export default CardCTALinedUp;

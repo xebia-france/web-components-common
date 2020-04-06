@@ -165,7 +165,7 @@ export const CTACommon = styled.a.attrs(props => ({
     align-items: center;
     z-index : 2;
     cursor : pointer;
-    
+    overflow : hidden;
     & p, & i{
        transition : all 0.25s ease;
     }

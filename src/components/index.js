@@ -16,3 +16,4 @@ export { default as FooterBasic } from './FooterBasic';
 export { default as HeaderBasic } from './HeaderBasic';
 export { default as ButtonScrollTop } from './ButtonScrollTop';
 export { default as CardDuplicableCTA } from './CardDuplicableCTA';
+export { default as CardCTALinedUp } from './CardCTALinedUp';
