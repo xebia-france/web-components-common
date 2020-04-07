@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {device, size} from "../../../styles/constants";
+import {device} from "../../../styles/constants";
 import {
     getFormatedColor,
     generateBorder,
@@ -7,8 +7,6 @@ import {
     generatePadding,
     generateSize, generateBackgroundImage
 } from "../../../utils/StyleGenerator";
-import {ImageContainerCommon} from "../../../styles/common.styled";
-import { isNumber} from "../../../utils/functions";
 
 export const Formation = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -70,12 +68,17 @@ export const Formation = styled.div.attrs(props => ({
      }
 `;
 
-
-
-export const ImageContainer = styled(ImageContainerCommon)``;
-
-export const RightContent = styled.div`
+export const RightContent = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    basis: props.basis
+}))`
    z-index : 2;
+   
+   ${ props => ['T', 'D'].map(size => `
+         @media ${ device[size] } {
+            max-width : calc(100% - ${ props.basis[size].size.width });
+         }`)
+    }; 
 `;
 
 
@@ -93,13 +96,7 @@ export const ImageBackground = styled.div.attrs(props => ({
     
     ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-            ${ props.basis ? generateSize(props.basis, size) : '' }    
-            ${props.basis[size] && props.basis[size].size.width && props.basis[size].size.width !== '' ?
-        `min-width :${ isNumber(props.basis[size].size.width)
-            ? `${ props.basis[size].size.width }px;`
-            : props.basis[size].size.width };`
-        : ''}
-              
+            ${ props.basis ? generateSize(props.basis, size) : '' }        
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' }   
             ${ props.border ? generateBorder(props.border, size) : '' } 

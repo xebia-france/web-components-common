@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import {
-   Formation, ImageContainer, RightContent, ImageBackground
-
-} from './styled';
+import { Formation, RightContent, ImageBackground } from './styled';
 import { TextCommon, ContentCommon, CTACommon } from '../../../styles/common.styled'
 import { fileNameFromUrl } from '../../../utils/functions'
 
@@ -12,22 +9,16 @@ class CardFormation extends Component {
 
     }
 
-    componentDidMount() {
-
-    }
-
     render() {
         const {data, i, assetsDirectory, config, configCard, CTA} = this.props;
 
-        console.log('PROPS ON CARDFORMATION', this.props)
-
         const Settings = configCard && configCard.settings ? configCard.settings : null;
         const Responsive = configCard && configCard.responsiveSettings ? configCard.responsiveSettings : [];
+
         if(!data) return null
         return <Formation
             responsive={Responsive}
             responsiveContent={configCard.responsiveContent}
-
             basis={Settings ? Settings.basis : {}}
             border={Settings ? Settings.border : {}}>
             <ImageBackground
@@ -37,12 +28,9 @@ class CardFormation extends Component {
                 alt={data.name}
                 assetsDirectory={assetsDirectory}
                 asset={fileNameFromUrl(data.image.file.url)}
-
             />
 
-
-
-            <RightContent>
+            <RightContent responsive={config.responsiveSettings}  basis={config.settings.image}>
                 <TextCommon
                     responsive={config.responsiveSettings}
                     typography={config.settings.category}
@@ -50,7 +38,7 @@ class CardFormation extends Component {
                     border={null}
                     as={'p'}
                 >
-                    { data.category.name }
+                    { data.category.map( category => category.name).join(' / ') }
                 </TextCommon>
                 <TextCommon
                     responsive={config.responsiveSettings}
@@ -76,7 +64,7 @@ class CardFormation extends Component {
                     typography={CTA.settings.typography}
                     border={CTA.settings.border}
                     icon={CTA.settings.icon}
-                    href={data.slug && !CTA.settings.state.disabled ? `/${data.category.slug}/${data.slug}` : ''}
+                    href={data.slug && !CTA.settings.state.disabled ? `/${data.category[0].slug}/${data.slug}` : ''}
                     target={CTA.settings.state.external ? '_blank' : ''}
                     className={CTA.settings.state.disabled ? 'disabled' : ''}
                     onClick={(e) => {
@@ -89,15 +77,8 @@ class CardFormation extends Component {
                             : null
                     }
                     <p> {CTA.content.text ? CTA.content.text[this.props.language] : ''}</p>
-
                 </CTACommon>
-
-
             </RightContent>
-
-
-
-
         </Formation>;
     }
 }
@@ -105,16 +86,3 @@ class CardFormation extends Component {
 CardFormation.propTypes = {};
 
 export default CardFormation;
-
-
-/*
-
-
-            <ImageContainer key={i}
-                            responsive={config.responsiveSettings}
-                            basis={config.settings.image}>
-                <img alt={data.name} src={`${assetsDirectory || ''}${ fileNameFromUrl(data.image.file.url) }`}/>
-            </ImageContainer>
-
-
- */
