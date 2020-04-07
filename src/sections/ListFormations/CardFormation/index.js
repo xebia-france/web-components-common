@@ -4,11 +4,6 @@ import { TextCommon, ContentCommon, CTACommon } from '../../../styles/common.sty
 import { fileNameFromUrl } from '../../../utils/functions'
 
 class CardFormation extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
     render() {
         const {data, i, assetsDirectory, config, configCard, CTA} = this.props;
 

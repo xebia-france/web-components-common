@@ -1,37 +1,14 @@
 import React, {Component} from 'react';
-import {
-    Wrapper,
-    Container
-} from './styled';
-import {getResponsiveKey, removeSpaces, fileNameFromUrl} from "../../utils/functions";
+import {Wrapper, Container} from './styled';
+import {getResponsiveKey, removeSpaces} from "../../utils/functions";
 import CardFormation from './CardFormation';
 
 class ListFormations extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            active: false,
-            selectedCard: null,
-        };
-    }
-
-    componentDidMount(){
-        console.log('SPEAKERS ', this.props.speakers)
-    }
-
-
     render() {
         const {children, fields, name, assetsDirectory, data} = this.props;
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
         const CTA = fields.CTA;
-
-        console.log('data', data)
-        console.log('children', children)
-
-
-
         return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
@@ -57,6 +34,7 @@ class ListFormations extends Component {
                             />
                         })
                     }
+                    {children}
                 </Container>
             </Wrapper>
         );
@@ -66,23 +44,3 @@ class ListFormations extends Component {
 ListFormations.defaultProps = {}
 
 export default ListFormations;
-
-/*
-                        data.map( formation => {
-                            const rewritedProps = Object.assign({}, childProps);
-                            rewritedProps.fields.Title.content.text[this.props.language] = formation.name
-                            rewritedProps.fields.Tagline.content.text[this.props.language] = formation.category.name
-                            rewritedProps.fields.Content.content.html[this.props.language] = formation.description.childMarkdownRemark.html
-
-                            Object.keys(rewritedProps.fields.Image.content.images[0].asset).forEach(key => {
-                                rewritedProps.fields.Image.content.images[0].asset[key].fileName = fileNameFromUrl(formation.image.file.url);
-                            });
-                            console.log('REWRITED PROPS',  rewritedProps)
-                            return <CardImageLeft
-                                        fields={rewritedProps.fields}
-                                        order={rewritedProps.order}
-                                        assetsDirectory={rewritedProps.assetsDirectory}
-                                        language={rewritedProps.language}
-
-                                    />
-                        })*/
