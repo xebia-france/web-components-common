@@ -65,7 +65,6 @@ export const Container = styled.div.attrs(props => ({
 }))`
   width : inherit;
   display : flex;
-  z-index : 2;
   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {

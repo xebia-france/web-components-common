@@ -10,6 +10,7 @@ const FullLayout = ({ children, fields, name, assetsDirectory }) => {
 
     return (
         <Wrapper id={removeSpaces(name)} responsive={Template ? Template.responsiveSettings : null}
+
                  basis={Template.settings && Template.settings.basis ? Template.settings.basis : null}
                  border={Template.settings && Template.settings.border ? Template.settings.border : null}
                  asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
