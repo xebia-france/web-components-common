@@ -18,13 +18,16 @@ export const Formation = styled.div.attrs(props => ({
 }))`
    height :auto;
    display : flex;
-   flex-direction : column;
    position : relative;
    overflow : hidden;
+   flex-direction : row;
+   
+   @media  ${ device.M }{
+        flex-direction : column;
+   }
    
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-         
             ${ props.basis ? generateSize(props.basis, size) : '' }       
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' } 
@@ -47,7 +50,7 @@ export const Formation = styled.div.attrs(props => ({
                 ` : 'top : 0;'}
                left : 0;
                background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-           ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+                ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };
 
                ` : ''}
@@ -60,12 +63,6 @@ export const Formation = styled.div.attrs(props => ({
             ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
          }`)
     };
-    
-    flex-direction : row;
-    
-     @media  ${ device.M }{
-        flex-direction : column;
-     }
 `;
 
 export const RightContent = styled.div.attrs(props => ({
@@ -90,8 +87,6 @@ export const ImageBackground = styled.div.attrs(props => ({
     assetsDirectory : props.assetsDirectory
 }))`
     overflow : hidden;
-    -webkit-mask-image: -webkit-radial-gradient(white, black);
-    border-style : solid;
     z-index : 2;
     
     ${ props => props.responsive.map(size => `
@@ -101,16 +96,15 @@ export const ImageBackground = styled.div.attrs(props => ({
             ${ props.basis ? generateMargin(props.basis, size) : '' }   
             ${ props.border ? generateBorder(props.border, size) : '' } 
             ${ props.border ?
-    ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
-    : ''}
+            ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
+            : ''}
                
             align-self:${ props.basis[size].alignment.horizontal || '' };
-          
+         
          }`)
     }; 
     
     ${ props =>  `
-        
             background-image : url(${ `${ props.assetsDirectory  || ''}${  props.asset }`});    
             background-size : cover;
             background-position : center;
@@ -118,9 +112,5 @@ export const ImageBackground = styled.div.attrs(props => ({
             background-repeat : no-repeat;
          }
          }`
-    };
-         
-   &>img{
-        width : 100%; 
-   }     
+    };  
 `;
