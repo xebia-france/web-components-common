@@ -49,7 +49,7 @@ class CardFormation extends Component {
                     typography={config.settings.text}
                     basis={config.settings.text}
                     dangerouslySetInnerHTML={{
-                        __html: data.description.childMarkdownRemark ? data.description.childMarkdownRemark.html :
+                        __html: data.shortPresentation.childMarkdownRemark ? data.shortPresentation.childMarkdownRemark.html :
                             <p></p>
                     }}
                 />
