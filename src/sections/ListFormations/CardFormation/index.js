@@ -59,12 +59,7 @@ class CardFormation extends Component {
                     typography={CTA.settings.typography}
                     border={CTA.settings.border}
                     icon={CTA.settings.icon}
-                    href={data.slug && !CTA.settings.state.disabled ? `/${data.category[0].slug}/${data.slug}` : ''}
-                    target={CTA.settings.state.external ? '_blank' : ''}
-                    className={CTA.settings.state.disabled ? 'disabled' : ''}
-                    onClick={(e) => {
-                        if (CTA.settings.state.disabled) e.preventDefault();
-                    }}
+                    href={data.slug ? `/${data.category[0].slug}/${data.slug}` : ''}
                 >
                     {
                         CTA.content.icon && CTA.content.icon[this.props.language] ?
