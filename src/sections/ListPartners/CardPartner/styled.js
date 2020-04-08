@@ -23,6 +23,8 @@ export const Partner = styled.div.attrs(props => ({
    position : relative;
    overflow : hidden;
    
+   
+   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
          
@@ -65,4 +67,7 @@ export const Partner = styled.div.attrs(props => ({
 
 
 
-export const ImageContainer = styled(ImageContainerCommon)``;
+export const ImageContainer = styled(ImageContainerCommon)`
+
+
+`;

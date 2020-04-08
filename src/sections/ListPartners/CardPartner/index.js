@@ -24,10 +24,14 @@ class CardPartner extends Component {
         return <Partner
             responsive={Responsive}
             responsiveContent={configCard.responsiveContent}
-
             basis={Settings ? Settings.basis : {}}
-            border={Settings ? Settings.border : {}}>
+            border={Settings ? Settings.border : {}}
+        >
             <ImageContainer key={i}
+                            as={'a'}
+                            href={partner.link ? partner.link : ''}
+                            disabled={!partner.link || partner.link === ''}
+                            target={'_blank'}
                             responsive={config.responsiveSettings}
                             basis={config.settings.logo}>
                 <img alt={partner.name} src={`${assetsDirectory || ''}${ fileNameFromUrl(partner.logo.file.url) }`}/>
