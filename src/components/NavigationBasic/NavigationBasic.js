@@ -64,6 +64,14 @@ class NavigationBasic extends Component {
         return result.join('/')
     }
 
+    getLocalePath = () => {
+        if(this.props.locales.length > 1 ){
+            return `/${this.props.locale.split('-')[0]}`
+        }else{
+            return ``
+        }
+    }
+
     getRenderLinks = (links, slugParent = null) => {
         return links.map((link, i) => {
             const responsiveSettings = this.props.fields['Links'].responsiveSettings;
@@ -77,7 +85,7 @@ class NavigationBasic extends Component {
                     return <NavigationLink key={`${i}-${link.name}`}>
                         <Link responsive={responsiveSettings} basis={basis} typography={typography} border={border}
                               onClick={() => this.setState({open: !this.state.open})}
-                              href={slugParent ? `/${this.props.locale.split('-')[0]}/${slugParent}#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}
+                              href={slugParent ? `${ this.getLocalePath()}/${slugParent}#${link.slug}` : `${this.getLocalePath()}/#${link.slug}`}>{link.name}
                             {Arrow}
                         </Link>
                         {Childrens}
@@ -96,7 +104,7 @@ class NavigationBasic extends Component {
                     return <NavigationLink key={`${i}-${link.name}`}>
                         <Link responsive={responsiveSettings} basis={basis} typography={typography} border={border}
                               className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
-                              href={`/${this.props.locale.split('-')[0]}/${link.slug}`}>
+                              href={`${ this.getLocalePath()}/${link.slug}`}>
                             {link.name}
                             {Arrow}
                         </Link>
@@ -129,15 +137,25 @@ class NavigationBasic extends Component {
                 <FixedContainer responsive={fields['Bar'].responsiveSettings}
                                 basis={fields['Bar'].settings.basis}
                                 burger={fields['Bar'].settings.burger}
-                            basisLink={fields['Links'].settings.basis}
+                                basisLink={fields['Links'].settings.basis}
                                 className={[this.state.open ? 'open' : '', this.state.scrollY && this.state.scrollY > 100 ? 'scrolled' : '']}
                 >
                     <Top>
-                        <div><a href={`/${locale.split('-')[0]}`} onClick={() => {
-                            localStorage.setItem('scrollPosition', 0);
-                        }}>
-                            {fields['Image'] ? getImages(fields['Image'], language) : null}
-                        </a></div>
+                        <div>
+                            {
+                                locales && locales.length > 1 ?
+                                    <a href={`/${locale.split('-')[0]}`} onClick={() => {
+                                        localStorage.setItem('scrollPosition', 0);
+                                    }}>
+                                        {fields['Image'] ? getImages(fields['Image'], language) : null}
+                                    </a>
+                                    : <a href={`/`} onClick={() => {
+                                        localStorage.setItem('scrollPosition', 0);
+                                    }}>
+                                        {fields['Image'] ? getImages(fields['Image'], language) : null}
+                                    </a>
+                            }
+                        </div>
 
                         <Hamburger className={this.state.open ? 'open' : ''}
                                    responsive={fields['Bar'].responsiveSettings}
@@ -154,44 +172,49 @@ class NavigationBasic extends Component {
                     <Links>
                         <nav>
                             <ul>{menu ? this.getRenderLinks(menu) : null}</ul>
-                            <Locale>
-                                <CurrentLocale responsive={fields['Bar'].responsiveSettings}
-                                               svg={fields['Bar'].settings.svg}>
-                                    <LinkLanguage responsive={this.props.fields['Links'].responsiveSettings}
-                                                  basis={this.props.fields['Links'].settings.basis}
-                                                  typography={this.props.fields['Links'].settings.typography}
-                                                  border={this.props.fields['Links'].settings.border}
-                                    >
-                                        {locale.split('-')[0]}
-                                    </LinkLanguage>
-                                    <BubbleContainer responsive={fields['Bar'].responsiveSettings}
-                                                     svg={fields['Bar'].settings.svg}>
-                                        <SvgBubble/>
-                                    </BubbleContainer>
-                                </CurrentLocale>
-                                <LanguageSelector>
-                                    {
-                                        locales.map((l) => {
-                                            return <Link key={l}
-                                                         responsive={this.props.fields['Links'].responsiveSettings}
-                                                         basis={this.props.fields['Links'].settings.basis}
-                                                         typography={this.props.fields['Links'].settings.typography}
-                                                         border={this.props.fields['Links'].settings.border}
-                                                         className={l === locale ? '' : ''}
-                                                         href={this.getUrlWithLocale(l, location.pathname)}
-                                                         onClick={() => {
-                                                             localStorage.setItem('scrollPosition', this.state.scrollY);
-                                                         }}
+                            {
+                                locales && locales.length > 1 ?
+                                    <Locale>
+                                        <CurrentLocale responsive={fields['Bar'].responsiveSettings}
+                                                       svg={fields['Bar'].settings.svg}>
+                                            <LinkLanguage responsive={this.props.fields['Links'].responsiveSettings}
+                                                          basis={this.props.fields['Links'].settings.basis}
+                                                          typography={this.props.fields['Links'].settings.typography}
+                                                          border={this.props.fields['Links'].settings.border}
                                             >
-                                                {l.split('-')[0]}
-                                                <CheckContainer className={l === locale ? 'selected' : ''}>
-                                                    <SvgCheck/>
-                                                </CheckContainer>
-                                            </Link>
-                                        })
-                                    }
-                                </LanguageSelector>
-                            </Locale>
+                                                {locale.split('-')[0]}
+                                            </LinkLanguage>
+                                            <BubbleContainer responsive={fields['Bar'].responsiveSettings}
+                                                             svg={fields['Bar'].settings.svg}>
+                                                <SvgBubble/>
+                                            </BubbleContainer>
+                                        </CurrentLocale>
+                                        <LanguageSelector>
+                                            {
+                                                locales.map((l) => {
+                                                    return <Link key={l}
+                                                                 responsive={this.props.fields['Links'].responsiveSettings}
+                                                                 basis={this.props.fields['Links'].settings.basis}
+                                                                 typography={this.props.fields['Links'].settings.typography}
+                                                                 border={this.props.fields['Links'].settings.border}
+                                                                 className={l === locale ? '' : ''}
+                                                                 href={this.getUrlWithLocale(l, location.pathname)}
+                                                                 onClick={() => {
+                                                                     localStorage.setItem('scrollPosition', this.state.scrollY);
+                                                                 }}
+                                                    >
+                                                        {l.split('-')[0]}
+                                                        <CheckContainer className={l === locale ? 'selected' : ''}>
+                                                            <SvgCheck/>
+                                                        </CheckContainer>
+                                                    </Link>
+                                                })
+                                            }
+                                        </LanguageSelector>
+                                    </Locale>
+                                    : null
+                            }
+
                         </nav>
                     </Links>
                 </FixedContainer>

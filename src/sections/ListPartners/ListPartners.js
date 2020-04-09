@@ -16,14 +16,9 @@ class ListPartners extends Component {
 
 
     render() {
-        const {children, fields, name, assetsDirectory, data, childProperties} = this.props;
+        const {children, fields, name, assetsDirectory, data} = this.props;
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
-
-        console.log('data', data)
-        console.log('children', children)
-
-
         return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}

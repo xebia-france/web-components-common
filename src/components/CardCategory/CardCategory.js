@@ -80,7 +80,6 @@ class CardCategory extends Component {
 
         const Template = fields.Template;
 
-        console.log('PROPS ON CARD CATEGORY', this.props)
         return (
             <Container responsive={Template ? Template.responsiveSettings : []}
                        responsiveContent={getResponsiveKey(Template.content.images[0].asset)}
