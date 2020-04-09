@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Container, Text, Content, ImageContainer, CTA, RightContent, ImageBackground} from './styled';
+import {Container, Text, Content, ImageContainer, CTA, Iframe} from './styled';
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
 
-class CardImageLeft extends Component {
+class CardIframe extends Component {
     buildComponent = (fields, field, key) => {
         if (!fields[field]) return
         switch (field) {
@@ -43,6 +43,20 @@ class CardImageLeft extends Component {
                     }}
                 />
 
+            case 'Iframe':
+                return <Iframe
+                    key={key}
+                    responsive={fields[field].responsiveSettings}
+                    basis={fields[field].settings.basis}
+                    dangerouslySetInnerHTML={{
+                        __html: fields[field].content.html ? fields[field].content.html[this.props.language] :
+                            <p></p>
+                    }}
+                />
+
+            case 'Image':
+                return this.getImages(fields[field]);
+
             case 'CTA':
                 return <CTA
                     key={key}
@@ -81,21 +95,15 @@ class CardImageLeft extends Component {
                 return null
             } else {
                 return (
-                    <ImageBackground
-                        key={i}
-                        responsive={field.responsiveSettings}
-                        basis={field.settings.basis}
-                        border={field.settings.border}
-                        alt={image.alt[this.props.language]}
-                        assetsDirectory={this.props.assetsDirectory}
-                        asset={file}
-                    />
-                )
+                    <ImageContainer key={i}
+                                    responsive={field.responsiveSettings}
+                                    basis={field.settings.basis}
+                                    border={field.settings.border}>
+                        <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
+                    </ImageContainer>);
             }
         });
     }
-
-
 
     render() {
         const {fields, order, assetsDirectory} = this.props;
@@ -111,24 +119,18 @@ class CardImageLeft extends Component {
                        border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
             >
                 {
-                    fields.Image ? this.getImages(fields.Image) : null
+                    order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                        : ['Title', 'Tagline', 'Content', 'Image', 'CTA', 'Iframe'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                 }
-
-                <RightContent>
-                    {
-                        order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                            : ['Title', 'Tagline', 'Content', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                    }
-                </RightContent>
             </Container>
         );
     }
 }
 
 
-CardImageLeft.defaultProps = {};
+CardIframe.defaultProps = {};
 
-CardImageLeft.propTypes = {
+CardIframe.propTypes = {
     order: PropTypes.arrayOf(PropTypes.string),
     fields: PropTypes.shape({
         Template: PropTypes.object,
@@ -141,11 +143,4 @@ CardImageLeft.propTypes = {
     language: PropTypes.number.isRequired,
     assetsDirectory: PropTypes.string
 };
-export default CardImageLeft;
-
-/*<ImageContainer key={i}
-                                  responsive={field.responsiveSettings}
-                                  basis={field.settings.basis}
-                                  border={field.settings.border}>
-                      <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
-                  </ImageContainer>);*/
+export default CardIframe;

@@ -25,14 +25,6 @@ class NavigationBarExtentedTop extends Component {
         return result.join('/')
     }
 
-    /*getLinksByLanguage = () => {
-        const links = this.props.menu.edges.filter((edge) => edge.node.node_locale === this.props.locale)[0].node.menuHeader;
-        console.log('LINKS', links)
-        return links;
-    }*/
-
-
-
     getRenderLinks = (links, slugParent = null) => {
         return links.map((link) => {
             switch (link.type) {
@@ -121,9 +113,6 @@ class NavigationBarExtentedTop extends Component {
 
     render() {
         const {fields, locales, locale, location, menu, scrollPosition} = this.props;
-
-        console.log('MENU', menu);
-
 
         return (
             <Container>

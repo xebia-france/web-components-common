@@ -76,7 +76,6 @@ class BasicSchedule extends Component {
 
 
         })
-        console.log('schedule', schedule);
         return schedule;
 
     }
@@ -128,7 +127,6 @@ class BasicSchedule extends Component {
             }
         }
         if (minutesEnd !== 0) {
-            console.log('divide', Math.ceil(minutesEnd / 15));
 
             rows.push(
                 <DashContainer>

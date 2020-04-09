@@ -273,7 +273,6 @@ class BasicSchedule extends Component {
     };
 
     handleChangeIndex = index => {
-        console.log('handleChangeIndex index', index)
         this.setState({
             index,
         });

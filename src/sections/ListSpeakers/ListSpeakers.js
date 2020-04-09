@@ -17,7 +17,6 @@ class ListSpeakers extends Component {
     }
 
     componentDidMount(){
-        console.log('SPEAKERS ', this.props.speakers)
     }
 
     selectCard = (i) => {
