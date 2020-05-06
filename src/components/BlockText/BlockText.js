@@ -1,47 +1,19 @@
 import React, {Component} from 'react';
-import {Container, Text, Content} from './styled';
+import {Container} from './styled';
+import Text from '../../functional/Text'
+import Content from '../../functional/Content'
 import PropTypes from 'prop-types';
+import {getTemplateProps} from "../../utils/gettersProperties";
 
 class BlockText extends Component {
     buildComponent = (fields, field, key) => {
         if (!fields[field]) return
         switch (field) {
-            case 'Title':
-                return <Text
-                    key={key}
-                    responsive={fields[field].responsiveSettings}
-                    typography={fields[field].settings.typography}
-                    basis={fields[field].settings.basis}
-                    border={fields[field].settings.border}
-                    as={fields[field].settings.seo.tag || 'h2'}
-
-                >
-                    {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}
-                </Text>;
-
-            case 'Tagline':
-                return <Text
-                    key={key}
-                    responsive={fields[field].responsiveSettings}
-                    typography={fields[field].settings.typography}
-                    basis={fields[field].settings.basis}
-                    border={fields[field].settings.border}
-                    as={fields[field].settings.seo.tag || 'h2'}
-
-                >
-                    {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}
-                </Text>;
+            case 'Title' || 'Tagline':
+                return <Text key={key} field={fields[field]} language={this.props.language}/>;
 
             case 'Content':
-                return <Content
-                    key={key}
-                    responsive={fields[field].responsiveSettings}
-                    typography={fields[field].settings.typography}
-                    basis={fields[field].settings.basis}
-                    dangerouslySetInnerHTML={{
-                        __html: fields[field].content.html ? fields[field].content.html[this.props.language] : <p></p>
-                    }}
-                />
+                return <Content key={key} field={fields[field]} language={this.props.language}/>;
 
             default :
                 return null;
@@ -50,13 +22,8 @@ class BlockText extends Component {
 
     render() {
         const {fields, order} = this.props;
-
-        const Template = fields.Template;
         return (
-            <Container responsive={Template ? Template.responsiveSettings : []}
-                       basis={Template && Template.settings ? Template.settings.basis : null}
-                       border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
-            >
+            <Container {...getTemplateProps(fields.Template)}>
                 {
                     order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                         : ['Title', 'Tagline', 'Content'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
@@ -65,7 +32,6 @@ class BlockText extends Component {
         );
     }
 }
-
 
 BlockText.defaultProps = {};
 

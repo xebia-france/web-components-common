@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { device } from '../../styles/constants';
 import { generateSize, generatePadding, generateMargin, generateBorder, getFormatedColor } from '../../utils/StyleGenerator';
-import { TextCommon, ContentCommon } from "../../styles/common.styled";
 
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -30,7 +29,3 @@ export const Container = styled.div.attrs(props => ({
          }`)
 }; 
 `;
-
-export const Text = styled(TextCommon)``;
-
-export const Content = styled(ContentCommon)``;

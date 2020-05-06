@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { Formation, RightContent, ImageBackground } from './styled';
-import { TextCommon, ContentCommon, CTACommon } from '../../../styles/common.styled'
-import { fileNameFromUrl } from '../../../utils/functions'
+import {Formation, RightContent, ImageBackground, LeftContent} from './styled';
+import {TextCommon, ContentCommon, CTACommon} from '../../../styles/common.styled'
+import {fileNameFromUrl} from '../../../utils/functions'
 
 class CardFormation extends Component {
     render() {
@@ -10,22 +10,26 @@ class CardFormation extends Component {
         const Settings = configCard && configCard.settings ? configCard.settings : null;
         const Responsive = configCard && configCard.responsiveSettings ? configCard.responsiveSettings : [];
 
-        if(!data) return null
+        if (!data) return null
         return <Formation
             responsive={Responsive}
             responsiveContent={configCard.responsiveContent}
             basis={Settings ? Settings.basis : {}}
             border={Settings ? Settings.border : {}}>
-            <ImageBackground
-                key={i}
-                responsive={config.responsiveSettings}
-                basis={config.settings.image}
-                alt={data.name}
-                assetsDirectory={assetsDirectory}
-                asset={fileNameFromUrl(data.image.file.url)}
-            />
+            <LeftContent key={i}
+                         responsive={config.responsiveSettings}
+                         basis={config.settings.image}>
+                <ImageBackground
+                    key={i}
+                    responsive={config.responsiveSettings}
+                    basis={config.settings.image}
+                    alt={data.name}
+                    assetsDirectory={assetsDirectory}
+                    asset={fileNameFromUrl(data.image.file.url)}
+                />
+            </LeftContent>
 
-            <RightContent responsive={config.responsiveSettings}  basis={config.settings.image}>
+            <RightContent responsive={config.responsiveSettings} basis={config.settings.image}>
                 <TextCommon
                     responsive={config.responsiveSettings}
                     typography={config.settings.category}
@@ -33,7 +37,7 @@ class CardFormation extends Component {
                     border={null}
                     as={'p'}
                 >
-                    { data.category.map( category => category.name).join(' / ') }
+                    {data.category.map(category => category.name).join(' / ')}
                 </TextCommon>
                 <TextCommon
                     responsive={config.responsiveSettings}
@@ -42,7 +46,7 @@ class CardFormation extends Component {
                     border={null}
                     as={'h4'}
                 >
-                    { data.name }
+                    {data.name}
                 </TextCommon>
                 <ContentCommon
                     responsive={config.responsiveSettings}
@@ -54,6 +58,7 @@ class CardFormation extends Component {
                     }}
                 />
                 <CTACommon
+                    animateUnderline
                     responsive={CTA.responsiveSettings}
                     basis={CTA.settings.basis}
                     typography={CTA.settings.typography}

@@ -59,10 +59,10 @@ export const ContainerCommon = styled.div.attrs(props => ({
          }`)
     };
 
-    ${ props => props.responsiveContent.map((size, i) => `
+    ${ props =>  props.responsiveContent ? props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
             ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
-         }`)
+         }`) : ''
     };
 `;
 
@@ -155,7 +155,8 @@ export const CTACommon = styled.a.attrs(props => ({
     basis: props.basis,
     typography: props.typography,
     border: props.border,
-    icon: props.icon
+    icon: props.icon,
+    animateUnderline : props.animateUnderline || null
 }))`
     transition : all 0.25s ease;
     border-style : solid;
@@ -235,6 +236,37 @@ export const CTACommon = styled.a.attrs(props => ({
                     }
                 }
             }
+            
+            ${ props.animateUnderline ? `
+                ${ props.typography[size].text.decoration === 'underline' ?
+                `
+                    position : relative;
+                    overflow : visible;
+                    & p{
+                        text-decoration : none;
+                        padding-bottom : 3px;
+                    }
+                    
+                    &:before{
+                        content : '';
+                        position : absolute;
+                        width : 100%;
+                        height :  2px;
+                        transition : all 0.3s cubic-bezier(0.32, 0.01, 0, 1);
+                        bottom : 0;
+                        background-color: ${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )} ;
+            
+                    }
+                    
+                    &:hover{
+                         &:before{
+                            width : 0;
+                            background-color:${ getFormatedColor(props.typography[size].color.hover, props.typography[size].opacity.hover )};
+                         }
+                    }
+                `
+                : ``}
+            ` : '' }
         }`)};
 `;
 export const IconCommon = styled.a.attrs(props => ({

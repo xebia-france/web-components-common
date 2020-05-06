@@ -92,6 +92,7 @@ class CardDuplicableCTA extends Component {
         }).filter(el => el)
             .map((cta, i) => <CTA
                 key={i}
+                animateUnderline={cta.settings.state && cta.settings.state.animation && cta.settings.state.animation === 'underline' ? true : false }
                 responsive={cta.responsiveSettings}
                 basis={cta.settings.basis}
                 typography={cta.settings.typography}

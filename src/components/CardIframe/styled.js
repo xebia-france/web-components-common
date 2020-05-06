@@ -14,4 +14,5 @@ export const CTA = styled(CTACommon)``;
 export const Iframe = styled.div`
     width : 100%;
     height : auto;
+    z-index : 10;
 `

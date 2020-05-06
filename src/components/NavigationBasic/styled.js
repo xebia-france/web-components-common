@@ -306,7 +306,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                             position :relative;
                             
                             &>ul{
-                                position : absolute;
+                                //position : absolute;
                                 top : 100%;
                                 width : 100%;
                                 overflow : hidden;

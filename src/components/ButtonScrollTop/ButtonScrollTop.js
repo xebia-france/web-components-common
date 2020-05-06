@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Container,ImageContainer} from './styled';
+import {Container, ImageContainer} from './styled';
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
+import {getImageProps, getTemplatePropsWithImage} from "../../utils/gettersProperties";
 
 let scrollPositions = null;
 
@@ -10,6 +11,7 @@ class ButtonScrollTop extends Component {
         super(props);
         this.state = {};
     }
+
     componentDidMount() {
         if (typeof window !== 'undefined') {
             window.addEventListener("scroll", this.listener)
@@ -29,37 +31,20 @@ class ButtonScrollTop extends Component {
         })
     }
 
-    buildComponent = (fields, field, key) => {
-        if (!fields[field]) return
-        switch (field) {
+    getImage = (field) => {
+        const { language, assetsDirectory } = this.props;
+        const responsiveKey = getResponsiveKey(field.content.images[0].asset)[0];
+        const image = field.content.images[0];
+        const file = image.asset[responsiveKey].fileName ? image.asset[responsiveKey].fileName : null;
+        const alt = image.alt && image.alt[language]? image.alt[language] : '';
+        if (!file) return null;
+        return (
+            <ImageContainer {...getImageProps(field)}>
+                <img alt={alt} src={`${assetsDirectory || ''}${ file }`}/>
+            </ImageContainer>
+        )
 
-            case 'Image':
-                return this.getImages(fields[field]);
-
-            default :
-                return null;
-        }
     }
-
-
-    getImages = field => {
-        const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
-        return field.content.images.map((image, i) => {
-            const file = image.asset[responsiveContent].fileName ? image.asset[responsiveContent].fileName : null;
-            if (!file) {
-                return null
-            } else {
-                return (
-                    <ImageContainer key={i}
-                                    responsive={field.responsiveSettings}
-                                    basis={field.settings.basis}
-                                    border={field.settings.border}>
-                        <img src={`${this.props.assetsDirectory || ''}${ file }`}/>
-                    </ImageContainer>);
-            }
-        });
-    }
-
     scrollToTop = () => {
         if (typeof window !== 'undefined') {
             window.scrollTo(0, 0);
@@ -69,8 +54,8 @@ class ButtonScrollTop extends Component {
 
     getWindowHeight = () => {
         if (typeof window !== 'undefined') {
-            return  window.innerHeight;
-        }else{
+            return window.innerHeight;
+        } else {
             return 0;
         }
 
@@ -79,22 +64,14 @@ class ButtonScrollTop extends Component {
     render() {
         const {fields, order, assetsDirectory} = this.props;
 
-        const Template = fields.Template;
-
         return (
-            <Container responsive={Template ? Template.responsiveSettings : []}
-                       responsiveContent={getResponsiveKey(Template.content.images[0].asset)}
-                       asset={Template.content.images[0].asset || null}
+            <Container {...getTemplatePropsWithImage(fields.Template)}
                        assetsDirectory={assetsDirectory}
-                       basis={Template && Template.settings ? Template.settings.basis : null}
-                       border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
-                       onClick={() => { this.scrollToTop()}}
-                       className={ this.state.scrollY && this.state.scrollY > this.getWindowHeight() ? 'display' : ''}
-            >
-                {
-                    order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                        : ['Image'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                }
+                       className={this.state.scrollY && this.state.scrollY > this.getWindowHeight() ? 'display' : ''}
+                       onClick={() => {
+                           this.scrollToTop()
+                       }}>
+                { this.getImage(fields.Image)}
             </Container>
         );
     }
