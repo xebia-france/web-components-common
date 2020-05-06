@@ -167,7 +167,6 @@ ${ props => props.responsive.map(size => `
 
 export const ImageContainer = styled(ImageContainerCommon)``;
 
-export const CTA = styled(CTACommon)``;
 
 export const Blocks = styled(ContainerCommon)`
  display : flex;

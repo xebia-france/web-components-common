@@ -14,9 +14,10 @@ export const Contain = styled.div`
     flex-direction : column;
     justify-content : center;
     
-    & ${TextCommon}{
+    ${TextCommon}{
         display : flex;
         justify-content : space-between;
+   
     }
 `;
 export const IconContainer = styled.div.attrs(props => ({

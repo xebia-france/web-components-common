@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Container, ListSession} from './styled';
-import { InsertBox, Content} from "../styled";
+import { Content} from "../styled";
 import {getTextProps, getTemplateProps} from "../../../utils/gettersProperties";
 import {TextCommon} from "../../../styles/common.styled";
 import ItemSession from '../ItemSession';
