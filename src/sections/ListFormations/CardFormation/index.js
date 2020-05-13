@@ -10,7 +10,11 @@ class CardFormation extends Component {
         const Settings = configCard && configCard.settings ? configCard.settings : null;
         const Responsive = configCard && configCard.responsiveSettings ? configCard.responsiveSettings : [];
 
+        console.log('DATA ON CARD FORMATION ------------------>', data)
         if (!data) return null
+
+        const sessions = data.sessions && data.sessions.value ? JSON.parse(data.sessions.value) : null;
+
         return <Formation
             responsive={Responsive}
             responsiveContent={configCard.responsiveContent}
@@ -26,7 +30,11 @@ class CardFormation extends Component {
                     alt={data.name}
                     assetsDirectory={assetsDirectory}
                     asset={fileNameFromUrl(data.image.file.url)}
-                />
+                >
+                    {
+                        sessions ? <div>prochaine session</div> : null
+                    }
+                </ImageBackground>
             </LeftContent>
 
             <RightContent responsive={config.responsiveSettings} basis={config.settings.image}>

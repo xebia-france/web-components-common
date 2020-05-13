@@ -49,28 +49,28 @@ export const ContainerBanner = styled(ContainerCommon)`
 export const PromotionBanner = styled(ContainerCommon)`
   flex-direction: row;
   align-items: center;
-  height : 80px;
-  min-height : 80px;
+  height : 60px;
+  min-height : 60px;
   width : 300px;
   right : 0;
-  transform : translateY(-80px);
+  transform : translateY(-60px);
  
   
   &>${TextCommon}{
     text-transform : uppercase;
-    transform : scale(1.5);
     transform-origin : left;
     width : auto;
-    margin-left : 15px;
+    margin-left : 10px;
+    padding-top : 5px;
   }
   
   & ${IconContainer} {
-    width : 60px;
-    height : 60px;
+    width : 50px;
+    height : 50px;
     
     & svg{
-        width : 60px;
-        height : 60px;
+        width : 50px;
+        height : 50px;
     }
   
   }
