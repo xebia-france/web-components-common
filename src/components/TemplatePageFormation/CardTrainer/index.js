@@ -8,9 +8,6 @@ import { getTextProps} from "../../../utils/gettersProperties";
 class CardTrainer extends Component {
     render() {
         const {trainer, settings, assetsDirectory} = this.props;
-
-        console.log('Settings on card', settings)
-
         const imageFileName = fileNameFromUrl(trainer.photo.file.url)
 
         return <Container>

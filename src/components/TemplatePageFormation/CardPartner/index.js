@@ -8,9 +8,6 @@ import { getTextProps} from "../../../utils/gettersProperties";
 class CardPartner extends Component {
     render() {
         const {partner, settings, assetsDirectory} = this.props;
-
-        console.log('Settings on card', settings)
-
         const imageFileName = fileNameFromUrl(partner.logo.file.url)
 
         return <Container>

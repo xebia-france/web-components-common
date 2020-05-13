@@ -18,15 +18,10 @@ class ItemSession extends Component {
         } else {
             return `${startDay.toLocaleDateString('fr-FR', optionsComplete)} - ${endDay.toLocaleDateString('fr-FR', optionsComplete)} `
         }
-
-
     }
 
     render() {
         const {session, settingsSession, settingsPromo, price} = this.props;
-
-        console.log("SETTINGS SESSION", settingsSession)
-        console.log("SETTINGS PROMO", settingsPromo)
 
         if (session.promo.available) {
             return (

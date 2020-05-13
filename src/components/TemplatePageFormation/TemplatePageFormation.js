@@ -7,29 +7,22 @@ import {
     Main,
     Blocks,
     Trainers,
-    PartnershipList
+    PartnershipList, PromotionBanner, ContainerBanner
 } from './styled';
-import {getResponsiveKey, removeSpaces, fileNameFromUrl} from "../../utils/functions";
+import {IconContainer} from "./ItemSession/styled";
+import {fileNameFromUrl} from "../../utils/functions";
 import CardTrainer from './CardTrainer';
 import CardPartner from './CardPartner'
 import SessionsBlock from './SessionsBlock';
 import InsertBlock from './InsertBlock';
 import InfoBlock from './InfoBlock';
 import CTA from '../../functional/CTA';
+import SvgPromo from '../../assets/svg/SvgPromo'
 
-import {getTextProps} from "../../utils/gettersProperties";
+import {getTemplateProps, getTextProps} from "../../utils/gettersProperties";
 
 class TemplatePageFormation extends Component {
-    /*
-        getTextPropsBySettings = (settings) => {
-            return {
-                responsive: settings ? settings.responsiveSettings : [],
-                typography: settings ? settings.settings.typography : null,
-                basis: settings ? settings.settings.basis : null,
-                border: settings ? settings.settings.border : null,
-                as: settings && settings.settings.seo ? settings.settings.seo.tag : 'p'
-            }
-        }*/
+
 
     getContentProps = (settings) => {
         return {
@@ -68,14 +61,14 @@ class TemplatePageFormation extends Component {
         }
     }
 
+    promoExist = (schedule) => schedule.filter(session => session.promo.available).length !== 0 ? true : false
+
+
     render() {
         const {fields, assetsDirectory, data, language} = this.props;
-        console.log('DATA ON TEMPLATE ------>', data)
-        console.log('FIELDS ON TEMPLATE ------>', fields)
-
         const sessions = data.sessions && data.sessions.value ? JSON.parse(data.sessions.value) : null;
-        console.log('session : ', sessions);
 
+        console.log('<<<<<< SESSIONS >>>>>>>>>', sessions);
         const images = {
             M: {
                 fileName: fileNameFromUrl(data.smallImage.file.url)
@@ -88,8 +81,6 @@ class TemplatePageFormation extends Component {
             }
         }
 
-        console.log('images', images)
-
         const HeaderSettings = {
             Template: fields.HeaderTemplate,
             Title: fields.HeaderTitle,
@@ -101,7 +92,6 @@ class TemplatePageFormation extends Component {
             Heading1: fields.MainHeading1,
             Heading2: fields.MainHeading2,
             Heading3: fields.MainHeading3,
-            //  Title: fields.TitleMain,
             Content: fields.MainContent,
             ContentBold: fields.ContentMainBold,
             ContentLink: fields.ContentMainLink
@@ -214,7 +204,25 @@ class TemplatePageFormation extends Component {
                         <TextCommon {...getTextProps(HeaderSettings.Tagline)}>{data.category[0].name}</TextCommon>
                         <TextCommon {...getTextProps(HeaderSettings.Title)}>{data.name}</TextCommon>
                     </div>
+
+
                 </Header>
+                {
+                    sessions && this.promoExist(sessions.schedule) ?
+                        <ContainerBanner {...this.getTemplateProps(MainSettings.Template)}>
+                            <PromotionBanner  {...getTemplateProps(Promo.Template)}>
+                                <IconContainer
+                                    responsive={Promo.Title ? Promo.Title.responsiveSettings : []}
+                                    typography={Promo.Title && Promo.Title.settings ? Promo.Title.settings.typography : null}>
+                                    <SvgPromo/>
+                                </IconContainer>
+                                <TextCommon {...getTextProps(Promo.Title)} >Promotion</TextCommon>
+                            </PromotionBanner>
+
+                        </ContainerBanner>
+                        : null
+                }
+
                 <Main {...this.getTemplateProps(MainSettings.Template)}>
                     <div>
                         <Content {...this.getContentProps(MainSettings)}
@@ -228,19 +236,17 @@ class TemplatePageFormation extends Component {
                     </div>
                     <div>
                         <ContainerCommon {...this.getTemplateProps(Badges.Template)}>
-                            {
-                                data.badge && data.badge.length !== 0 ?
 
-                                    data.badge.map(b => {
-                                        return <ImageContainerCommon
-                                            responsive={Badges.Image.responsiveSettings}
-                                            basis={Badges.Image.settings.basis}
-                                            border={Badges.Image.settings.border}>
-                                            <img alt={`${b.name}`}
-                                                 src={`${assetsDirectory || ''}${ fileNameFromUrl(b.image.file.url) }`}/>
-                                        </ImageContainerCommon>
-                                    })
-                                    : null
+                            {
+                                data.badge && data.badge.length !== 0 ? data.badge.map(b => {
+                                    return <ImageContainerCommon
+                                        responsive={Badges.Image.responsiveSettings}
+                                        basis={Badges.Image.settings.basis}
+                                        border={Badges.Image.settings.border}>
+                                        <img alt={`${b.name}`}
+                                             src={`${assetsDirectory || ''}${ fileNameFromUrl(b.image.file.url) }`}/>
+                                    </ImageContainerCommon>
+                                }) : null
                             }
                         </ContainerCommon>
 

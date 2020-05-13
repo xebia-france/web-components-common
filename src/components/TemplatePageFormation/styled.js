@@ -2,15 +2,11 @@ import styled from 'styled-components';
 import {device} from "../../styles/constants";
 import {
     generatePadding,
-    generateBorder,
-    generateBackgroundImage,
     getFormatedColor,
-    generateSize,
     generateFontProperties,
-    generateMargin,
-    getFormatedSizeProperty
 } from "../../utils/StyleGenerator";
-import {ContainerCommon, ContentCommon, CTACommon, ImageContainerCommon, TextCommon} from "../../styles/common.styled";
+import {ContainerCommon, ImageContainerCommon, TextCommon} from "../../styles/common.styled";
+import {IconContainer} from "./ItemSession/styled";
 
 export const Container = styled.section.attrs(props => ({
     responsive: props.responsive,
@@ -30,9 +26,62 @@ export const Container = styled.section.attrs(props => ({
 `;
 
 
+export const ContainerBanner = styled(ContainerCommon)`
+    width : 100%;
+    max-width : 1280px;
+    position : relative;
+    height : 0;
+    overflow : visible;
+    background-color : transparent;
+    border-color : transparent;
+    z-index : 5;
+    align-items : flex-end;
+    padding-top : 0;
+    padding-bottom : 0;
+    
+     &:after{
+         background-color : transparent;
+         background : transparent;
+         background-image : none;
+     }
+`
+
+export const PromotionBanner = styled(ContainerCommon)`
+  flex-direction: row;
+  align-items: center;
+  height : 80px;
+  min-height : 80px;
+  width : 300px;
+  right : 0;
+  transform : translateY(-80px);
+ 
+  
+  &>${TextCommon}{
+    text-transform : uppercase;
+    transform : scale(1.5);
+    transform-origin : left;
+    width : auto;
+    margin-left : 15px;
+  }
+  
+  & ${IconContainer} {
+    width : 60px;
+    height : 60px;
+    
+    & svg{
+        width : 60px;
+        height : 60px;
+    }
+  
+  }
+   
+   
+`;
+
 export const Header = styled(ContainerCommon)`
    justify-content: center;
    z-index : 2;
+   position : relative;
    
    &>div{
     max-width : 900px;
@@ -44,6 +93,8 @@ export const Main = styled(ContainerCommon)`
  display : flex;
  flex-direction : row;
  max-width : 1280px;
+ overflow : visible;
+
  
  &>div{
     z-index : 2;
@@ -57,6 +108,7 @@ export const Main = styled(ContainerCommon)`
  }
  &>div:nth-child(2){
     width : 300px;
+    position : relative;
  
  }
  
@@ -73,11 +125,6 @@ export const Main = styled(ContainerCommon)`
      
      }
  }
- 
-`;
-
-export const Partnership = styled(ContainerCommon)`
- 
  
 `;
 
@@ -179,21 +226,6 @@ export const Blocks = styled(ContainerCommon)`
 
 export const Block = styled(ContainerCommon)``;
 
-export const ContentBlock = styled(Content).attrs(props => ({
-    responsive: props.responsive,
-    typography: props.typography
-
-}))`
-  z-index : 2;
-
-${ props => props.responsive.map(size => `
-         @media ${ device[size] } {
-            & strong, & a{
-              color:${ getFormatedColor(props.typography[size].color, props.typography[size].opacity) };
-            }
-         }`)
-    };
-`;
 export const Trainers = styled(ContainerCommon)`
  max-width : 1280px;
  
@@ -225,3 +257,4 @@ export const PartnershipList = styled.div.attrs(props => ({
     };
  
 `;
+
