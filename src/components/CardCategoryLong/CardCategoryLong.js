@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
-import {Container, ImageContainer, CTA} from './styled';
+import {Container, ImageContainer,  Content} from './styled';
 import PropTypes from 'prop-types';
 import {fileNameFromUrl, getResponsiveKey} from "../../utils/functions";
 import TextCustomContent from '../../functional/TextCustomContent';
-import ContentMarkdownRemark from "../../functional/ContentMarkdownRemark";
 import CTACustomLink from "../../functional/CTACustomLink";
 import {getImageProps, getTemplatePropsWithImage} from "../../utils/gettersProperties";
 
-class CardCategory extends Component {
+class CardCategoryLong extends Component {
     buildComponent = (fields, field, key) => {
         const {data} = this.props
         if (!fields[field]) return
@@ -17,7 +16,23 @@ class CardCategory extends Component {
                 return <TextCustomContent key={key} field={fields[field]} content={data.name}/>
 
             case 'Content':
-                return <ContentMarkdownRemark key={key} field={fields[field]} content={data.shortPresentation}/>
+                const Settings = {
+                    Template: fields.Template,
+                    Heading1: fields.Heading1,
+                    Heading2: fields.Heading2,
+                    Heading3: fields.Heading3,
+                    Content: fields.Content,
+                    ContentBold: fields.ContentBold,
+                    ContentLink: fields.ContentLink
+                }
+                return <Content {...this.getContentProps(Settings)}
+                                dangerouslySetInnerHTML={{
+                                    __html: data.presentation && data.presentation.childMarkdownRemark ?
+                                        data.presentation.childMarkdownRemark.html
+                                        : <p></p>
+                                }}
+                />
+                //return <ContentMarkdownRemark key={key} field={fields[field]} content={data.presentation}/>
 
             case 'Image':
                 return this.getImage(fields[field]);
@@ -28,6 +43,24 @@ class CardCategory extends Component {
 
             default :
                 return null;
+        }
+    }
+
+    getContentProps = (settings) => {
+        return {
+            responsive: settings.Content.responsiveSettings,
+            typography: settings.Content.settings.typography,
+            basis: settings.Content.settings.basis,
+            typographyBold: settings.ContentBold ? settings.ContentBold.settings.typography : null,
+            basisBold: settings.ContentBold ? settings.ContentBold.settings.basis : null,
+            typographyLink: settings.ContentLink ? settings.ContentLink.settings.typography : null,
+            basisLink: settings.ContentLink ? settings.ContentLink.settings.basis : null,
+            typographyHeading1: settings.Heading1.settings.typography,
+            basisHeading1: settings.Heading1.settings.basis,
+            typographyHeading2: settings.Heading2.settings.typography,
+            basisHeading2: settings.Heading2.settings.basis,
+            typographyHeading3: settings.Heading3.settings.typography,
+            basisHeading3: settings.Heading3.settings.basis,
         }
     }
 
@@ -43,6 +76,9 @@ class CardCategory extends Component {
     render() {
         const {fields, order, assetsDirectory, data} = this.props;
         if(!data) return null
+
+
+
         return (
             <Container {...getTemplatePropsWithImage(fields.Template)} assetsDirectory={assetsDirectory}>
                 {
@@ -54,9 +90,9 @@ class CardCategory extends Component {
     }
 }
 
-CardCategory.defaultProps = {};
+CardCategoryLong.defaultProps = {};
 
-CardCategory.propTypes = {
+CardCategoryLong.propTypes = {
     order: PropTypes.arrayOf(PropTypes.string),
     fields: PropTypes.shape({
         Template: PropTypes.object,
@@ -69,4 +105,4 @@ CardCategory.propTypes = {
     language: PropTypes.number.isRequired,
     assetsDirectory: PropTypes.string
 };
-export default CardCategory;
+export default CardCategoryLong;

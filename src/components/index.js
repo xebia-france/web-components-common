@@ -5,6 +5,7 @@
 //export { default as BaseButton } from './BaseButton';
 export { default as Card } from './Card';
 export { default as CardCategory } from './CardCategory';
+export { default as CardCategoryLong } from './CardCategoryLong';
 export { default as CardClickable } from './CardClickable';
 export { default as CardDuo } from './CardDuo';
 export { default as CardImageLeft } from './CardImageLeft';
