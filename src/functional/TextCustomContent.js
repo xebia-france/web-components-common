@@ -6,7 +6,7 @@ import {getTextProps} from "../utils/gettersProperties";
 
 const TextCustomContent = ({field, content}) => {
     if (!content) return null;
-    return (<TextCommon {...getTextProps(field)}>{content}</TextCommon>);
+    return (<TextCommon {...getTextProps(field)}>{ content }</TextCommon>);
 };
 
 TextCustomContent.defaultProps = {}

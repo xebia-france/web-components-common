@@ -44,6 +44,10 @@ export const ContainerBanner = styled(ContainerCommon)`
          background : transparent;
          background-image : none;
      }
+     
+    @media  (max-width: 1023px) {
+        align-items : flex-start;
+    }
 `
 
 export const PromotionBanner = styled(ContainerCommon)`
@@ -73,7 +77,11 @@ export const PromotionBanner = styled(ContainerCommon)`
         height : 50px;
     }
   
-  }
+   }
+   
+   @media  (max-width: 1023px) {
+        width : 215px;
+    }
    
    
 `;

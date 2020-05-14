@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {Formation, RightContent, ImageBackground, LeftContent} from './styled';
+import {Formation, RightContent, ImageBackground, LeftContent, NextSession, IconContainer} from './styled';
 import {TextCommon, ContentCommon, CTACommon} from '../../../styles/common.styled'
 import {fileNameFromUrl} from '../../../utils/functions'
+import { getTextProps} from "../../../utils/gettersProperties";
+import SvgElearning from '../../../assets/svg/SvgElearning';
 
 class CardFormation extends Component {
     render() {
@@ -11,6 +13,7 @@ class CardFormation extends Component {
         const Responsive = configCard && configCard.responsiveSettings ? configCard.responsiveSettings : [];
 
         console.log('DATA ON CARD FORMATION ------------------>', data)
+        console.log('CONFIG ON CARD FORMATION ------------------>', config)
         if (!data) return null
 
         const sessions = data.sessions && data.sessions.value ? JSON.parse(data.sessions.value) : null;
@@ -30,11 +33,36 @@ class CardFormation extends Component {
                     alt={data.name}
                     assetsDirectory={assetsDirectory}
                     asset={fileNameFromUrl(data.image.file.url)}
-                >
-                    {
-                        sessions ? <div>prochaine session</div> : null
-                    }
-                </ImageBackground>
+                />
+                {
+                    sessions ? <NextSession responsive={config.responsiveSettings}
+                                            basis={config.settings.session}>
+                        <div>
+                            <TextCommon responsive={config.responsiveSettings}
+                                        typography={config.settings.textSession}
+                                        basis={config.settings.textSession}
+                                        border={null}
+                                        as={'p'}
+                            >Date
+                            </TextCommon>
+                            <TextCommon responsive={config.responsiveSettings}
+                                        typography={config.settings.taglineSession}
+                                        basis={config.settings.taglineSession}
+                                        border={null}
+                                        as={'p'}
+                            >prochaine session
+                            </TextCommon>
+                        </div>
+                        <div>
+                            <IconContainer
+                                responsive={config.responsiveSettings}
+                                typography={config.settings.textSession}>
+                                <SvgElearning/>
+                            </IconContainer>
+                        </div>
+
+                    </NextSession> : null
+                }
             </LeftContent>
 
             <RightContent responsive={config.responsiveSettings} basis={config.settings.image}>

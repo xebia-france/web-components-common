@@ -11,6 +11,7 @@ class CardCategory extends Component {
     buildComponent = (fields, field, key) => {
         const {data} = this.props
         if (!fields[field]) return
+        if(!data) return
         switch (field) {
             case 'Title':
                 return <TextCustomContent key={key} field={fields[field]} content={data.name}/>
@@ -31,7 +32,7 @@ class CardCategory extends Component {
     }
 
     getImage = field => {
-        if (!this.props.data.logo.file) return null;
+        if (!this.props.data || !this.props.data.logo || !this.props.data.logo.file) return null;
         return (
             <ImageContainer {...getImageProps(field)}>
                 <img alt={this.props.data.name}
@@ -40,7 +41,8 @@ class CardCategory extends Component {
     }
 
     render() {
-        const {fields, order, assetsDirectory} = this.props;
+        const {fields, order, assetsDirectory, data} = this.props;
+        if(!data) return null
         return (
             <Container {...getTemplatePropsWithImage(fields.Template)} assetsDirectory={assetsDirectory}>
                 {

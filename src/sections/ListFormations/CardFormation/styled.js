@@ -115,6 +115,7 @@ export const LeftContent = styled.div.attrs(props => ({
 }))`
    z-index : 2;
    overflow : hidden;
+   position : relative;
    
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
@@ -141,3 +142,61 @@ export const RightContent = styled.div.attrs(props => ({
     
 `;
 
+
+
+export const NextSession = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    basis: props.basis
+}))`
+   z-index : 8;
+   position : absolute;
+   bottom : 0;
+   width : 100%;
+   display : flex;
+   
+   &>div:nth-child(1){
+    width: calc(100% - 40px);
+   }
+   &>div:nth-child(2){
+    width: 40px;
+   }
+   
+   
+   ${ props => props.responsive.map(size => `
+       
+         @media ${ device[size] } {
+              ${ props.basis && props.basis[size].color ? `
+                   background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+
+              ` : ''}
+
+         
+         }`)
+    }; 
+    
+    
+`;
+
+
+export const IconContainer = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    typography: props.typography
+}))`
+    width: 40px;
+    height: 40px;
+    z-index : 2;
+    
+    ${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+            
+         
+            ${ props.typography ? `
+                & svg path{ 
+                  fill:${ getFormatedColor(props.typography[size].color, props.typography[size].opacity) };
+            }
+            ` : '' }       
+            
+         }`)
+    };
+
+`;
