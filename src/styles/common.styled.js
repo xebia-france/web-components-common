@@ -76,7 +76,7 @@ export const TextCommon = styled.p.attrs(props => ({
         z-index : 2;
         width : 100%;
         @media ${ device[size] } {
-            color: ${ getFormatedColor(props.typography[size].color, props.typography[size].opacity) };
+            ${ props.typography ? `color: ${ getFormatedColor(props.typography[size].color, props.typography[size].opacity) };` : ''}
             ${ props.typography ? generateFontProperties(props.typography, size) : '' }
             ${ props.basis ? generatePadding(props.basis, size) : '' }    
             ${ props.border ?  generateBorder(props.border, size) : '' }   
