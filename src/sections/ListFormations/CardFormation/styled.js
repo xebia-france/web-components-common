@@ -21,7 +21,6 @@ export const ImageBackground = styled.div.attrs(props => ({
     
     ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-            ${ props.basis ? generateSize(props.basis, size) : '' }        
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' }   
             ${ props.border ? generateBorder(props.border, size) : '' } 
@@ -43,6 +42,9 @@ export const ImageBackground = styled.div.attrs(props => ({
          }
          }`
     };  
+    
+    width : 100%;
+    height : 100%;
 `;
 
 export const Formation = styled.div.attrs(props => ({
@@ -116,6 +118,7 @@ export const LeftContent = styled.div.attrs(props => ({
    z-index : 2;
    overflow : hidden;
    position : relative;
+   cursor : pointer;
    
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
@@ -153,12 +156,16 @@ export const NextSession = styled.div.attrs(props => ({
    bottom : 0;
    width : 100%;
    display : flex;
+   padding : 10px 10px 15px 10px;
+
    
    &>div:nth-child(1){
     width: calc(100% - 40px);
    }
    &>div:nth-child(2){
     width: 40px;
+    display : flex;
+    align-items : center;
    }
    
    
@@ -177,7 +184,9 @@ export const NextSession = styled.div.attrs(props => ({
     
 `;
 
-
+export const NextSessionPromo = styled(NextSession)`
+   padding : 10px 10px 10px 10px;
+`
 export const IconContainer = styled.div.attrs(props => ({
     responsive: props.responsive,
     typography: props.typography
@@ -185,6 +194,11 @@ export const IconContainer = styled.div.attrs(props => ({
     width: 40px;
     height: 40px;
     z-index : 2;
+    
+    & svg{
+        width: 40px;
+        height: 40px;
+    }
     
     ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
