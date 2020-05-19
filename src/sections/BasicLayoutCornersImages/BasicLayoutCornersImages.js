@@ -15,6 +15,8 @@ class BasicLayoutCornersImages extends Component{// = ({children, fields, name, 
         }
     }
 
+
+
     getCornerImages = field => {
         const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
             return field.content.images.map((image, i) => {
