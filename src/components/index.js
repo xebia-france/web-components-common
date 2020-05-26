@@ -18,6 +18,7 @@ export { default as NavigationBarExtentedTop } from './NavigationBarExtentedTop'
 export { default as NavigationBasic } from './NavigationBasic';
 export { default as FooterBasic } from './FooterBasic';
 export { default as HeaderBasic } from './HeaderBasic';
+export { default as HeaderTextSwitchDown } from './HeaderTextSwitchDown';
 export { default as ButtonScrollTop } from './ButtonScrollTop';
 export { default as CardDuplicableCTA } from './CardDuplicableCTA';
 export { default as CardCTALinedUp } from './CardCTALinedUp';

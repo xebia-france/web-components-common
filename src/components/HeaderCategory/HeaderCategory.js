@@ -14,7 +14,7 @@ class HeaderCategory extends Component {
                     typography={fields[field].settings.typography}
                     basis={fields[field].settings.basis}
                     border={fields[field].settings.border}
-                    as={'h4'}
+                    as={'p'}
                 >
                     {data.name}
                 </Text>
