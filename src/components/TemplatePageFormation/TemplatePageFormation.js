@@ -68,7 +68,6 @@ class TemplatePageFormation extends Component {
         const {fields, assetsDirectory, data, language} = this.props;
         const sessions = data.sessions && data.sessions.value ? JSON.parse(data.sessions.value) : null;
 
-        console.log('<<<<<< SESSIONS >>>>>>>>>', sessions);
         const images = {
             M: {
                 fileName: fileNameFromUrl(data.smallImage.file.url)

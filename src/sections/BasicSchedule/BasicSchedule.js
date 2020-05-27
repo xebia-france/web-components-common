@@ -93,8 +93,6 @@ class BasicSchedule extends Component {
 
 
         if (minutesStart !== 0) {
-             console.log('divide', Math.ceil(minutesStart / 15));
-
             rows.push(
                 <DashContainer>
                     {

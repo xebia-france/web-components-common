@@ -92,8 +92,6 @@ class HeaderCategory extends Component {
             }
         }
 
-        console.log('images', images)
-
         return (
             <Container responsive={Template ? Template.responsiveSettings : []}
                        responsiveContent={Template ? Template.responsiveSettings : []}

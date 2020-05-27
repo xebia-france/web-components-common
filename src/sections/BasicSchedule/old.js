@@ -57,8 +57,6 @@ class BasicSchedule extends Component {
         const max = this.props.schedule.reduce((prev, current) => {
             return (this.getHourFromTime(prev.toTime)) > (this.getHourFromTime(current.toTime)) ? prev : current
         })
-        console.log('MAX', max)
-        console.log('INIT NED TIME', Number(this.getHourFromTime(max.toTime).slice(0, -3)))
         return Number(this.getHourFromTime(max.toTime).slice(0, -3))
     }
     formatSchedule = () => {

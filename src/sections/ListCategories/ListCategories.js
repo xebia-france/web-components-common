@@ -10,7 +10,6 @@ class ListCategories extends Component {
         const FlexContainer = fields.FlexContainer;
         const CTA = fields.CTA;
 
-        console.log('DATA ON LIST CATEGORIES', data)
         return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
