@@ -7,7 +7,7 @@ import {
     Main,
     Blocks,
     Trainers,
-    PartnershipList, PromotionBanner, ContainerBanner
+    PartnershipList, PromotionBanner, ContainerBanner, Contain
 } from './styled';
 import {IconContainer} from "./ItemSession/styled";
 import {fileNameFromUrl} from "../../utils/functions";
@@ -199,28 +199,30 @@ class TemplatePageFormation extends Component {
             <Container>
                 <Header {...this.getTemplateProps(HeaderSettings.Template)} asset={images}
                         assetsDirectory={assetsDirectory}>
-                    <div>
+                    {
+                        sessions && this.promoExist(sessions.schedule) ?
+                            <ContainerBanner {...this.getTemplateProps(MainSettings.Template)}>
+                                <PromotionBanner  {...getTemplateProps(Promo.Template)}>
+                                    <IconContainer
+                                        responsive={Promo.Title ? Promo.Title.responsiveSettings : []}
+                                        typography={Promo.Title && Promo.Title.settings ? Promo.Title.settings.typography : null}>
+                                        <SvgPromo/>
+                                    </IconContainer>
+                                    <TextCommon {...getTextProps(Promo.Title)} >Promotion</TextCommon>
+                                </PromotionBanner>
+
+                            </ContainerBanner>
+                            : null
+                    }
+                    <Contain>
+
                         <TextCommon {...getTextProps(HeaderSettings.Tagline)}>{data.category[0].name}</TextCommon>
                         <TextCommon {...getTextProps(HeaderSettings.Title)}>{data.name}</TextCommon>
-                    </div>
+                    </Contain>
 
 
                 </Header>
-                {
-                    sessions && this.promoExist(sessions.schedule) ?
-                        <ContainerBanner {...this.getTemplateProps(MainSettings.Template)}>
-                            <PromotionBanner  {...getTemplateProps(Promo.Template)}>
-                                <IconContainer
-                                    responsive={Promo.Title ? Promo.Title.responsiveSettings : []}
-                                    typography={Promo.Title && Promo.Title.settings ? Promo.Title.settings.typography : null}>
-                                    <SvgPromo/>
-                                </IconContainer>
-                                <TextCommon {...getTextProps(Promo.Title)} >Promotion</TextCommon>
-                            </PromotionBanner>
 
-                        </ContainerBanner>
-                        : null
-                }
 
                 <Main {...this.getTemplateProps(MainSettings.Template)}>
                     <div>

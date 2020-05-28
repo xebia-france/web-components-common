@@ -4,6 +4,7 @@ import {
     generatePadding,
     getFormatedColor,
     generateFontProperties,
+    generateBackgroundImage
 } from "../../utils/StyleGenerator";
 import {ContainerCommon, ImageContainerCommon, TextCommon} from "../../styles/common.styled";
 import {IconContainer} from "./ItemSession/styled";
@@ -48,6 +49,12 @@ export const ContainerBanner = styled(ContainerCommon)`
     @media  (max-width: 1023px) {
         align-items : flex-start;
     }
+    
+    @media (min-width: 768px) {
+       position : absolute;
+       bottom : 0;
+    }
+    
 `
 
 export const PromotionBanner = styled(ContainerCommon)`
@@ -90,13 +97,49 @@ export const Header = styled(ContainerCommon)`
    justify-content: center;
    z-index : 2;
    position : relative;
+   align-items : flex-start;
+    justify-content  : center;
+    
+    ${ props =>  props.responsiveContent ? ['M'].map((size, i) => `
+         @media ${ device[size] } {
+         
+                &:before{
+                   z-index : 1;
+                   position : absolute;
+                   width : 100%;
+                   ${ props.basis[size].padding &&  props.basis[size].padding.top ? `
+                      height:${ props.basis[size].padding.top  }px;
+                    ` : 'height : 0;'}
+                   content : ''; 
+                   ${ props.basis[size].background &&  props.basis[size].background.top ? `
+                      top:${ props.basis[size].background.top  }px;
+                    ` : 'top : 0;'}
+                   left : 0;
+                   ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+
+               
+                }
+         
+                background-image : none;
+         }`) : ''
+    };
    
-   &>div{
-    max-width : 900px;
-   }
+   
    
 `;
 
+
+export const Contain = styled.div`
+    z-index : 2;
+    
+    ${ props =>  ['T', 'D'].map((size, i) => `
+         @media ${ device[size] } {
+            width : 45%;
+            max-width : 600px;
+         }`)
+    };
+    
+`
 export const Main = styled(ContainerCommon)`
  display : flex;
  flex-direction : row;

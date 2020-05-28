@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Text, Content, ImageContainer, CTA} from './styled';
+import {Container, Text, Content, ImageContainer, CTA, Contain} from './styled';
 import PropTypes from 'prop-types';
 import {fileNameFromUrl, getResponsiveKey} from "../../utils/functions";
 
@@ -100,12 +100,12 @@ class HeaderCategory extends Component {
                        basis={Template && Template.settings ? Template.settings.basis : null}
                        border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
             >
-                <div>
+                <Contain>
                     {
                         order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                             : ['Title', 'Content'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
                     }
-                </div>
+                </Contain>
             </Container>
         );
     }
