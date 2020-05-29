@@ -46,8 +46,7 @@ export const Contain = styled.div`
     
     ${ ['T', 'D'].map((size, i) => `
          @media ${ device[size] } {
-            width : 45%;
-            max-width : 600px;
+            width : calc(100% / 3);
          }`)
     };
     
