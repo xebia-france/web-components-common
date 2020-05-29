@@ -156,7 +156,7 @@ export const NextSession = styled.div.attrs(props => ({
    bottom : 0;
    width : 100%;
    display : flex;
-   padding : 10px 10px 15px 10px;
+   padding : 10px 10px 10px 10px;
 
    
    &>div:nth-child(1){

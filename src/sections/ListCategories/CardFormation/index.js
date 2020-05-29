@@ -58,7 +58,7 @@ class CardFormation extends Component {
                     typography={config.settings.title}
                     basis={config.settings.title}
                     border={null}
-                    as={'h4'}
+                    as={'h3'}
                 >
                     {data.name}
                 </TextCommon>

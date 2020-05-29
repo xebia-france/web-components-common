@@ -64,7 +64,7 @@ export const Container = styled.div.attrs(props => ({
     flex: props.flex
 
 }))`
-  max-width : 1280px;
+  //max-width : 1280px;
   margin: auto;
   width : inherit;
   display : flex;
