@@ -201,14 +201,14 @@ class TemplatePageFormation extends Component {
                         assetsDirectory={assetsDirectory}>
                     {
                         sessions && this.promoExist(sessions.schedule) ?
-                            <ContainerBanner {...this.getTemplateProps(MainSettings.Template)}>
-                                <PromotionBanner  {...getTemplateProps(Promo.Template)}>
+                            <ContainerBanner {...this.getTemplateProps(MainSettings.Template)} basisHeader={HeaderSettings.Template.settings.basis}>
+                                <PromotionBanner  {...getTemplateProps(Promo.Template)} >
+                                    <TextCommon {...getTextProps(Promo.Title)} >Promotion</TextCommon>
                                     <IconContainer
                                         responsive={Promo.Title ? Promo.Title.responsiveSettings : []}
                                         typography={Promo.Title && Promo.Title.settings ? Promo.Title.settings.typography : null}>
                                         <SvgPromo/>
                                     </IconContainer>
-                                    <TextCommon {...getTextProps(Promo.Title)} >Promotion</TextCommon>
                                 </PromotionBanner>
 
                             </ContainerBanner>

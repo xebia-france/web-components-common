@@ -4,10 +4,12 @@ import {
     generatePadding,
     getFormatedColor,
     generateFontProperties,
-    generateBackgroundImage
+    generateBackgroundImage,
+    generateSize
 } from "../../utils/StyleGenerator";
 import {ContainerCommon, ImageContainerCommon, TextCommon} from "../../styles/common.styled";
 import {IconContainer} from "./ItemSession/styled";
+import {isNumber} from "../../utils/functions";
 
 export const Container = styled.section.attrs(props => ({
     responsive: props.responsive,
@@ -27,7 +29,10 @@ export const Container = styled.section.attrs(props => ({
 `;
 
 
-export const ContainerBanner = styled(ContainerCommon)`
+export const ContainerBanner = styled(ContainerCommon).attrs(props => ({
+    responsive: props.responsive,
+    basisHeader : props.basisHeader,
+}))`
     width : 100%;
     max-width : 1280px;
     position : relative;
@@ -39,6 +44,7 @@ export const ContainerBanner = styled(ContainerCommon)`
     align-items : flex-end;
     padding-top : 0;
     padding-bottom : 0;
+    align-self : center;
     
      &:after{
          background-color : transparent;
@@ -47,7 +53,7 @@ export const ContainerBanner = styled(ContainerCommon)`
      }
      
     @media  (max-width: 1023px) {
-        align-items : flex-start;
+        align-items : flex-end;
     }
     
     @media (min-width: 768px) {
@@ -55,16 +61,36 @@ export const ContainerBanner = styled(ContainerCommon)`
        bottom : 0;
     }
     
+    ${ props => props.responsive.map(size => `
+         @media ${ device[size] } {
+            ${props.basisHeader && props.basisHeader[size].padding.left && props.basis && props.basis[size].size.width !== '' ? `
+                width : calc(${ isNumber(props.basis[size].size.width) ? `${ props.basis[size].size.width }px;` : props.basis[size].size.width} - ${ props.basisHeader[size].padding.left}px);
+            ` : ''}
+            ${props.basisHeader && props.basisHeader[size].padding.left ? `
+                max-width : calc(${ isNumber(props.basis[size].size.maxWidth) ? `${ props.basis[size].size.maxWidth }px;` : props.basis[size].size.maxWidth} - ${ props.basisHeader[size].padding.left}px);
+            ` : ''}
+         }`
+    )}
+    
+    @media (max-width: 768px) {
+       padding : 0;
+       width : 100%;
+       max-width : 100%;
+    }
+    
+   
+    
 `
 
 export const PromotionBanner = styled(ContainerCommon)`
   flex-direction: row;
   align-items: center;
-  height : 60px;
-  min-height : 60px;
-  width : 300px;
+  justify-content : space-between;
+  height : 50px;
+  min-height : 50px;
+  width : 250px;
   right : 0;
-  transform : translateY(-60px);
+  transform : translateY(-50px);
  
   
   &>${TextCommon}{
@@ -72,22 +98,13 @@ export const PromotionBanner = styled(ContainerCommon)`
     transform-origin : left;
     width : auto;
     margin-left : 10px;
-    padding-top : 5px;
   }
-  
-  & ${IconContainer} {
-    width : 50px;
-    height : 50px;
-    
-    & svg{
-        width : 50px;
-        height : 50px;
-    }
-  
-   }
    
    @media  (max-width: 1023px) {
         width : 215px;
+    }
+    @media (max-width: 768px) {
+       width : 100%;
     }
    
    
@@ -159,11 +176,11 @@ export const Main = styled(ContainerCommon)`
  
  &>div:nth-child(1){
     padding-right : 40px;
-    width : calc(100% - 300px);
+    width : calc(100% - 250px);
  
  }
  &>div:nth-child(2){
-    width : 300px;
+    width : 250px;
     position : relative;
  
  }
@@ -172,6 +189,7 @@ export const Main = styled(ContainerCommon)`
     flex-direction : column;
     &>div:nth-child(1){
         width : 100%;
+        padding-right : 0px;
      
      }
      &>div:nth-child(2){
@@ -208,12 +226,17 @@ ${ props => props.responsive.map(size => `
          
          & ul{
             list-style-type : circle;
-            padding-left : 1em;
+            padding-left : 1.5em;
             
             & li{
                 list-style : circle;
             }
          }
+         
+         & iframe{
+            margin-top : 40px;
+            max-width : 100%;
+        }
 
          @media ${ device[size] } {
              color:${ getFormatedColor(props.typography[size].color, props.typography[size].opacity) };
@@ -278,6 +301,14 @@ export const Blocks = styled(ContainerCommon)`
  max-width : 1280px;
  width : 100%;
  
+ ${ props =>  props.responsiveContent ? ['M'].map((size, i) => `
+         @media ${ device[size] } {
+            padding-left : 0;
+            padding-right : 0;
+              
+         }`) : ''
+    };
+ 
 `;
 
 export const Block = styled(ContainerCommon)``;
@@ -296,18 +327,19 @@ export const PartnershipList = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis,
 }))`
-   width : 100%;
+   //width : 100%;
    height :auto;
    display : flex;
    flex-direction : column;
    position : relative;
    overflow : hidden;
-   max-width : 1280px;
+   //max-width : 1280px;
    align-self : center;
    
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
             ${ props.basis ? generatePadding(props.basis, size) : '' } 
+            ${ props.basis ? generateSize(props.basis, size) : '' } 
          
          }`)
     };

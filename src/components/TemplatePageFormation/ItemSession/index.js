@@ -29,19 +29,19 @@ class ItemSession extends Component {
                     <Contain>
                         <TextCommon {...getTextProps(settingsPromo.Title)} >
                             {this.getStringDays()}
-                            {
-                                session.type !== 'a_distance' ? null :
-                                    <IconContainer
-                                        responsive={settingsPromo.Title ? settingsPromo.Title.responsiveSettings : []}
-                                        typography={settingsPromo.Title && settingsPromo.Title.settings ? settingsPromo.Title.settings.typography : null}>
-                                        <SvgElearning/>
-                                    </IconContainer>
-                            }
+
 
                         </TextCommon>
                         <TextCommon {...getTextProps(settingsPromo.Tagline)} >{`${ session.promo.price } au lieu ${ price }`}</TextCommon>
                     </Contain>
-
+                    {
+                        session.type !== 'a_distance' ? null :
+                            <IconContainer
+                                responsive={settingsPromo.Title ? settingsPromo.Title.responsiveSettings : []}
+                                typography={settingsPromo.Title && settingsPromo.Title.settings ? settingsPromo.Title.settings.typography : null}>
+                                <SvgElearning/>
+                            </IconContainer>
+                    }
                 </ContainerPromo>
             )
         } else {

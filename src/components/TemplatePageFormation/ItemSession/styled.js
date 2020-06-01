@@ -24,9 +24,14 @@ export const IconContainer = styled.div.attrs(props => ({
     responsive: props.responsive,
     typography: props.typography
 }))`
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     z-index : 2;
+    
+    & svg{
+         width: 35px;
+        height: 35px;
+    }
     
     ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
@@ -49,11 +54,11 @@ export const Container = styled.div.attrs(props => ({
     basis: props.basis
 }))`
     display : flex;
-    padding-bottom : 5px;
+    //padding-bottom : 5px;
     
     ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-            ${ props.basis ? `border-bottom: 2px solid ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };` : '' }       
+            ${ props.basis ? `border-bottom: 1px solid ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };` : '' }       
             
          }`)
     };
