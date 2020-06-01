@@ -114,6 +114,15 @@ export const ContentCommon = styled.div.attrs(props => ({
         margin-top : 40px;
         max-width : 100%;
     }
+    
+    & ul{
+        list-style-type : circle;
+        padding-left : 1.5em;
+        
+        & li{
+            list-style : circle;
+        }
+    }
 `;
 
 export const ImageContainerCommon = styled.div.attrs(props => ({
