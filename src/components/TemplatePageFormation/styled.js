@@ -138,6 +138,12 @@ export const Contain = styled.div`
          }`)
     };
     
+    ${ props =>  ['M'].map((size, i) => `
+         @media ${ device[size] } {
+            width : 100%;
+         }`)
+    };
+    
 `
 export const Main = styled(ContainerCommon)`
  display : flex;

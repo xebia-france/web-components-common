@@ -49,5 +49,10 @@ export const Contain = styled.div`
             width : calc(100% / 3);
          }`)
     };
+    ${ props =>  ['M'].map((size, i) => `
+         @media ${ device[size] } {
+            width : 100%;
+         }`)
+    };
     
 `
