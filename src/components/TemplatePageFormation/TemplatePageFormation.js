@@ -307,7 +307,7 @@ class TemplatePageFormation extends Component {
                 {
                     data.trainers && data.trainers.length !== 0 ?
                         <Trainers  {...this.getTemplateProps(MainSettings.Template)}>
-                            <TextCommon {...getTextProps(MainSettings.Heading1)}>
+                            <TextCommon {...getTextProps(MainSettings.Heading2)}>
                                 {fields['TrainersTitle'].content.text ? fields['TrainersTitle'].content.text[language] : ''}
                             </TextCommon>
                             {
