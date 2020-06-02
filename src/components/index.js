@@ -15,6 +15,7 @@ export { default as BlockText } from './BlockText';
 export { default as HeaderCategory } from './HeaderCategory';
 export { default as HeaderPicturesOnCorners } from './HeaderPicturesOnCorners';
 export { default as NavigationBarExtentedTop } from './NavigationBarExtentedTop';
+export { default as NavigationBar } from './NavigationBar';
 export { default as NavigationBasic } from './NavigationBasic';
 export { default as FooterBasic } from './FooterBasic';
 export { default as HeaderBasic } from './HeaderBasic';
