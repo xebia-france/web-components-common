@@ -1,38 +1,237 @@
 import React, {Component} from 'react';
-import {Container} from './styled';
-import Text from '../../functional/Text';
-import Content from '../../functional/Content';
-import CTA from '../../functional/CTA'
-import Image from "../../functional/Image";
-
+import {
+    Container,
+    Links,
+    Link,
+    Hamburger,
+    LineWrapper,
+    FixedContainer,
+    Top,
+    Locale,
+    BubbleContainer,
+    CurrentLocale,
+    LanguageSelector,
+    CheckContainer,
+    ArrowContainer,
+    LinkLanguage, FixedBar, Logo, ContainerLeft, LinksChildren
+} from './styled'
 import PropTypes from 'prop-types';
-import {getTemplatePropsWithImage} from "../../utils/gettersProperties";
+import {getResponsiveKey} from "../../utils/functions";
+import {getImages} from "../../utils/gettersCommonElement";
+import {ContainerCommon} from "../../styles/common.styled";
+import {getTemplateProps, getTextProps} from "../../utils/gettersProperties";
+
+import NavigationLink from './NavigationLink';
+import SvgBubble from '../../assets/svg/SvgBubble'
+import SvgCheck from '../../assets/svg/SvgCheck'
+import SvgArrowTop from '../../assets/svg/SvgArrowTop'
 
 class NavigationBar extends Component {
-    buildComponent = (fields, field, key) => {
-        if (!fields[field]) return
-        switch (field) {
-            case 'Title' || 'Tagline':
-                return <Text key={key} field={fields[field]} language={this.props.language}/>;
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false
+        };
+    }
 
-            case 'Content':
-                return <Content key={key} field={fields[field]} language={this.props.language}/>;
+    componentDidMount() {
+        if (typeof window !== 'undefined') {
+            window.addEventListener("scroll", this.listener)
+        }
 
-            case 'Image':
-                return <Image key={key} field={fields[field]} language={this.props.language}
-                              assetsDirectory={this.props.assetsDirectory}/>
-
-            case 'CTA':
-                return <CTA key={key} field={fields[field]} language={this.props.language}/>;
-            default :
-                return null;
+        if (localStorage.getItem('scrollPosition')) {
+            const localStorageScrollPosition = Number(localStorage.getItem('scrollPosition'));
+            if (typeof window !== 'undefined' && (!this.props.location.hash || this.props.location.hash === '')) {
+                window.scrollTo(0, localStorageScrollPosition);
+                localStorage.removeItem('scrollPosition');
+            }
         }
     }
 
+    componentWillUnmount() {
+        if (typeof window !== 'undefined') {
+            window.removeEventListener("scroll", this.listener)
+        }
+    }
+
+    listener = () => {
+        this.setState({
+            scrollY: window.scrollY
+        })
+    }
+
+    getUrlWithLocale = (locale, currentPath) => {
+        let result = currentPath.split('/');
+        result.splice(1, 1, locale.split('-')[0]);
+        return result.join('/')
+    }
+
+    getLocalePath = () => {
+        if (this.props.locales.length > 1) {
+            return `/${this.props.locale.split('-')[0]}`
+        } else {
+            return ``
+        }
+    }
+
+    getLinkProps = (field) => {
+        return {
+            responsive: field ? field.responsiveSettings : [],
+            typography: field && field.settings.typography ? field.settings.typography : null,
+            basis: field && field.settings.basis ? field.settings.basis : null,
+            border: field && field.settings.border ? field.settings.border : null,
+        }
+    }
+
+    getRenderLinks = (links, slugParent = null) => {
+        const LinksConfig = !slugParent ? this.props.fields['NavigationLinks'] : this.props.fields['NavigationSubLinks']
+        const TemplateConfig = !slugParent ? this.props.fields['TemplateLinks'] : this.props.fields['TemplateSubLinks']
+        return links.map((link, i) => {
+
+            const Arrow = link.childrens ? <ArrowContainer><SvgArrowTop/></ArrowContainer> : null;
+            const Childrens = link.childrens ?
+                <LinksChildren {...getTemplateProps(this.props.fields['TemplateSubLinks'])}>{this.getRenderLinks(link.childrens, link.slug)}</LinksChildren> : null;
+            const hadChildren = link.childrens && link.childrens.length !== 0 ? true : false;
+
+            switch (link.type) {
+                case 'anchor':
+                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig}
+                                           TemplateSubLinks={this.props.fields['TemplateSubLinks']}
+                                           hadChildren={hadChildren}>
+                        <Link {...this.getLinkProps(LinksConfig)}
+                              onClick={() => this.setState({open: !this.state.open})}
+                              href={slugParent ? `${ this.getLocalePath()}/${slugParent}#${link.slug}` : `${this.getLocalePath()}/#${link.slug}`}>{link.name}
+                            {Arrow}
+                        </Link>
+                        {Childrens}
+                    </NavigationLink>;
+
+                case 'external':
+                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={this.props.fields['TemplateSubLinks']}
+                                           hadChildren={hadChildren}>
+                        <Link {...this.getLinkProps(LinksConfig)}
+                              target={'_blank'} href={`${link.urlLink}`}>{link.name}
+                            {Arrow}
+                        </Link>
+                        {Childrens}
+                    </NavigationLink>;
+
+                case 'internal':
+                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={this.props.fields['TemplateSubLinks']}
+                                           hadChildren={hadChildren}>
+                        <Link {...this.getLinkProps(LinksConfig)}
+                              className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
+                              href={`${ this.getLocalePath()}/${link.slug}`}>
+                            {link.name}
+                            {Arrow}
+                        </Link>
+                        {Childrens}
+                    </NavigationLink>;
+
+                case 'null':
+                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={this.props.fields['TemplateSubLinks']}
+                                           hadChildren={hadChildren}>
+                        <Link {...this.getLinkProps(LinksConfig)}>
+                            {link.name}
+                            {Arrow}
+                        </Link>
+                        {Childrens}
+                    </NavigationLink>;
+
+                default :
+                    return null;
+            }
+        })
+    }
+
     render() {
-        const {fields, order, assetsDirectory} = this.props;
+        const {fields, locales, locale, location, menu, language, assetsDirectory} = this.props;
+
+        //if (!fields['Bar']) return null
+
+        console.log('FIELDS ON NAVIGATION BAR', fields)
+
+        const TemplateLeft = fields['TemplateLeft'];
+        const TemplateLinks = fields['TemplateLinks'];
+        const TemplateBurger = fields['TemplateBurger'];
+        const LinksConfig = fields['NavigationLinks'];
+
+
+
         return (
-            <div>navigation bar</div>
+            <Container>
+                <FixedBar
+                    className={[this.state.open ? 'open' : '', this.state.scrollY && this.state.scrollY > 100 ? 'scrolled' : '']}>
+                    <ContainerLeft {...getTemplateProps(TemplateLeft)}>
+                        <Logo>
+                            {
+                                locales && locales.length > 1 ?
+                                    <a href={`/${locale.split('-')[0]}`} onClick={() => {
+                                        localStorage.setItem('scrollPosition', 0);
+                                    }}>
+                                        {fields['Image'] ? getImages(fields['Image'], language) : null}
+                                    </a>
+                                    : <a href={`/`} onClick={() => {
+                                        localStorage.setItem('scrollPosition', 0);
+                                    }}>
+                                        {fields['Image'] ? getImages(fields['Image'], language) : null}
+                                    </a>
+                            }</Logo>
+
+
+                        <Hamburger className={this.state.open ? 'open' : ''}
+                                   {...getTemplateProps(TemplateBurger)}
+                                   onClick={() => this.setState({open: !this.state.open})}>
+                            <LineWrapper>
+                                <div/>
+                                <div/>
+                                <div/>
+                            </LineWrapper>
+                        </Hamburger>
+                    </ContainerLeft>
+
+                    <Links {...getTemplateProps(TemplateLinks)}
+                           basisTemplateLeft={TemplateLeft && TemplateLeft.settings ? TemplateLeft.settings.basis : null}
+                           className={this.state.open ? 'open' : ''}
+
+                    >
+                        <nav>
+                            <ul>{menu ? this.getRenderLinks(menu) : null}</ul>
+                            {
+                                locales && locales.length > 1 ?
+                                    <Locale>
+                                        <CurrentLocale>
+                                            <LinkLanguage {...this.getLinkProps(LinksConfig)}>
+                                                {locale.split('-')[0]}
+                                            </LinkLanguage>
+                                        </CurrentLocale>
+                                        <LanguageSelector>
+                                            {
+                                                locales.map((l) => {
+                                                    return <Link key={l}
+                                                                 {...this.getLinkProps(LinksConfig)}
+                                                                 className={l === locale ? '' : ''}
+                                                                 href={this.getUrlWithLocale(l, location.pathname)}
+                                                                 onClick={() => {
+                                                                     localStorage.setItem('scrollPosition', this.state.scrollY);
+                                                                 }}
+                                                    >
+                                                        {l.split('-')[0]}
+                                                        <CheckContainer className={l === locale ? 'selected' : ''}>
+                                                            <SvgCheck/>
+                                                        </CheckContainer>
+                                                    </Link>
+                                                })
+                                            }
+                                        </LanguageSelector>
+                                    </Locale>
+                                    : null
+                            }
+
+                        </nav>
+                    </Links>
+                </FixedBar>
+            </Container>
         );
     }
 }
@@ -40,5 +239,9 @@ class NavigationBar extends Component {
 
 NavigationBar.defaultProps = {};
 
-NavigationBar.propTypes = {};
+NavigationBar.propTypes = {
+    fields: PropTypes.object.isRequired,
+    language: PropTypes.number.isRequired
+};
+
 export default NavigationBar;
