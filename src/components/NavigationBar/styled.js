@@ -87,7 +87,7 @@ export const ArrowContainer = styled.div`
     width : 100%;
   } 
   
-  @media  ${ device.M }, ${ device.T } {
+  @media  ${ device.T }, ${ device.D } {
     display : flex;
     position : relative;
     width :35px;
