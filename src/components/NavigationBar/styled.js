@@ -146,6 +146,16 @@ export const Link = styled.a.attrs(props => ({
          }`)
     };
     
+    @media  ${ device.M }{
+        ${ props =>  props.basis && props.basis['M'].padding && props.basis['M'].padding.right && props.basis['M'].padding.right !== '0' ?
+    `
+        &>${ArrowContainer}{
+            right : ${ props.basis['M'].padding.right }px;
+        }
+    `
+    : ''}
+    }
+    
     
     
 `;
@@ -200,7 +210,6 @@ export const Links = styled(ContainerCommon).attrs(props => ({
     }
     
     @media  ${ device.M }{
-        transform : translateY(-100%);
         
         &.open{
             transform : translateY(0);
@@ -208,6 +217,7 @@ export const Links = styled(ContainerCommon).attrs(props => ({
     
     
         &>nav{
+            overflow-y: scroll;
             ${ props => 
                 props.basisTemplateLeft ? `
                     height : calc(100vh - ${isNumber(props.basisTemplateLeft['M'].size.height)
