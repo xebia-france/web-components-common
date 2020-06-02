@@ -38,23 +38,23 @@ class NavigationBar extends Component {
 
     componentDidMount() {
         if (typeof window !== 'undefined') {
-            window.addEventListener("scroll", this.listener)
+           // window.addEventListener("scroll", this.listener)
             window.addEventListener("scroll", this.handleScroll);
 
         }
 
-        if (localStorage.getItem('scrollPosition')) {
+        /*if (localStorage.getItem('scrollPosition')) {
             const localStorageScrollPosition = Number(localStorage.getItem('scrollPosition'));
             if (typeof window !== 'undefined' && (!this.props.location.hash || this.props.location.hash === '')) {
                 window.scrollTo(0, localStorageScrollPosition);
                 localStorage.removeItem('scrollPosition');
             }
-        }
+        }*/
     }
 
     componentWillUnmount() {
         if (typeof window !== 'undefined') {
-            window.removeEventListener("scroll", this.listener)
+            //window.removeEventListener("scroll", this.listener)
             window.removeEventListener("scroll", this.handleScroll);
 
         }
@@ -109,6 +109,7 @@ class NavigationBar extends Component {
                 return false;
             }
         }
+        return false;
 
 
     }
