@@ -154,6 +154,7 @@ export const Link = styled.a.attrs(props => ({
         ${ props =>  props.basis && props.basis['M'].padding && props.basis['M'].padding.right && props.basis['M'].padding.right !== '0' ?
     `
         &>${ArrowContainer}{
+            display : block;
             right : ${ props.basis['M'].padding.right }px;
         }
     `
