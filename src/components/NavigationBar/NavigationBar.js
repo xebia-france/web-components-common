@@ -31,13 +31,13 @@ class NavigationBar extends Component {
         super(props);
         this.state = {
             open: false,
-            prevScrollpos: window.pageYOffset,
+            prevScrollpos:   typeof window !== `undefined` ? window.pageYOffset : 0,
             visible: true
         };
     }
 
     componentDidMount() {
-        if (typeof window !== 'undefined') {
+        if (typeof window !== 'undefined' && typeof document !== `undefined`) {
            // window.addEventListener("scroll", this.listener)
             window.addEventListener("scroll", this.handleScroll);
 
@@ -53,7 +53,7 @@ class NavigationBar extends Component {
     }
 
     componentWillUnmount() {
-        if (typeof window !== 'undefined') {
+        if (typeof window !== 'undefined'  && typeof document !== `undefined`) {
             //window.removeEventListener("scroll", this.listener)
             window.removeEventListener("scroll", this.handleScroll);
 
@@ -102,7 +102,7 @@ class NavigationBar extends Component {
     }
 
     linkIsOpen = () => {
-        if (typeof document !== 'undefined') {
+        if (typeof window !== 'undefined' && typeof document !== `undefined`) {
             if (document.querySelector('li.open') !== null) {
                 return true
             } else {
