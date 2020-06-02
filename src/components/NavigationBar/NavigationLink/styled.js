@@ -9,8 +9,9 @@ export const Element = styled.li.attrs(props => ({
     hadChildren : props.hadChildren,
     basisSubLink : props.basisSubLink
 }))`
-
-    position : relative;
+    @media  ${ device.M }{
+        position : relative;
+    }
     
     ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
@@ -70,7 +71,28 @@ export const Element = styled.li.attrs(props => ({
     
     }
     
-    &.closed{
+    @media  ${ device.T }, ${ device.D }{
+        &.open{
+            &>${Link}{
+                ${ props => props.hadChildren ? `
+                    padding-bottom : 0px;
+                    
+                    &:after{
+                        bottom : -1px;
+                    }
+                
+                ` : ''}
+            }
+            & ${LinksChildren}{
+                display : flex;
+                flex-direction : column;
+                justify-content : center;
+            }
+            
+            
         
+        }
     }
+    
+    
 `;

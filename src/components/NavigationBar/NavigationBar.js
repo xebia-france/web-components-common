@@ -30,13 +30,17 @@ class NavigationBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false
+            open: false,
+            prevScrollpos: window.pageYOffset,
+            visible: true
         };
     }
 
     componentDidMount() {
         if (typeof window !== 'undefined') {
             window.addEventListener("scroll", this.listener)
+            window.addEventListener("scroll", this.handleScroll);
+
         }
 
         if (localStorage.getItem('scrollPosition')) {
@@ -51,8 +55,22 @@ class NavigationBar extends Component {
     componentWillUnmount() {
         if (typeof window !== 'undefined') {
             window.removeEventListener("scroll", this.listener)
+            window.removeEventListener("scroll", this.handleScroll);
+
         }
     }
+
+    handleScroll = () => {
+        const { prevScrollpos } = this.state;
+
+        const currentScrollPos = window.pageYOffset;
+        const visible = prevScrollpos > currentScrollPos;
+
+        this.setState({
+            prevScrollpos: currentScrollPos,
+            visible
+        });
+    };
 
     listener = () => {
         this.setState({
@@ -83,20 +101,34 @@ class NavigationBar extends Component {
         }
     }
 
+    linkIsOpen = () => {
+        if (typeof document !== 'undefined') {
+            if (document.querySelector('li.open') !== null) {
+                return true
+            } else {
+                return false;
+            }
+        }
+
+
+    }
+
     getRenderLinks = (links, slugParent = null) => {
-        const LinksConfig = !slugParent ? this.props.fields['NavigationLinks'] : this.props.fields['NavigationSubLinks']
-        const TemplateConfig = !slugParent ? this.props.fields['TemplateLinks'] : this.props.fields['TemplateSubLinks']
+        const { TemplateLinks,TemplateSubLinks, NavigationLinks, NavigationSubLinks } = this.props.fields
+        const LinksConfig = !slugParent ? NavigationLinks : NavigationSubLinks;
+        const TemplateConfig = !slugParent ? TemplateLinks :TemplateSubLinks
+
         return links.map((link, i) => {
 
             const Arrow = link.childrens ? <ArrowContainer><SvgArrowTop/></ArrowContainer> : null;
             const Childrens = link.childrens ?
-                <LinksChildren {...getTemplateProps(this.props.fields['TemplateSubLinks'])}>{this.getRenderLinks(link.childrens, link.slug)}</LinksChildren> : null;
+                <LinksChildren {...getTemplateProps(TemplateSubLinks)} basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>{this.getRenderLinks(link.childrens, link.slug)}</LinksChildren> : null;
             const hadChildren = link.childrens && link.childrens.length !== 0 ? true : false;
 
             switch (link.type) {
                 case 'anchor':
                     return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig}
-                                           TemplateSubLinks={this.props.fields['TemplateSubLinks']}
+                                           TemplateSubLinks={TemplateSubLinks}
                                            hadChildren={hadChildren}>
                         <Link {...this.getLinkProps(LinksConfig)}
                               onClick={() => this.setState({open: !this.state.open})}
@@ -107,7 +139,7 @@ class NavigationBar extends Component {
                     </NavigationLink>;
 
                 case 'external':
-                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={this.props.fields['TemplateSubLinks']}
+                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={TemplateSubLinks}
                                            hadChildren={hadChildren}>
                         <Link {...this.getLinkProps(LinksConfig)}
                               target={'_blank'} href={`${link.urlLink}`}>{link.name}
@@ -117,7 +149,7 @@ class NavigationBar extends Component {
                     </NavigationLink>;
 
                 case 'internal':
-                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={this.props.fields['TemplateSubLinks']}
+                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={TemplateSubLinks}
                                            hadChildren={hadChildren}>
                         <Link {...this.getLinkProps(LinksConfig)}
                               className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
@@ -129,7 +161,7 @@ class NavigationBar extends Component {
                     </NavigationLink>;
 
                 case 'null':
-                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={this.props.fields['TemplateSubLinks']}
+                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={TemplateSubLinks}
                                            hadChildren={hadChildren}>
                         <Link {...this.getLinkProps(LinksConfig)}>
                             {link.name}
@@ -147,21 +179,14 @@ class NavigationBar extends Component {
     render() {
         const {fields, locales, locale, location, menu, language, assetsDirectory} = this.props;
 
-        //if (!fields['Bar']) return null
-
-        console.log('FIELDS ON NAVIGATION BAR', fields)
-
         const TemplateLeft = fields['TemplateLeft'];
         const TemplateLinks = fields['TemplateLinks'];
         const TemplateBurger = fields['TemplateBurger'];
         const LinksConfig = fields['NavigationLinks'];
-
-
-
         return (
             <Container>
                 <FixedBar
-                    className={[this.state.open ? 'open' : '', this.state.scrollY && this.state.scrollY > 100 ? 'scrolled' : '']}>
+                    className={[this.state.open ? 'open' : '', !this.state.visible ? 'hidden' : '', this.linkIsOpen() ? 'linkOpened' : '']}>
                     <ContainerLeft {...getTemplateProps(TemplateLeft)}>
                         <Logo>
                             {

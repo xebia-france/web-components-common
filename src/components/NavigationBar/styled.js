@@ -89,6 +89,9 @@ export const ArrowContainer = styled.div`
   
   @media  ${ device.M }, ${ device.T } {
     display : flex;
+    position : relative;
+    width :35px;
+    height : 35px;
   }
 `;
 
@@ -103,6 +106,7 @@ export const Link = styled.a.attrs(props => ({
     display : flex;
     align-items: center;
     position : relative;
+    cursor : pointer:
     z-index : 2;
   
    ${ props => props.responsive.map(size => `
@@ -198,6 +202,7 @@ export const Links = styled(ContainerCommon).attrs(props => ({
     basisTemplateLeft : props.basisTemplateLeft
 }))`
    transition : transform .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+   position: relative;
 
     &>nav{
         z-index: 2;
@@ -205,18 +210,18 @@ export const Links = styled(ContainerCommon).attrs(props => ({
         
         &>ul{
         
-            position : relative;
+            
         }
     }
     
     @media  ${ device.M }{
-        
+        transform : translateY(-100%);
         &.open{
             transform : translateY(0);
         }
     
-    
         &>nav{
+        
             overflow-y: scroll;
             ${ props => 
                 props.basisTemplateLeft ? `
@@ -227,12 +232,36 @@ export const Links = styled(ContainerCommon).attrs(props => ({
                 ` : ''
             }
             &>ul{
+               position : relative;
                display : flex;
                flex-direction : column;
                
                &>li{
                     width : 100%;
                }
+            }
+        }
+    }
+    
+    @media  ${ device.T }, ${ device.D }{
+        overflow : visible;
+        & nav{
+            display : flex;
+            align-items : center;
+            justify-content : flex-end;
+            &>ul{
+                display : flex;
+                flex-direction : row;
+                height : 100%;
+                align-items : center;
+                
+                &>li{
+                    height : 100% !important;
+                    
+                    &>a{
+                        height : 100%;
+                    }
+                }
             }
         }
     }
@@ -335,328 +364,31 @@ export const FixedBar = styled.div.attrs(props => ({
     position : fixed;
     display : flex;
     width : 100%;
+    transition : transform .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+    transform : translateY(0);
     
-    @media  ${ device.M }{
+   
+    
+    &.hidden{
+        transform : translateY(-100%);
+    }
+    
+     @media  ${ device.T }, ${ device.D }{
+        
+        &.linkOpened.hidden{
+            transform : translateY(0);
+        }
+    }
+    
+     @media  ${ device.M }{
         flex-direction : column;
+        
+        &.open.hidden{
+            transform : translateY(0);
+        }
     }
 `
 
-export const FixedContainer = styled.div.attrs(props => ({
-    responsive: props.responsive,
-    basis: props.basis,
-    burger : props.burger,
-    basisLink : props.basisLink
-}))`
-    position : fixed;
-    display : flex;
-    width : 100%;
-    justify-content : space-between;
-    align-items : center;
-    
-    ${ Links }{
-        height : inherit;
-        &>nav{
-            display : flex;
-            height : inherit;
-            &>ul{
-                display : flex;
-            }
-        }
-    }
-    
-    ${ props => props.responsive.map((size, i) => `
-         @media ${ device[size] } {
-            ${ props.basis ? generateSize(props.basis, size, 'basic') : ''}
-            ${ props.basis ? generatePadding(props.basis, size, 'basic') : ''}
-            ${ props.basis ? generateMargin(props.basis, size, 'basic') : ''}
-            
-            &.scrolled{
-                ${ props.basis ? generateSize(props.basis, size, 'scroll') : ''}
-                ${ props.basis ? generatePadding(props.basis, size, 'scroll') : ''}
-                ${ props.basis ? generateMargin(props.basis, size, 'scroll') : ''}
-            }
-            
-            ${ Links }{
-                &>nav{
-                    &>ul{
-                        & li{
-                            position :relative;
-                            
-                            &>ul{
-                                //position : absolute;
-                                top : 100%;
-                                width : 100%;
-                                overflow : hidden;
-                                
-                                & li{
-                                    height : 0px;
-                                    transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
-                                    
-                                    & a{
-                                        width : 100%;
-                                    }
-                                }
-                            }
-                            
-                            &:hover{
-                                & ul li{
-                                     display : block;
-                                     height:${ isNumber(props.basisLink[size].size.height)
-                                        ? `${ props.basisLink[size].size.height }px`
-                                        : props.basisLink[size].size.height };
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-         }
-    `)}     
-
- ${ props => ['D'].map((size, i) => `
-    @media ${ device[size] } {
-        background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
-        
-        ${ Links }{
-            &>nav>ul li ul, &>nav ${Locale} ${LanguageSelector} {
-                background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
-            }
-        } 
-        
-        &.scrolled{
-            background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
-            
-            ${ Links }{
-                &>nav>ul li ul, &>nav ${Locale} ${LanguageSelector} {
-                    background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
-                }
-            }
-        } 
-    
-       ${Locale}{
-            &:hover{
-                & ${LanguageSelector} a{
-                     height:${ isNumber(props.basisLink[size].size.height)
-                        ? `${ props.basisLink[size].size.height }px`
-                        : props.basisLink[size].size.height };
-                }
-            }
-        }
-    }
- `)}
- 
- ${ props => ['M', 'T'].map((size, i) => `
-    @media ${ device[size] } {
-        ${ Links }{
-            &>nav{
-                background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},1)` : props.basis[size].color.basic.hex };
-                padding-top:${ isNumber(props.basis[size].size.basic.height)
-                                    ? `${ props.basis[size].size.basic.height }px`
-                                    : props.basis[size].size.basic.height };
-                &>ul{
-                    & li{
-                        &.open{
-                            & ul li{
-                                 display : block;
-                                 height:${ isNumber(props.basisLink[size].size.height)
-                                    ? `${ props.basisLink[size].size.height }px`
-                                    : props.basisLink[size].size.height };
-                            }
-                            
-                             & ${ArrowContainer}{
-                                transform : rotate(0deg);
-                             }
-                            
-                            &>ul{
-                               position : initial;
-                               border-top : 1px solid rgba(${ props => props.burger['M'].fill.rgb},0.3);    
-                            }
-                        }
-                        &.closed{
-                            & ul li{
-                                height : 0px !important;
-                            }
-                        }     
-                    }
-                    
-                    &>li{
-                        border-bottom : 1px solid rgba(${ props.burger[size].fill.rgb},0.3);
-                        &:first-child{
-                            border-top : 1px solid rgba(${ props.burger[size].fill.rgb},0.3);
-                        }
-                        
-                        & ul{
-                            background-color : rgba(${ props.burger[size].fill.rgb}, 0.05) !important;
-                            
-                            & li {
-                                padding-left : 40px;
-                                padding-right : 40px;
-                                
-                                & a{
-                                    padding-left : 0px;
-                                }
-                                   
-                                &:not(:last-child) a{
-                                    border-bottom : 1px solid rgba(${ props.burger[size].fill.rgb}, 0.3);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        
-        ${ Top }{
-            background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
-        }
-        
-        &.scrolled{
-             ${ Links }{
-                &>nav{
-                    background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},1)` : props.basis[size].color.scroll.hex };
-                }
-             }
-             ${ Top }{
-                background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
-            }
-        }
-        
-        &.open{
-            ${ Top }{
-                 background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},1)` : props.basis[size].color.basic.hex };
-            }  
-            
-            &.scrolled{
-                ${ Top }{
-                    background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},1})` : props.basis[size].color.scroll.hex };
-                }
-            }  
-        }
-        
-         ${ArrowContainer}{
-                 ${ props.basisLink[size].padding && props.basisLink[size].padding.top && props.basisLink[size].padding.top !== '0' ?
-                    `margin-top : -${ props.basisLink[size].padding.top }px;`
-                 : ''}       
-                 
-                 ${ props.basisLink[size].padding && props.basisLink[size].padding.bottom && props.basisLink[size].padding.bottom !== '0' ?
-                    `margin-bottom : -${ props.basisLink[size].padding.bottom }px;`
-                : ''}             
-         }
-         
-         & ${ LanguageSelector}{
-            border-top : 1px solid rgba(${ props.burger[size].fill.rgb},0.3);
-            background-color : rgba(${ props.burger[size].fill.rgb}, 0.05) !important;
-            
-            & ${Link}{
-                transition: height 0ms ease-in-out;
-                height:${ isNumber(props.basis[size].size.basic.height)
-                                ? `calc(${ props.basis[size].size.basic.height }px - 10px)`
-                                : props.basis[size].size.basic.height } !important;
-                &:not(:last-child){
-                    border-right : 1px solid rgba(${ props.burger[size].fill.rgb},0.3);
-               }
-               
-               ${CheckContainer}{
-                  width:${ isNumber(props.basis[size].size.basic.height)
-                                ? `calc(${ props.basis[size].size.basic.height }px - 10px)`
-                                : props.basis[size].size.basic.height } !important;
-                  height:${ isNumber(props.basis[size].size.basic.height)
-                                ? `calc(${ props.basis[size].size.basic.height }px - 10px)`
-                                : props.basis[size].size.basic.height } !important;
-               }
-            }
-         }
-    }
- `)}
-
- @media  ${ device.M } , ${ device.T } {
-    position : fixed;
-    z-index : 5;
-    display : block;
-    
-    ${ Top }{
-        overflow-x : hidden;
-        position : absolute;
-        display : flex;
-        align-items : center;
-        justify-content : space-between;
-        width : 100%;
-        top : 0;
-        left : 0;
-        z-index : 3;
-        overflow : hidden;
-        transition : background-color 500ms ease-in-out;
-        height :  inherit;
-    }
-    
-    ${ Links }{
-        width : 100%;
-        transform : translateY(-100%);
-        transition : transform 700ms ease-in-out;
-        overflow-x : hidden;
-        height : auto;
-        
-        &>nav{
-            position : relative;
-            display : flex;
-            flex-direction : column;
-            height : 100vh;
-            top : -100vh;
-            transition : transform 700ms ease-in-out;
-            max-height : 100%;
-            
-            &>ul{
-                order : 2;
-                position : relative;
-                float : left;
-                z-index: 2;
-                width : 100%;
-                transition : transform 700ms ease-in-out, background-color 500ms ease-in-out;
-                overflow-x : hidden;
-                display : flex;
-                flex-direction : column;
-                align-items : flex-start;
-                align-content : flex-start;
-                height : calc(100% - 50px);
-                max-height : calc(100% - 50px);
-                
-                & li{
-                    width : 100%;
-                    
-                    & ${Link}{
-                        justify-content : space-between;
-                        padding-right : 0;
-                    }
-                    
-                    & ul{
-                        position : relative;
-                        top : 0;
-                    }  
-                }
-            }
-        }
-    }
-    
-    ${ Locale }{
-        order : 1;
-        ${ LanguageSelector}{
-            ${ Link }{
-                height : auto;
-            }
-        }
-    }
-    
-    &.open{
-        ${ Links }{
-            transform : translateY(0%);
-            
-            &>nav{
-                transform : translateY(100%)
-            }
-        }
-    }
- }
-`;
 
 
 export const LineWrapper = styled.div`
@@ -701,7 +433,7 @@ export const Hamburger = styled.label.attrs(props => ({
          }`)
     }; 
       
-    @media  ${ device.M },  ${ device.T } {
+    @media  ${ device.M } {
         display : flex;
         align-items : center;
     }
@@ -741,7 +473,8 @@ export const ContainerLeft = styled(ContainerCommon)`
 export const LinksChildren = styled.ul.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis,
-    border : props.border
+    border : props.border,
+    basisLinks : props.basisLinks
 }))`
     position : relative;
     overflow : hidden;
@@ -774,5 +507,24 @@ export const LinksChildren = styled.ul.attrs(props => ({
             
          }`)
     };
+    ${ props => ['T', 'D'].map((size, i) => `
+         @media ${ device[size] } {
+         
+             ${ props.basisLinks ? `
+                    height : calc(100vh - ${isNumber(props.basisLinks[size].size.height)
+                    ? `${ props.basisLinks[size].size.height }px`
+                    : props.basisLinks[size].size.height});
+                
+                ` : ''}
+            
+         }`)
+    };
+    
+    @media  ${ device.T }, ${ device.D }{
+        position : absolute;
+        right : 0;
+        width : 100%;
+        
+    }
 
 `
