@@ -53,9 +53,6 @@ class SessionsBlock extends Component {
 
                         : null
                 }
-
-
-
             </Container>
 
         )
