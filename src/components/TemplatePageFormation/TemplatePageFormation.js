@@ -66,7 +66,8 @@ class TemplatePageFormation extends Component {
 
     render() {
         const {fields, assetsDirectory, data, language} = this.props;
-        const sessions = data.sessions && data.sessions.value ? JSON.parse(data.sessions.value) : null;
+        if(!data ) return null;
+        const sessions = data && data.sessions && data.sessions.value ? JSON.parse(data.sessions.value) : null;
 
         const images = {
             M: {
