@@ -82,6 +82,7 @@ class CardClickable extends Component {
                        assetsDirectory={assetsDirectory}
                        as={ Link.content.link[this.props.language] ? 'a' : 'div' }
                        target={Link.settings.state.external ? '_blank' : ''}
+                       rel={Link.settings.state.external ? 'noopener' : ''}
                        href={ Link.content.link[this.props.language] ?  Link.content.link[this.props.language] : '' }
                        onClick={(e) => {
                            if(! Link.content.link[this.props.language] || Link.settings.state.disabled) e.preventDefault();

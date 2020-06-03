@@ -265,6 +265,7 @@ class TemplatePageFormation extends Component {
                                    className={!data.linkInscription ? 'disabled' : ''}
                                    href={data.linkInscription || ''}
                                    target={'_blank'}
+                                   rel={'noopener'}
                                    onClick={(e) => {
                                        if (!data.linkInscription) e.preventDefault();
                                    }}

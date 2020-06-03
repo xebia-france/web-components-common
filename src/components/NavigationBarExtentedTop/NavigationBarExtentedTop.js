@@ -48,6 +48,7 @@ class NavigationBarExtentedTop extends Component {
                         basis={this.props.fields['Links'].settings.basis}
                         typography={this.props.fields['Links'].settings.typography}
                         border={this.props.fields['Links'].settings.border}
+                        rel={'noopener'}
                         target={'_blank'} href={`${link.urlLink}`}>{link.name}</Link>
                         <ul>
                         {

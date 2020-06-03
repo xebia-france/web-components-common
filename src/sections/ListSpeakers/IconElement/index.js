@@ -8,6 +8,7 @@ const IconElement = ({field, property, content, link}) => {
             responsive={field.responsiveSettings}
             icon={field.settings[property]}
             target={'_blank'}
+            rel={'noopener'}
             href={link}
         >
             <i>{content}</i>

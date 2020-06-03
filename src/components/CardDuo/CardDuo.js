@@ -57,6 +57,7 @@ class CardDuo extends Component {
                     icon={fields[field].settings.icon}
                     href={fields[field].content.link && !fields[field].settings.state.disabled ? fields[field].content.link[this.props.language] : ''}
                     target={fields[field].settings.state.external ? '_blank' : ''}
+                    rel={fields[field].settings.state.external ? 'noopener' : ''}
                     className={fields[field].settings.state.disabled ? 'disabled' : ''}
                     onClick={(e) => {
                         if (fields[field].settings.state.disabled) e.preventDefault();

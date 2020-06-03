@@ -15,6 +15,7 @@ const CTA = ({field, language}) => {
         <CTACommon {...getCTAProps(field)}
                    href={link}
                    target={field.settings.state.external ? '_blank' : ''}
+                   rel={field.settings.state.external ? 'noopener' : ''}
                    className={field.settings.state.disabled ? 'disabled' : ''}
                    onClick={(e) => {
                        if (field.settings.state.disabled) e.preventDefault();

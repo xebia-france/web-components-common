@@ -31,6 +31,7 @@ class CardPartner extends Component {
                             as={'a'}
                             href={partner.link ? partner.link : ''}
                             disabled={!partner.link || partner.link === ''}
+                            rel={'noopener'}
                             target={'_blank'}
                             responsive={config.responsiveSettings}
                             basis={config.settings.logo}>

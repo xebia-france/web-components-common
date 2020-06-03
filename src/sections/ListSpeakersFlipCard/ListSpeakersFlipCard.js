@@ -92,6 +92,7 @@ class ListSpeakersFlipCard extends Component {
                                                               typography={Speakers.settings.icon1}
                                                               href={`https://twitter.com/${data[i].twitter}`}
                                                               target={'_blank'}
+                                                              rel={'noopener'}
                                                               view={'view1'}
                                                         >
                                                             {
@@ -110,6 +111,7 @@ class ListSpeakersFlipCard extends Component {
                                                               typography={Speakers.settings.icon2}
                                                               href={`https://www.linkedin.com/in/${data[i].linkedin}`}
                                                               target={'_blank'}
+                                                              rel={'noopener'}
                                                               view={'view1'}
                                                         >
                                                             {
@@ -194,6 +196,7 @@ class ListSpeakersFlipCard extends Component {
                                                                   typography={Speakers.settings.icon1}
                                                                   href={`https://twitter.com/${data[i].twitter}`}
                                                                   target={'_blank'}
+                                                                  rel={'noopener'}
                                                                   view={'view2'}
                                                             >
                                                                 {
@@ -212,6 +215,7 @@ class ListSpeakersFlipCard extends Component {
                                                                   typography={Speakers.settings.icon2}
                                                                   href={`https://www.linkedin.com/in/${data[i].linkedin}`}
                                                                   target={'_blank'}
+                                                                  rel={'noopener'}
                                                                   view={'view2'}
                                                             >
                                                                 {

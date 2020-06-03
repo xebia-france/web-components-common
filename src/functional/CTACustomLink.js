@@ -14,6 +14,7 @@ const CTACustomLink = ({field, language, link, animateUnderline}) => {
                    animateUnderline={animateUnderline || null}
                    href={link}
                    target={field.settings.state && field.settings.state.external ? '_blank' : ''}
+                   rel={field.settings.state && field.settings.state.external ? 'noopener' : ''}
                    className={field.settings.state && field.settings.state.disabled ? 'disabled' : ''}
                    onClick={(e) => {
                        if (field.settings.state && field.settings.state.disabled) e.preventDefault();

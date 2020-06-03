@@ -139,7 +139,7 @@ class NavigationBar extends Component {
                     return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={TemplateSubLinks}
                                            hadChildren={hadChildren}>
                         <Link {...this.getLinkProps(LinksConfig)}
-                              target={'_blank'} href={`${link.urlLink}`}>{link.name}
+                              target={'_blank'} rel={'noopener'} href={`${link.urlLink}`}>{link.name}
                             {Arrow}
                         </Link>
                         {Childrens}

@@ -37,6 +37,7 @@ class FooterBasic extends Component {
                         basis={settings.basis}
                         typography={settings.typography}
                         border={settings.border}
+                        rel={'noopener'}
                         target={'_blank'} href={`${link.urlLink}`}>{link.name}</Link>
                         {
                             link.childrens ? <div> {this.getRenderLinks(link.childrens)}</div> : null

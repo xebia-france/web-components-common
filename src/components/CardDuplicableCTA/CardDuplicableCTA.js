@@ -45,35 +45,6 @@ class CardDuplicableCTA extends Component {
 
             case 'Image':
                 return this.getImages(fields[field]);
-            /*
-                        case 'CTA' :
-                        case 'CTA2' :
-                        case 'CTA3' :
-                        case 'CTA4' :
-
-                            return <CTA
-                                key={key}
-                                responsive={fields[field].responsiveSettings}
-                                basis={fields[field].settings.basis}
-                                typography={fields[field].settings.typography}
-                                border={fields[field].settings.border}
-                                icon={fields[field].settings.icon}
-                                href={fields[field].content.link && !fields[field].settings.state.disabled ? fields[field].content.link[this.props.language] : ''}
-                                target={fields[field].settings.state.external ? '_blank' : ''}
-                                className={fields[field].settings.state.disabled ? 'disabled' : ''}
-                                onClick={(e) => {
-                                    if (fields[field].settings.state.disabled) e.preventDefault();
-                                }
-                                }
-                            >
-                                <p>
-                                    {
-                                        fields[field].content.icon && fields[field].content.icon[this.props.language] ?
-                                            <i>{fields[field].content.icon[this.props.language]}</i>
-                                            : null
-                                    }
-                                    {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}</p>
-                            </CTA>;*/
 
             case 'DupCTA' :
 
@@ -100,6 +71,7 @@ class CardDuplicableCTA extends Component {
                 icon={cta.settings.icon}
                 href={cta.content.link && !cta.settings.state.disabled ? cta.content.link[this.props.language] : ''}
                 target={cta.settings.state.external ? '_blank' : ''}
+                rel={cta.settings.state.external ? 'noopener' : ''}
                 className={cta.settings.state.disabled ? 'disabled' : ''}
                 onClick={(e) => {
                     if (cta.settings.state.disabled) e.preventDefault();

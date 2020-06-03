@@ -94,7 +94,7 @@ class NavigationBasic extends Component {
                 case 'external':
                     return <NavigationLink key={`${i}-${link.name}`}>
                         <Link responsive={responsiveSettings} basis={basis} typography={typography} border={border}
-                              target={'_blank'} href={`${link.urlLink}`}>{link.name}
+                              target={'_blank'} rel={'noopener'} href={`${link.urlLink}`}>{link.name}
                             {Arrow}
                         </Link>
                         {Childrens}
