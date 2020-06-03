@@ -37,18 +37,24 @@ class SessionsBlock extends Component {
                             !sessions.pricing.intra || !sessions.pricing.intra.available ? null : this.renderPricing('intra', sessions.pricing.intra.price, settingsSession)
                         }
                 </InsertBlock>
+                {
+                    sessions.schedule.length !== 0 ?
+                        <InsertBlock settings={settingsSession} text={'Prochaines dates'}>
+                            <ListSession>
+                                {
+                                    sessions.schedule.map(session => {
+                                        return <ItemSession session={session} settingsSession={settingsSession}
+                                                            settingsPromo={settingsPromo}
+                                                            price={sessions.pricing.inter ? sessions.pricing.inter.price : ''}/>
+                                    })
+                                }
+                            </ListSession>
+                        </InsertBlock>
 
-                <InsertBlock settings={settingsSession} text={'Prochaines dates'}>
-                    <ListSession>
-                        {
-                            sessions.schedule.map(session => {
-                                return <ItemSession session={session} settingsSession={settingsSession}
-                                                    settingsPromo={settingsPromo}
-                                                    price={sessions.pricing.inter ? sessions.pricing.inter.price : ''}/>
-                            })
-                        }
-                    </ListSession>
-                </InsertBlock>
+                        : null
+                }
+
+
 
             </Container>
 
