@@ -183,7 +183,7 @@ class NavigationBar extends Component {
         const LinksConfig = fields['NavigationLinks'];
         return (
             <Container>
-                <FixedBar
+                <FixedBar {...getTemplateProps(TemplateLeft)}
                     className={[this.state.open ? 'open' : '', !this.state.visible && !this.onTopPage() ? 'hidden' : '', this.linkIsOpen() ? 'linkOpened' : '']}>
                     <ContainerLeft {...getTemplateProps(TemplateLeft)}>
                         <Logo>

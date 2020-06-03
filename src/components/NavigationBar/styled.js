@@ -363,7 +363,9 @@ export const CurrentLocale = styled.div.attrs(props => ({
 `;
 
 export const FixedBar = styled.div.attrs(props => ({
-
+    responsive: props.responsive,
+    basis: props.basis,
+    border : props.border
 }))`
     position : fixed;
     display : flex;
@@ -391,6 +393,24 @@ export const FixedBar = styled.div.attrs(props => ({
             transform : translateY(0);
         }
     }
+    
+    ${ props => ['M'].map((size, i) => `
+         @media ${ device[size] } {
+         
+             ${ props.basis ? `
+                    max-height : ${isNumber(props.basis[size].size.height)
+                    ? `${ props.basis[size].size.height }px`
+                    : props.basis[size].size.height};
+                
+                ` : ''}
+                
+                    &.open{
+                        max-height : 100%;
+                    }
+         }`)
+    };
+    
+    
 `
 
 
@@ -468,9 +488,24 @@ export const Hamburger = styled.label.attrs(props => ({
       }  
 `;
 
-export const ContainerLeft = styled(ContainerCommon)`
+export const ContainerLeft = styled(ContainerCommon).attrs(props => ({
+    responsive: props.responsive,
+    basis: props.basis
+}))`
     flex-direction : row;
     justify-content : space-between;
+    
+    ${ props => ['M'].map((size, i) => `
+         @media ${ device[size] } {
+         
+             ${ props.basis ? `
+                    min-height : ${isNumber(props.basis[size].size.height)
+                    ? `${ props.basis[size].size.height }px`
+                    : props.basis[size].size.height};
+                
+                ` : ''}
+         }`)
+    };
 
 `
 
