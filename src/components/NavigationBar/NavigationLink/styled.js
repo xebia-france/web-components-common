@@ -61,6 +61,7 @@ export const Element = styled.li.attrs(props => ({
         
         & ${ArrowContainer}{
             transform : rotate(0deg);
+            opacity: 0;
         }
         
         & ${LinksChildren}{

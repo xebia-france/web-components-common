@@ -6,9 +6,7 @@ import {
     Hamburger,
     LineWrapper,
     FixedContainer,
-    Top,
     Locale,
-    BubbleContainer,
     CurrentLocale,
     LanguageSelector,
     CheckContainer,
@@ -16,15 +14,12 @@ import {
     LinkLanguage, FixedBar, Logo, ContainerLeft, LinksChildren
 } from './styled'
 import PropTypes from 'prop-types';
-import {getResponsiveKey} from "../../utils/functions";
 import {getImages} from "../../utils/gettersCommonElement";
-import {ContainerCommon} from "../../styles/common.styled";
-import {getTemplateProps, getTextProps} from "../../utils/gettersProperties";
+import {getTemplateProps} from "../../utils/gettersProperties";
 
 import NavigationLink from './NavigationLink';
-import SvgBubble from '../../assets/svg/SvgBubble'
 import SvgCheck from '../../assets/svg/SvgCheck'
-import SvgArrowTop from '../../assets/svg/SvgArrowTop'
+import SvgArrow from '../../assets/svg/SvgArrow'
 
 class NavigationBar extends Component {
     constructor(props) {
@@ -38,23 +33,21 @@ class NavigationBar extends Component {
 
     componentDidMount() {
         if (typeof window !== 'undefined' && typeof document !== `undefined`) {
-           // window.addEventListener("scroll", this.listener)
             window.addEventListener("scroll", this.handleScroll);
 
         }
 
-        /*if (localStorage.getItem('scrollPosition')) {
+        if (localStorage.getItem('scrollPosition')) {
             const localStorageScrollPosition = Number(localStorage.getItem('scrollPosition'));
             if (typeof window !== 'undefined' && (!this.props.location.hash || this.props.location.hash === '')) {
                 window.scrollTo(0, localStorageScrollPosition);
                 localStorage.removeItem('scrollPosition');
             }
-        }*/
+        }
     }
 
     componentWillUnmount() {
         if (typeof window !== 'undefined'  && typeof document !== `undefined`) {
-            //window.removeEventListener("scroll", this.listener)
             window.removeEventListener("scroll", this.handleScroll);
 
         }
@@ -63,20 +56,26 @@ class NavigationBar extends Component {
     handleScroll = () => {
         const { prevScrollpos } = this.state;
 
+
         const currentScrollPos = window.pageYOffset;
+        const currentScrollY = window.scrollY;
+        console.log('currentScrollY', currentScrollY)
         const visible = prevScrollpos > currentScrollPos;
 
         this.setState({
+            scrollY: window.scrollY,
             prevScrollpos: currentScrollPos,
             visible
         });
     };
 
-    listener = () => {
-        this.setState({
-            scrollY: window.scrollY
-        })
+    onTopPage = () => {
+        const currentScrollY = window.scrollY;
+        if(currentScrollY < 100) return true;
+        return false;
     }
+
+
 
     getUrlWithLocale = (locale, currentPath) => {
         let result = currentPath.split('/');
@@ -103,15 +102,13 @@ class NavigationBar extends Component {
 
     linkIsOpen = () => {
         if (typeof window !== 'undefined' && typeof document !== `undefined`) {
-            if (document.querySelector('li.open') !== null) {
+            if (document.querySelector('li.navigation-link.open') !== null) {
                 return true
             } else {
                 return false;
             }
         }
         return false;
-
-
     }
 
     getRenderLinks = (links, slugParent = null) => {
@@ -121,7 +118,7 @@ class NavigationBar extends Component {
 
         return links.map((link, i) => {
 
-            const Arrow = link.childrens ? <ArrowContainer><SvgArrowTop/></ArrowContainer> : null;
+            const Arrow = link.childrens ? <ArrowContainer><SvgArrow/></ArrowContainer> : null;
             const Childrens = link.childrens ?
                 <LinksChildren {...getTemplateProps(TemplateSubLinks)} basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>{this.getRenderLinks(link.childrens, link.slug)}</LinksChildren> : null;
             const hadChildren = link.childrens && link.childrens.length !== 0 ? true : false;
@@ -187,7 +184,7 @@ class NavigationBar extends Component {
         return (
             <Container>
                 <FixedBar
-                    className={[this.state.open ? 'open' : '', !this.state.visible ? 'hidden' : '', this.linkIsOpen() ? 'linkOpened' : '']}>
+                    className={[this.state.open ? 'open' : '', !this.state.visible && !this.onTopPage() ? 'hidden' : '', this.linkIsOpen() ? 'linkOpened' : '']}>
                     <ContainerLeft {...getTemplateProps(TemplateLeft)}>
                         <Logo>
                             {

@@ -16,7 +16,7 @@ class NavigationLink extends Component {
         return (
             <Element hadChildren={hadChildren} {...getTemplateProps(Template)}
                      basisSubLink={TemplateSubLinks.settings.basis}
-                     className={this.state.open ? 'open' : 'closed'} onClick={() => {
+                     className={['navigation-link', this.state.open ? 'open' : 'closed']} onClick={() => {
                 this.setState({
                     open: !this.state.open
                 })

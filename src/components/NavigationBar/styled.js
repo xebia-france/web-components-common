@@ -76,12 +76,12 @@ export const CheckContainer = styled.div`
 
 export const ArrowContainer = styled.div`
   display : none;
-  width : 50px;
-  height : 50px;
-  transform : rotate(180deg);
+  width : 40px;
+  height : 40px;
   cursor : pointer;
   position : absolute;
   right : 0;
+  opacity : 0.5;
   
   &>svg{
     width : 100%;
@@ -90,8 +90,9 @@ export const ArrowContainer = styled.div`
   @media  ${ device.T }, ${ device.D } {
     display : flex;
     position : relative;
-    width :35px;
-    height : 35px;
+    width :30px;
+    height : 32px;
+    padding-top : 2px;
   }
 `;
 
@@ -154,7 +155,8 @@ export const Link = styled.a.attrs(props => ({
         ${ props =>  props.basis && props.basis['M'].padding && props.basis['M'].padding.right && props.basis['M'].padding.right !== '0' ?
     `
         &>${ArrowContainer}{
-            display : block;
+            display : flex;
+            align-items : center;
             right : ${ props.basis['M'].padding.right }px;
         }
     `
@@ -216,6 +218,10 @@ export const Links = styled(ContainerCommon).attrs(props => ({
     }
     
     @media  ${ device.M }{
+        &>nav{
+            padding-bottom : 50px;
+        }
+        
         transform : translateY(-100%);
         &.open{
             transform : translateY(0);
@@ -355,9 +361,6 @@ export const CurrentLocale = styled.div.attrs(props => ({
     display : none;
   }
 `;
-
-export const Top = styled.div``;
-
 
 export const FixedBar = styled.div.attrs(props => ({
 
