@@ -59,7 +59,6 @@ class NavigationBar extends Component {
 
         const currentScrollPos = window.pageYOffset;
         const currentScrollY = window.scrollY;
-        console.log('currentScrollY', currentScrollY)
         const visible = prevScrollpos > currentScrollPos;
 
         this.setState({
