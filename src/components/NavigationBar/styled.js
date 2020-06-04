@@ -109,6 +109,8 @@ export const Link = styled.a.attrs(props => ({
     position : relative;
     cursor : pointer:
     z-index : 2;
+    cursor : pointer;
+
   
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {

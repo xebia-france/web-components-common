@@ -6,6 +6,7 @@ import TextCustomContent from '../../functional/TextCustomContent';
 import ContentMarkdownRemark from "../../functional/ContentMarkdownRemark";
 import CTACustomLink from "../../functional/CTACustomLink";
 import {getImageProps, getTemplatePropsWithImage} from "../../utils/gettersProperties";
+import { generatePictureWebP } from "../../utils/gettersCommonElement";
 
 class CardCategory extends Component {
     buildComponent = (fields, field, key) => {
@@ -35,8 +36,8 @@ class CardCategory extends Component {
         if (!this.props.data || !this.props.data.logo || !this.props.data.logo.file) return null;
         return (
             <ImageContainer {...getImageProps(field)}>
-                <img alt={this.props.data.name}
-                     src={`${this.props.assetsDirectory || ''}${ fileNameFromUrl(this.props.data.logo.file.url) }`}/>
+                { generatePictureWebP(`${this.props.assetsDirectory || ''}${ fileNameFromUrl(this.props.data.logo.file.url) }`, this.props.data.name )}
+
             </ImageContainer>);
     }
 

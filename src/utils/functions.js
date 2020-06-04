@@ -46,6 +46,16 @@ function naiveCopy(mainObj) {
     return objCopy;
 }
 
+
+const getExtensionFileName = (fileName) => {
+    return fileName.substr(fileName.lastIndexOf('.') + 1);
+}
+
+const extractWithoutExtension = (fileName) => {
+    return fileName.split('.').slice(0, -1).join('.')
+}
+
+
 export {
     hexToRgb,
     RGBtoString,
@@ -53,5 +63,5 @@ export {
     isResponsiveProps,
     getResponsiveKey,
     isNumber,
-    removeSpaces, fileNameFromUrl, naiveCopy
+    removeSpaces, fileNameFromUrl, naiveCopy, getExtensionFileName, extractWithoutExtension
 };

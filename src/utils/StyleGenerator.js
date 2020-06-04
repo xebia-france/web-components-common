@@ -1,4 +1,5 @@
 import {isNumber} from "./functions";
+import { extractWithoutExtension} from "./functions";
 
 const generatePadding = (prop, size, subProp) => {
     if(subProp){
@@ -258,13 +259,36 @@ const generateBorder = (prop, size) => {
 }
 
 const generateBackgroundImage = (prop, size, assetsDirectory) => {
-    return `
-    ${ prop[size].fileName ? `
-            background-image : url('${  `${assetsDirectory  || ''}${  prop[size].fileName }`}');
+    if(!prop[size].fileName) return '';
+    console.log('prop prop[size].fileName', prop[size].fileName);
+    const path = `${assetsDirectory  || ''}${  prop[size].fileName }`;
+    const pathWebp = `${  extractWithoutExtension( path ) }.webp`;
+    console.log('path normal : ', path);
+    console.log('path webp : ', pathWebp);
+    return  `
+            background-image : url('${ path }');
             background-size : cover;
             background-position : center;
             
-            ` : ''}
+            .webp {
+                color : red;
+                background-image : url('${ pathWebp }');
+            }
+    `
+}
+
+const generateBackgroundImageWebp = (prop, size, assetsDirectory) => {
+    if(!prop[size].fileName) return '';
+    console.log('prop prop[size].fileName', prop[size].fileName);
+    const path = `${assetsDirectory  || ''}${  prop[size].fileName }`;
+    const pathWebp = `${  extractWithoutExtension( path ) }.webp`;
+    console.log('path normal : ', path);
+    console.log('path webp : ', pathWebp);
+    return  `
+            background-image : url('${ pathWebp }');
+            background-size : cover;
+            background-position : center;
+            
     `
 }
 
@@ -302,6 +326,7 @@ export {
     generateFontProperties,
     generateBorder,
     generateBackgroundImage,
+    generateBackgroundImageWebp,
     getFormatedColor,
     getFormatedSizeProperty
 }

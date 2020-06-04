@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { device } from '../../styles/constants';
 import {ContainerCommon, ContentCommon, CTACommon, ImageContainerCommon, TextCommon} from "../../styles/common.styled";
-import { generateBackgroundImage} from "../../utils/StyleGenerator";
+import { generateBackgroundImage, generateBackgroundImageWebp } from "../../utils/StyleGenerator";
 
 export const Container = styled(ContainerCommon)`
     align-items : flex-start;
@@ -23,6 +23,12 @@ export const Container = styled(ContainerCommon)`
                     ` : 'top : 0;'}
                    left : 0;
                    ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+
+               
+                }
+                .webp &:before{
+                   color: blue;
+                   ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''}  
 
                
                 }

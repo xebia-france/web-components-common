@@ -53,6 +53,7 @@ export const Link = styled.a.attrs(props => ({
     display : flex;
     align-items: center;
     z-index : 2;
+    cursor : pointer;
   
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
