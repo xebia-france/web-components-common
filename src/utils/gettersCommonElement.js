@@ -26,9 +26,6 @@ const generatePictureWebP = (src, alt) => {
     const extension = getExtensionFileName(src);
     const srcWithoutExtension = extractWithoutExtension(src);
 
-    console.log('extension : ', extension);
-    console.log('srcWithoutExtension : ', srcWithoutExtension);
-
     if(extension === 'png'){
         return (
             <picture>
