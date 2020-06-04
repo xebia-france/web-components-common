@@ -5,7 +5,7 @@ import {
     generateBorder,
     generateMargin,
     generatePadding,
-    generateSize, generateBackgroundImage, generateBackgroundImageWebp
+    generateSize, generateBackgroundImage, generateBackgroundImageWebp, generateBackgroundImageNoResponsive, generateBackgroundImageWebpNoResponsive
 } from "../../../utils/StyleGenerator";
 
 export const ImageBackground = styled.div.attrs(props => ({
@@ -34,13 +34,28 @@ export const ImageBackground = styled.div.attrs(props => ({
     }; 
     
     ${ props =>  `
-            background-image : url(${ `${ props.assetsDirectory  || ''}${  props.asset }`});    
-            background-size : cover;
-            background-position : center;
-            background-position : center;
-            background-repeat : no-repeat;
-         }
-         }`
+             &:before{
+               z-index : 1;
+               position : absolute;
+               width : 100%;
+               height : 100%;
+               content : ''; 
+               top : 0;
+               left : 0;
+               ${ props.asset ? generateBackgroundImageNoResponsive(props.asset, props.assetsDirectory) : ''}  
+                background-size : cover;
+                background-position : center;
+                background-position : center;
+                background-repeat : no-repeat;
+            }
+            .webp &:before{
+               ${ props.asset ? generateBackgroundImageWebpNoResponsive(props.asset, props.assetsDirectory) : ''}  
+                background-size : cover;
+                background-position : center;
+                background-position : center;
+                background-repeat : no-repeat;
+            }
+        `
     };  
     
     width : 100%;

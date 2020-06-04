@@ -60,8 +60,8 @@ export const ImageBackground = styled.div.attrs(props => ({
                 background-position : center;
                 background-repeat : no-repeat;
             }
-         }
-         }`
+         
+         `
     };  
     
     width : 100%;
