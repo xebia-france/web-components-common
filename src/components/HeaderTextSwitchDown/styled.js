@@ -27,10 +27,7 @@ export const Container = styled(ContainerCommon)`
                
                 }
                 .webp &:before{
-                   color: blue;
                    ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''}  
-
-               
                 }
          
                 background-image : none;

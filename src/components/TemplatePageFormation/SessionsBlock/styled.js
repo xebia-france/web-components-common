@@ -1,8 +1,4 @@
 import styled from "styled-components";
-import {device} from "../../../styles/constants";
-import { getFormatedColor} from "../../../utils/StyleGenerator";
-import {ContainerCommon, TextCommon} from "../../../styles/common.styled";
-
 
 export const Container = styled.div`
     display : flex;
@@ -10,11 +6,7 @@ export const Container = styled.div`
     width : 100%;
 `;
 
-
-
-export const ListSession = styled.div.attrs(props => ({
-
-}))`
+export const ListSession = styled.div`
    &>div:last-child{
     border : none;
    }

@@ -11,7 +11,6 @@ export const Container = styled.div`
     
     @media  ${ device.M }{
         flex-direction : column;
-       // align-items : center;
     }
 `;
 export const Left = styled.div`

@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 import { device } from '../../styles/constants';
-import { generateSize, generatePadding, generateMargin, generateBackgroundImage, getFormatedColor } from '../../utils/StyleGenerator';
+import {
+    generateSize,
+    generatePadding,
+    generateMargin,
+    generateBackgroundImage,
+    getFormatedColor,
+    generateBackgroundImageWebp
+} from '../../utils/StyleGenerator';
 import {ContainerCommon, ContentCommon, CTACommon, ImageContainerCommon, TextCommon} from "../../styles/common.styled";
 
 export const Container = styled.div``;
@@ -50,7 +57,19 @@ export const Between = styled.div.attrs(props => ({
 
     ${ props => props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-            ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}              
+            &:before{
+               z-index : 1;
+               position : absolute;
+               width : 100%;
+               height : 100%;
+               content : ''; 
+               top : 0;
+               left : 0;
+               ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+            }
+            .webp &:before{
+               ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''}  
+            }       
          }`)
     };
  

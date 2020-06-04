@@ -4,6 +4,7 @@ import {Container, Left, Right} from './styled';
 import {fileNameFromUrl} from "../../../utils/functions";
 import {ImageContainerCommon} from "../../../styles/common.styled";
 import { getTextProps} from "../../../utils/gettersProperties";
+import {generatePictureWebP} from "../../../utils/gettersCommonElement";
 
 class CardPartner extends Component {
     render() {
@@ -16,7 +17,7 @@ class CardPartner extends Component {
                                 responsive={settings.Image.responsiveSettings}
                                 basis={settings.Image.settings.basis}
                                 border={settings.Image.settings.border}>
-                    <img alt={`${partner.name}`} src={`${assetsDirectory || ''}${ imageFileName }`}/>
+                    { generatePictureWebP(`${assetsDirectory || ''}${ imageFileName }`,`${partner.name}` )}
                 </ImageContainerCommon>
             </Left>
             <Right>

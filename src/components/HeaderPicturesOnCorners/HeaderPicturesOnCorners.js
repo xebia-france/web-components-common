@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {Container, Text, ImageCorner, Logo} from './styled';
 import {getResponsiveKey} from '../../utils/functions';
+import {generatePictureWebP} from "../../utils/gettersCommonElement";
 
 class HeaderPicturesOnCorners extends Component {
 
@@ -56,7 +57,7 @@ class HeaderPicturesOnCorners extends Component {
 
             return (
                 <ImageCorner key={i} responsive={field.responsiveSettings} basis={field.settings.basis} index={i+1}>
-                    <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
+                    { generatePictureWebP(`${this.props.assetsDirectory || ''}${ file }`, image.alt[this.props.language]) }
                 </ImageCorner>);
         });
     }

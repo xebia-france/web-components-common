@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {device} from '../../styles/constants';
-import {generatePadding, generateSize, generateMargin, getFormatedColor, generateBackgroundImage, getFormatedSizeProperty} from "../../utils/StyleGenerator";
+import {generatePadding, generateSize, generateMargin, getFormatedColor, generateBackgroundImage, getFormatedSizeProperty, generateBackgroundImageWebp} from "../../utils/StyleGenerator";
 import {TextCommon} from "../../styles/common.styled";
 
 export const ImageCorner = styled.div.attrs(props => ({
@@ -98,6 +98,20 @@ export const Logo = styled.div.attrs(props => ({
     ${ props => props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
             ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''} 
+         
+            &:before{
+               z-index : 1;
+               position : absolute;
+               width : 100%;
+               height : 100%;
+               content : ''; 
+               top : 0;
+               left : 0;
+               ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+            }
+            .webp &:before{
+               ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''}  
+            }
          }`)
     };             
 `;

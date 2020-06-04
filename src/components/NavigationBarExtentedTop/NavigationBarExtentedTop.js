@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Container, Links, Link, Hamburger, LineWrapper, FixedContainer, Top, Locale, ImageContainer} from './styled'
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
+import {generatePictureWebP} from "../../utils/gettersCommonElement";
 
 class NavigationBarExtentedTop extends Component {
     constructor(props) {
@@ -105,7 +106,7 @@ class NavigationBarExtentedTop extends Component {
                     <ImageContainer key={i}
                                     responsive={field.responsiveSettings}
                                     basis={field.settings.basis}>
-                        <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
+                        { generatePictureWebP(`${this.props.assetsDirectory || ''}${ file }`, image.alt[this.props.language]) }
                     </ImageContainer>);
             }
 

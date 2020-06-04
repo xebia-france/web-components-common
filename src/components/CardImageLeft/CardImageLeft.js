@@ -143,10 +143,3 @@ CardImageLeft.propTypes = {
     assetsDirectory: PropTypes.string
 };
 export default CardImageLeft;
-
-/*<ImageContainer key={i}
-                                  responsive={field.responsiveSettings}
-                                  basis={field.settings.basis}
-                                  border={field.settings.border}>
-                      <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
-                  </ImageContainer>);*/

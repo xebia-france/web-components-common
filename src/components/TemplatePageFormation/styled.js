@@ -4,11 +4,10 @@ import {
     generatePadding,
     getFormatedColor,
     generateFontProperties,
-    generateBackgroundImage,
+    generateBackgroundImage,generateBackgroundImageWebp,
     generateSize
 } from "../../utils/StyleGenerator";
 import {ContainerCommon, ImageContainerCommon, TextCommon} from "../../styles/common.styled";
-import {IconContainer} from "./ItemSession/styled";
 import {isNumber} from "../../utils/functions";
 
 export const Container = styled.section.attrs(props => ({
@@ -134,9 +133,11 @@ export const Header = styled(ContainerCommon)`
                    left : 0;
                    ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
 
-               
                 }
-         
+                .webp &:before{
+                   ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''}  
+                }
+                
                 background-image : none;
          }`) : ''
     };

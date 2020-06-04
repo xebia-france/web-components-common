@@ -20,6 +20,7 @@ import CTA from '../../functional/CTA';
 import SvgPromo from '../../assets/svg/SvgPromo'
 
 import {getTemplateProps, getTextProps} from "../../utils/gettersProperties";
+import {generatePictureWebP} from "../../utils/gettersCommonElement";
 
 class TemplatePageFormation extends Component {
 
@@ -245,8 +246,7 @@ class TemplatePageFormation extends Component {
                                         responsive={Badges.Image.responsiveSettings}
                                         basis={Badges.Image.settings.basis}
                                         border={Badges.Image.settings.border}>
-                                        <img alt={`${b.name}`}
-                                             src={`${assetsDirectory || ''}${ fileNameFromUrl(b.image.file.url) }`}/>
+                                        { generatePictureWebP(`${assetsDirectory || ''}${ fileNameFromUrl(b.image.file.url) }`,`${b.name}` ) }
                                     </ImageContainerCommon>
                                 }) : null
                             }

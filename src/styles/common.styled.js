@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {
     generateBackgroundImage,
+    generateBackgroundImageWebp,
     generateBorder,
     generateFontProperties, generateMargin,
     generatePadding,
@@ -61,7 +62,20 @@ export const ContainerCommon = styled.div.attrs(props => ({
 
     ${ props =>  props.responsiveContent ? props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-            ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+            
+            &:before{
+               z-index : 1;
+               position : absolute;
+               width : 100%;
+               height : 100%;
+               content : ''; 
+               top : 0;
+               left : 0;
+               ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+            }
+            .webp &:before{
+               ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''}  
+            }
          }`) : ''
     };
 `;

@@ -5,6 +5,7 @@ import {fileNameFromUrl, getResponsiveKey} from "../../utils/functions";
 import TextCustomContent from '../../functional/TextCustomContent';
 import CTACustomLink from "../../functional/CTACustomLink";
 import {getImageProps, getTemplatePropsWithImage} from "../../utils/gettersProperties";
+import {generatePictureWebP} from "../../utils/gettersCommonElement";
 
 class CardCategoryLong extends Component {
     buildComponent = (fields, field, key) => {
@@ -68,8 +69,7 @@ class CardCategoryLong extends Component {
         if (!this.props.data || !this.props.data.logo || !this.props.data.logo.file) return null;
         return (
             <ImageContainer {...getImageProps(field)}>
-                <img alt={this.props.data.name}
-                     src={`${this.props.assetsDirectory || ''}${ fileNameFromUrl(this.props.data.logo.file.url) }`}/>
+                { generatePictureWebP(`${this.props.assetsDirectory || ''}${ fileNameFromUrl(this.props.data.logo.file.url) }`, this.props.data.name)}
             </ImageContainer>);
     }
 

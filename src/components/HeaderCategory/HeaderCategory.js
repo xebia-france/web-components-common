@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Container, Text, Content, ImageContainer, CTA, Contain} from './styled';
 import PropTypes from 'prop-types';
 import {fileNameFromUrl, getResponsiveKey} from "../../utils/functions";
+import {generatePictureWebP} from "../../utils/gettersCommonElement";
 
 class HeaderCategory extends Component {
     buildComponent = (fields, field, key) => {
@@ -68,8 +69,7 @@ class HeaderCategory extends Component {
                 <ImageContainer responsive={field.responsiveSettings}
                                 basis={field.settings.basis}
                                 border={field.settings.border}>
-                    <img alt={this.props.data.name}
-                         src={`${this.props.assetsDirectory || ''}${ fileNameFromUrl(this.props.data.logo.file.url) }`}/>
+                    { generatePictureWebP(`${this.props.assetsDirectory || ''}${ fileNameFromUrl(this.props.data.logo.file.url) }`,this.props.data.name )}
                 </ImageContainer>);
         }
 

@@ -15,4 +15,7 @@ export const Iframe = styled.div`
     width : 100%;
     height : auto;
     z-index : 10;
+    display : flex;
+    flex-direction: column;
+    align-items: center;
 `

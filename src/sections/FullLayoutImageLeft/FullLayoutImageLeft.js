@@ -26,25 +26,8 @@ class FullLayoutImageLeft extends Component {
                 )
             }
         });
-    }/*
+    }
 
-    getImages = field => {
-        const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
-        return field.content.images.map((image, i) => {
-            const file = image.asset[responsiveContent].fileName ? image.asset[responsiveContent].fileName : null;
-            if (!file) {
-                return null
-            } else {
-                return (
-                    <ImageContainerCommon key={i}
-                                    responsive={field.responsiveSettings}
-                                    basis={field.settings.basis}
-                                    border={field.settings.border}>
-                        <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
-                    </ImageContainerCommon>);
-            }
-        });
-    }*/
     render() {
 
         const { children, fields, name, assetsDirectory } = this.props;

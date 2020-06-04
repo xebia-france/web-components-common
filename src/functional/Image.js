@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {ImageContainerCommon} from "../styles/common.styled";
 import {getImageProps} from "../utils/gettersProperties";
 import {getResponsiveKey} from "../utils/functions";
+import {generatePictureWebP} from "../utils/gettersCommonElement";
 
 const Image = ({field, language, assetsDirectory}) => {
     const responsiveKey = getResponsiveKey(field.content.images[0].asset)[0];
@@ -13,7 +14,7 @@ const Image = ({field, language, assetsDirectory}) => {
     if (!file) return null;
     return (
         <ImageContainerCommon {...getImageProps(field)}>
-            <img alt={alt} src={`${assetsDirectory || ''}${ file }`}/>
+            { generatePictureWebP(`${assetsDirectory || ''}${ file }`,alt )}
         </ImageContainerCommon>
     )
 };

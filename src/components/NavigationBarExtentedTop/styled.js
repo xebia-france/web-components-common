@@ -8,8 +8,7 @@ import {
     generateMargin,
     generateFontProperties,
     generateBorder,
-    getFormatedColor,
-    generateBackgroundImage
+    getFormatedColor
 } from "../../utils/StyleGenerator";
 
 export const Container = styled.div`

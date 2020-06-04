@@ -14,12 +14,12 @@ const getImages = (field, language) => {
                 <ImageContainerCommon key={i}
                                       responsive={field.responsiveSettings}
                                       basis={field.settings.basis}>
-                    <img alt={image.alt[language]}
-                         src={file.startsWith('https://') ? file : `/assets/${ file }`}/>
+                    { generatePictureWebP(file.startsWith('https://') ? file : `/assets/${ file }`,image.alt[language] )}
                 </ImageContainerCommon>);
         }
     });
 }
+
 
 
 const generatePictureWebP = (src, alt) => {

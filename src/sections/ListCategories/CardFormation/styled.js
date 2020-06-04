@@ -5,7 +5,7 @@ import {
     generateBorder,
     generateMargin,
     generatePadding,
-    generateSize, generateBackgroundImage
+    generateSize, generateBackgroundImage, generateBackgroundImageWebp
 } from "../../../utils/StyleGenerator";
 
 export const ImageBackground = styled.div.attrs(props => ({
@@ -104,10 +104,22 @@ export const Formation = styled.div.attrs(props => ({
          }`)
     };
 
-    ${ props => props.responsiveContent.map((size, i) => `
+    ${ props =>  props.responsiveContent ? props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-            ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
-         }`)
+            &:before{
+               z-index : 1;
+               position : absolute;
+               width : 100%;
+               height : 100%;
+               content : ''; 
+               top : 0;
+               left : 0;
+               ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+            }
+            .webp &:before{
+               ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''}  
+            }
+         }`) : ''
     };
 `;
 

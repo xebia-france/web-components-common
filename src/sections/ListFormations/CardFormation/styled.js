@@ -5,7 +5,11 @@ import {
     generateBorder,
     generateMargin,
     generatePadding,
-    generateSize, generateBackgroundImage
+    generateSize,
+    generateBackgroundImage,
+    generateBackgroundImageWebp,
+    generateBackgroundImageWebpNoResponsive,
+    generateBackgroundImageNoResponsive
 } from "../../../utils/StyleGenerator";
 
 export const ImageBackground = styled.div.attrs(props => ({
@@ -34,11 +38,28 @@ export const ImageBackground = styled.div.attrs(props => ({
     }; 
     
     ${ props =>  `
-            background-image : url(${ `${ props.assetsDirectory  || ''}${  props.asset }`});    
-            background-size : cover;
-            background-position : center;
-            background-position : center;
-            background-repeat : no-repeat;
+    
+            &:before{
+               z-index : 1;
+               position : absolute;
+               width : 100%;
+               height : 100%;
+               content : ''; 
+               top : 0;
+               left : 0;
+               ${ props.asset ? generateBackgroundImageNoResponsive(props.asset, props.assetsDirectory) : ''}  
+                background-size : cover;
+                background-position : center;
+                background-position : center;
+                background-repeat : no-repeat;
+            }
+            .webp &:before{
+               ${ props.asset ? generateBackgroundImageWebpNoResponsive(props.asset, props.assetsDirectory) : ''}  
+                background-size : cover;
+                background-position : center;
+                background-position : center;
+                background-repeat : no-repeat;
+            }
          }
          }`
     };  
@@ -104,10 +125,23 @@ export const Formation = styled.div.attrs(props => ({
          }`)
     };
 
-    ${ props => props.responsiveContent.map((size, i) => `
+    ${ props =>  props.responsiveContent ? props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-            ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
-         }`)
+            
+            &:before{
+               z-index : 1;
+               position : absolute;
+               width : 100%;
+               height : 100%;
+               content : ''; 
+               top : 0;
+               left : 0;
+               ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+            }
+            .webp &:before{
+               ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''}  
+            }
+         }`) : ''
     };
 `;
 
@@ -141,8 +175,6 @@ export const RightContent = styled.div.attrs(props => ({
             max-width : calc(100% - ${ props.basis[size].size.width });
          }`)
     }; 
-    
-    
 `;
 
 
@@ -157,7 +189,6 @@ export const NextSession = styled.div.attrs(props => ({
    width : 100%;
    display : flex;
    padding : 10px 10px 10px 10px;
-
    
    &>div:nth-child(1){
     width: calc(100% - 40px);
@@ -180,8 +211,6 @@ export const NextSession = styled.div.attrs(props => ({
          
          }`)
     }; 
-    
-    
 `;
 
 export const NextSessionPromo = styled(NextSession)`

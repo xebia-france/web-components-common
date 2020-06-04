@@ -3,6 +3,7 @@ import {Container, ImageContainer} from './styled';
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
 import {getImageProps, getTemplatePropsWithImage} from "../../utils/gettersProperties";
+import {generatePictureWebP} from "../../utils/gettersCommonElement";
 
 let scrollPositions = null;
 
@@ -40,7 +41,7 @@ class ButtonScrollTop extends Component {
         if (!file) return null;
         return (
             <ImageContainer {...getImageProps(field)}>
-                <img alt={alt} src={`${assetsDirectory || ''}${ file }`}/>
+                { generatePictureWebP(`${assetsDirectory || ''}${ file }`, alt)}
             </ImageContainer>
         )
 

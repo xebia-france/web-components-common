@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Container, Text, Content, ImageContainer, CTA, Iframe} from './styled';
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
+import {generatePictureWebP} from "../../utils/gettersCommonElement";
 
 class CardIframe extends Component {
     buildComponent = (fields, field, key) => {
@@ -100,7 +101,7 @@ class CardIframe extends Component {
                                     responsive={field.responsiveSettings}
                                     basis={field.settings.basis}
                                     border={field.settings.border}>
-                        <img alt={image.alt[this.props.language]} src={`${this.props.assetsDirectory || ''}${ file }`}/>
+                        {generatePictureWebP(`${this.props.assetsDirectory || ''}${ file }`,image.alt[this.props.language] )}
                     </ImageContainer>);
             }
         });

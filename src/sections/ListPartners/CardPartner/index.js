@@ -4,6 +4,7 @@ import {
 
 } from './styled';
 import { fileNameFromUrl } from '../../../utils/functions'
+import {generatePictureWebP} from "../../../utils/gettersCommonElement";
 
 class CardPartner extends Component {
     constructor(props) {
@@ -35,7 +36,7 @@ class CardPartner extends Component {
                             target={'_blank'}
                             responsive={config.responsiveSettings}
                             basis={config.settings.logo}>
-                <img alt={partner.name} src={`${assetsDirectory || ''}${ fileNameFromUrl(partner.logo.file.url) }`}/>
+                { generatePictureWebP(`${assetsDirectory || ''}${ fileNameFromUrl(partner.logo.file.url) }`,partner.name )}
             </ImageContainer>
         </Partner>;
     }

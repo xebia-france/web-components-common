@@ -14,6 +14,7 @@ import {
 } from './styled';
 import PropTypes from 'prop-types';
 import { removeSpaces } from '../../utils/functions';
+import {generatePictureWebP} from "../../utils/gettersCommonElement";
 
 class ListSpeakersFlipCard extends Component {
 
@@ -80,7 +81,9 @@ class ListSpeakersFlipCard extends Component {
                                                                 basis={Speakers.settings.companyLogo}
                                                                 view={'view1'}
                                                             >
-                                                                <img src={getImagePath(data[i].companyLogo, assetsDirectory)}/>
+                                                                {
+                                                                    generatePictureWebP(getImagePath(data[i].companyLogo, assetsDirectory), 'image')
+                                                                }
                                                             </ImageContainer>
 
                                                         </BlockCenter> : null

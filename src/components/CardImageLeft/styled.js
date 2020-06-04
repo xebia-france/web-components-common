@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {ContainerCommon ,ContentCommon, TextCommon, ImageContainerCommon, CTACommon } from '../../styles/common.styled';
 import {device} from "../../styles/constants";
-import {generateBackgroundImage, getFormatedSizeProperty, generateMargin, generateBorder, generatePadding, generateFontProperties, generateSize, getFormatedColor} from "../../utils/StyleGenerator";
+import {generateMargin, generateBorder, generatePadding, generateSize, getFormatedColor} from "../../utils/StyleGenerator";
 
 export const Container = styled(ContainerCommon)`
     flex-direction : row;
