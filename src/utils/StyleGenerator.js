@@ -312,8 +312,6 @@ const generateBackgroundImageWebp = (prop, size, assetsDirectory) => {
     const path = `${assetsDirectory || ''}${  prop[size].fileName }`;
     const extension = getExtensionFileName(path);
 
-    console.log('extension', extension)
-
     if (extension === 'png' || extension === 'jpeg' || extension === 'jpg') {
         const pathWebp = `${  extractWithoutExtension(path) }.webp`;
 
@@ -336,8 +334,6 @@ const generateBackgroundImageWebpNoResponsive = (fileName, assetsDirectory) => {
 
     const path = `${assetsDirectory || ''}${  fileName }`;
     const extension = getExtensionFileName(path);
-
-    console.log('extension', extension)
 
     if (extension === 'png' || extension === 'jpeg' || extension === 'jpg') {
         const pathWebp = `${  extractWithoutExtension(path) }.webp`;
