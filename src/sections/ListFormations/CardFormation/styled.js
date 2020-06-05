@@ -47,6 +47,8 @@ export const ImageBackground = styled.div.attrs(props => ({
                content : ''; 
                top : 0;
                left : 0;
+            }
+            .no-webp &:before{
                ${ props.asset ? generateBackgroundImageNoResponsive(props.asset, props.assetsDirectory) : ''}  
                 background-size : cover;
                 background-position : center;
