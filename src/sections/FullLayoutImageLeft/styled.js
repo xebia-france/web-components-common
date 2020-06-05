@@ -2,7 +2,13 @@ import styled from 'styled-components';
 import {device} from "../../styles/constants";
 import {
     generatePadding,
-    generateBorder, generateBackgroundImage, generateSize, generateMargin, getFormatedColor, generateBackgroundImageWebp
+    generateBorder,
+    generateBackgroundImage,
+    generateSize,
+    generateMargin,
+    getFormatedColor,
+    generateBackgroundImageWebp,
+    generateBackgroundImageNoResponsive, generateBackgroundImageWebpNoResponsive
 } from "../../utils/StyleGenerator";
 
 export const Wrapper = styled.section.attrs(props => ({
@@ -157,16 +163,33 @@ export const ImageBackground = styled.div.attrs(props => ({
     }; 
     
     ${ props =>  `
-        
-            background-image : url(${ `${ props.assetsDirectory  || ''}${  props.asset }`});    
-            background-size : cover;
-            background-position : center;
-            background-position : top left;
-            background-repeat : no-repeat;
-            
-            
+            &:before{
+               z-index : 0;
+               position : absolute;
+               width : 100%;
+               height : 100%;
+               content : ''; 
+               top : 0;
+               left : 0;
+            }
+            .no-webp &:before{
+               ${ props.asset ? generateBackgroundImageNoResponsive(props.asset, props.assetsDirectory) : ''}  
+                background-size : cover;
+                background-position : center;
+                background-position : top left;
+                background-repeat : no-repeat;
+            }
+            .webp &:before{
+               ${ props.asset ? generateBackgroundImageWebpNoResponsive(props.asset, props.assetsDirectory) : ''}  
+                background-size : cover;
+                background-position : center;
+                background-position : top left;
+                background-repeat : no-repeat;
+            }
          `
     };
+    
+    
          
    &>img{
         width : 100%; 

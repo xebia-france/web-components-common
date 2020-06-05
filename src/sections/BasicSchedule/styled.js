@@ -3,7 +3,7 @@ import {device} from "../../styles/constants";
 import {
     generatePadding,
     generateBorder,
-    generateBackgroundImage
+    generateBackgroundImage, generateBackgroundImageWebp, getFormatedColor
 } from "../../utils/StyleGenerator";
 
 let grey80 = '#666666';
@@ -36,7 +36,7 @@ export const Wrapper = styled.section.attrs(props => ({
                                                                         : `${props.border[size].color.hex};`}` : '')
              : ''}
              
-            &:before{
+            &:after{
                z-index : 0;
                position : absolute;
                width : 100%;
@@ -46,17 +46,35 @@ export const Wrapper = styled.section.attrs(props => ({
                   top:${ props.basis[size].background.top  }px;
                 ` : 'top : 0;'}
                left : 0;
-               background-color:${ props.basis[size].color.rgb ?  `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` : props.basis[size].color.hex };
+               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+           ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+                  background:${ props.basis[size].color.gradient  };
+
+               ` : ''}
             }
          }`)
     }; 
     
-    ${ props =>  props.asset ?  props.responsiveContent.map((size, i) => `
+    ${ props =>  props.responsiveContent ? props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-         ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}    
-         }
-         }`)
-    : ''  };
+           
+            &:before{
+               z-index : 0;
+               position : absolute;
+               width : 100%;
+               height : 100%;
+               content : ''; 
+               top : 0;
+               left : 0;
+            }
+            .no-webp &:before{
+               ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+            }
+            .webp &:before{
+               ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''}  
+            }
+         }`) : ''
+    };
 `;
 
 
