@@ -115,7 +115,7 @@ export const Wrapper = styled.section.attrs(props => ({
     
     ${ props =>  props.responsiveContent ? props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-            &:before{
+             &:before{
                z-index : 0;
                position : absolute;
                width : 100%;
@@ -123,6 +123,8 @@ export const Wrapper = styled.section.attrs(props => ({
                content : ''; 
                top : 0;
                left : 0;
+            }
+            .no-webp &:before{
                ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
             }
             .webp &:before{

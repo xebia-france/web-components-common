@@ -60,6 +60,8 @@ export const Wrapper = styled.section.attrs(props => ({
                content : ''; 
                top : 0;
                left : 0;
+            }
+            .no-webp &:before{
                ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
             }
             .webp &:before{

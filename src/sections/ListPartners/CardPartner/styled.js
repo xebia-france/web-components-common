@@ -69,7 +69,9 @@ export const Partner = styled.div.attrs(props => ({
                content : ''; 
                top : 0;
                left : 0;
-               ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+            }
+            .no-webp &:before{
+               ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''}  
             }
             .webp &:before{
                ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''}  
