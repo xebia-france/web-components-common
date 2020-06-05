@@ -147,6 +147,7 @@ export const ImageBackground = styled.div.attrs(props => ({
     border-style : solid;
     z-index : 2;
     display : flex;
+    position : relative;
     
     ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
