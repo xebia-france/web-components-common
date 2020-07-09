@@ -94,7 +94,6 @@ class FooterBasic extends Component {
     render() {
         const {fields, menu} = this.props;
         const Template = fields.Template;
-        const Links = fields.Links;
 
         return (
             <Container>
@@ -103,12 +102,8 @@ class FooterBasic extends Component {
 
                 >
                     {
-                        Links && menu ?
-                            <Links>
-                                {
-                                    this.getRenderLinks(menu)
-                                }
-                            </Links>
+                        fields.Links && menu ?
+                            <Links>{this.getRenderLinks(menu)}</Links>
                             : null
                     }
 
