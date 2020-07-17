@@ -155,6 +155,8 @@ export const Dash = styled.div.attrs(props => ({
 export const DashContainer = styled.div.attrs(props => ({
 
 }))`
+   background : white;
+
    &>div:nth-child(2){
    // border-top : 1px solid grey;
    }
@@ -180,57 +182,6 @@ export const Head = styled.div.attrs(props => ({
 
 export const Column = styled.div.attrs(props => ({
 }))``;
-
-
-export const HoursLine = styled.div.attrs(props => ({
-
-}))`
-  width : 35px;
-  min-width : 35px;
-  height : auto;
-  display : flex;
-  flex-direction : column;
-  background : white;
-  border-right : 1px solid grey;
-  z-index: 20;
-  transition : margin-right 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
-  
-  &>div{
-  
-   //eight : calc(${baseHeight}px * 4);
-    position : relative;
-    display : flex;
-    flex-direction : column; 
-    align-items : flex-end;
-    
-    &:first-child{
-         height : 40px;
-         
-         align-items : center;
-        
-        &>p{
-            position : relative;
-            top : auto;
-            right : auto;
-            line-height : 35px;
-            margin-top : 0px;
-        }s
-    }
-    
-    &:nth-child(2){
-        margin-top : 10px;
-    }
-    
-    &>p{
-        position : absolute;
-        top : -12px;
-        right : 10px;
-    }
-    
-    
-    
-  }
-`;
 
 
 export const HeadSchedule = styled.div.attrs(props => ({
@@ -268,6 +219,62 @@ export const Label = styled.div.attrs(props => ({
     text-align : center;
     font-size : 11px;
     margin-top : 5px;
+  }
+`;
+
+
+export const HoursLine = styled.div.attrs(props => ({
+
+}))`
+  width : 35px;
+  min-width : 35px;
+  //height : auto;
+  height : fit-content;
+  display : flex;
+  flex-direction : column;
+  border-right : 1px solid grey;
+  z-index: 20;
+  transition : margin-right 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
+  background : white;
+  
+  &>div{
+  
+   //eight : calc(${baseHeight}px * 4);
+    position : relative;
+    display : flex;
+    flex-direction : column; 
+    align-items : flex-end;
+    
+    &:first-child{
+         //height : 40px;
+         
+         //align-items : center;
+        
+        &>p{
+            position : relative;
+            top : auto;
+            right : auto;
+            line-height : 35px;
+            margin-top : 0px;
+        }s
+    }
+    
+    &:nth-child(2){
+       // margin-top : 10px;
+    }
+    
+    &>p{
+        position : absolute;
+        top : -12px;
+        right : 10px;
+    }
+    
+  }
+  
+  & ${Label}{
+    position : sticky;
+    z-index : 5;
+    top: 0;
   }
 `;
 
@@ -381,7 +388,6 @@ export const Clock = styled.div.attrs(props => ({
 export const SlotsContainer = styled.div.attrs(props => ({
 
 }))`
-  margin-top : 10px;
   position : relative;
   
 `;
@@ -509,6 +515,40 @@ export const BodySchedule = styled.div.attrs(props => ({
   display : flex;
   overflow : hidden;
   position : relative;
+  overflow-y : scroll;
+  height : 70vh;
+  cursor : pointer;
+  
+  &:before{
+        opacity : 0;
+       z-index : 2;
+       position : sticky;
+       width : 40px;
+       min-width : 40px;
+       margin-right : -40px;
+       height : 100%;
+       min-height : 40px;
+       content : ''; 
+       top : 0;
+       left : 35px;
+       box-shadow : inset 180px 0px 10px -173px rgba(0,0,0,0.51);
+       transition : opacity 0.35s cubic-bezier(0.15,0.3,0.25,1) 0s;
+  }
+  &:after{
+        opacity : 0;
+       z-index : 2;
+       position : sticky;
+       width : 40px;
+       min-width : 40px;
+       height : 100%;
+       min-height : 40px;
+       content : ''; 
+       top : 0;
+       right : 0;
+       transform : scaleX(-1);
+       box-shadow : inset 180px 0px 10px -173px rgba(0,0,0,0.51);
+       transition : opacity 0.35s cubic-bezier(0.15,0.3,0.25,1) 0s;
+  }
   
   & ${Column}{
 
@@ -604,14 +644,14 @@ export const BodySchedule = styled.div.attrs(props => ({
    @media (min-width: 1024px) {
    
         ${ props => props.index > 0 ? `
-            & ${ShadowLeft}{
+            & ${ShadowLeft}, &:before{
                 opacity : 1;
             }
         ` : ``}
    
         ${ props => props.nbrColumn > 3 ? `
             ${ (props.nbrColumn - props.index) > 3 ? `
-                & ${ShadowRight}{
+                & ${ShadowRight}, &:after{
                     opacity : 1;
                 }
         ` : ``}
@@ -623,7 +663,7 @@ export const BodySchedule = styled.div.attrs(props => ({
         
         ${ props => props.nbrColumn == 2 ? `
             ${ (props.nbrColumn - props.index) <= 1 ? `
-                & ${ShadowLeft}{
+                & ${ShadowLeft}, &:before{
                     opacity : 0;
                 }
         ` : ``}
@@ -685,14 +725,14 @@ export const BodySchedule = styled.div.attrs(props => ({
    @media (min-width: 0px) and (max-width: 1023px) {
    
         ${ props => props.index > 0 ? `
-            & ${ShadowLeft}{
+            & ${ShadowLeft}, &:before{
                 opacity : 1;
             }
         ` : ``}
    
         ${ props => props.nbrColumn > 3 ? `
             ${ (props.nbrColumn - props.index) > 3 ? `
-                & ${ShadowRight}{
+                & ${ShadowRight}, &:after{
                     opacity : 1;
                 }
         ` : ``}
@@ -753,6 +793,153 @@ export const BodySchedule = styled.div.attrs(props => ({
     }
     
     
-  
+    & ${Head}{
+        opacity : 0;
+        height : 0;
+    }
+    
   
 `;
+
+export const BodyRooms =  styled(BodySchedule).attrs(props => ({
+    translatePosition: props.translatePosition,
+    transition : props.transition
+}))`
+    height : auto;
+    
+    & ${Head}{
+        opacity : 1;
+        height : 40px;
+    }
+    
+    &>div:nth-child(2)>div{
+        ${props => props.translatePosition ?
+    `transform : ${props.translatePosition} !important;` : ''}
+     
+     ${props => props.transition ?
+    `transition : ${props.transition} !important;` : ''}
+    }
+    
+    
+    @media (min-width: 1024px) {
+        
+        &>div:nth-child(2){
+        
+            ${ props => props.nbrColumn > 3 ? `
+            
+                
+                
+                ${ (props.nbrColumn - props.index) <= 3  ? `
+                    &>div{
+                        transform : translate(-${(props.nbrColumn - 3) * 100}%, 0px) !important;
+                    }
+                    padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 25px !important;
+                    
+                    
+
+                    
+                    
+                ` : ``}
+                  
+                
+            ` 
+            : ''}
+            ${ props => props.nbrColumn === 3 ? `
+                padding :0 calc((100% - 35px) * (2/3)) 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            ${ props => props.nbrColumn === 2 ? `
+                padding :0 calc((100% - 35px) * (1/2)) 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            ${ props => props.nbrColumn === 1 ? `
+                padding :0 0 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            
+            
+            
+        }
+        
+             
+    }
+   @media (min-width: 0px) and (max-width: 1023px) {
+   
+        ${ props => props.index > 0 ? `
+            & ${ShadowLeft}, &:before{
+                opacity : 1;
+            }
+        ` : ``}
+   
+        ${ props => props.nbrColumn > 3 ? `
+            ${ (props.nbrColumn - props.index) > 3 ? `
+                & ${ShadowRight}, &:after{
+                    opacity : 1;
+                }
+        ` : ``}
+            
+           & ${ HoursLine}{
+             margin-right : ${ props.index === 0 ? ' -50px' : '0'};
+           }  
+        ` : ''}
+        
+        
+        &>div:nth-child(2){
+        
+            ${ props => props.nbrColumn > 3 ? `
+            
+                ${ props.index === 0 ? `
+                  padding :0 calc((100% - 35px - 0px) * (2/3) ) 0 50px !important;
+                ` : `
+                  padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 50px !important;`
+                }
+                
+                ${ (props.nbrColumn - props.index) <= 3  ? `
+                    &>div{
+                        transform : translate(-${(props.nbrColumn - 3) * 100}%, 0px) !important;
+                    }
+                    padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 25px !important;
+
+                    
+                    
+                ` : ``}
+                  
+                
+            ` 
+            : ''}
+            ${ props => props.nbrColumn === 3 ? `
+                padding :0 calc((100% - 35px) * (2/3)) 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            ${ props => props.nbrColumn === 2 ? `
+                padding :0 calc((100% - 35px) * (1/2)) 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            ${ props => props.nbrColumn === 1 ? `
+                padding :0 0 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            
+            
+            
+        }
+        
+             
+    }
+    
+    
+    
+    
+`

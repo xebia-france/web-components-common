@@ -11,22 +11,29 @@ import {
     Label,
     HeadSchedule,
     BodySchedule,
+    BodyRooms,
     DashContainer,
     Day,
     Days,
-    Schedule, Column, SlotsContainer, Head
+    Schedule
 } from "./styled";
 import { renderView } from './View';
+import { renderRooms } from './Rooms';
 import { getHourFromTime} from "./utils";
-import Slots from './Slots'
 
 class BasicSchedule extends Component {
     constructor(props) {
         super(props);
         this.state = {
             nbrColumn: 5,
-            index: 0
+            nbrColumnPerView : 3,
+            index: 0,
+            translatePosition : null,
+            transition : 'transform 0.35s cubic-bezier(0.15,0.3,0.25,1) 0s'
+
         };
+
+        this.viewsRef = React.createRef()
     }
 
     async componentDidMount() {
@@ -227,10 +234,23 @@ class BasicSchedule extends Component {
 
 
 
-    updateIndex = index => {
-        console.log('index ------', index)
+    switchView = (index, type) => {
+        console.log('SWITCH INDEX ------', index)
+        console.log('SWITCH TYPE ------', type)
+
+        const css = this.viewsRef.current.containerNode.style.transform;
+        console.log('style container', css );
         this.setState({
-            index,
+            translatePosition : css,
+            transition : 'transform 0.0s cubic-bezier(0.15,0.3,0.25,1) 0s'
+        });
+    };
+
+
+    updateIndex = index => {
+        this.setState({
+            index : index,
+            transition : 'transform 0.35s cubic-bezier(0.15,0.3,0.25,1) 0s'
         });
     };
 
@@ -247,9 +267,8 @@ class BasicSchedule extends Component {
         })
     }
 
-
     render() {
-        const {children, fields, name, assetsDirectory, schedule} = this.props;
+        const {children, fields, name, assetsDirectory, data} = this.props;
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
 
@@ -323,7 +342,7 @@ class BasicSchedule extends Component {
             },
         };
 
-        const styles = styles;
+        const styles = styles3;
 
 
 
@@ -356,23 +375,35 @@ class BasicSchedule extends Component {
                             }
                         </Days>
                     </HeadSchedule>
-                    <BodySchedule responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                    <BodyRooms translatePosition={this.state.translatePosition} transition={this.state.transition} responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
                                   nbrColumn={this.state.nbrColumn} index={this.state.index}>
                         <HoursLine>
                             <Label><p>ROOM</p></Label>
-
-                            {this.getHoursTimeLine(this.state.scheduleOfDay.startTime, this.state.scheduleOfDay.endTime)}
                         </HoursLine>
                         <SwipeableViews
                             index={this.state.index} onChangeIndex={this.updateIndex}
                             resistance enableMouseEvents disableLazyLoading style={styles.root}
                             slideStyle={styles.slideContainer}>
                             {
+                                this.state.scheduleOfDay ? renderRooms(this.state.scheduleOfDay,styles)  : null
+                            }
+                        </SwipeableViews>
+
+                    </BodyRooms>
+                    <BodySchedule responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                                  nbrColumn={this.state.nbrColumn} index={this.state.index}>
+                        <HoursLine>
+                            {this.getHoursTimeLine(this.state.scheduleOfDay.startTime, this.state.scheduleOfDay.endTime)}
+                        </HoursLine>
+                        <SwipeableViews
+                            ref={this.viewsRef}
+                            index={this.state.index} onSwitching={this.switchView} onChangeIndex={this.updateIndex}
+                            resistance enableMouseEvents disableLazyLoading style={styles.root}
+                            slideStyle={styles.slideContainer}>
+                            {
                                 this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay,styles)  : null
                             }
                         </SwipeableViews>
-                        <ShadowLeft/>
-                        <ShadowRight/>
                     </BodySchedule>
                 </Schedule>
             </Container>
