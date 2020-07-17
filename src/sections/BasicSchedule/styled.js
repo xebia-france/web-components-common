@@ -8,7 +8,8 @@ import {
 
 let grey80 = '#666666';
 let grey50 = '#A2A2A2';
-let red = '#FE414D';
+let red = '#B2B2B2' +
+    '\n';
 let baseHeight = 60;
 
 export const Wrapper = styled.section.attrs(props => ({
@@ -178,10 +179,7 @@ export const Head = styled.div.attrs(props => ({
 `;
 
 export const Column = styled.div.attrs(props => ({
-
-}))`
-    
-`;
+}))``;
 
 
 export const HoursLine = styled.div.attrs(props => ({
@@ -276,14 +274,6 @@ export const Label = styled.div.attrs(props => ({
 
 
 
-export const Days = styled.div.attrs(props => ({
-
-}))`
-  width : 100%;
-  background : black;
-  display : flex;
-`;
-
 
 export const Day = styled.div.attrs(props => ({
 
@@ -307,6 +297,20 @@ export const Day = styled.div.attrs(props => ({
 `;
 
 
+export const Days = styled.div.attrs(props => ({
+
+}))`
+  width : 100%;
+  background : black;
+  display : flex;
+  
+  & ${Day}:last-child{
+    border-right : none;
+  }
+`;
+
+
+
 
 export const Header = styled.div.attrs(props => ({
 }))`
@@ -318,13 +322,16 @@ export const Header = styled.div.attrs(props => ({
 export const Tag = styled.div.attrs(props => ({
 }))`
     display : flex;
+    height : 20px;
+    flex-wrap : wrap;
+    overflow : hidden;
     
    &>div{
         height : 20px;
         line-height : 20px;
         border-radius : 2px;
-        padding-left : 4px;
-        padding-right : 4px;
+        padding-left : 7px;
+        padding-right : 7px;
         font-size : 12px;
         display : flex;
         align-items: center;
@@ -337,11 +344,9 @@ export const Tag = styled.div.attrs(props => ({
         }
         
         
-        &:not(first-child){
-            //margin-left : 3px;
+        &:not(:first-child){
             background : rgba(0,0,0,0.25);
-            
-
+            margin-left : 5px;
         }
    }
  
@@ -350,16 +355,20 @@ export const Tag = styled.div.attrs(props => ({
 export const Time = styled.div.attrs(props => ({
 }))`
  font-size : 12px;
- line-height : 16px;
+ line-height : 15px;
  display : flex;
+ min-width : 95px;
+ opacity : 0.7;
  
 `;
 
 export const Clock = styled.div.attrs(props => ({
 }))`
- width : 10px;
- height : 10px;
+ width : 11px;
+ height : 11px;
  margin-right : 4px;
+ display : flex;
+ align-self : center;
  
  &>svg{
     width : 100%;
@@ -369,7 +378,7 @@ export const Clock = styled.div.attrs(props => ({
 `;
 
 
-export const Slots = styled.div.attrs(props => ({
+export const SlotsContainer = styled.div.attrs(props => ({
 
 }))`
   margin-top : 10px;
@@ -381,10 +390,11 @@ export const Informations = styled.div.attrs(props => ({
 }))`
  display : flex;
  flex-direction : column;
- padding-top : 8px;
  
   & h4{
     font-size : 14px;
+    line-height : 18px;
+    margin-top : 5px;
     
     &.cropped{
         overflow:hidden; 
@@ -394,9 +404,10 @@ export const Informations = styled.div.attrs(props => ({
    
   }
   & h5{
-    font-size : 14px;
+    font-size : 12px;
+    line-height : 13px;
     opacity : 0.4;
-    text-transform : uppercase;
+    margin-top : 5px;
   }
   
 `;
@@ -448,6 +459,13 @@ export const Slot = styled.div.attrs(props => ({
         
         }
     }
+  }
+  &:not(.other){
+    width : calc(100% - 8px);
+    margin-left : 8px;
+  }
+  &.overlaped{
+  
   }
 `;
 
@@ -505,7 +523,7 @@ export const BodySchedule = styled.div.attrs(props => ({
   &>div:nth-child(2){    
     &>div>div {
         & ${ Column }{
-           & ${ Slots }{
+           & ${ SlotsContainer }{
               & ${ Slot }{
                   &.other{
                         padding-left : 0px;
@@ -524,12 +542,13 @@ export const BodySchedule = styled.div.attrs(props => ({
     
         &:first-child{
            & ${ Column }{
-                    & ${ Slots }{
+                    & ${ SlotsContainer }{
                         & ${ Slot }{
                             padding-left : 4px;
                             padding-right : 0px;
                             
                             &.other{
+                                padding-left : 12px;
                                 & ${SlotContent}{
                                    border-radius :4px 0px 0px 4px;
                                    
@@ -544,7 +563,7 @@ export const BodySchedule = styled.div.attrs(props => ({
         }
         &:last-child{
            & ${ Column }{
-                    & ${ Slots }{
+                    & ${ SlotsContainer }{
                         & ${ Slot }{
                             padding-left : 0px;
                             padding-right : 4px;
@@ -562,6 +581,20 @@ export const BodySchedule = styled.div.attrs(props => ({
                     } 
             }
         }
+        
+        & ${ Column }{
+           & ${ SlotsContainer }{
+              & ${ Slot }{
+                  &.overlaped{
+                        padding-right : 8px;
+                       
+                  }
+               }
+            } 
+         }
+        
+            
+        
     }
     
     
@@ -569,6 +602,87 @@ export const BodySchedule = styled.div.attrs(props => ({
   }
     
    @media (min-width: 1024px) {
+   
+        ${ props => props.index > 0 ? `
+            & ${ShadowLeft}{
+                opacity : 1;
+            }
+        ` : ``}
+   
+        ${ props => props.nbrColumn > 3 ? `
+            ${ (props.nbrColumn - props.index) > 3 ? `
+                & ${ShadowRight}{
+                    opacity : 1;
+                }
+        ` : ``}
+            
+           & ${ HoursLine}{
+             margin-right : ${ props.index === 0 ? ' -50px' : '0'};
+           }  
+        ` : ''}
+        
+        ${ props => props.nbrColumn == 2 ? `
+            ${ (props.nbrColumn - props.index) <= 1 ? `
+                & ${ShadowLeft}{
+                    opacity : 0;
+                }
+        ` : ``}
+            
+          
+        ` : ''}
+        
+        
+        &>div:nth-child(2){
+        
+            ${ props => props.nbrColumn > 3 ? `
+            
+                ${ props.index === 0 ? `
+                  padding :0 calc((100% - 35px - 0px) * (2/3) ) 0 50px !important;
+                ` : `
+                  padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 50px !important;`
+                }
+                
+                ${ (props.nbrColumn - props.index) <= 3  ? `
+                    &>div{
+                        transform : translate(-${(props.nbrColumn - 3) * 100}%, 0px) !important;
+                    }
+                    padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 25px !important;
+                    
+                    
+
+                    
+                    
+                ` : ``}
+                  
+                
+            ` 
+            : ''}
+            ${ props => props.nbrColumn === 3 ? `
+                padding :0 calc((100% - 35px) * (2/3)) 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            ${ props => props.nbrColumn === 2 ? `
+                padding :0 calc((100% - 35px) * (1/2)) 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            ${ props => props.nbrColumn === 1 ? `
+                padding :0 0 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            
+            
+            
+        }
+        
+             
+    }
+   @media (min-width: 0px) and (max-width: 1023px) {
    
         ${ props => props.index > 0 ? `
             & ${ShadowLeft}{
@@ -596,13 +710,15 @@ export const BodySchedule = styled.div.attrs(props => ({
                 ${ props.index === 0 ? `
                   padding :0 calc((100% - 35px - 0px) * (2/3) ) 0 50px !important;
                 ` : `
-                  padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 50px !important`
+                  padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 50px !important;`
                 }
                 
                 ${ (props.nbrColumn - props.index) <= 3  ? `
                     &>div{
                         transform : translate(-${(props.nbrColumn - 3) * 100}%, 0px) !important;
                     }
+                    padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 25px !important;
+
                     
                     
                 ` : ``}

@@ -13,7 +13,7 @@ import {
     BodySchedule,
     HeadSchedule,
     Label,
-    Slots,
+    SlotsContainer,
     Slot,
     SlotContent,
     DashContainer,
@@ -420,30 +420,30 @@ export default BasicSchedule;
                                         return (
                                             <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
                                                 <Head>{room.name}</Head>
-                                                <Slots>
+                                                <SlotsContainer>
                                                     {this.renderSlots(room.slots, this.getScheduleOfDay().others)}
-                                                </Slots>
+                                                </SlotsContainer>
                                             </Column>
                                         )
                                     }) : null
                                 }
                                 <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
                                     <Head>Test 1</Head>
-                                    <Slots>
+                                    <SlotsContainer>
                                         {this.renderSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
-                                    </Slots>
+                                    </SlotsContainer>
                                 </Column>
                                 <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
                                     <Head>Test 2</Head>
-                                    <Slots>
+                                    <SlotsContainer>
                                         {this.renderSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
-                                    </Slots>
+                                    </SlotsContainer>
                                 </Column>
                                 <Column style={Object.assign({}, stylesB.slide, stylesB.slide1)}>
                                     <Head>Test 3</Head>
-                                    <Slots>
+                                    <SlotsContainer>
                                         {this.renderSlots(this.getScheduleOfDay().rooms[0].slots, this.getScheduleOfDay().others)}
-                                    </Slots>
+                                    </SlotsContainer>
                                 </Column>
                             </SwipeableViews>
                             <ShadowLeft/>

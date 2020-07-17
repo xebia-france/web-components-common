@@ -1,25 +1,78 @@
 import React, {Component} from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
-import { Wrapper, Container, ShadowRight, ShadowLeft, HoursLine, Informations, SlotContent, Slot, Column, Dash, Clock, Time, Tag, Header, Label, HeadSchedule, BodySchedule, DashContainer, Day, Days, Head, Schedule, Slots} from "./styled";
-import SvgClock from '../../assets/svg/SvgClock';
+import {
+    Wrapper,
+    Container,
+    ShadowRight,
+    ShadowLeft,
+    HoursLine,
+    Dash,
+    Label,
+    HeadSchedule,
+    BodySchedule,
+    DashContainer,
+    Day,
+    Days,
+    Schedule, Column, SlotsContainer, Head
+} from "./styled";
+import { renderView } from './View';
+import { getHourFromTime} from "./utils";
+import Slots from './Slots'
 
 class BasicSchedule extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            formatedSchedule: this.formatSchedule(),
-            scheduleOfDay: this.formatSchedule()[0],
-            currentDay: this.formatSchedule()[0].date,
-            nbrColumn: 5, //this.formatSchedule()[0].rooms.length,
-            index : 0
+            nbrColumn: 5,
+            index: 0
         };
     }
 
-    formatSchedule = () => {
+    async componentDidMount() {
+
+        try {
+            this.setState({
+                formatedSchedule: await this.formatSchedule()
+            }, () => {
+                this.setState(prevState => ({
+                    ...prevState,
+                    scheduleOfDay: prevState.formatedSchedule[0],
+                    currentDay: prevState.formatedSchedule[0].date,
+                    nbrColumn: prevState.formatedSchedule[0].rooms.length === 0 ? 1 : prevState.formatedSchedule[0].rooms.length
+                }));
+
+            })
+
+        } catch (err) {
+        }
+    }
+
+    async fetchData() {
+        try {
+            const response = await fetch(this.props.data, {
+                method: 'GET',
+                credentials: 'same-origin'
+            });
+            const result = await response.json();
+            const slots = result.map(slot => {
+                let copy = Object.assign({}, slot);
+                copy.fromTime = this.formatMinutes(slot.fromTime)
+                copy.toTime = this.formatMinutes(slot.toTime)
+                return copy;
+            })
+            return slots;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    formatSchedule = async () => {
         const schedule = [];
 
-        const days = this.props.schedule.map(slot => {
+        const data = await this.fetchData();
+
+        const days = data.map(slot => {
             return this.getDayFromTime(slot.fromTime);
         })
         const daysUnique = [...new Set(days)];
@@ -35,19 +88,21 @@ class BasicSchedule extends Component {
         })
 
         schedule.forEach(item => {
-            const slotsOfDay = this.props.schedule.map(slot => {
+            const slotsOfDay = data.map(slot => {
                 return this.getDayFromTime(slot.fromTime) === item.date ? slot : null
-            }).filter(el => el);
+            }).filter(el => el)
+
+            console.log('slotsOfDay', slotsOfDay);
 
             const min = slotsOfDay.reduce((prev, current) => {
-                return (this.getHourFromTime(prev.fromTime)) < (this.getHourFromTime(current.fromTime)) ? prev : current
+                return (getHourFromTime(prev.fromTime)) < (getHourFromTime(current.fromTime)) ? prev : current
             })
-            item.startTime = this.lowerRoundTimeQuarter(min.fromTime);
+            item.startTime = this.formatMinutes(this.lowerRoundTimeQuarter(min.fromTime));
 
             const max = slotsOfDay.reduce((prev, current) => {
-                return (this.getHourFromTime(prev.toTime)) > (this.getHourFromTime(current.toTime)) ? prev : current
+                return (getHourFromTime(prev.toTime)) > (getHourFromTime(current.toTime)) ? prev : current
             })
-            item.endTime = this.upperRoundTimeQuarter(max.toTime);
+            item.endTime = this.formatMinutes(this.upperRoundTimeQuarter(max.toTime));
 
             const rooms = slotsOfDay.map((item) => {
                 return item.room ? item.room : null
@@ -76,11 +131,25 @@ class BasicSchedule extends Component {
 
 
         })
+        console.log('FINAL SCHEDULE', schedule);
         return schedule;
 
     }
-    getHourFromTime = (time) => time.split(' ')[1];
     getDayFromTime = (time) => time.split(' ')[0];
+
+    formatMinutes = (time) => {
+        if (Number((time.split(' ')[1]).split(':')[1]) === 0 && (time.split(' ')[1]).split(':')[1].length === 1) {
+            time = `${time}0`
+        }
+        if ((time.split(' ')[1]).split(':')[0].length === 1) {
+            let date = time.split(' ')[0];
+            let hour = Number((time.split(' ')[1]).split(':')[0])
+            let minutes = Number((time.split(' ')[1]).split(':')[1])
+
+            time = `${date} 0${hour}:${minutes}`;
+        }
+        return time;
+    }
 
     getHoursTimeLine = (start, end) => {
         const hourStart = Number((start.split(' ')[1]).split(':')[0]);
@@ -88,8 +157,6 @@ class BasicSchedule extends Component {
         const hourEnd = Number((end.split(' ')[1]).split(':')[0]);
         const minutesEnd = Number((end.split(' ')[1]).split(':')[1]);
         let rows = [];
-
-
 
 
         if (minutesStart !== 0) {
@@ -113,7 +180,7 @@ class BasicSchedule extends Component {
                     </DashContainer>);
             }
         } else {
-            for (let i = (hourStart); i <= (hourEnd - 1) ; i++) {
+            for (let i = (hourStart); i <= (hourEnd - 1); i++) {
                 rows.push(
                     <DashContainer>
                         <p>{i}</p>
@@ -137,17 +204,10 @@ class BasicSchedule extends Component {
                 </DashContainer>);
         }
 
-
-
         return rows;
     }
 
-    getDuration = (start, end) => {
-        const startTime = new Date(start.replace(/ /g,"T"));
-        const endTime = new Date(end.replace(/ /g,"T"));
-        const difference = endTime.getTime() - startTime.getTime(); // This will give difference in milliseconds
-        return Math.round(difference / 60000);
-    }
+
 
     getScheduleOfDay = () => this.state.formatedSchedule.find(day => day.date === this.state.currentDay);
 
@@ -164,40 +224,11 @@ class BasicSchedule extends Component {
         return time.slice(0, -2) + String(m);
     }
 
-    renderSlots = (slots, transverses) => {
-        return slots.concat(transverses).map(slot => {
-
-            const startDay = this.state.scheduleOfDay.startTime;
 
 
-            return <Slot duration={this.getDuration(slot.fromTime, slot.toTime)}
-                         minutes={this.getDuration(startDay, slot.fromTime)} className={!slot.room ? 'other' : ''}>
-                <SlotContent>
-                    <Header>
-                        <Tag>
-                            {slot.type ? <div>{slot.type}</div> : null}
-                            {slot.track ? <div>{slot.track}</div> : null}
-                        </Tag>
-                        <Time>
-                            <Clock><SvgClock/></Clock>
-                            {this.getHourFromTime(slot.fromTime)} - {this.getHourFromTime(slot.toTime)}
-                        </Time>
-                    </Header>
-                    <Informations>
-                        <h4 className={this.getDuration(slot.fromTime, slot.toTime) <= 30 ? 'cropped' : ''}>{slot.title}</h4>
-                        {
-                            slot.speakers && slot.speakers.length !== 0 && this.getDuration(slot.fromTime, slot.toTime) >= 30 ?
-                                <h5>{slot.speakers.map((speaker) => speaker.name).join(', ')}</h5>
-                                : null
-                        }
-
-                    </Informations>
-                </SlotContent>
-            </Slot>
-        })
-    }
 
     updateIndex = index => {
+        console.log('index ------', index)
         this.setState({
             index,
         });
@@ -206,12 +237,12 @@ class BasicSchedule extends Component {
     changeCurrentDay = (date) => {
         this.setState({
             currentDay: date,
-            index : 0
+            index: 0
         }, () => {
             const currentSchedule = this.getScheduleOfDay();
             this.setState({
-                scheduleOfDay : currentSchedule,
-               // nbrColumn : currentSchedule.rooms.length
+                scheduleOfDay: currentSchedule,
+                nbrColumn : currentSchedule.rooms.length === 0 ? 1 :  currentSchedule.rooms.length
             })
         })
     }
@@ -222,7 +253,53 @@ class BasicSchedule extends Component {
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
 
-        const styles = {
+        const styles1 = {
+            root: {
+                width: '100%',
+                overflowX: 'visible',
+                padding: '0 0% 0 0',
+                marginLeft: '0%'
+            },
+            slideContainer: {
+                padding: '0',
+                width: '100%',
+                overflow: 'visible'
+            },
+            slide: {},
+            slide1: {
+                backgroundColor: 'transparent',
+            },
+            slide2: {
+                backgroundColor: '#transparent',
+            },
+            slide3: {
+                backgroundColor: '#transparent',
+            },
+        };
+        const styles2 = {
+            root: {
+                width: '100%',
+                overflowX: 'visible',
+                padding: '0 54% 0 0',
+                marginLeft: '0%'
+            },
+            slideContainer: {
+                padding: '0',
+                width: '100%',
+                overflow: 'visible'
+            },
+            slide: {},
+            slide1: {
+                backgroundColor: 'transparent',
+            },
+            slide2: {
+                backgroundColor: '#transparent',
+            },
+            slide3: {
+                backgroundColor: '#transparent',
+            },
+        };
+        const styles3 = {
             root: {
                 width: '100%',
                 overflowX: 'visible',
@@ -246,6 +323,15 @@ class BasicSchedule extends Component {
             },
         };
 
+        const styles = styles;
+
+
+
+        if (!this.state.formatedSchedule || !this.state.scheduleOfDay) return null;
+        console.log('FINAL SCHEDULE', this.state.formatedSchedule)
+        console.log('SCHEDULE OF DAY', this.state.scheduleOfDay)
+
+
         return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
@@ -263,7 +349,7 @@ class BasicSchedule extends Component {
                         <Label><p>DAY</p></Label>
                         <Days>
                             {
-                                this.formatSchedule().map(day => {
+                                this.state.formatedSchedule.map(day => {
                                     return <Day className={day.date === this.state.currentDay ? 'active' : ''}
                                                 onClick={() => this.changeCurrentDay(day.date)}>{day.date}</Day>
                                 })
@@ -282,36 +368,8 @@ class BasicSchedule extends Component {
                             resistance enableMouseEvents disableLazyLoading style={styles.root}
                             slideStyle={styles.slideContainer}>
                             {
-
-                                this.state.scheduleOfDay ? this.state.scheduleOfDay.rooms.map(room => {
-                                    return (
-                                        <Column style={Object.assign({}, styles.slide, styles.slide1)}>
-                                            <Head>{room.name}</Head>
-                                            <Slots>
-                                                {this.renderSlots(room.slots, this.state.scheduleOfDay.others)}
-                                            </Slots>
-                                        </Column>
-                                    )
-                                }) : null
+                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay,styles)  : null
                             }
-                            <Column style={Object.assign({}, styles.slide, styles.slide1)}>
-                                <Head>Test 1</Head>
-                                <Slots>
-                                    {this.renderSlots(this.state.scheduleOfDay.rooms[0].slots, this.state.scheduleOfDay.others)}
-                                </Slots>
-                            </Column>
-                            <Column style={Object.assign({}, styles.slide, styles.slide1)}>
-                                <Head>Test 2</Head>
-                                <Slots>
-                                    {this.renderSlots(this.state.scheduleOfDay.rooms[0].slots, this.state.scheduleOfDay.others)}
-                                </Slots>
-                            </Column>
-                            <Column style={Object.assign({}, styles.slide, styles.slide1)}>
-                                <Head>Test 3</Head>
-                                <Slots>
-                                    {this.renderSlots(this.state.scheduleOfDay.rooms[0].slots, this.state.scheduleOfDay.others)}
-                                </Slots>
-                            </Column>
                         </SwipeableViews>
                         <ShadowLeft/>
                         <ShadowRight/>
@@ -323,7 +381,10 @@ class BasicSchedule extends Component {
         )
 
     }
+
+
 }
+
 
 BasicSchedule.defaultProps = {}
 export default BasicSchedule;
