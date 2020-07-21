@@ -5,7 +5,7 @@
 export { default as BasicLayout } from './BasicLayout';
 export { default as BasicLayoutCornersImages } from './BasicLayoutCornersImages';
 export { default as BasicLayoutFirstFull } from './BasicLayoutFirstFull';
-export { default as BasicSchedule } from './BasicSchedule';
+//export { default as BasicSchedule } from './BasicSchedule';
 export { default as FullLayout } from './FullLayout';
 export { default as FullLayoutImageLeft } from './FullLayoutImageLeft';
 export { default as ListCategories } from './ListCategories';
