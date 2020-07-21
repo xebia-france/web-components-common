@@ -26,11 +26,11 @@ const generatePictureWebP = (src, alt) => {
     const extension = getExtensionFileName(src);
     const srcWithoutExtension = extractWithoutExtension(src);
 
-    if (typeof window !== 'undefined' && typeof document !== `undefined`) {
+ /*   if (typeof window !== 'undefined' && typeof document !== `undefined`) {
         if(document.documentElement.classList.contains('no-webp')){
             return (<img alt={alt} src={src}/>)
         }
-    }
+    }*/
 
 
     if(extension === 'png'){
