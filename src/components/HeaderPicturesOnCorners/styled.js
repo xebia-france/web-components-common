@@ -86,6 +86,7 @@ export const Logo = styled.div.attrs(props => ({
     background-size : 100% auto;
     background-repeat: no-repeat;
     z-index : 2;
+    position : relative;
     
     ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
