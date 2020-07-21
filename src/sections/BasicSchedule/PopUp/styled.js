@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { grey80, red} from "../styled";
+import {generateBackgroundImageWebpNoResponsive, generateBackgroundImageNoResponsive} from "../../../utils/StyleGenerator";
 
 export const PopUpContainer = styled.div.attrs(props => ({
 }))`
@@ -193,6 +194,7 @@ export const Image = styled.div.attrs(props => ({
 }))`
  width : 40px;
  height : 50px;
+ position : relative;
  
  &:before{
        z-index : 1;
@@ -204,10 +206,10 @@ export const Image = styled.div.attrs(props => ({
        left : 0;
     }
     .no-webp &:before{
-       ${ props.asset ? generateBackgroundImageNoResponsive(props.asset, props.assetsDirectory) : ''}  
+       ${ props => props.asset ? generateBackgroundImageNoResponsive(props.asset, props.assetsDirectory) : ''}  
     }
     .webp &:before{
-       ${ props.asset ? generateBackgroundImageWebpNoResponsive(props.asset, props.assetsDirectory) : ''}  
+       ${ props => props.asset ? generateBackgroundImageWebpNoResponsive(props.asset, props.assetsDirectory) : ''}  
     }
  }
  
