@@ -3,8 +3,6 @@ import { Column, Head, SlotsContainer } from "../styled";
 import Slots from '../Slots';
 
 export const renderRooms = (scheduleOfDay, styles) => {
-    console.log('scheduleOfDay BUG', scheduleOfDay)
-
     if (!scheduleOfDay.rooms || scheduleOfDay.rooms.length === 0) {
 
         return (

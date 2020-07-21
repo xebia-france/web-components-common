@@ -7,3 +7,4 @@ export const getDuration = (start, end) => {
 }
 
 export const getHourFromTime = (time) => time.split(' ')[1];
+export const getDayFromTime = (time) => time.split(' ')[0];

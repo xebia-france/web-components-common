@@ -17,19 +17,24 @@ import {
     Days,
     Schedule
 } from "./styled";
-import { renderView } from './View';
-import { renderRooms } from './Rooms';
-import { getHourFromTime} from "./utils";
+import {renderView} from './View';
+import {getHoursTimeLine} from './TimeLine';
+import {renderRooms} from './Rooms';
+import {getHourFromTime, getDayFromTime} from "./utils";
+import {fileNameFromUrl} from "../../utils/functions";
+import PopUp from './PopUp';
+
 
 class BasicSchedule extends Component {
     constructor(props) {
         super(props);
         this.state = {
             nbrColumn: 5,
-            nbrColumnPerView : 3,
+            nbrColumnPerView: 3,
             index: 0,
-            translatePosition : null,
-            transition : 'transform 0.35s cubic-bezier(0.15,0.3,0.25,1) 0s'
+            translatePosition: null,
+            transition: 'transform 0.2s cubic-bezier(0.15,0.3,0.25,1) 0s',
+            openPopUp: false
 
         };
 
@@ -40,13 +45,15 @@ class BasicSchedule extends Component {
 
         try {
             this.setState({
-                formatedSchedule: await this.formatSchedule()
+                formatedSchedule: await this.formatSchedule(),
+                speakers: await this.formatSpeakers()
             }, () => {
                 this.setState(prevState => ({
                     ...prevState,
                     scheduleOfDay: prevState.formatedSchedule[0],
                     currentDay: prevState.formatedSchedule[0].date,
-                    nbrColumn: prevState.formatedSchedule[0].rooms.length === 0 ? 1 : prevState.formatedSchedule[0].rooms.length
+                    nbrColumn: prevState.formatedSchedule[0].rooms.length === 0 ? 1 : prevState.formatedSchedule[0].rooms.length,
+                    nbrQuarters: this.getNumberQuarters(prevState.formatedSchedule[0].startTime, prevState.formatedSchedule[0].endTime)
                 }));
 
             })
@@ -55,9 +62,9 @@ class BasicSchedule extends Component {
         }
     }
 
-    async fetchData() {
+    async fetchFileSchedule() {
         try {
-            const response = await fetch(this.props.data, {
+            const response = await fetch(this.props.data.schedule, {
                 method: 'GET',
                 credentials: 'same-origin'
             });
@@ -74,13 +81,44 @@ class BasicSchedule extends Component {
         }
     }
 
+    async fetchFileSpeakers() {
+        try {
+            const response = await fetch(this.props.data.speakers, {
+                method: 'GET',
+                credentials: 'same-origin'
+            });
+            const result = await response.json();
+            console.log('result', result);
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    formatSpeakers = async () => {
+        const speakers = [];
+        const data = await this.fetchFileSpeakers();
+
+        data.forEach(s => {
+            speakers.push({
+                id: s.id,
+                firstName: s.firstName,
+                lastName: s.lastName,
+                imageURL: fileNameFromUrl(s.imageURL)
+            })
+        })
+
+        console.log('FINAL SPEAKERS', speakers);
+        return speakers;
+    }
+
     formatSchedule = async () => {
         const schedule = [];
 
-        const data = await this.fetchData();
+        const data = await this.fetchFileSchedule();
 
         const days = data.map(slot => {
-            return this.getDayFromTime(slot.fromTime);
+            return getDayFromTime(slot.fromTime);
         })
         const daysUnique = [...new Set(days)];
 
@@ -96,7 +134,7 @@ class BasicSchedule extends Component {
 
         schedule.forEach(item => {
             const slotsOfDay = data.map(slot => {
-                return this.getDayFromTime(slot.fromTime) === item.date ? slot : null
+                return getDayFromTime(slot.fromTime) === item.date ? slot : null
             }).filter(el => el)
 
             console.log('slotsOfDay', slotsOfDay);
@@ -142,7 +180,6 @@ class BasicSchedule extends Component {
         return schedule;
 
     }
-    getDayFromTime = (time) => time.split(' ')[0];
 
     formatMinutes = (time) => {
         if (Number((time.split(' ')[1]).split(':')[1]) === 0 && (time.split(' ')[1]).split(':')[1].length === 1) {
@@ -157,63 +194,6 @@ class BasicSchedule extends Component {
         }
         return time;
     }
-
-    getHoursTimeLine = (start, end) => {
-        const hourStart = Number((start.split(' ')[1]).split(':')[0]);
-        const minutesStart = Number((start.split(' ')[1]).split(':')[1]);
-        const hourEnd = Number((end.split(' ')[1]).split(':')[0]);
-        const minutesEnd = Number((end.split(' ')[1]).split(':')[1]);
-        let rows = [];
-
-
-        if (minutesStart !== 0) {
-            rows.push(
-                <DashContainer>
-                    {
-                        Array.from(Array((Math.ceil(minutesStart / 15))), (e, i) => {
-                            return <Dash/>
-                        })
-                    }
-                </DashContainer>);
-
-            for (let i = (hourStart + 1); i <= (hourEnd - 1); i++) {
-                rows.push(
-                    <DashContainer>
-                        <p>{i}</p>
-                        <Dash/>
-                        <Dash/>
-                        <Dash/>
-                        <Dash/>
-                    </DashContainer>);
-            }
-        } else {
-            for (let i = (hourStart); i <= (hourEnd - 1); i++) {
-                rows.push(
-                    <DashContainer>
-                        <p>{i}</p>
-                        <Dash/>
-                        <Dash/>
-                        <Dash/>
-                        <Dash/>
-                    </DashContainer>);
-            }
-        }
-        if (minutesEnd !== 0) {
-
-            rows.push(
-                <DashContainer>
-                    <p>{hourEnd}</p>
-                    {
-                        Array.from(Array((Math.ceil(minutesEnd / 15))), (e, i) => {
-                            return <Dash/>
-                        })
-                    }
-                </DashContainer>);
-        }
-
-        return rows;
-    }
-
 
 
     getScheduleOfDay = () => this.state.formatedSchedule.find(day => day.date === this.state.currentDay);
@@ -232,25 +212,22 @@ class BasicSchedule extends Component {
     }
 
 
-
-
     switchView = (index, type) => {
-        console.log('SWITCH INDEX ------', index)
-        console.log('SWITCH TYPE ------', type)
 
         const css = this.viewsRef.current.containerNode.style.transform;
-        console.log('style container', css );
+        console.log('this.viewsRef.current', this.viewsRef.current);
         this.setState({
-            translatePosition : css,
-            transition : 'transform 0.0s cubic-bezier(0.15,0.3,0.25,1) 0s'
+            translatePosition: css,
+            transition: 'all 0.0s cubic-bezier(0.15,0.3,0.25,1) 0s'
         });
+
     };
 
 
     updateIndex = index => {
         this.setState({
-            index : index,
-            transition : 'transform 0.35s cubic-bezier(0.15,0.3,0.25,1) 0s'
+            index: index,
+            transition: 'transform 0.2s cubic-bezier(0.15,0.3,0.25,1) 0s'
         });
     };
 
@@ -262,8 +239,59 @@ class BasicSchedule extends Component {
             const currentSchedule = this.getScheduleOfDay();
             this.setState({
                 scheduleOfDay: currentSchedule,
-                nbrColumn : currentSchedule.rooms.length === 0 ? 1 :  currentSchedule.rooms.length
+                nbrColumn: currentSchedule.rooms.length === 0 ? 1 : currentSchedule.rooms.length,
+                nbrQuarters: this.getNumberQuarters(currentSchedule.startTime, currentSchedule.endTime)
             })
+        })
+    }
+
+    getNumberQuarters = (start, end) => {
+        const hourStart = Number((start.split(' ')[1]).split(':')[0]);
+        const minutesStart = Number((start.split(' ')[1]).split(':')[1]);
+        const hourEnd = Number((end.split(' ')[1]).split(':')[0]);
+        const minutesEnd = Number((end.split(' ')[1]).split(':')[1]);
+        let quarters = 0;
+
+        if (minutesStart !== 0) {
+            Array.from(Array((Math.ceil(minutesStart / 15))), (e, i) => {
+                quarters++;
+            })
+
+            for (let i = (hourStart + 1); i <= (hourEnd - 1); i++) {
+                quarters = quarters + 4;
+            }
+        } else {
+            for (let i = (hourStart); i <= (hourEnd - 1); i++) {
+                quarters = quarters + 4;
+            }
+        }
+        if (minutesEnd !== 0) {
+            Array.from(Array((Math.ceil(minutesEnd / 15))), (e, i) => {
+                quarters++;
+            })
+        }
+
+        return quarters;
+
+
+    }
+
+    openPopUp = (slot) => {
+        this.setState({
+            openPopUp: true,
+            selectedSlot: slot
+        }, () => {
+            console.log('after update popup : ', this.state)
+        })
+
+
+    }
+    closePopUp = () => {
+        this.setState({
+            openPopUp: false,
+            selectedSlot: null
+        }, () => {
+            console.log('after update popup : ', this.state)
         })
     }
 
@@ -272,53 +300,7 @@ class BasicSchedule extends Component {
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
 
-        const styles1 = {
-            root: {
-                width: '100%',
-                overflowX: 'visible',
-                padding: '0 0% 0 0',
-                marginLeft: '0%'
-            },
-            slideContainer: {
-                padding: '0',
-                width: '100%',
-                overflow: 'visible'
-            },
-            slide: {},
-            slide1: {
-                backgroundColor: 'transparent',
-            },
-            slide2: {
-                backgroundColor: '#transparent',
-            },
-            slide3: {
-                backgroundColor: '#transparent',
-            },
-        };
-        const styles2 = {
-            root: {
-                width: '100%',
-                overflowX: 'visible',
-                padding: '0 54% 0 0',
-                marginLeft: '0%'
-            },
-            slideContainer: {
-                padding: '0',
-                width: '100%',
-                overflow: 'visible'
-            },
-            slide: {},
-            slide1: {
-                backgroundColor: 'transparent',
-            },
-            slide2: {
-                backgroundColor: '#transparent',
-            },
-            slide3: {
-                backgroundColor: '#transparent',
-            },
-        };
-        const styles3 = {
+        const styles = {
             root: {
                 width: '100%',
                 overflowX: 'visible',
@@ -341,10 +323,6 @@ class BasicSchedule extends Component {
                 backgroundColor: '#transparent',
             },
         };
-
-        const styles = styles3;
-
-
 
         if (!this.state.formatedSchedule || !this.state.scheduleOfDay) return null;
         console.log('FINAL SCHEDULE', this.state.formatedSchedule)
@@ -375,38 +353,46 @@ class BasicSchedule extends Component {
                             }
                         </Days>
                     </HeadSchedule>
-                    <BodyRooms translatePosition={this.state.translatePosition} transition={this.state.transition} responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                                  nbrColumn={this.state.nbrColumn} index={this.state.index}>
+                    <BodyRooms translatePosition={this.state.translatePosition} transition={this.state.transition}
+                               responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                               nbrColumn={this.state.nbrColumn} index={this.state.index}>
                         <HoursLine>
                             <Label><p>ROOM</p></Label>
                         </HoursLine>
                         <SwipeableViews
                             index={this.state.index} onChangeIndex={this.updateIndex}
-                            resistance enableMouseEvents disableLazyLoading style={styles.root}
+                            resistance enableMouseEvents style={styles.root}
                             slideStyle={styles.slideContainer}>
                             {
-                                this.state.scheduleOfDay ? renderRooms(this.state.scheduleOfDay,styles)  : null
+                                this.state.scheduleOfDay ? renderRooms(this.state.scheduleOfDay, styles) : null
                             }
                         </SwipeableViews>
-
+                        <ShadowLeft/>
+                        <ShadowRight/>
                     </BodyRooms>
                     <BodySchedule responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                                  nbrColumn={this.state.nbrColumn} index={this.state.index}>
+                                  nbrColumn={this.state.nbrColumn} index={this.state.index}
+                                  nbrQuarters={this.state.nbrQuarters}>
                         <HoursLine>
-                            {this.getHoursTimeLine(this.state.scheduleOfDay.startTime, this.state.scheduleOfDay.endTime)}
+                            {getHoursTimeLine(this.state.scheduleOfDay.startTime, this.state.scheduleOfDay.endTime)}
                         </HoursLine>
                         <SwipeableViews
                             ref={this.viewsRef}
                             index={this.state.index} onSwitching={this.switchView} onChangeIndex={this.updateIndex}
-                            resistance enableMouseEvents disableLazyLoading style={styles.root}
+                            resistance enableMouseEvents style={styles.root}
                             slideStyle={styles.slideContainer}>
                             {
-                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay,styles)  : null
+                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp) : null
                             }
                         </SwipeableViews>
+                        <ShadowLeft nbrQuarters={this.state.nbrQuarters}/>
+                        <ShadowRight nbrQuarters={this.state.nbrQuarters}/>
                     </BodySchedule>
                 </Schedule>
+
             </Container>
+                <PopUp open={this.state.openPopUp} closePopUp={this.closePopUp} slot={this.state.selectedSlot}
+                       allSpeakers={this.state.speakers} assetsDirectory={assetsDirectory}/>
             </Wrapper>
 
         )

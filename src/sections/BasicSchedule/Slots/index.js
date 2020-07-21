@@ -4,20 +4,14 @@ import SvgClock from '../../../assets/svg/SvgClock';
 import { getDuration, getHourFromTime} from "../utils";
 
 export const overlaped = (slot, transverse) => {
-    //console.log('overlap SLOT', slot);
-    //console.log('overlap TRANSVERSE', transverse);
-
-
     const startSlot = new Date(slot.fromTime);
     const endSlot = new Date(slot.toTime);
     const startTransverse = new Date(transverse.fromTime);
     const endTransverse = new Date(transverse.toTime);
 
     if ((startSlot >= startTransverse && startSlot < endTransverse) || (endSlot > startTransverse && endSlot <= endTransverse)) {
-        //console.log('OVERLAP !!!!')
         return true
     } else {
-        //console.log('NOT OVERLAPED');
         return false
     }
 
@@ -30,22 +24,27 @@ export const searchOverlap = (slot, transverses) => {
         if (overlaped(slot, transverse)) {
             nbrOverlap++
         }
-        //console.log('nbrOverlap', nbrOverlap);
     })
     return nbrOverlap !== 0 ? true : false
 }
 
 
-const Slots = ({scheduleOfDay, slots, transverses}) => {
-    console.log('---------------------------SLOST-----------------', slots)
+
+function Slots({scheduleOfDay, slots, transverses, openPopUp}) {
     const all = !slots ? transverses : slots.concat(transverses);
+
     return all.map(slot => {
 
         const startDay = scheduleOfDay.startTime;
 
 
         return <Slot duration={getDuration(slot.fromTime, slot.toTime)}
-                     minutes={getDuration(startDay, slot.fromTime)} className={[!slot.room ? 'other' : '', slot.room && searchOverlap(slot, transverses) ? 'overlaped' : '']}>
+                     minutes={getDuration(startDay, slot.fromTime)} className={[!slot.room ? 'other' : '', slot.room && searchOverlap(slot, transverses) ? 'overlaped' : '']}
+                     onClick={ () => {
+                         openPopUp(slot)
+                         console.log('openPopUP SLOT')
+                     }}
+        >
             <SlotContent>
                 <Header>
                     <Tag>

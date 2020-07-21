@@ -6,10 +6,11 @@ import {
     generateBackgroundImage, generateBackgroundImageWebp, getFormatedColor
 } from "../../utils/StyleGenerator";
 
-let grey80 = '#666666';
+import { size} from "../../styles/constants";
+
+export let grey80 = '#666666';
 let grey50 = '#A2A2A2';
-let red = '#B2B2B2' +
-    '\n';
+export let red = '#B2B2B2';
 let baseHeight = 60;
 
 export const Wrapper = styled.section.attrs(props => ({
@@ -24,7 +25,7 @@ export const Wrapper = styled.section.attrs(props => ({
   display : flex;
   flex-direction : column;
   width: 100%;  
-  position : relative;
+  //position : relative;
   overflow : hidden;
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
@@ -234,7 +235,7 @@ export const HoursLine = styled.div.attrs(props => ({
   flex-direction : column;
   border-right : 1px solid grey;
   z-index: 20;
-  transition : margin-right 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
+  transition : margin-right 0.2s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
   background : white;
   
   &>div{
@@ -468,17 +469,14 @@ export const Slot = styled.div.attrs(props => ({
   }
   &:not(.other){
     width : calc(100% - 8px);
-    margin-left : 8px;
-  }
-  &.overlaped{
-  
+    margin-left : 4px;
   }
 `;
 
 
 
 export const ShadowLeft = styled.div.attrs(props => ({
-
+    nbrQuarters : props.nbrQuarters
 
 }))`
     position : absolute;
@@ -488,11 +486,11 @@ export const ShadowLeft = styled.div.attrs(props => ({
     height : 100%;
     box-shadow: inset 180px 0px 10px -173px rgba(0,0,0,0.51);
     opacity : 0;
-    transition : opacity 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
-
+    transition : opacity 0.2s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
+    ${ props => props.nbrQuarters && props.nbrQuarters !== 0 ? `height :${props.nbrQuarters * baseHeight}px;` : ``}
 `;
 export const ShadowRight = styled.div.attrs(props => ({
-
+    nbrQuarters : props.nbrQuarters
 
 }))`
     position : absolute;
@@ -503,13 +501,16 @@ export const ShadowRight = styled.div.attrs(props => ({
     transform : scaleX(-1);
     box-shadow: inset 180px 0px 10px -173px rgba(0,0,0,0.51);
     opacity : 0;
-    transition : opacity 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
+    transition : opacity 0.2s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
+    ${ props => props.nbrQuarters && props.nbrQuarters !== 0 ? `height :${props.nbrQuarters * baseHeight}px;` : ``}
+
 `;
 
 export const BodySchedule = styled.div.attrs(props => ({
     responsive: props.responsive,
     nbrColumn : props.nbrColumn,
-    index : props.index
+    index : props.index,
+    nbrQuarters : props.nbrQuarters
 
 }))`
   display : flex;
@@ -518,37 +519,8 @@ export const BodySchedule = styled.div.attrs(props => ({
   overflow-y : scroll;
   height : 70vh;
   cursor : pointer;
-  
-  &:before{
-        opacity : 0;
-       z-index : 2;
-       position : sticky;
-       width : 40px;
-       min-width : 40px;
-       margin-right : -40px;
-       height : 100%;
-       min-height : 40px;
-       content : ''; 
-       top : 0;
-       left : 35px;
-       box-shadow : inset 180px 0px 10px -173px rgba(0,0,0,0.51);
-       transition : opacity 0.35s cubic-bezier(0.15,0.3,0.25,1) 0s;
-  }
-  &:after{
-        opacity : 0;
-       z-index : 2;
-       position : sticky;
-       width : 40px;
-       min-width : 40px;
-       height : 100%;
-       min-height : 40px;
-       content : ''; 
-       top : 0;
-       right : 0;
-       transform : scaleX(-1);
-       box-shadow : inset 180px 0px 10px -173px rgba(0,0,0,0.51);
-       transition : opacity 0.35s cubic-bezier(0.15,0.3,0.25,1) 0s;
-  }
+  border-bottom: 1px solid ${grey50};
+  background: rgba(0,0,0,0.1);
   
   & ${Column}{
 
@@ -561,7 +533,10 @@ export const BodySchedule = styled.div.attrs(props => ({
   }
   
   &>div:nth-child(2){    
+  
     &>div>div {
+        ${ props => props.nbrQuarters && props.nbrQuarters !== 0 ? `height :${props.nbrQuarters * baseHeight}px;` : ``}
+
         & ${ Column }{
            & ${ SlotsContainer }{
               & ${ Slot }{
@@ -586,6 +561,7 @@ export const BodySchedule = styled.div.attrs(props => ({
                         & ${ Slot }{
                             padding-left : 4px;
                             padding-right : 0px;
+                            width : calc(100% - 12px);
                             
                             &.other{
                                 padding-left : 12px;
@@ -605,7 +581,7 @@ export const BodySchedule = styled.div.attrs(props => ({
            & ${ Column }{
                     & ${ SlotsContainer }{
                         & ${ Slot }{
-                            padding-left : 0px;
+                            padding-left : 4px;
                             padding-right : 4px;
                             
                             &.other{
@@ -644,14 +620,14 @@ export const BodySchedule = styled.div.attrs(props => ({
    @media (min-width: 1024px) {
    
         ${ props => props.index > 0 ? `
-            & ${ShadowLeft}, &:before{
+            & ${ShadowLeft}{
                 opacity : 1;
             }
         ` : ``}
    
         ${ props => props.nbrColumn > 3 ? `
             ${ (props.nbrColumn - props.index) > 3 ? `
-                & ${ShadowRight}, &:after{
+                & ${ShadowRight}{
                     opacity : 1;
                 }
         ` : ``}
@@ -663,7 +639,7 @@ export const BodySchedule = styled.div.attrs(props => ({
         
         ${ props => props.nbrColumn == 2 ? `
             ${ (props.nbrColumn - props.index) <= 1 ? `
-                & ${ShadowLeft}, &:before{
+                & ${ShadowLeft}{
                     opacity : 0;
                 }
         ` : ``}
@@ -722,17 +698,17 @@ export const BodySchedule = styled.div.attrs(props => ({
         
              
     }
-   @media (min-width: 0px) and (max-width: 1023px) {
+   @media (min-width: ${size.T}) and (max-width: 1023px) {
    
         ${ props => props.index > 0 ? `
-            & ${ShadowLeft}, &:before{
+            & ${ShadowLeft}{
                 opacity : 1;
             }
         ` : ``}
    
-        ${ props => props.nbrColumn > 3 ? `
-            ${ (props.nbrColumn - props.index) > 3 ? `
-                & ${ShadowRight}, &:after{
+        ${ props => props.nbrColumn > 2 ? `
+            ${ (props.nbrColumn - props.index) > 2 ? `
+                & ${ShadowRight}{
                     opacity : 1;
                 }
         ` : ``}
@@ -745,19 +721,19 @@ export const BodySchedule = styled.div.attrs(props => ({
         
         &>div:nth-child(2){
         
-            ${ props => props.nbrColumn > 3 ? `
+            ${ props => props.nbrColumn > 2 ? `
             
                 ${ props.index === 0 ? `
-                  padding :0 calc((100% - 35px - 0px) * (2/3) ) 0 50px !important;
+                  padding :0 calc((100% - 35px - 0px) * (0.53) ) 0 50px !important;
                 ` : `
-                  padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 50px !important;`
+                  padding : 0 calc((100% - 35px + 25px) * (0.53) ) 0 50px !important;`
                 }
                 
-                ${ (props.nbrColumn - props.index) <= 3  ? `
+                ${ (props.nbrColumn - props.index) <= 2  ? `
                     &>div{
-                        transform : translate(-${(props.nbrColumn - 3) * 100}%, 0px) !important;
+                        transform : translate(-${(props.nbrColumn - 2) * 100}%, 0px) !important;
                     }
-                    padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 25px !important;
+                    padding : 0 calc((100% - 35px + 25px) * (0.53) ) 0 25px !important;
 
                     
                     
@@ -766,12 +742,7 @@ export const BodySchedule = styled.div.attrs(props => ({
                 
             ` 
             : ''}
-            ${ props => props.nbrColumn === 3 ? `
-                padding :0 calc((100% - 35px) * (2/3)) 0 0 !important;
-                &>div{
-                    transform : translate(0%, 0px) !important;
-                }
-            ` : ''}
+            
             ${ props => props.nbrColumn === 2 ? `
                 padding :0 calc((100% - 35px) * (1/2)) 0 0 !important;
                 &>div{
@@ -788,7 +759,65 @@ export const BodySchedule = styled.div.attrs(props => ({
             
             
         }
+             
+    }
+    
+    
+    @media ${device.M} {
+   
+        ${ props => props.index > 0 ? `
+            & ${ShadowLeft}{
+                opacity : 1;
+            }
+        ` : ``}
+   
+        ${ props => props.nbrColumn > 1 ? `
+            ${ (props.nbrColumn - props.index) > 1 ? `
+                & ${ShadowRight}{
+                    opacity : 1;
+                }
+        ` : ``}
+            
+           & ${ HoursLine}{
+             margin-right : ${ props.index === 0 ? ' -50px' : '0'};
+           }  
+        ` : ''}
         
+        
+        &>div:nth-child(2){
+        
+            ${ props => props.nbrColumn > 1 ? `
+            
+                ${ props.index === 0 ? `
+                  padding :0 calc((100% - 35px - 0px) * (1/8) ) 0 50px !important;
+                ` : `
+                  padding : 0 calc((100% - 35px + 25px) * (1/8) ) 0 50px !important;`
+                }
+                
+                ${ (props.nbrColumn - props.index) <= 1  ? `
+                    &>div{
+                        transform : translate(-${(props.nbrColumn - 1) * 100}%, 0px) !important;
+                    }
+                    padding : 0 calc((100% - 35px + 25px) * (1/8) ) 0 25px !important;
+
+                    
+                    
+                ` : ``}
+                  
+                
+            ` 
+            : ''}
+            
+            ${ props => props.nbrColumn === 1 ? `
+                padding :0 0 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            
+            
+            
+        }
              
     }
     
@@ -806,6 +835,7 @@ export const BodyRooms =  styled(BodySchedule).attrs(props => ({
     transition : props.transition
 }))`
     height : auto;
+    border-bottom:none;
     
     & ${Head}{
         opacity : 1;
@@ -872,14 +902,14 @@ export const BodyRooms =  styled(BodySchedule).attrs(props => ({
    @media (min-width: 0px) and (max-width: 1023px) {
    
         ${ props => props.index > 0 ? `
-            & ${ShadowLeft}, &:before{
+            & ${ShadowLeft}{
                 opacity : 1;
             }
         ` : ``}
    
         ${ props => props.nbrColumn > 3 ? `
             ${ (props.nbrColumn - props.index) > 3 ? `
-                & ${ShadowRight}, &:after{
+                & ${ShadowRight}{
                     opacity : 1;
                 }
         ` : ``}
@@ -892,19 +922,19 @@ export const BodyRooms =  styled(BodySchedule).attrs(props => ({
         
         &>div:nth-child(2){
         
-            ${ props => props.nbrColumn > 3 ? `
+            ${ props => props.nbrColumn > 2 ? `
             
                 ${ props.index === 0 ? `
-                  padding :0 calc((100% - 35px - 0px) * (2/3) ) 0 50px !important;
+                  padding :0 calc((100% - 35px - 0px) * (0.53) ) 0 50px !important;
                 ` : `
-                  padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 50px !important;`
+                  padding : 0 calc((100% - 35px + 25px) * (0.53) ) 0 50px !important;`
                 }
                 
-                ${ (props.nbrColumn - props.index) <= 3  ? `
+                ${ (props.nbrColumn - props.index) <= 2  ? `
                     &>div{
-                        transform : translate(-${(props.nbrColumn - 3) * 100}%, 0px) !important;
+                        transform : translate(-${(props.nbrColumn - 2) * 100}%, 0px) !important;
                     }
-                    padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 25px !important;
+                    padding : 0 calc((100% - 35px + 25px) * (0.53) ) 0 25px !important;
 
                     
                     
@@ -913,12 +943,7 @@ export const BodyRooms =  styled(BodySchedule).attrs(props => ({
                 
             ` 
             : ''}
-            ${ props => props.nbrColumn === 3 ? `
-                padding :0 calc((100% - 35px) * (2/3)) 0 0 !important;
-                &>div{
-                    transform : translate(0%, 0px) !important;
-                }
-            ` : ''}
+            
             ${ props => props.nbrColumn === 2 ? `
                 padding :0 calc((100% - 35px) * (1/2)) 0 0 !important;
                 &>div{
@@ -939,7 +964,98 @@ export const BodyRooms =  styled(BodySchedule).attrs(props => ({
              
     }
     
-    
-    
+    @media ${device.M} {
+   
+        ${ props => props.index > 0 ? `
+            & ${ShadowLeft}{
+                opacity : 1;
+            }
+        ` : ``}
+   
+        ${ props => props.nbrColumn > 1 ? `
+            ${ (props.nbrColumn - props.index) > 1 ? `
+                & ${ShadowRight}{
+                    opacity : 1;
+                }
+        ` : ``}
+            
+           & ${ HoursLine}{
+             margin-right : ${ props.index === 0 ? ' -50px' : '0'};
+           }  
+        ` : ''}
+        
+        
+        &>div:nth-child(2){
+        
+            ${ props => props.nbrColumn > 1 ? `
+            
+                ${ props.index === 0 ? `
+                  padding :0 calc((100% - 35px - 0px) * (1/8) ) 0 50px !important;
+                ` : `
+                  padding : 0 calc((100% - 35px + 25px) * (1/8) ) 0 50px !important;`
+                }
+                
+                ${ (props.nbrColumn - props.index) <= 1  ? `
+                    &>div{
+                        transform : translate(-${(props.nbrColumn - 1) * 100}%, 0px) !important;
+                    }
+                    padding : 0 calc((100% - 35px + 25px) * (1/8) ) 0 25px !important;
+
+                    
+                    
+                ` : ``}
+                  
+                
+            ` 
+            : ''}
+            
+            ${ props => props.nbrColumn === 1 ? `
+                padding :0 0 0 0 !important;
+                &>div{
+                    transform : translate(0%, 0px) !important;
+                }
+            ` : ''}
+            
+            
+            
+        }
+             
+    }
     
 `
+
+
+export const Grid = styled.div.attrs(props => ({
+}))`
+  position : absolute;
+  width:  100%;
+  height : 100%;
+  opacity : 0.2;
+  
+  & ${ DashContainer}{
+    background : none;
+    width : 100%;
+    border-right : 1px solid grey;
+    
+    & p{
+        display : none;
+    }
+    
+    &>div:last-child{
+       width : 100%;
+   }
+  }
+  
+  &:last-child{
+    &>div:last-child{
+      // width : 0;
+   }
+  }
+  
+  & ${ Dash}{
+    background : none;
+    width : 0;
+    
+  }
+  
+`;

@@ -1,8 +1,9 @@
 import React from 'react';
-import { Column, Head, SlotsContainer } from "../styled";
+import { Column, Head, SlotsContainer, Grid } from "../styled";
 import Slots from '../Slots';
+import { getHoursTimeLine} from "../TimeLine";
 
-export const renderView = (scheduleOfDay, styles) => {
+export const renderView = (scheduleOfDay, styles, openPopUp) => {
     console.log('scheduleOfDay BUG', scheduleOfDay)
 
     if (!scheduleOfDay.rooms || scheduleOfDay.rooms.length === 0) {
@@ -11,8 +12,11 @@ export const renderView = (scheduleOfDay, styles) => {
             <Column style={Object.assign({}, styles.slide, styles.slide1)}>
                 <Head>{ 'no room' }</Head>
                 <SlotsContainer>
-                    <Slots scheduleOfDay={scheduleOfDay} slots={[]} transverses={scheduleOfDay.others} />
+                    <Slots openPopUp={openPopUp} scheduleOfDay={scheduleOfDay} slots={[]} transverses={scheduleOfDay.others} />
                 </SlotsContainer>
+                <Grid>
+                    {getHoursTimeLine(scheduleOfDay.startTime, scheduleOfDay.endTime)}
+                </Grid>
             </Column>
         )
 
@@ -22,8 +26,11 @@ export const renderView = (scheduleOfDay, styles) => {
                 <Column style={Object.assign({}, styles.slide, styles.slide1)}>
                     <Head>{room.name}</Head>
                     <SlotsContainer>
-                        <Slots scheduleOfDay={scheduleOfDay} slots={room.slots} transverses={scheduleOfDay.others} />
+                        <Slots openPopUp={openPopUp} scheduleOfDay={scheduleOfDay} slots={room.slots} transverses={scheduleOfDay.others} />
                     </SlotsContainer>
+                    <Grid>
+                        {getHoursTimeLine(scheduleOfDay.startTime, scheduleOfDay.endTime)}
+                    </Grid>
                 </Column>
             )
         })

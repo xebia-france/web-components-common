@@ -9,7 +9,7 @@ export const ImageCorner = styled.div.attrs(props => ({
     index : props.index
 }))`
     position : absolute;
-    z-index : 0;
+    z-index : 2;
     
     ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
