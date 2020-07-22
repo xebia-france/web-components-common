@@ -23,6 +23,7 @@ import {renderRooms} from './Rooms';
 import {getHourFromTime, getDayFromTime, getStringDate} from "./utils";
 import {fileNameFromUrl} from "../../utils/functions";
 import PopUp from './PopUp';
+import SvgArrow from '../../assets/svg/SvgArrow';
 
 
 class BasicSchedule extends Component {
@@ -380,10 +381,10 @@ class BasicSchedule extends Component {
                         <SwitchButtons index={this.state.index} nbrColumn={this.state.nbrColumn}>
                             <ToLeft onClick={() => {
                                 if(this.state.index !== 0 ){ this.updateIndex(this.state.index - 1) }
-                            }}> {'<'} </ToLeft>
+                            }}><SvgArrow/></ToLeft>
                             <ToRight onClick={() => {
                                 if(this.state.index < (this.state.nbrColumn )){ this.updateIndex(this.state.index + 1) }
-                            }}> {'>'} </ToRight>
+                            }}><SvgArrow/></ToRight>
                         </SwitchButtons>
                     </HeadSchedule>
                     <BodyRooms translatePosition={this.state.translatePosition} transition={this.state.transition}
