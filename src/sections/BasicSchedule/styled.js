@@ -1140,7 +1140,6 @@ export const Filters = styled.div.attrs(props => ({
 
 export const ToLeft = styled.div.attrs(props => ({
 }))`
-  
     background :${theme.grey60};
     border-radius : 10px;
     text-transform : uppercase;
@@ -1151,14 +1150,25 @@ export const ToLeft = styled.div.attrs(props => ({
     align-items : center;
     color : ${theme.white};
     padding : 0 10px;
-    cursor : pointer;
     transition : background 0.2s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
     opacity : 0.2;
 `;
 
 
-export const ToRight = styled(ToLeft).attrs(props => ({
+export const ToRight = styled.div.attrs(props => ({
 }))`
+    background :${theme.grey60};
+    border-radius : 10px;
+    text-transform : uppercase;
+    font-size : 14px;
+    line-height : 16px;
+    display : flex;
+    height : 20px;
+    align-items : center;
+    color : ${theme.white};
+    padding : 0 10px;
+    transition : background 0.2s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
+    opacity : 0.2;
 `;
 
 
@@ -1172,71 +1182,50 @@ export const SwitchButtons = styled.div.attrs(props => ({
   align-items :center;
   justify-content : center;
   
-  @media (min-width: 1024px) {
-   
-        ${ props => props.index > 0 ? `
+  & ${ToRight}{
+    margin-left : 5px;
+  }
+  
+  ${ props => props.index > 0 ? `
             & ${ToLeft}{
                 opacity : 1;
+                cursor :pointer;
                 &:hover{
                     background : ${red};
                 }
             }
-        ` : ``}
+  ` : ``}
+  
+  @media ${ device['M'] } {
+      display : none;
+  }
+  
+  @media (min-width: 1024px) {
    
         ${ props => props.nbrColumn > 3 ? `
-            ${ (props.nbrColumn - props.index) > 3 ? `
+            ${ (props.nbrColumn - props.index) >  3   ? `
                 & ${ToRight}{
                     opacity : 1;
+                    cursor :pointer;
                     &:hover{
                         background : ${red};
                     }
                 }
             ` : ``}
         ` : ''}
-        
-        ${ props => props.nbrColumn == 2 ? `
-            ${ (props.nbrColumn - props.index) <= 1 ? `
-                & ${ToLeft}{
-                    opacity : 0.2;
-                    &:hover{
-                        background : ${theme.grey60};
-                    }
-                }
-        ` : ``}
-            
-          
-        ` : ''}
-   }
-  
-    @media (min-width: ${size.T}) and (max-width: 1023px) {
-   
-        ${ props => props.index > 0 ? `
-            & ${ToLeft}{
-                opacity : 1;
-                &:hover{
-                    background : ${red};
-                }
-            }
-        ` : ``}
+    }
+   @media (min-width: ${size.T}) and (max-width: 1023px) {
    
         ${ props => props.nbrColumn > 2 ? `
             ${ (props.nbrColumn - props.index) > 2 ? `
                 & ${ToRight}{
                     opacity : 1;
+                    cursor :pointer;
                     &:hover{
                         background : ${red};
                     }
                 }
-        ` : ``}
+            ` : ``}
         ` : ''}
     }
-  
-  @media ${ device['M'] } {
-      display : none;
-  }
-  
-        
-        
-        
-  
 `;

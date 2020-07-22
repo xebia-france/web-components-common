@@ -225,11 +225,13 @@ class BasicSchedule extends Component {
 
 
     updateIndex = index => {
-        console.log('nbr column', this.state.nbrColumn)
-        console.log('nbr column per view', this.state.nbrColumnPerView)
+
         this.setState({
             index: index,
             transition: 'transform 0.2s cubic-bezier(0.15,0.3,0.25,1) 0s'
+        }, () => {
+            console.log('nbr column', this.state.nbrColumn)
+            console.log('index  on click', this.state.index)
         });
     };
 
@@ -380,7 +382,7 @@ class BasicSchedule extends Component {
                                 if(this.state.index !== 0 ){ this.updateIndex(this.state.index - 1) }
                             }}> {'<'} </ToLeft>
                             <ToRight onClick={() => {
-                                if(this.state.index !== (this.state.nbrColumn - this.state.nbrColumnPerView )){ this.updateIndex(this.state.index + 1) }
+                                if(this.state.index < (this.state.nbrColumn )){ this.updateIndex(this.state.index + 1) }
                             }}> {'>'} </ToRight>
                         </SwitchButtons>
                     </HeadSchedule>
