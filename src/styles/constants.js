@@ -8,6 +8,7 @@ export const theme = {
     grey50: '#CBCBCB',
     grey60: '#B2B2B2',
     grey80: '#969FA6',
+    grey90: '#666666',
     greenM: '#14D292',
     greenL: '#0CAA75',
     greenXL: '#0baa75',

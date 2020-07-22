@@ -15,12 +15,12 @@ import {
     DashContainer,
     Day,
     Days,
-    Schedule
+    Schedule, Filters, SwitchButtons, ToRight, ToLeft
 } from "./styled";
 import {renderView} from './View';
 import {getHoursTimeLine} from './TimeLine';
 import {renderRooms} from './Rooms';
-import {getHourFromTime, getDayFromTime} from "./utils";
+import {getHourFromTime, getDayFromTime, getStringDate} from "./utils";
 import {fileNameFromUrl} from "../../utils/functions";
 import PopUp from './PopUp';
 
@@ -34,8 +34,8 @@ class BasicSchedule extends Component {
             index: 0,
             translatePosition: null,
             transition: 'transform 0.2s cubic-bezier(0.15,0.3,0.25,1) 0s',
-            openPopUp: false
-
+            openPopUp: false,
+            filter : null
         };
 
         this.viewsRef = React.createRef()
@@ -225,6 +225,8 @@ class BasicSchedule extends Component {
 
 
     updateIndex = index => {
+        console.log('nbr column', this.state.nbrColumn)
+        console.log('nbr column per view', this.state.nbrColumnPerView)
         this.setState({
             index: index,
             transition: 'transform 0.2s cubic-bezier(0.15,0.3,0.25,1) 0s'
@@ -282,6 +284,11 @@ class BasicSchedule extends Component {
             selectedSlot: slot
         }, () => {
             console.log('after update popup : ', this.state)
+            if (typeof window !== 'undefined' && typeof document !== `undefined`) {
+                //document.body.classList.add("no-scroll")
+                //document.body.style.overflow = "hidden"
+
+            }
         })
 
 
@@ -292,11 +299,26 @@ class BasicSchedule extends Component {
             selectedSlot: null
         }, () => {
             console.log('after update popup : ', this.state)
+            if (typeof window !== 'undefined' && typeof document !== `undefined`) {
+               //document.body.classList.remove("no-scroll")
+                //document.body.style.overflow = ""
+
+            }
         })
     }
 
+    updateFilter = (filter) => {
+        console.log('UPDATE FILTER', filter)
+        if(this.state.filter === filter){
+            this.setState({ filter : null})
+        }
+        else{
+            this.setState({ filter : filter})
+        }
+    }
+
     render() {
-        const {children, fields, name, assetsDirectory, data} = this.props;
+        const {children, fields, name, assetsDirectory, data, locale} = this.props;
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
 
@@ -348,10 +370,19 @@ class BasicSchedule extends Component {
                             {
                                 this.state.formatedSchedule.map(day => {
                                     return <Day className={day.date === this.state.currentDay ? 'active' : ''}
-                                                onClick={() => this.changeCurrentDay(day.date)}>{day.date}</Day>
+                                                onClick={() => this.changeCurrentDay(day.date)}>{getStringDate(day.date, locale)}</Day>
                                 })
                             }
+
                         </Days>
+                        <SwitchButtons index={this.state.index} nbrColumn={this.state.nbrColumn}>
+                            <ToLeft onClick={() => {
+                                if(this.state.index !== 0 ){ this.updateIndex(this.state.index - 1) }
+                            }}> {'<'} </ToLeft>
+                            <ToRight onClick={() => {
+                                if(this.state.index !== (this.state.nbrColumn - this.state.nbrColumnPerView )){ this.updateIndex(this.state.index + 1) }
+                            }}> {'>'} </ToRight>
+                        </SwitchButtons>
                     </HeadSchedule>
                     <BodyRooms translatePosition={this.state.translatePosition} transition={this.state.transition}
                                responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
@@ -382,17 +413,22 @@ class BasicSchedule extends Component {
                             resistance enableMouseEvents style={styles.root}
                             slideStyle={styles.slideContainer}>
                             {
-                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp) : null
+                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter) : null
                             }
                         </SwipeableViews>
                         <ShadowLeft nbrQuarters={this.state.nbrQuarters}/>
                         <ShadowRight nbrQuarters={this.state.nbrQuarters}/>
                     </BodySchedule>
+                    <Filters>
+                        <div className={this.state.filter === 'talk' ? 'active' : ''} onClick={() => this.updateFilter('talk')}>Talk</div>
+                        <div className={this.state.filter === 'conf' ? 'active' : ''} onClick={() => this.updateFilter('conf')}>Conf</div>
+                        <div className={this.state.filter === 'rex' ? 'active' : ''} onClick={() => this.updateFilter('rex')}>Rex</div>
+                    </Filters>
                 </Schedule>
 
             </Container>
                 <PopUp open={this.state.openPopUp} closePopUp={this.closePopUp} slot={this.state.selectedSlot}
-                       allSpeakers={this.state.speakers} assetsDirectory={assetsDirectory}/>
+                       allSpeakers={this.state.speakers} assetsDirectory={assetsDirectory} locale={locale}/>
             </Wrapper>
 
         )

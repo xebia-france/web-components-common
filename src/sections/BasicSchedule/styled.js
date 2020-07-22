@@ -1,16 +1,14 @@
 import styled from 'styled-components';
-import {device} from "../../styles/constants";
 import {
     generatePadding,
     generateBorder,
     generateBackgroundImage, generateBackgroundImageWebp, getFormatedColor
 } from "../../utils/StyleGenerator";
 
-import { size} from "../../styles/constants";
+import {device, size, theme} from "../../styles/constants";
 
-export let grey80 = '#666666';
 let grey50 = '#A2A2A2';
-export let red = '#B2B2B2';
+export let red = '#FE414D';
 let baseHeight = 60;
 
 export const Wrapper = styled.section.attrs(props => ({
@@ -25,7 +23,7 @@ export const Wrapper = styled.section.attrs(props => ({
   display : flex;
   flex-direction : column;
   width: 100%;  
-  //position : relative;
+  position : relative;
   overflow : hidden;
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
@@ -165,13 +163,15 @@ export const DashContainer = styled.div.attrs(props => ({
        width : 5px;
    }
    
+   
+   
 `;
 
 
 export const Head = styled.div.attrs(props => ({
 
 }))`
-    background-color : ${grey80};
+    background-color : ${theme.grey90};
     padding-left : 20px;
     padding-right : 20px;
     height : 40px;
@@ -197,6 +197,7 @@ export const Schedule = styled.div.attrs(props => ({
 }))`
   display : flex;
   flex-direction : column;
+  position : relative;
   
   
 `;
@@ -215,11 +216,14 @@ export const Label = styled.div.attrs(props => ({
   & p{
     color : white;
     transform : rotate(-90deg);
-    //height : 35px;
-    //width : 40px;
     text-align : center;
     font-size : 11px;
     margin-top : 5px;
+  }
+  
+  @media ${ device['M'] } {
+      width : 25px;
+      min-width: 25px;
   }
 `;
 
@@ -240,16 +244,13 @@ export const HoursLine = styled.div.attrs(props => ({
   
   &>div{
   
-   //eight : calc(${baseHeight}px * 4);
     position : relative;
     display : flex;
     flex-direction : column; 
     align-items : flex-end;
     
     &:first-child{
-         //height : 40px;
          
-         //align-items : center;
         
         &>p{
             position : relative;
@@ -257,7 +258,7 @@ export const HoursLine = styled.div.attrs(props => ({
             right : auto;
             line-height : 35px;
             margin-top : 0px;
-        }s
+        }
     }
     
     &:nth-child(2){
@@ -277,6 +278,26 @@ export const HoursLine = styled.div.attrs(props => ({
     z-index : 5;
     top: 0;
   }
+  
+  @media ${ device['M'] } {
+      width : 25px;
+      min-width : 25px;
+      
+      &>div{
+        &:first-child{
+            &>p{
+                line-height : 28px;
+                padding-top : 10px;
+            }
+        }
+        
+        
+       &>p{
+         font-size : 12px;
+         right : 8px;
+       } 
+      }
+   }
 `;
 
 
@@ -308,12 +329,17 @@ export const Day = styled.div.attrs(props => ({
 export const Days = styled.div.attrs(props => ({
 
 }))`
-  width : 100%;
+  width :calc(100% - 35px - 80px);
   background : black;
   display : flex;
   
+  
   & ${Day}:last-child{
     border-right : none;
+  }
+  
+  @media ${ device['M'] } {
+       width :calc(100% - 25px);
   }
 `;
 
@@ -353,7 +379,7 @@ export const Tag = styled.div.attrs(props => ({
         
         
         &:not(:first-child){
-            background : rgba(0,0,0,0.25);
+            background : ${theme.grey60};
             margin-left : 5px;
         }
    }
@@ -471,6 +497,10 @@ export const Slot = styled.div.attrs(props => ({
     width : calc(100% - 8px);
     margin-left : 4px;
   }
+  
+  &.filtered{
+    opacity : 0.2;
+  }
 `;
 
 
@@ -488,6 +518,11 @@ export const ShadowLeft = styled.div.attrs(props => ({
     opacity : 0;
     transition : opacity 0.2s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
     ${ props => props.nbrQuarters && props.nbrQuarters !== 0 ? `height :${props.nbrQuarters * baseHeight}px;` : ``}
+
+    @media ${ device['M'] } {
+      left : 25px;
+    }
+    
 `;
 export const ShadowRight = styled.div.attrs(props => ({
     nbrQuarters : props.nbrQuarters
@@ -520,7 +555,7 @@ export const BodySchedule = styled.div.attrs(props => ({
   height : 70vh;
   cursor : pointer;
   border-bottom: 1px solid ${grey50};
-  background: rgba(0,0,0,0.1);
+  background: ${theme.grey20};
   
   & ${Column}{
 
@@ -899,7 +934,7 @@ export const BodyRooms =  styled(BodySchedule).attrs(props => ({
         
              
     }
-   @media (min-width: 0px) and (max-width: 1023px) {
+   @media (min-width: ${size.T}) and (max-width: 1023px) {
    
         ${ props => props.index > 0 ? `
             & ${ShadowLeft}{
@@ -907,8 +942,8 @@ export const BodyRooms =  styled(BodySchedule).attrs(props => ({
             }
         ` : ``}
    
-        ${ props => props.nbrColumn > 3 ? `
-            ${ (props.nbrColumn - props.index) > 3 ? `
+        ${ props => props.nbrColumn > 2 ? `
+            ${ (props.nbrColumn - props.index) > 2 ? `
                 & ${ShadowRight}{
                     opacity : 1;
                 }
@@ -1057,5 +1092,151 @@ export const Grid = styled.div.attrs(props => ({
     width : 0;
     
   }
+  
+`;
+export const Filters = styled.div.attrs(props => ({
+}))`
+  position : absolute;
+  background : ${theme.grey90};
+  border-radius : 15px;
+  height : 30px;
+  display : flex;
+  padding : 5px;
+  bottom : 10px;
+  align-self : center;
+  
+  &>div{
+    background :${theme.grey60};
+    border-radius : 10px;
+    text-transform : uppercase;
+    font-size : 14px;
+    line-height : 16px;
+    display : flex;
+    height : 20px;
+    align-items : center;
+    color : ${theme.white};
+    padding : 0 10px;
+    cursor : pointer;
+    transition : background 0.2s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
+
+    
+    &:not(:first-child){
+       margin-left : 5px;
+    }
+    
+    &:hover{
+        background : ${red};
+    }
+    &.active{
+        background : ${red};
+    }
+  }
+  
+        
+        
+        
+  
+`;
+
+export const ToLeft = styled.div.attrs(props => ({
+}))`
+  
+    background :${theme.grey60};
+    border-radius : 10px;
+    text-transform : uppercase;
+    font-size : 14px;
+    line-height : 16px;
+    display : flex;
+    height : 20px;
+    align-items : center;
+    color : ${theme.white};
+    padding : 0 10px;
+    cursor : pointer;
+    transition : background 0.2s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
+    opacity : 0.2;
+`;
+
+
+export const ToRight = styled(ToLeft).attrs(props => ({
+}))`
+`;
+
+
+export const SwitchButtons = styled.div.attrs(props => ({
+    nbrColumn : props.nbrColumn,
+    index : props.index
+}))`
+  background : ${theme.white};
+  width : 80px;
+  display : flex;
+  align-items :center;
+  justify-content : center;
+  
+  @media (min-width: 1024px) {
+   
+        ${ props => props.index > 0 ? `
+            & ${ToLeft}{
+                opacity : 1;
+                &:hover{
+                    background : ${red};
+                }
+            }
+        ` : ``}
+   
+        ${ props => props.nbrColumn > 3 ? `
+            ${ (props.nbrColumn - props.index) > 3 ? `
+                & ${ToRight}{
+                    opacity : 1;
+                    &:hover{
+                        background : ${red};
+                    }
+                }
+            ` : ``}
+        ` : ''}
+        
+        ${ props => props.nbrColumn == 2 ? `
+            ${ (props.nbrColumn - props.index) <= 1 ? `
+                & ${ToLeft}{
+                    opacity : 0.2;
+                    &:hover{
+                        background : ${theme.grey60};
+                    }
+                }
+        ` : ``}
+            
+          
+        ` : ''}
+   }
+  
+    @media (min-width: ${size.T}) and (max-width: 1023px) {
+   
+        ${ props => props.index > 0 ? `
+            & ${ToLeft}{
+                opacity : 1;
+                &:hover{
+                    background : ${red};
+                }
+            }
+        ` : ``}
+   
+        ${ props => props.nbrColumn > 2 ? `
+            ${ (props.nbrColumn - props.index) > 2 ? `
+                & ${ToRight}{
+                    opacity : 1;
+                    &:hover{
+                        background : ${red};
+                    }
+                }
+        ` : ``}
+        ` : ''}
+    }
+  
+  @media ${ device['M'] } {
+      display : none;
+  }
+  
+        
+        
+        
   
 `;

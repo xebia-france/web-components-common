@@ -13,19 +13,18 @@ import {
     InfoTime,
     Info,
     Summary,
-    Speaker, Image
+    Speaker, Image, InfoSpeakers
 } from "./styled";
-import {getDayFromTime, getHourFromTime, getDuration} from "../utils";
+import {getDayFromTime, getHourFromTime, getDuration,getStringDate} from "../utils";
 import SvgClock from '../../../assets/svg/SvgClock';
 import {Tag} from '../styled'
-import {generatePictureWebP} from "../../../utils/gettersCommonElement";
 
-const PopUp = ({open, closePopUp, slot, allSpeakers, assetsDirectory}) => {
+const PopUp = ({open, closePopUp, slot, allSpeakers, assetsDirectory, locale}) => {
     if (!slot || !allSpeakers) return null
     return (<PopUpContainer className={open ? 'open' : ''}>
             <Card>
                 <Banner>
-                    <Day>{getDayFromTime(slot.fromTime)}</Day>
+                    <Day>{getStringDate(slot.fromTime, locale) }</Day>
                     <Room>{slot.room || ''}</Room>
                     <Close onClick={() => {
                         closePopUp()
@@ -36,6 +35,7 @@ const PopUp = ({open, closePopUp, slot, allSpeakers, assetsDirectory}) => {
                 </Banner>
                 <Content>
                     <InfoTime>
+
                         <Time>{`${getHourFromTime(slot.fromTime)}-${getHourFromTime(slot.toTime)}`}</Time>
                         <Duration>
                             <Clock><SvgClock/></Clock>
@@ -53,7 +53,7 @@ const PopUp = ({open, closePopUp, slot, allSpeakers, assetsDirectory}) => {
 
                     {
                         slot.speakers && slot.speakers.length !== 0 ?
-                            <Info>
+                            <InfoSpeakers>
                                 {
                                     slot.speakers.map(s => {
                                         console.log('allSpeakers :', allSpeakers)
@@ -70,10 +70,11 @@ const PopUp = ({open, closePopUp, slot, allSpeakers, assetsDirectory}) => {
                                     })
                                 }
 
-                            </Info>
+                            </InfoSpeakers>
                             : null
                     }
                 </Content>
+
             </Card>
         </PopUpContainer>
     )

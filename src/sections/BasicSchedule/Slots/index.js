@@ -30,7 +30,7 @@ export const searchOverlap = (slot, transverses) => {
 
 
 
-function Slots({scheduleOfDay, slots, transverses, openPopUp}) {
+function Slots({scheduleOfDay, slots, transverses, openPopUp, filter}) {
     const all = !slots ? transverses : slots.concat(transverses);
 
     return all.map(slot => {
@@ -39,7 +39,9 @@ function Slots({scheduleOfDay, slots, transverses, openPopUp}) {
 
 
         return <Slot duration={getDuration(slot.fromTime, slot.toTime)}
-                     minutes={getDuration(startDay, slot.fromTime)} className={[!slot.room ? 'other' : '', slot.room && searchOverlap(slot, transverses) ? 'overlaped' : '']}
+                     minutes={getDuration(startDay, slot.fromTime)}
+
+                     className={[!slot.room ? 'other' : '', slot.room && searchOverlap(slot, transverses), filter && filter !== slot.type ? 'filtered' : '' ? 'overlaped' : '']}
                      onClick={ () => {
                          openPopUp(slot)
                          console.log('openPopUP SLOT')

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { grey80, red} from "../styled";
+import { red} from "../styled";
+import { theme,  device } from '../../../styles/constants';
 import {generateBackgroundImageWebpNoResponsive, generateBackgroundImageNoResponsive} from "../../../utils/StyleGenerator";
 
 export const PopUpContainer = styled.div.attrs(props => ({
@@ -22,6 +23,17 @@ export const PopUpContainer = styled.div.attrs(props => ({
   
   
 `;
+
+export const Banner = styled.div.attrs(props => ({
+}))`
+  display : flex;
+  background : ${theme.grey90};
+  height : 40px;
+  min-height : 40px;
+  position : sticky;
+  
+`;
+
 export const Card = styled.div.attrs(props => ({
 }))`
   display : flex;
@@ -30,19 +42,19 @@ export const Card = styled.div.attrs(props => ({
   min-width : 500px;
   max-width : 100%;
   background :white;
-  overflow : scroll;
-
-`;
-
-
-export const Banner = styled.div.attrs(props => ({
-}))`
-  display : flex;
-  background : ${grey80};
-  height : 40px;
-  min-height : 40px;
-  position : relative;
+  position  : relative;
+  margin:auto;
+  margin-top : 10vh;
+  margin-bottom : 10vh;
   
+  
+  @media ${ device['M'] } {
+      width : 100%;
+      height  : 100%; 
+      margin: 0;
+      min-width : 100%;
+   }
+
 `;
 
 export const Day = styled.div.attrs(props => ({
@@ -111,6 +123,8 @@ export const Content = styled.div.attrs(props => ({
 }))`
   width : 100%;
   padding : 20px;
+  overflow : scroll;
+
 `;
 
 
@@ -130,7 +144,7 @@ export const Duration = styled.div.attrs(props => ({
 }))`
     display : flex;
     align-items : center;
-    padding : 0 30px;
+    padding : 0 15px;
     font-size : 12px;
     lint-height : 16px;
 `;
@@ -176,15 +190,37 @@ export const Summary = styled.p.attrs(props => ({
  line-height : 24px;
  
 `;
+
+
+export const InfoSpeakers = styled(Info).attrs(props => ({
+}))`
+ flex-direction : row;
+ flex-wrap : wrap;
+ 
+`;
+
 export const Speaker = styled.div.attrs(props => ({
 }))`
     display : flex;
- & h4>span{
-    text-transform : uppercase;
+    border : 1px solid ${theme.grey20};
+    width : 210px;
+    margin-right : 25px;
+    margin-bottom : 10px;
+    
+ & h4{
+    font-size : 14px;
+    line-height : 17px;
+    &>span{
+        text-transform : uppercase;
+    }    
  }
  
  &>div:nth-child(2){
-    width : 100%;
+    width : calc(100% - 40px);
+    padding : 10px;
+    display : flex;
+    flex-direction : column; 
+    justify-content : center;
  }
  
 `;
@@ -195,6 +231,8 @@ export const Image = styled.div.attrs(props => ({
  width : 40px;
  height : 50px;
  position : relative;
+ border-right :1px solid ${theme.grey20};
+ background : ${ theme.grey10};
  
  &:before{
        z-index : 1;
