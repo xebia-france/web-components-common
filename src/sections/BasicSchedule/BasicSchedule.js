@@ -42,7 +42,9 @@ class BasicSchedule extends Component {
         this.viewsRef = React.createRef()
     }
 
-    async componentDidMount() {
+    /*async componentDidMount() {
+
+        console.log('PROPS', this.props.data);
 
         try {
             this.setState({
@@ -318,7 +320,7 @@ class BasicSchedule extends Component {
         else{
             this.setState({ filter : filter})
         }
-    }
+    }*/
 
     render() {
         const {children, fields, name, assetsDirectory, data, locale} = this.props;
@@ -353,8 +355,8 @@ class BasicSchedule extends Component {
         console.log('FINAL SCHEDULE', this.state.formatedSchedule)
         console.log('SCHEDULE OF DAY', this.state.scheduleOfDay)
 
-
-        return (
+        return null;
+        /*return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
                      assetsDirectory={assetsDirectory}
@@ -434,7 +436,7 @@ class BasicSchedule extends Component {
                        allSpeakers={this.state.speakers} assetsDirectory={assetsDirectory} locale={locale}/>
             </Wrapper>
 
-        )
+        )*/
 
     }
 
