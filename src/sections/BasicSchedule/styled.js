@@ -239,7 +239,7 @@ export const HoursLine = styled.div.attrs(props => ({
   flex-direction : column;
   border-right : 1px solid grey;
   z-index: 20;
-  transition : margin-right 0.2s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
+  transition : margin-right 0.0s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
   background : white;
   
   &>div{
@@ -500,6 +500,8 @@ export const Slot = styled.div.attrs(props => ({
   
   &.filtered{
     opacity : 0.2;
+    
+    
   }
 `;
 
@@ -545,7 +547,8 @@ export const BodySchedule = styled.div.attrs(props => ({
     responsive: props.responsive,
     nbrColumn : props.nbrColumn,
     index : props.index,
-    nbrQuarters : props.nbrQuarters
+    nbrQuarters : props.nbrQuarters,
+    filter : props.filter
 
 }))`
   display : flex;
@@ -556,6 +559,8 @@ export const BodySchedule = styled.div.attrs(props => ({
   cursor : pointer;
   border-bottom: 1px solid ${grey50};
   background: ${theme.grey20};
+  
+  ${props => props.filter ? `background : ${theme.grey60}; ` : ''}
   
   & ${Column}{
 
@@ -599,7 +604,9 @@ export const BodySchedule = styled.div.attrs(props => ({
                             width : calc(100% - 12px);
                             
                             &.other{
-                                padding-left : 12px;
+                                padding-left : 8px;
+                                padding-right : 0px;
+                                width : 100%;
                                 & ${SlotContent}{
                                    border-radius :4px 0px 0px 4px;
                                    
@@ -620,6 +627,8 @@ export const BodySchedule = styled.div.attrs(props => ({
                             padding-right : 4px;
                             
                             &.other{
+                                padding-left : 0px;
+                                padding-right : 8px;
                                 & ${SlotContent}{
                                    border-radius :0px 4px 4px 0px;
                                    
@@ -637,7 +646,9 @@ export const BodySchedule = styled.div.attrs(props => ({
            & ${ SlotsContainer }{
               & ${ Slot }{
                   &.overlaped{
-                        padding-right : 8px;
+                        padding-left : 8px;
+                        padding-right : 12px;
+                        
                        
                   }
                }
@@ -1094,8 +1105,12 @@ export const SwitchButtons = styled.div.attrs(props => ({
                     opacity : 1;
                     cursor :pointer;
                     pointer-events: auto;
-                    &:hover svg path{
-                        fill : ${red};
+                    &:hover{
+                        background : ${red};
+                        
+                        & svg path{
+                            fill : ${theme.white};
+                        }
                     }
                 }
             ` : ``}
@@ -1109,8 +1124,13 @@ export const SwitchButtons = styled.div.attrs(props => ({
                     opacity : 1;
                     cursor :pointer;
                     pointer-events: auto;
-                    &:hover svg path{
-                        fill : ${red};
+                    
+                    &:hover{
+                        background : ${red};
+                        
+                        & svg path{
+                            fill : ${theme.white};
+                        }
                     }
                 }
             ` : ``}

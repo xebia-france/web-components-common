@@ -35,7 +35,7 @@ class BasicSchedule extends Component {
             nbrColumnPerView: 3,
             index: 0,
             translatePosition: null,
-            transition: 'transform 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s',
+            transition: 'transform 0.0s cubic-bezier(0.15, 0.3, 0.25, 1) 0s',
             openPopUp: false,
             filter: null
         };
@@ -44,8 +44,6 @@ class BasicSchedule extends Component {
     }
 
      async componentDidMount() {
-
-       // console.log('PROPS', this.props.data);
 
             this.setState({
                 formatedSchedule:  await this.formatSchedule(),
@@ -137,7 +135,6 @@ class BasicSchedule extends Component {
             })
         })
 
-        //console.log('FINAL SPEAKERS', speakers);
         return speakers;
     }
 
@@ -146,7 +143,6 @@ class BasicSchedule extends Component {
 
         const data = await this.fetchFileSchedule();
 
-       // console.log('data on formatschedule', data);
 
         const days = data.map(slot => {
             return getDayFromTime(slot.fromTime);
@@ -168,7 +164,6 @@ class BasicSchedule extends Component {
                 return getDayFromTime(slot.fromTime) === item.date ? slot : null
             }).filter(el => el)
 
-            //console.log('slotsOfDay', slotsOfDay);
 
             const min = slotsOfDay.reduce((prev, current) => {
                 return (getHourFromTime(prev.fromTime)) < (getHourFromTime(current.fromTime)) ? prev : current
@@ -207,7 +202,6 @@ class BasicSchedule extends Component {
 
 
         })
-        //console.log('FINAL SCHEDULE', schedule);
         return schedule;
 
     }
@@ -349,7 +343,6 @@ class BasicSchedule extends Component {
     }
 
     updateFilter = (filter) => {
-       // console.log('UPDATE FILTER', filter)
         if (this.state.filter === filter) {
             this.setState({filter: null})
         }
@@ -434,8 +427,8 @@ class BasicSchedule extends Component {
                             <Label><p>ROOM</p></Label>
                         </HoursLine>
                         <SwipeableViews
-                            index={this.state.index} style={styles.root} resistance enableMouseEvents onChangeIndex={this.updateIndex}
-                            slideStyle={styles.slideContainer} >
+                            index={this.state.index} style={styles.root}  enableMouseEvents onChangeIndex={this.updateIndex}
+                            slideStyle={styles.slideContainer} springConfig={{}} animateTransitions={false}>
                             {
                                 this.state.scheduleOfDay ? renderRooms(this.state.scheduleOfDay, styles) : null
                             }
@@ -445,15 +438,15 @@ class BasicSchedule extends Component {
                     </BodyRooms>
                     <BodySchedule responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
                                   nbrColumn={this.state.nbrColumn} index={this.state.index}
-                                  nbrQuarters={this.state.nbrQuarters}>
+                                  nbrQuarters={this.state.nbrQuarters} filter={this.state.filter}>
                         <HoursLine>
                             {getHoursTimeLine(this.state.scheduleOfDay.startTime, this.state.scheduleOfDay.endTime)}
                         </HoursLine>
                         <SwipeableViews
                             ref={this.viewsRef}
                             index={this.state.index} onSwitching={this.switchView} onChangeIndex={this.updateIndex}
-                            resistance enableMouseEvents style={styles.root}
-                            slideStyle={styles.slideContainer}
+                             enableMouseEvents style={styles.root}
+                            slideStyle={styles.slideContainer} springConfig={{}} animateTransitions={false}
                         >
                             {
                                 this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter) : null

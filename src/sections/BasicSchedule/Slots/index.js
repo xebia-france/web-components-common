@@ -52,7 +52,7 @@ class Slots extends Component {
 
             return <Slot duration={getDuration(slot.fromTime, slot.toTime)}
                          minutes={getDuration(startDay, slot.fromTime)}
-                         className={[!slot.room ? 'other' : '', slot.room && searchOverlap(slot, transverses), filter && filter !== slot.type ? 'filtered' : '' ? 'overlaped' : '']}
+                         className={[!slot.room ? 'other' : '', slot.room && searchOverlap(slot, transverses) ? 'overlaped' : '', filter && filter !== slot.type ? 'filtered' : '' ]}
                          onMouseDown={(e) => {
                              this.setState({
                                  xStart : e.clientX

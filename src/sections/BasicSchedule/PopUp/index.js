@@ -21,9 +21,9 @@ import {Tag} from '../styled'
 
 
 
-const PopUp = ({open, closePopUp, slot, allSpeakers, assetsDirectory, locale}) => {
+const PopUp = ({open, closePopUp, openPopUp, slot, allSpeakers, assetsDirectory, locale}) => {
     if (!slot || !allSpeakers) return null
-    return (<PopUpContainer className={open ? 'open' : ''}>
+    return (<PopUpContainer className={open ? 'open' : ''}  >
             <Card>
                 <Banner>
                     <Day>{getStringDate(slot.fromTime, locale) }</Day>
