@@ -19,6 +19,8 @@ import {getDayFromTime, getHourFromTime, getDuration,getStringDate} from "../uti
 import SvgClock from '../../../assets/svg/SvgClock';
 import {Tag} from '../styled'
 
+
+
 const PopUp = ({open, closePopUp, slot, allSpeakers, assetsDirectory, locale}) => {
     if (!slot || !allSpeakers) return null
     return (<PopUpContainer className={open ? 'open' : ''}>

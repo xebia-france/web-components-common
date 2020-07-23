@@ -15,7 +15,8 @@ export const PopUpContainer = styled.div.attrs(props => ({
   display : none;
   flex-direction : column;
   align-items : center;
-  justify-content : center;
+  //justify-content : center;
+  overflow : scroll;
   
   &.open{
     display : flex;

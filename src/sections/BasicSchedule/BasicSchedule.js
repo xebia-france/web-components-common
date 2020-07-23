@@ -24,6 +24,7 @@ import {getHourFromTime, getDayFromTime, getStringDate} from "./utils";
 import {fileNameFromUrl} from "../../utils/functions";
 import PopUp from './PopUp';
 import SvgArrow from '../../assets/svg/SvgArrow';
+import axios from 'axios';
 
 
 class BasicSchedule extends Component {
@@ -34,22 +35,21 @@ class BasicSchedule extends Component {
             nbrColumnPerView: 3,
             index: 0,
             translatePosition: null,
-            transition: 'transform 0.2s cubic-bezier(0.15,0.3,0.25,1) 0s',
+            transition: 'transform 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s',
             openPopUp: false,
-            filter : null
+            filter: null
         };
 
         this.viewsRef = React.createRef()
     }
 
-    /*async componentDidMount() {
+     async componentDidMount() {
 
-        console.log('PROPS', this.props.data);
+       // console.log('PROPS', this.props.data);
 
-        try {
             this.setState({
-                formatedSchedule: await this.formatSchedule(),
-                speakers: await this.formatSpeakers()
+                formatedSchedule:  await this.formatSchedule(),
+                speakers:  await this.formatSpeakers()
             }, () => {
                 this.setState(prevState => ({
                     ...prevState,
@@ -60,32 +60,47 @@ class BasicSchedule extends Component {
                 }));
 
             })
-
-        } catch (err) {
-        }
     }
 
     async fetchFileSchedule() {
+        /* try {
+             const response = await fetch(this.props.data.schedule, {
+                 method: 'GET',
+                 credentials: 'same-origin'
+             });
+             const result = await response.json();
+             const slots = result.map(slot => {
+                 let copy = Object.assign({}, slot);
+                 copy.fromTime = this.formatMinutes(slot.fromTime)
+                 copy.toTime = this.formatMinutes(slot.toTime)
+                 return copy;
+             })
+             return slots;
+         } catch (error) {
+             console.error(error);
+         }*/
         try {
-            const response = await fetch(this.props.data.schedule, {
-                method: 'GET',
-                credentials: 'same-origin'
-            });
-            const result = await response.json();
-            const slots = result.map(slot => {
-                let copy = Object.assign({}, slot);
-                copy.fromTime = this.formatMinutes(slot.fromTime)
-                copy.toTime = this.formatMinutes(slot.toTime)
-                return copy;
-            })
-            return slots;
+            
+            return await axios.get(this.props.data.schedule)
+                .then(res => {
+                    //.log('RES SCHEDULE', res);
+                    const result = res.data;
+                    const slots = result.map(slot => {
+                        let copy = Object.assign({}, slot);
+                        copy.fromTime = this.formatMinutes(slot.fromTime)
+                        copy.toTime = this.formatMinutes(slot.toTime)
+                        return copy;
+                    })
+                    return slots;
+                })
         } catch (error) {
             console.error(error);
         }
     }
 
     async fetchFileSpeakers() {
-        try {
+
+        /*try {
             const response = await fetch(this.props.data.speakers, {
                 method: 'GET',
                 credentials: 'same-origin'
@@ -93,6 +108,17 @@ class BasicSchedule extends Component {
             const result = await response.json();
             console.log('result', result);
             return result;
+        } catch (error) {
+            console.error(error);
+        }*/
+
+        try {
+            return await axios.get(this.props.data.speakers)
+                .then(res => {
+                  //  console.log('RES SPEAKERS', res);
+                    const result = res.data;
+                    return result;
+                })
         } catch (error) {
             console.error(error);
         }
@@ -111,7 +137,7 @@ class BasicSchedule extends Component {
             })
         })
 
-        console.log('FINAL SPEAKERS', speakers);
+        //console.log('FINAL SPEAKERS', speakers);
         return speakers;
     }
 
@@ -119,6 +145,8 @@ class BasicSchedule extends Component {
         const schedule = [];
 
         const data = await this.fetchFileSchedule();
+
+       // console.log('data on formatschedule', data);
 
         const days = data.map(slot => {
             return getDayFromTime(slot.fromTime);
@@ -140,7 +168,7 @@ class BasicSchedule extends Component {
                 return getDayFromTime(slot.fromTime) === item.date ? slot : null
             }).filter(el => el)
 
-            console.log('slotsOfDay', slotsOfDay);
+            //console.log('slotsOfDay', slotsOfDay);
 
             const min = slotsOfDay.reduce((prev, current) => {
                 return (getHourFromTime(prev.fromTime)) < (getHourFromTime(current.fromTime)) ? prev : current
@@ -179,7 +207,7 @@ class BasicSchedule extends Component {
 
 
         })
-        console.log('FINAL SCHEDULE', schedule);
+        //console.log('FINAL SCHEDULE', schedule);
         return schedule;
 
     }
@@ -218,23 +246,27 @@ class BasicSchedule extends Component {
     switchView = (index, type) => {
 
         const css = this.viewsRef.current.containerNode.style.transform;
-        console.log('this.viewsRef.current', this.viewsRef.current);
         this.setState({
             translatePosition: css,
-            transition: 'all 0.0s cubic-bezier(0.15,0.3,0.25,1) 0s'
+           // transition: 'all 0.0s cubic-bezier(0.15,0.3,0.25,1) 0s'
         });
 
     };
 
 
     updateIndex = index => {
+        if(index > this.state.nbrColumn)return
 
         this.setState({
             index: index,
-            transition: 'transform 0.2s cubic-bezier(0.15,0.3,0.25,1) 0s'
+           // transition: 'transform 0.2s cubic-bezier(0.15,0.3,0.25,1) 0s'
         }, () => {
-            console.log('nbr column', this.state.nbrColumn)
-            console.log('index  on click', this.state.index)
+
+            const css = this.viewsRef.current.containerNode.style.transform;
+            this.setState({
+                translatePosition: css,
+                // transition: 'all 0.0s cubic-bezier(0.15,0.3,0.25,1) 0s'
+            });
         });
     };
 
@@ -287,14 +319,8 @@ class BasicSchedule extends Component {
         this.setState({
             openPopUp: true,
             selectedSlot: slot
-        }, () => {
-            console.log('after update popup : ', this.state)
-            if (typeof window !== 'undefined' && typeof document !== `undefined`) {
-                //document.body.classList.add("no-scroll")
-                //document.body.style.overflow = "hidden"
-
-            }
         })
+        this.disableScrolling();
 
 
     }
@@ -302,25 +328,35 @@ class BasicSchedule extends Component {
         this.setState({
             openPopUp: false,
             selectedSlot: null
-        }, () => {
-            console.log('after update popup : ', this.state)
-            if (typeof window !== 'undefined' && typeof document !== `undefined`) {
-               //document.body.classList.remove("no-scroll")
-                //document.body.style.overflow = ""
-
-            }
         })
+        this.enableScrolling();
+    }
+
+
+    disableScrolling = () => {
+        if (typeof window !== 'undefined' && typeof document !== `undefined`) {
+            var x=window.scrollX;
+            var y=window.scrollY;
+            window.onscroll=function(){window.scrollTo(x, y);};
+        }
+
+    }
+
+    enableScrolling = () => {
+        if (typeof window !== 'undefined' && typeof document !== `undefined`) {
+            window.onscroll=function(){};
+        }
     }
 
     updateFilter = (filter) => {
-        console.log('UPDATE FILTER', filter)
-        if(this.state.filter === filter){
-            this.setState({ filter : null})
+       // console.log('UPDATE FILTER', filter)
+        if (this.state.filter === filter) {
+            this.setState({filter: null})
         }
-        else{
-            this.setState({ filter : filter})
+        else {
+            this.setState({filter: filter})
         }
-    }*/
+    }
 
     render() {
         const {children, fields, name, assetsDirectory, data, locale} = this.props;
@@ -352,11 +388,9 @@ class BasicSchedule extends Component {
         };
 
         if (!this.state.formatedSchedule || !this.state.scheduleOfDay) return null;
-        console.log('FINAL SCHEDULE', this.state.formatedSchedule)
-        console.log('SCHEDULE OF DAY', this.state.scheduleOfDay)
-
-        return null;
-        /*return (
+        //console.log('FINAL SCHEDULE', this.state.formatedSchedule)
+       // console.log('SCHEDULE OF DAY', this.state.scheduleOfDay)
+        return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
                      assetsDirectory={assetsDirectory}
@@ -382,10 +416,14 @@ class BasicSchedule extends Component {
                         </Days>
                         <SwitchButtons index={this.state.index} nbrColumn={this.state.nbrColumn}>
                             <ToLeft onClick={() => {
-                                if(this.state.index !== 0 ){ this.updateIndex(this.state.index - 1) }
+                                if (this.state.index !== 0) {
+                                    this.updateIndex(this.state.index - 1)
+                                }
                             }}><SvgArrow/></ToLeft>
                             <ToRight onClick={() => {
-                                if(this.state.index < (this.state.nbrColumn )){ this.updateIndex(this.state.index + 1) }
+                                if (this.state.index < (this.state.nbrColumn)) {
+                                    this.updateIndex(this.state.index + 1)
+                                }
                             }}><SvgArrow/></ToRight>
                         </SwitchButtons>
                     </HeadSchedule>
@@ -396,9 +434,8 @@ class BasicSchedule extends Component {
                             <Label><p>ROOM</p></Label>
                         </HoursLine>
                         <SwipeableViews
-                            index={this.state.index} onChangeIndex={this.updateIndex}
-                            resistance enableMouseEvents style={styles.root}
-                            slideStyle={styles.slideContainer}>
+                            index={this.state.index} style={styles.root} resistance enableMouseEvents onChangeIndex={this.updateIndex}
+                            slideStyle={styles.slideContainer} >
                             {
                                 this.state.scheduleOfDay ? renderRooms(this.state.scheduleOfDay, styles) : null
                             }
@@ -416,7 +453,8 @@ class BasicSchedule extends Component {
                             ref={this.viewsRef}
                             index={this.state.index} onSwitching={this.switchView} onChangeIndex={this.updateIndex}
                             resistance enableMouseEvents style={styles.root}
-                            slideStyle={styles.slideContainer}>
+                            slideStyle={styles.slideContainer}
+                        >
                             {
                                 this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter) : null
                             }
@@ -425,9 +463,15 @@ class BasicSchedule extends Component {
                         <ShadowRight nbrQuarters={this.state.nbrQuarters}/>
                     </BodySchedule>
                     <Filters>
-                        <div className={this.state.filter === 'talk' ? 'active' : ''} onClick={() => this.updateFilter('talk')}>Talk</div>
-                        <div className={this.state.filter === 'conf' ? 'active' : ''} onClick={() => this.updateFilter('conf')}>Conf</div>
-                        <div className={this.state.filter === 'rex' ? 'active' : ''} onClick={() => this.updateFilter('rex')}>Rex</div>
+                        <div className={this.state.filter === 'talk' ? 'active' : ''}
+                             onClick={() => this.updateFilter('talk')}>Talk
+                        </div>
+                        <div className={this.state.filter === 'conf' ? 'active' : ''}
+                             onClick={() => this.updateFilter('conf')}>Conf
+                        </div>
+                        <div className={this.state.filter === 'rex' ? 'active' : ''}
+                             onClick={() => this.updateFilter('rex')}>Rex
+                        </div>
                     </Filters>
                 </Schedule>
 
@@ -436,7 +480,7 @@ class BasicSchedule extends Component {
                        allSpeakers={this.state.speakers} assetsDirectory={assetsDirectory} locale={locale}/>
             </Wrapper>
 
-        )*/
+        )
 
     }
 

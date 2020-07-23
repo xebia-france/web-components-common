@@ -4,8 +4,7 @@ import Slots from '../Slots';
 import { getHoursTimeLine} from "../TimeLine";
 
 export const renderView = (scheduleOfDay, styles, openPopUp, filter) => {
-    console.log('scheduleOfDay BUG', scheduleOfDay)
-    console.log('FILTER ON VIEW :', filter);
+
 
     if (!scheduleOfDay.rooms || scheduleOfDay.rooms.length === 0) {
 

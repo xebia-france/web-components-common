@@ -856,150 +856,7 @@ export const BodySchedule = styled.div.attrs(props => ({
              
     }
     
-    
-    & ${Head}{
-        opacity : 0;
-        height : 0;
-    }
-    
-  
-`;
-
-export const BodyRooms =  styled(BodySchedule).attrs(props => ({
-    translatePosition: props.translatePosition,
-    transition : props.transition
-}))`
-    height : auto;
-    border-bottom:none;
-    
-    & ${Head}{
-        opacity : 1;
-        height : 40px;
-    }
-    
-    &>div:nth-child(2)>div{
-        ${props => props.translatePosition ?
-    `transform : ${props.translatePosition} !important;` : ''}
-     
-     ${props => props.transition ?
-    `transition : ${props.transition} !important;` : ''}
-    }
-    
-    
-    @media (min-width: 1024px) {
-        
-        &>div:nth-child(2){
-        
-            ${ props => props.nbrColumn > 3 ? `
-            
-                
-                
-                ${ (props.nbrColumn - props.index) <= 3  ? `
-                    &>div{
-                        transform : translate(-${(props.nbrColumn - 3) * 100}%, 0px) !important;
-                    }
-                    padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 25px !important;
-                    
-                    
-
-                    
-                    
-                ` : ``}
-                  
-                
-            ` 
-            : ''}
-            ${ props => props.nbrColumn === 3 ? `
-                padding :0 calc((100% - 35px) * (2/3)) 0 0 !important;
-                &>div{
-                    transform : translate(0%, 0px) !important;
-                }
-            ` : ''}
-            ${ props => props.nbrColumn === 2 ? `
-                padding :0 calc((100% - 35px) * (1/2)) 0 0 !important;
-                &>div{
-                    transform : translate(0%, 0px) !important;
-                }
-            ` : ''}
-            ${ props => props.nbrColumn === 1 ? `
-                padding :0 0 0 0 !important;
-                &>div{
-                    transform : translate(0%, 0px) !important;
-                }
-            ` : ''}
-            
-            
-            
-        }
-        
-             
-    }
-   @media (min-width: ${size.T}) and (max-width: 1023px) {
-   
-        ${ props => props.index > 0 ? `
-            & ${ShadowLeft}{
-                opacity : 1;
-            }
-        ` : ``}
-   
-        ${ props => props.nbrColumn > 2 ? `
-            ${ (props.nbrColumn - props.index) > 2 ? `
-                & ${ShadowRight}{
-                    opacity : 1;
-                }
-        ` : ``}
-            
-           & ${ HoursLine}{
-             margin-right : ${ props.index === 0 ? ' -50px' : '0'};
-           }  
-        ` : ''}
-        
-        
-        &>div:nth-child(2){
-        
-            ${ props => props.nbrColumn > 2 ? `
-            
-                ${ props.index === 0 ? `
-                  padding :0 calc((100% - 35px - 0px) * (0.53) ) 0 50px !important;
-                ` : `
-                  padding : 0 calc((100% - 35px + 25px) * (0.53) ) 0 50px !important;`
-                }
-                
-                ${ (props.nbrColumn - props.index) <= 2  ? `
-                    &>div{
-                        transform : translate(-${(props.nbrColumn - 2) * 100}%, 0px) !important;
-                    }
-                    padding : 0 calc((100% - 35px + 25px) * (0.53) ) 0 25px !important;
-
-                    
-                    
-                ` : ``}
-                  
-                
-            ` 
-            : ''}
-            
-            ${ props => props.nbrColumn === 2 ? `
-                padding :0 calc((100% - 35px) * (1/2)) 0 0 !important;
-                &>div{
-                    transform : translate(0%, 0px) !important;
-                }
-            ` : ''}
-            ${ props => props.nbrColumn === 1 ? `
-                padding :0 0 0 0 !important;
-                &>div{
-                    transform : translate(0%, 0px) !important;
-                }
-            ` : ''}
-            
-            
-            
-        }
-        
-             
-    }
-    
-    @media ${device.M} {
+    @media (max-width: 479px) {
    
         ${ props => props.index > 0 ? `
             & ${ShadowLeft}{
@@ -1025,16 +882,16 @@ export const BodyRooms =  styled(BodySchedule).attrs(props => ({
             ${ props => props.nbrColumn > 1 ? `
             
                 ${ props.index === 0 ? `
-                  padding :0 calc((100% - 35px - 0px) * (1/8) ) 0 50px !important;
+                  padding :0 calc((100% - 35px - 300px) * (1/8) ) 0 50px !important;
                 ` : `
-                  padding : 0 calc((100% - 35px + 25px) * (1/8) ) 0 50px !important;`
+                  padding : 0 calc((100% - 35px + 0px) * (1/8) ) 0 20px !important;`
                 }
                 
                 ${ (props.nbrColumn - props.index) <= 1  ? `
                     &>div{
                         transform : translate(-${(props.nbrColumn - 1) * 100}%, 0px) !important;
                     }
-                    padding : 0 calc((100% - 35px + 25px) * (1/8) ) 0 25px !important;
+                    padding : 0 calc((100% - 35px + 0px) * (1/8) ) 0 20px !important;
 
                     
                     
@@ -1056,6 +913,38 @@ export const BodyRooms =  styled(BodySchedule).attrs(props => ({
         }
              
     }
+    
+    
+    & ${Head}{
+        opacity : 0;
+        height : 0;
+    }
+    
+  
+`;
+
+export const BodyRooms =  styled(BodySchedule).attrs(props => ({
+    translatePosition: props.translatePosition,
+    transition : props.transition
+}))`
+    height : auto;
+    border-bottom:none;
+    
+    & ${Head}{
+        opacity : 1;
+        height : 40px;
+    }
+    
+    /*&>div:nth-child(2)>div{
+        ${props => props.translatePosition ?
+    `transform : ${props.translatePosition} !important;` : ''}
+     
+     ${props => props.transition ?
+    `transition : ${props.transition} !important;` : ''}
+    }*/
+    
+    
+    
     
 `
 
@@ -1147,6 +1036,7 @@ export const ToLeft = styled.div.attrs(props => ({
     display : flex;
     align-items : center;
     justify-content : center;
+    pointer-events: none;
     
     &>svg{
         transform : rotate(90deg);
@@ -1163,6 +1053,7 @@ export const ToRight = styled.div.attrs(props => ({
     display : flex;
     align-items : center;
     justify-content : center;
+    pointer-events: none;
     
     &>svg{
         transform : rotate(-90deg);
@@ -1184,6 +1075,7 @@ export const SwitchButtons = styled.div.attrs(props => ({
             & ${ToLeft}{
                 opacity : 1;
                 cursor :pointer;
+                pointer-events: auto;
                 &:hover svg path{
                     fill : ${red};
                 }
@@ -1201,6 +1093,7 @@ export const SwitchButtons = styled.div.attrs(props => ({
                 & ${ToRight}{
                     opacity : 1;
                     cursor :pointer;
+                    pointer-events: auto;
                     &:hover svg path{
                         fill : ${red};
                     }
@@ -1215,6 +1108,7 @@ export const SwitchButtons = styled.div.attrs(props => ({
                 & ${ToRight}{
                     opacity : 1;
                     cursor :pointer;
+                    pointer-events: auto;
                     &:hover svg path{
                         fill : ${red};
                     }

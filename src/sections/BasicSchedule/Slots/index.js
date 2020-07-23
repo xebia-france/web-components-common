@@ -1,7 +1,7 @@
-import React from 'react';
-import { SlotContent, Slot, Header, Tag, Time, Clock, Informations } from "../styled";
+import React, {Component} from 'react';
+import {SlotContent, Slot, Header, Tag, Time, Clock, Informations} from "../styled";
 import SvgClock from '../../../assets/svg/SvgClock';
-import { getDuration, getHourFromTime} from "../utils";
+import {getDuration, getHourFromTime} from "../utils";
 
 export const overlaped = (slot, transverse) => {
     const startSlot = new Date(slot.fromTime);
@@ -29,47 +29,103 @@ export const searchOverlap = (slot, transverses) => {
 }
 
 
+class Slots extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isSwiping: false,
+            xStart : null,
+            xEnd : null
+        };
 
-function Slots({scheduleOfDay, slots, transverses, openPopUp, filter}) {
-    const all = !slots ? transverses : slots.concat(transverses);
+    }
 
-    return all.map(slot => {
+    render() {
 
-        const startDay = scheduleOfDay.startTime;
+        const {scheduleOfDay, slots, transverses, openPopUp, filter} = this.props;
+        const all = !slots ? transverses : slots.concat(transverses);
+
+        return all.map(slot => {
+
+            const startDay = scheduleOfDay.startTime;
 
 
-        return <Slot duration={getDuration(slot.fromTime, slot.toTime)}
-                     minutes={getDuration(startDay, slot.fromTime)}
+            return <Slot duration={getDuration(slot.fromTime, slot.toTime)}
+                         minutes={getDuration(startDay, slot.fromTime)}
+                         className={[!slot.room ? 'other' : '', slot.room && searchOverlap(slot, transverses), filter && filter !== slot.type ? 'filtered' : '' ? 'overlaped' : '']}
+                         onMouseDown={(e) => {
+                             this.setState({
+                                 xStart : e.clientX
+                             })
+                             console.log('MOUSE DOWN')
+                             console.log('MOUSE DOWN e', e)
+                             console.log('X', e.clientX)
+                         }}
+                         onMouseUp={e => {
+                             console.log('MOUSE UP')
+                             console.log('MOUSE UP e', e)
+                             console.log('X', e.clientX)
 
-                     className={[!slot.room ? 'other' : '', slot.room && searchOverlap(slot, transverses), filter && filter !== slot.type ? 'filtered' : '' ? 'overlaped' : '']}
-                     onClick={ () => {
-                         openPopUp(slot)
-                         console.log('openPopUP SLOT')
-                     }}
-        >
-            <SlotContent>
-                <Header>
-                    <Tag>
-                        {slot.type ? <div>{slot.type}</div> : null}
-                        {slot.track ? <div>{slot.track}</div> : null}
-                    </Tag>
-                    <Time>
-                        <Clock><SvgClock/></Clock>
-                        {getHourFromTime(slot.fromTime)} - {getHourFromTime(slot.toTime)}
-                    </Time>
-                </Header>
-                <Informations>
-                    <h4 className={getDuration(slot.fromTime, slot.toTime) <= 30 ? 'cropped' : ''}>{slot.title}</h4>
-                    {
-                        slot.speakers && slot.speakers.length !== 0 && getDuration(slot.fromTime, slot.toTime) >= 30 ?
-                            <h5>{slot.speakers.map((speaker) => speaker.name).join(', ')}</h5>
-                            : null
-                    }
+                             this.setState({
+                                 xEnd : e.clientX
+                             }, () => {
+                                 if(this.state.xStart === this.state.xEnd){
+                                     openPopUp(slot)
+                                 }
+                                 this.setState({
+                                     xStart : null,
+                                     xEnd : null
+                                 })
 
-                </Informations>
-            </SlotContent>
-        </Slot>
-    })
+                             })
+
+                         }}
+                         /*onTouchStart={(e) => {
+                             console.log('ON TOUCH START',e.touches[0].clientX)
+                             this.setState({
+                                 xStart : e.touches[0].clientX
+                             })
+                         }}
+                         onTouchEnd={e => {
+                             console.log('ON TOUCH END', e.touches[0].clientX)
+                             this.setState({
+                                 xEnd :e.touches[0].clientX
+                             }, () => {
+                                 if(this.state.xStart === this.state.xEnd){
+                                     openPopUp(slot)
+                                 }
+                                 this.setState({
+                                     xStart : null,
+                                     xEnd : null
+                                 })
+
+                             })
+                         }}*/
+            >
+                <SlotContent>
+                    <Header>
+                        <Tag>
+                            {slot.type ? <div>{slot.type}</div> : null}
+                            {slot.track ? <div>{slot.track}</div> : null}
+                        </Tag>
+                        <Time>
+                            <Clock><SvgClock/></Clock>
+                            {getHourFromTime(slot.fromTime)} - {getHourFromTime(slot.toTime)}
+                        </Time>
+                    </Header>
+                    <Informations>
+                        <h4 className={getDuration(slot.fromTime, slot.toTime) <= 30 ? 'cropped' : ''}>{slot.title}</h4>
+                        {
+                            slot.speakers && slot.speakers.length !== 0 && getDuration(slot.fromTime, slot.toTime) >= 30 ?
+                                <h5>{slot.speakers.map((speaker) => speaker.name).join(', ')}</h5>
+                                : null
+                        }
+
+                    </Informations>
+                </SlotContent>
+            </Slot>
+        })
+    }
 
 };
 
