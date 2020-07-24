@@ -24,7 +24,7 @@ import {getHourFromTime, getDayFromTime, getStringDate} from "./utils";
 import {fileNameFromUrl} from "../../utils/functions";
 import PopUp from './PopUp';
 import SvgArrow from '../../assets/svg/SvgArrow';
-import axios from 'axios';
+//import axios from 'axios';
 
 
 class BasicSchedule extends Component {
@@ -43,9 +43,9 @@ class BasicSchedule extends Component {
         this.viewsRef = React.createRef()
     }
 
-     async componentDidMount() {
+     /*async componentDidMount() {
 
-          /*  this.setState({
+            this.setState({
                 formatedSchedule:  await this.formatSchedule(),
                 speakers:  await this.formatSpeakers()
             }, () => {
@@ -58,7 +58,7 @@ class BasicSchedule extends Component {
                     types : this.getTypesList(prevState.formatedSchedule[0])
                 }));
 
-            })*/
+            })
     }
 
     async fetchFileSchedule() {
@@ -78,7 +78,7 @@ class BasicSchedule extends Component {
          } catch (error) {
              console.error(error);
          }*/
-        try {
+       /* try {
             
             return await axios.get(this.props.data.schedule)
                 .then(res => {
@@ -111,7 +111,7 @@ class BasicSchedule extends Component {
             console.error(error);
         }*/
 
-        try {
+       /* try {
             return await axios.get(this.props.data.speakers)
                 .then(res => {
                   //  console.log('RES SPEAKERS', res);
@@ -371,7 +371,7 @@ class BasicSchedule extends Component {
         else {
             this.setState({filter: filter})
         }
-    }
+    }*/
 
     render() {
         const {children, fields, name, assetsDirectory, data, locale} = this.props;
@@ -402,12 +402,12 @@ class BasicSchedule extends Component {
             },
         };
 
-        if (!this.state.formatedSchedule || !this.state.scheduleOfDay) return null;
+       // if (!this.state.formatedSchedule || !this.state.scheduleOfDay) return null;
         //console.log('FINAL SCHEDULE', this.state.formatedSchedule)
        // console.log('SCHEDULE OF DAY', this.state.scheduleOfDay)
 
         return null;
-        return (
+        /*return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
                      assetsDirectory={assetsDirectory}
@@ -496,7 +496,7 @@ class BasicSchedule extends Component {
                        allSpeakers={this.state.speakers} assetsDirectory={assetsDirectory} locale={locale}/>
             </Wrapper>
 
-        )
+        )*/
 
     }
 
