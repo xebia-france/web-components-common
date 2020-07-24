@@ -62,71 +62,9 @@ class BasicSchedule extends Component {
             })
     }
 
-    /*async fetchFileSchedule() {
-         try {
-             const response = await fetch(this.props.data.schedule, {
-                 method: 'GET',
-                 credentials: 'same-origin'
-             });
-             const result = await response.json();
-             const slots = result.map(slot => {
-                 let copy = Object.assign({}, slot);
-                 copy.fromTime = this.formatMinutes(slot.fromTime)
-                 copy.toTime = this.formatMinutes(slot.toTime)
-                 return copy;
-             })
-             return slots;
-         } catch (error) {
-             console.error(error);
-         }
-        try {
-            
-            return await axios.get(this.props.data.schedule)
-                .then(res => {
-                    //.log('RES SCHEDULE', res);
-                    const result = res.data;
-                    const slots = result.map(slot => {
-                        let copy = Object.assign({}, slot);
-                        copy.fromTime = this.formatMinutes(slot.fromTime)
-                        copy.toTime = this.formatMinutes(slot.toTime)
-                        return copy;
-                    })
-                    return slots;
-                })
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    async fetchFileSpeakers() {
-
-        try {
-            const response = await fetch(this.props.data.speakers, {
-                method: 'GET',
-                credentials: 'same-origin'
-            });
-            const result = await response.json();
-            console.log('result', result);
-            return result;
-        } catch (error) {
-            console.error(error);
-        }
-
-        try {
-            return await axios.get(this.props.data.speakers)
-                .then(res => {
-                  //  console.log('RES SPEAKERS', res);
-                    const result = res.data;
-                    return result;
-                })
-        } catch (error) {
-            console.error(error);
-        }
-    }*/
-
     formatSpeakers = () => {
         const speakers = [];
-        const data = this.props.speakers;
+        const data = this.props.data.speakers;
 
         data.forEach(s => {
             speakers.push({
@@ -143,7 +81,7 @@ class BasicSchedule extends Component {
     formatSchedule = () => {
         const schedule = [];
 
-        const data = this.props.schedule.map(slot => {
+        const data = this.props.data.schedule.map(slot => {
             let copy = Object.assign({}, slot);
             copy.fromTime = this.formatMinutes(slot.fromTime)
             copy.toTime = this.formatMinutes(slot.toTime)
@@ -287,17 +225,12 @@ class BasicSchedule extends Component {
     }
 
     getTypesList = (schedule) => {
-        const typesNotIncluded = ['break', 'pause', 'lunch']
+        const typesNotIncluded = ['break', 'pause', 'lunch', 'cocktail','déjeuner']
         let allSLots = [];
-        console.log('SEACH TYPE', schedule);
         schedule.rooms.forEach( room => {
             return room.slots.forEach( slot => allSLots.push(slot))
         })
         schedule.others.forEach( slot => allSLots.push(slot));
-        console.log('ALL SLOT', allSLots);
-
-
-
         let typesList = allSLots.map( slot => slot.type);
         console.log('typeList', typesList);
         typesList = [...new Set(typesList)].filter(f => !typesNotIncluded.includes(f));
@@ -502,10 +435,7 @@ class BasicSchedule extends Component {
             </Wrapper>
 
         )
-
     }
-
-
 }
 
 

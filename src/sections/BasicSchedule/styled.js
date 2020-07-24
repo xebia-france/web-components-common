@@ -1071,11 +1071,14 @@ export const Filters = styled.div.attrs(props => ({
   position : absolute;
   background : ${theme.grey90};
   border-radius : 15px;
-  height : 30px;
   display : flex;
-  padding : 5px;
+  padding : 0 5px;
+  padding-top : 5px;
   bottom : 10px;
   align-self : center;
+  max-width : 80%;
+  flex-wrap : wrap;
+  justify-content : center;
   
   &>div{
     background :${theme.grey60};
@@ -1090,6 +1093,8 @@ export const Filters = styled.div.attrs(props => ({
     padding : 0 10px;
     cursor : pointer;
     transition : background 0.2s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
+    margin-bottom : 5px;
+    
 
     
     &:not(:first-child){
