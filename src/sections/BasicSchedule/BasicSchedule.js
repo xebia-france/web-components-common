@@ -45,7 +45,7 @@ class BasicSchedule extends Component {
 
      async componentDidMount() {
 
-            this.setState({
+          /*  this.setState({
                 formatedSchedule:  await this.formatSchedule(),
                 speakers:  await this.formatSpeakers()
             }, () => {
@@ -58,7 +58,7 @@ class BasicSchedule extends Component {
                     types : this.getTypesList(prevState.formatedSchedule[0])
                 }));
 
-            })
+            })*/
     }
 
     async fetchFileSchedule() {
