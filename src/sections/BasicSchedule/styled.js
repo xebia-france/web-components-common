@@ -499,7 +499,19 @@ export const Slot = styled.div.attrs(props => ({
   }
   
   &.filtered{
-    opacity : 0.2;
+     &>div:before{
+       z-index : 0;
+       position : absolute;
+       width : calc(100% - 6px);
+       height : calc(100% - 6px);
+       content : ''; 
+       top : 3px;
+       left : 3px;
+       background : rgba(0,0,0,0.3);
+       border-radius : 4px;
+    }
+    
+    
     
     
   }
@@ -586,6 +598,10 @@ export const BodySchedule = styled.div.attrs(props => ({
                        & ${SlotContent}{
                            border-radius : 0px;
                            
+                           &:before{
+                             border-radius : 0px;
+                           }
+                           
                            & ${ Tag }>div, & ${ Time }, & ${ Informations }{
                                 display : none;
                            }
@@ -609,12 +625,26 @@ export const BodySchedule = styled.div.attrs(props => ({
                                 width : 100%;
                                 & ${SlotContent}{
                                    border-radius :4px 0px 0px 4px;
-                                   
+                                   &:before{
+                                      border-radius :4px 0px 0px 4px;
+                                      width : calc(100% - 8px);
+                                      height : calc(100% - 8px);
+                                      left : 8px;
+                                      top : 4px;
+                                   }
                                    & ${Tag}>div, & ${Informations}{
                                         display : flex;
                                    }
                                } 
                             }
+                            &:not(.other){
+                               & ${SlotContent}{
+                                    &:before{
+                                       width : calc(100% - 2px);
+                                   }
+                               }
+                            }
+                            
                         }
                     } 
             }
@@ -632,6 +662,14 @@ export const BodySchedule = styled.div.attrs(props => ({
                                 & ${SlotContent}{
                                    border-radius :0px 4px 4px 0px;
                                    
+                                   
+                                   &:before{
+                                      border-radius :0px 4px 4px 0px;
+                                      width : calc(100% - 8px);
+                                       height : calc(100% - 8px);
+                                       top : 4px;
+                                       left : 0px;
+                                   }
                                    & ${Time}{
                                         display : flex;
                                    }
@@ -649,11 +687,45 @@ export const BodySchedule = styled.div.attrs(props => ({
                         padding-left : 8px;
                         padding-right : 12px;
                         
+                        & ${SlotContent}{
+                            &:before{
+                                width : calc(100% - 18px);
+                                left : 7px;
+                            }
+                        }
+                        
                        
                   }
+                 
                }
             } 
          }
+         
+         ${props => props.nbrColumn === 1 ? `
+            & ${ Column }{
+                    & ${ SlotsContainer }{
+                        & ${ Slot }{
+                            padding-left : 4px !important;
+                            padding-right : 4px !important;
+                            
+                            &.other{
+                                padding-left : 8px !important;
+                                padding-right : 8px !important;
+                                & ${SlotContent}{
+                                   border-radius :4px !important;
+                                   
+                                   
+                                   &:before{
+                                      border-radius :4px !important;
+                                      width : calc(100% - 16px) !important;
+                                      left : 8px !important;
+                                   }
+                               } 
+                            }
+                        }
+                    } 
+            }
+         `: ''}
         
             
         

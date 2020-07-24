@@ -54,7 +54,8 @@ class BasicSchedule extends Component {
                     scheduleOfDay: prevState.formatedSchedule[0],
                     currentDay: prevState.formatedSchedule[0].date,
                     nbrColumn: prevState.formatedSchedule[0].rooms.length === 0 ? 1 : prevState.formatedSchedule[0].rooms.length,
-                    nbrQuarters: this.getNumberQuarters(prevState.formatedSchedule[0].startTime, prevState.formatedSchedule[0].endTime)
+                    nbrQuarters: this.getNumberQuarters(prevState.formatedSchedule[0].startTime, prevState.formatedSchedule[0].endTime),
+                    types : this.getTypesList(prevState.formatedSchedule[0])
                 }));
 
             })
@@ -273,9 +274,30 @@ class BasicSchedule extends Component {
             this.setState({
                 scheduleOfDay: currentSchedule,
                 nbrColumn: currentSchedule.rooms.length === 0 ? 1 : currentSchedule.rooms.length,
-                nbrQuarters: this.getNumberQuarters(currentSchedule.startTime, currentSchedule.endTime)
+                nbrQuarters: this.getNumberQuarters(currentSchedule.startTime, currentSchedule.endTime),
+                types : this.getTypesList(currentSchedule)
             })
         })
+    }
+
+    getTypesList = (schedule) => {
+        const typesNotIncluded = ['break', 'pause', 'lunch']
+        let allSLots = [];
+        console.log('SEACH TYPE', schedule);
+        schedule.rooms.forEach( room => {
+            return room.slots.forEach( slot => allSLots.push(slot))
+        })
+        schedule.others.forEach( slot => allSLots.push(slot));
+        console.log('ALL SLOT', allSLots);
+
+
+
+        let typesList = allSLots.map( slot => slot.type);
+        console.log('typeList', typesList);
+        typesList = [...new Set(typesList)].filter(f => !typesNotIncluded.includes(f));
+        console.log('typesList 2', typesList);
+        return typesList;
+
     }
 
     getNumberQuarters = (start, end) => {
@@ -383,6 +405,8 @@ class BasicSchedule extends Component {
         if (!this.state.formatedSchedule || !this.state.scheduleOfDay) return null;
         //console.log('FINAL SCHEDULE', this.state.formatedSchedule)
        // console.log('SCHEDULE OF DAY', this.state.scheduleOfDay)
+
+        return null;
         return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
@@ -456,15 +480,14 @@ class BasicSchedule extends Component {
                         <ShadowRight nbrQuarters={this.state.nbrQuarters}/>
                     </BodySchedule>
                     <Filters>
-                        <div className={this.state.filter === 'talk' ? 'active' : ''}
-                             onClick={() => this.updateFilter('talk')}>Talk
-                        </div>
-                        <div className={this.state.filter === 'conf' ? 'active' : ''}
-                             onClick={() => this.updateFilter('conf')}>Conf
-                        </div>
-                        <div className={this.state.filter === 'rex' ? 'active' : ''}
-                             onClick={() => this.updateFilter('rex')}>Rex
-                        </div>
+                        {
+                            this.state.types ?
+                                this.state.types.map(type => {
+                                    return <div className={this.state.filter === type ? 'active' : ''}
+                                                onClick={() => this.updateFilter(type)}>{type}</div>
+                                })
+                            : null
+                        }
                     </Filters>
                 </Schedule>
 
