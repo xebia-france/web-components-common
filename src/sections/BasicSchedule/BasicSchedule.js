@@ -24,7 +24,6 @@ import {getHourFromTime, getDayFromTime, getStringDate} from "./utils";
 import {fileNameFromUrl} from "../../utils/functions";
 import PopUp from './PopUp';
 import SvgArrow from '../../assets/svg/SvgArrow';
-//import axios from 'axios';
 
 
 class BasicSchedule extends Component {
@@ -43,11 +42,13 @@ class BasicSchedule extends Component {
         this.viewsRef = React.createRef()
     }
 
-     /*async componentDidMount() {
+
+    componentDidMount() {
+            console.log('PROPS ON SCHEDULE', this.props)
 
             this.setState({
-                formatedSchedule:  await this.formatSchedule(),
-                speakers:  await this.formatSpeakers()
+                formatedSchedule:  this.formatSchedule(),
+                speakers:  this.formatSpeakers()
             }, () => {
                 this.setState(prevState => ({
                     ...prevState,
@@ -61,8 +62,8 @@ class BasicSchedule extends Component {
             })
     }
 
-    async fetchFileSchedule() {
-        /* try {
+    /*async fetchFileSchedule() {
+         try {
              const response = await fetch(this.props.data.schedule, {
                  method: 'GET',
                  credentials: 'same-origin'
@@ -77,8 +78,8 @@ class BasicSchedule extends Component {
              return slots;
          } catch (error) {
              console.error(error);
-         }*/
-       /* try {
+         }
+        try {
             
             return await axios.get(this.props.data.schedule)
                 .then(res => {
@@ -99,7 +100,7 @@ class BasicSchedule extends Component {
 
     async fetchFileSpeakers() {
 
-        /*try {
+        try {
             const response = await fetch(this.props.data.speakers, {
                 method: 'GET',
                 credentials: 'same-origin'
@@ -109,9 +110,9 @@ class BasicSchedule extends Component {
             return result;
         } catch (error) {
             console.error(error);
-        }*/
+        }
 
-       /* try {
+        try {
             return await axios.get(this.props.data.speakers)
                 .then(res => {
                   //  console.log('RES SPEAKERS', res);
@@ -121,11 +122,11 @@ class BasicSchedule extends Component {
         } catch (error) {
             console.error(error);
         }
-    }
+    }*/
 
-    formatSpeakers = async () => {
+    formatSpeakers = () => {
         const speakers = [];
-        const data = await this.fetchFileSpeakers();
+        const data = this.props.speakers;
 
         data.forEach(s => {
             speakers.push({
@@ -139,10 +140,15 @@ class BasicSchedule extends Component {
         return speakers;
     }
 
-    formatSchedule = async () => {
+    formatSchedule = () => {
         const schedule = [];
 
-        const data = await this.fetchFileSchedule();
+        const data = this.props.schedule.map(slot => {
+            let copy = Object.assign({}, slot);
+            copy.fromTime = this.formatMinutes(slot.fromTime)
+            copy.toTime = this.formatMinutes(slot.toTime)
+            return copy;
+        })
 
 
         const days = data.map(slot => {
@@ -371,7 +377,7 @@ class BasicSchedule extends Component {
         else {
             this.setState({filter: filter})
         }
-    }*/
+    }
 
     render() {
         const {children, fields, name, assetsDirectory, data, locale} = this.props;
@@ -402,12 +408,11 @@ class BasicSchedule extends Component {
             },
         };
 
-       // if (!this.state.formatedSchedule || !this.state.scheduleOfDay) return null;
+        if (!this.state.formatedSchedule || !this.state.scheduleOfDay) return null;
         //console.log('FINAL SCHEDULE', this.state.formatedSchedule)
        // console.log('SCHEDULE OF DAY', this.state.scheduleOfDay)
 
-        return null;
-        /*return (
+        return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
                      assetsDirectory={assetsDirectory}
@@ -496,7 +501,7 @@ class BasicSchedule extends Component {
                        allSpeakers={this.state.speakers} assetsDirectory={assetsDirectory} locale={locale}/>
             </Wrapper>
 
-        )*/
+        )
 
     }
 
