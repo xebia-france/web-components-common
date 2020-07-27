@@ -87,6 +87,7 @@ export const Container = styled.div.attrs(props => ({
   margin: auto;
   width : inherit;
   display : flex;
+  flex-direction : column;
   z-index : 2;
   
    ${ props => props.responsive.map((size, i) => `
@@ -179,6 +180,9 @@ export const Head = styled.div.attrs(props => ({
     align-items : center;
     justify-content : center;
     color : white;
+    position : sticky;
+    top : 0;
+    z-index : 8;
 `;
 
 export const Column = styled.div.attrs(props => ({
@@ -241,6 +245,8 @@ export const HoursLine = styled.div.attrs(props => ({
   z-index: 20;
   transition : margin-right 0.0s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
   background : white;
+  position : sticky;
+  left : 0;
   
   &>div{
   
@@ -555,6 +561,65 @@ export const ShadowRight = styled.div.attrs(props => ({
 
 `;
 
+export const Table = styled.div.attrs(props => ({
+    nbrColumn : props.nbrColumn
+
+}))`
+   
+   ${ props => props.nbrColumn ? `
+        width : calc(100% * ${props.nbrColumn});
+        display : flex;
+        flex-shrink  :  0;
+        
+        &>div{
+            width : calc(100% / ${props.nbrColumn});
+        }
+        
+   ` : ''}
+   
+   
+   
+   @media (min-width: 1024px) {
+        &>div{
+            width : calc(100% / ${props => props.nbrColumn * 3} - 30px);
+        }
+        
+        
+             
+   }
+   
+   @media (min-width: ${size.T}) and (max-width: 1023px) {
+        &>div{
+            width : calc(100% / ${props => props.nbrColumn * 2} - 30px);
+        }
+       
+             
+   }
+    
+    
+    @media ${device.M} {
+        &>div{
+            width : calc(100% / ${props => props.nbrColumn * 1} - 30px);
+        }
+       
+             
+    }
+    
+    @media (max-width: 479px) {
+        
+        
+        
+        
+             
+    }
+   
+   
+   
+   
+  
+   
+`;
+
 export const BodySchedule = styled.div.attrs(props => ({
     responsive: props.responsive,
     nbrColumn : props.nbrColumn,
@@ -564,9 +629,8 @@ export const BodySchedule = styled.div.attrs(props => ({
 
 }))`
   display : flex;
-  overflow : hidden;
   position : relative;
-  overflow-y : scroll;
+  overflow : scroll;
   height : 70vh;
   cursor : pointer;
   border-bottom: 1px solid ${grey50};
@@ -575,7 +639,7 @@ export const BodySchedule = styled.div.attrs(props => ({
   ${props => props.filter ? `background : ${theme.grey60}; ` : ''}
   
   & ${Column}{
-
+        ${ props => props.nbrQuarters && props.nbrQuarters !== 0 ? `height :${props.nbrQuarters * baseHeight}px;` : ``}
         & ${Head}{
             border-right: 1px solid rgba(255,255,255,0.5);
         }
@@ -587,7 +651,7 @@ export const BodySchedule = styled.div.attrs(props => ({
   &>div:nth-child(2){    
   
     &>div>div {
-        ${ props => props.nbrQuarters && props.nbrQuarters !== 0 ? `height :${props.nbrQuarters * baseHeight}px;` : ``}
+       // ${ props => props.nbrQuarters && props.nbrQuarters !== 0 ? `height :${props.nbrQuarters * baseHeight}px;` : ``}
 
         & ${ Column }{
            & ${ SlotsContainer }{
@@ -998,10 +1062,10 @@ export const BodySchedule = styled.div.attrs(props => ({
     }
     
     
-    & ${Head}{
+   /* & ${Head}{
         opacity : 0;
         height : 0;
-    }
+    }*/
     
   
 `;
@@ -1079,7 +1143,7 @@ export const Filters = styled.div.attrs(props => ({
   max-width : 80%;
   flex-wrap : wrap;
   justify-content : center;
-  
+  z-index : 9;
   &>div{
     background :${theme.grey60};
     border-radius : 10px;

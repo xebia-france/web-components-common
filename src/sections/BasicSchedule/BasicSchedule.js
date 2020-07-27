@@ -15,7 +15,7 @@ import {
     DashContainer,
     Day,
     Days,
-    Schedule, Filters, SwitchButtons, ToRight, ToLeft
+    Schedule, Filters, SwitchButtons, ToRight, ToLeft, Table
 } from "./styled";
 import {renderView} from './View';
 import {getHoursTimeLine} from './TimeLine';
@@ -345,6 +345,7 @@ class BasicSchedule extends Component {
         //console.log('FINAL SCHEDULE', this.state.formatedSchedule)
        // console.log('SCHEDULE OF DAY', this.state.scheduleOfDay)
 
+        console.log('THIS PROPS : ', this.props);
         return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
@@ -386,15 +387,19 @@ class BasicSchedule extends Component {
                                responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
                                nbrColumn={this.state.nbrColumn} index={this.state.index}>
                         <HoursLine>
-                            <Label><p>ROOM</p></Label>
+
                         </HoursLine>
-                        <SwipeableViews
+                        {
+                            /*
+                            <SwipeableViews
                             index={this.state.index} style={styles.root}  enableMouseEvents onChangeIndex={this.updateIndex}
                             slideStyle={styles.slideContainer} springConfig={{}} animateTransitions={false}>
                             {
                                 this.state.scheduleOfDay ? renderRooms(this.state.scheduleOfDay, styles) : null
                             }
                         </SwipeableViews>
+                             */
+                        }
                         <ShadowLeft/>
                         <ShadowRight/>
                     </BodyRooms>
@@ -402,18 +407,26 @@ class BasicSchedule extends Component {
                                   nbrColumn={this.state.nbrColumn} index={this.state.index}
                                   nbrQuarters={this.state.nbrQuarters} filter={this.state.filter}>
                         <HoursLine>
+                            <Label><p>ROOM</p></Label>
                             {getHoursTimeLine(this.state.scheduleOfDay.startTime, this.state.scheduleOfDay.endTime)}
                         </HoursLine>
-                        <SwipeableViews
-                            ref={this.viewsRef}
-                            index={this.state.index} onSwitching={this.switchView} onChangeIndex={this.updateIndex}
-                             enableMouseEvents style={styles.root}
-                            slideStyle={styles.slideContainer} springConfig={{}} animateTransitions={false}
-                        >
+                        {/*
+                            <SwipeableViews
+                                ref={this.viewsRef}
+                                index={this.state.index} onSwitching={this.switchView} onChangeIndex={this.updateIndex}
+                                enableMouseEvents style={styles.root}
+                                slideStyle={styles.slideContainer} springConfig={{}} animateTransitions={false}
+                            >
+                                {
+                                    this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter) : null
+                                }
+                            </SwipeableViews>
+                        */}
+                        <Table nbrColumn={this.state.nbrColumn}>
                             {
                                 this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter) : null
                             }
-                        </SwipeableViews>
+                        </Table>
                         <ShadowLeft nbrQuarters={this.state.nbrQuarters}/>
                         <ShadowRight nbrQuarters={this.state.nbrQuarters}/>
                     </BodySchedule>
