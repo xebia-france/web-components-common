@@ -24,7 +24,7 @@ import {getHourFromTime, getDayFromTime, getStringDate} from "./utils";
 import {fileNameFromUrl} from "../../utils/functions";
 import PopUp from './PopUp';
 import SvgArrow from '../../assets/svg/SvgArrow';
-
+import ReactDOM from 'react-dom';
 
 class BasicSchedule extends Component {
     constructor(props) {
@@ -36,17 +36,22 @@ class BasicSchedule extends Component {
             translatePosition: null,
             transition: 'transform 0.0s cubic-bezier(0.15, 0.3, 0.25, 1) 0s',
             openPopUp: false,
-            filter: null
+            filter: null,
+            shadowLeft : false,
+            shadowRight : true
         };
 
-        this.viewsRef = React.createRef()
+        this.slider = React.createRef()
+        this.table = React.createRef()
+
     }
 
 
     componentDidMount() {
-            console.log('PROPS ON SCHEDULE', this.props)
+        console.log('PROPS ON SCHEDULE', this.props);
 
-            this.setState({
+
+        this.setState({
                 formatedSchedule:  this.formatSchedule(),
                 speakers:  this.formatSpeakers()
             }, () => {
@@ -61,6 +66,22 @@ class BasicSchedule extends Component {
 
             })
     }
+
+    fireOnScroll(e) {
+        if(!this.state.shadowLeft && this.slider.current.scrollLeft !== 0){
+            this.setState({shadowLeft : true })
+        }
+        if(this.state.shadowLeft && this.slider.current.scrollLeft === 0){
+            this.setState({shadowLeft : false })
+        }
+
+        if( this.slider.current.scrollLeft > (this.table.current.clientWidth - this.slider.current.clientWidth  - 100)  && this.state.shadowRight){
+            this.setState({shadowRight : false })
+        }else if(this.slider.current.scrollLeft < (this.table.current.clientWidth - this.slider.current.clientWidth  - 100) && !this.state.shadowRight){
+            this.setState({shadowRight : true })
+        }
+    }
+
 
     formatSpeakers = () => {
         const speakers = [];
@@ -182,15 +203,7 @@ class BasicSchedule extends Component {
     }
 
 
-    switchView = (index, type) => {
 
-        const css = this.viewsRef.current.containerNode.style.transform;
-        this.setState({
-            translatePosition: css,
-           // transition: 'all 0.0s cubic-bezier(0.15,0.3,0.25,1) 0s'
-        });
-
-    };
 
 
     updateIndex = index => {
@@ -198,13 +211,11 @@ class BasicSchedule extends Component {
 
         this.setState({
             index: index,
-           // transition: 'transform 0.2s cubic-bezier(0.15,0.3,0.25,1) 0s'
         }, () => {
 
             const css = this.viewsRef.current.containerNode.style.transform;
             this.setState({
                 translatePosition: css,
-                // transition: 'all 0.0s cubic-bezier(0.15,0.3,0.25,1) 0s'
             });
         });
     };
@@ -312,6 +323,12 @@ class BasicSchedule extends Component {
         }
     }
 
+    handleEvent(e) {
+        console.log('Scroll event detected!');
+        console.log('e scroll',e );
+
+    }
+
     render() {
         const {children, fields, name, assetsDirectory, data, locale} = this.props;
         const Template = fields.Template;
@@ -400,36 +417,23 @@ class BasicSchedule extends Component {
                         </SwipeableViews>
                              */
                         }
-                        <ShadowLeft/>
-                        <ShadowRight/>
+
                     </BodyRooms>
                     <BodySchedule responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
                                   nbrColumn={this.state.nbrColumn} index={this.state.index}
-                                  nbrQuarters={this.state.nbrQuarters} filter={this.state.filter}>
+                                  nbrQuarters={this.state.nbrQuarters} filter={this.state.filter}  ref={this.slider} onScroll={(e) => this.fireOnScroll(e)} >
                         <HoursLine>
                             <Label><p>ROOM</p></Label>
                             {getHoursTimeLine(this.state.scheduleOfDay.startTime, this.state.scheduleOfDay.endTime)}
                         </HoursLine>
-                        {/*
-                            <SwipeableViews
-                                ref={this.viewsRef}
-                                index={this.state.index} onSwitching={this.switchView} onChangeIndex={this.updateIndex}
-                                enableMouseEvents style={styles.root}
-                                slideStyle={styles.slideContainer} springConfig={{}} animateTransitions={false}
-                            >
-                                {
-                                    this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter) : null
-                                }
-                            </SwipeableViews>
-                        */}
-                        <Table nbrColumn={this.state.nbrColumn}>
+                        <Table ref={this.table} nbrColumn={this.state.nbrColumn} >
                             {
                                 this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter) : null
                             }
                         </Table>
-                        <ShadowLeft nbrQuarters={this.state.nbrQuarters}/>
-                        <ShadowRight nbrQuarters={this.state.nbrQuarters}/>
                     </BodySchedule>
+                    <ShadowLeft nbrQuarters={this.state.nbrQuarters} className={this.state.shadowLeft ? 'display'  : ''}/>
+                    <ShadowRight nbrQuarters={this.state.nbrQuarters} className={this.state.shadowRight ? 'display'  : ''}/>
                     <Filters>
                         {
                             this.state.types ?

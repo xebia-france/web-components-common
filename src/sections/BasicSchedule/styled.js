@@ -186,7 +186,11 @@ export const Head = styled.div.attrs(props => ({
 `;
 
 export const Column = styled.div.attrs(props => ({
-}))``;
+
+}))`
+    position : relative;
+
+`;
 
 
 export const HeadSchedule = styled.div.attrs(props => ({
@@ -530,14 +534,19 @@ export const ShadowLeft = styled.div.attrs(props => ({
 
 }))`
     position : absolute;
-    top : 0;
+    top : 80px;
     left : 35px;
     width : 25px;
     height : 100%;
     box-shadow: inset 180px 0px 10px -173px rgba(0,0,0,0.51);
     opacity : 0;
+    z-index : 12;
     transition : opacity 0.2s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
     ${ props => props.nbrQuarters && props.nbrQuarters !== 0 ? `height :${props.nbrQuarters * baseHeight}px;` : ``}
+
+    &.display{
+        opacity : 1;
+    }
 
     @media ${ device['M'] } {
       left : 25px;
@@ -549,16 +558,20 @@ export const ShadowRight = styled.div.attrs(props => ({
 
 }))`
     position : absolute;
-    top : 0;
+    top : 80px;
     right : 0;
     width : 25px;
     height : 100%;
     transform : scaleX(-1);
     box-shadow: inset 180px 0px 10px -173px rgba(0,0,0,0.51);
     opacity : 0;
+    z-index : 12;
     transition : opacity 0.2s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
     ${ props => props.nbrQuarters && props.nbrQuarters !== 0 ? `height :${props.nbrQuarters * baseHeight}px;` : ``}
 
+    &.display{
+        opacity : 1;
+    }
 `;
 
 export const Table = styled.div.attrs(props => ({
@@ -567,7 +580,7 @@ export const Table = styled.div.attrs(props => ({
 }))`
    
    ${ props => props.nbrColumn ? `
-        width : calc(100% * ${props.nbrColumn});
+        width : calc(40vw * ${props.nbrColumn});
         display : flex;
         flex-shrink  :  0;
         
@@ -580,8 +593,12 @@ export const Table = styled.div.attrs(props => ({
    
    
    @media (min-width: 1024px) {
+        width : calc(30vw * ${props => props.nbrColumn});
+        max-width : calc(390px * ${props => props.nbrColumn});
         &>div{
-            width : calc(100% / ${props => props.nbrColumn * 3} - 30px);
+           // width : calc(100% / ${props => props.nbrColumn * 3} - 30px);
+           width: 30vw;
+           max-width : 390px;
         }
         
         
@@ -589,8 +606,10 @@ export const Table = styled.div.attrs(props => ({
    }
    
    @media (min-width: ${size.T}) and (max-width: 1023px) {
+        width : calc(40vw * ${ props => props.nbrColumn});
         &>div{
-            width : calc(100% / ${props => props.nbrColumn * 2} - 30px);
+            //width : calc(100% / ${props => props.nbrColumn * 2} - 30px);
+            width: 40vw;
         }
        
              
@@ -598,8 +617,10 @@ export const Table = styled.div.attrs(props => ({
     
     
     @media ${device.M} {
+        width : calc(80vw * ${ props => props.nbrColumn});
         &>div{
-            width : calc(100% / ${props => props.nbrColumn * 1} - 30px);
+            //width : calc(100% / ${props => props.nbrColumn * 2} - 30px);
+            width: 80vw;
         }
        
              
@@ -835,16 +856,16 @@ export const BodySchedule = styled.div.attrs(props => ({
             ${ props => props.nbrColumn > 3 ? `
             
                 ${ props.index === 0 ? `
-                  padding :0 calc((100% - 35px - 0px) * (2/3) ) 0 50px !important;
+                  padding :0 0 0 50px !important;
                 ` : `
-                  padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 50px !important;`
+                  padding : 0 0 0 50px !important;`
                 }
                 
                 ${ (props.nbrColumn - props.index) <= 3  ? `
                     &>div{
                         transform : translate(-${(props.nbrColumn - 3) * 100}%, 0px) !important;
                     }
-                    padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 25px !important;
+                    padding : 0 0 0 25px !important;
                     
                     
 
@@ -856,13 +877,13 @@ export const BodySchedule = styled.div.attrs(props => ({
             ` 
             : ''}
             ${ props => props.nbrColumn === 3 ? `
-                padding :0 calc((100% - 35px) * (2/3)) 0 0 !important;
+                padding :0 0 0 0 !important;
                 &>div{
                     transform : translate(0%, 0px) !important;
                 }
             ` : ''}
             ${ props => props.nbrColumn === 2 ? `
-                padding :0 calc((100% - 35px) * (1/2)) 0 0 !important;
+                padding :0 0 0 0 !important;
                 &>div{
                     transform : translate(0%, 0px) !important;
                 }
@@ -906,16 +927,16 @@ export const BodySchedule = styled.div.attrs(props => ({
             ${ props => props.nbrColumn > 2 ? `
             
                 ${ props.index === 0 ? `
-                  padding :0 calc((100% - 35px - 0px) * (0.53) ) 0 50px !important;
+                  padding :0 0 0 50px !important;
                 ` : `
-                  padding : 0 calc((100% - 35px + 25px) * (0.53) ) 0 50px !important;`
+                  padding : 0 0 0 50px !important;`
                 }
                 
                 ${ (props.nbrColumn - props.index) <= 2  ? `
                     &>div{
                         transform : translate(-${(props.nbrColumn - 2) * 100}%, 0px) !important;
                     }
-                    padding : 0 calc((100% - 35px + 25px) * (0.53) ) 0 25px !important;
+                    padding : 0 0 0 25px !important;
 
                     
                     
@@ -926,7 +947,7 @@ export const BodySchedule = styled.div.attrs(props => ({
             : ''}
             
             ${ props => props.nbrColumn === 2 ? `
-                padding :0 calc((100% - 35px) * (1/2)) 0 0 !important;
+                padding :0 0 0 0 !important;
                 &>div{
                     transform : translate(0%, 0px) !important;
                 }
@@ -971,16 +992,16 @@ export const BodySchedule = styled.div.attrs(props => ({
             ${ props => props.nbrColumn > 1 ? `
             
                 ${ props.index === 0 ? `
-                  padding :0 calc((100% - 35px - 0px) * (1/8) ) 0 50px !important;
+                  padding :0 0 0 50px !important;
                 ` : `
-                  padding : 0 calc((100% - 35px + 25px) * (1/8) ) 0 50px !important;`
+                  padding : 0 0 0 50px !important;`
                 }
                 
                 ${ (props.nbrColumn - props.index) <= 1  ? `
                     &>div{
                         transform : translate(-${(props.nbrColumn - 1) * 100}%, 0px) !important;
                     }
-                    padding : 0 calc((100% - 35px + 25px) * (1/8) ) 0 25px !important;
+                    padding : 0 0 0 25px !important;
 
                     
                     
@@ -1029,16 +1050,16 @@ export const BodySchedule = styled.div.attrs(props => ({
             ${ props => props.nbrColumn > 1 ? `
             
                 ${ props.index === 0 ? `
-                  padding :0 calc((100% - 35px - 300px) * (1/8) ) 0 50px !important;
+                  padding :0 0 0 50px !important;
                 ` : `
-                  padding : 0 calc((100% - 35px + 0px) * (1/8) ) 0 20px !important;`
+                  padding : 0 0 0 20px !important;`
                 }
                 
                 ${ (props.nbrColumn - props.index) <= 1  ? `
                     &>div{
                         transform : translate(-${(props.nbrColumn - 1) * 100}%, 0px) !important;
                     }
-                    padding : 0 calc((100% - 35px + 0px) * (1/8) ) 0 20px !important;
+                    padding : 0 0 0 20px !important;
 
                     
                     
