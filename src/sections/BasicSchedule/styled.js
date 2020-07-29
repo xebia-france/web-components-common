@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {
     generatePadding,
     generateBorder,
-    generateBackgroundImage, generateBackgroundImageWebp, getFormatedColor
+    generateBackgroundImage, generateBackgroundImageWebp, getFormatedColor, generateFontProperties
 } from "../../utils/StyleGenerator";
 
 import {device, size, theme} from "../../styles/constants";
@@ -88,47 +88,8 @@ export const Container = styled.div.attrs(props => ({
   width : inherit;
   display : flex;
   z-index : 2;
-  
-   ${ props => props.responsive.map((size, i) => `
-         @media ${ device[size] } {
-             flex-direction : ${ props.flex[size].properties.direction };
-             flex-wrap: ${ props.flex[size].properties.wrap };
-             justify-content: ${ props.flex[size].properties.justify };
-             align-items: ${ props.flex[size].properties.alignItems };
-             align-content: ${ props.flex[size].properties.alignContent };
-             margin-bottom : -${ props.flex[size].properties.gutterVertical }px;
-             
-             
-             
-             &>*{
-                width: calc(100% / ${ props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px );
-                margin-bottom : ${ props.flex[size].properties.gutterVertical }px;
-                
-                ${props.flex[size].properties.justify === 'flex-start' ? `
-                    &:not(:nth-child(${ props.flex[size].properties.columns }n) ){
-                        margin-right : ${props.flex[size].properties.gutterHorizontal}px;
-                    }
-                    
-                    `  : ''
-                }
-                ${props.flex[size].properties.justify === 'flex-end' ? `
-                    &:not(:nth-child(${ props.flex[size].properties.columns }n + 1)){
-                      margin-left : ${props.flex[size].properties.gutterHorizontal}px;
-                    }
-                    `  : ''
-                }
-                
-                ${props.flex[size].properties.justify === 'center' ? `
-                    &:not(:nth-child(${ props.flex[size].properties.columns }n + 1)){
-                      margin-left : ${props.flex[size].properties.gutterHorizontal}px;
-                    }
-                    `  : ''
-                }
-                
-             }
-             
-         }`)
-    }; 
+  flex-direction : column;
+    
 `;
 
 export const Test = styled.div.attrs(props => ({
@@ -169,7 +130,8 @@ export const DashContainer = styled.div.attrs(props => ({
 
 
 export const Head = styled.div.attrs(props => ({
-
+    responsive : props.responsive,
+    typographyTitle: props.typographyTitle
 }))`
     background-color : ${theme.grey90};
     padding-left : 20px;
@@ -179,6 +141,12 @@ export const Head = styled.div.attrs(props => ({
     align-items : center;
     justify-content : center;
     color : white;
+    
+    ${ props => props.responsive.map(size => `
+        @media ${ device[size] } {
+            ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+        }`)
+    };
 `;
 
 export const Column = styled.div.attrs(props => ({
@@ -305,7 +273,9 @@ export const HoursLine = styled.div.attrs(props => ({
 
 
 export const Day = styled.div.attrs(props => ({
-
+    basis : props.basis,
+    responsive : props.responsive,
+    typographyTitle: props.typographyTitle
 }))`
   background-color : ${grey50};
   border-right: 1px solid rgba(255,255,255,0.5);
@@ -319,9 +289,14 @@ export const Day = styled.div.attrs(props => ({
   align-items : center;
   justify-content : center;
   
-  &.active{
-    background-color : ${red};
-  }
+  ${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+            ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+            &.active{
+               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+            }
+         }`)
+  };
   
 `;
 
@@ -354,11 +329,22 @@ export const Header = styled.div.attrs(props => ({
 `;
 
 export const Tag = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    typographyTitle: props.typographyTitle
 }))`
     display : flex;
     height : 20px;
     flex-wrap : wrap;
     overflow : hidden;
+    
+    
+    ${ props => props.responsive.map(size => `
+        @media ${ device[size] } {
+            &>div{
+                ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+            }
+        }`)
+    };
     
    &>div{
         height : 20px;
@@ -386,15 +372,6 @@ export const Tag = styled.div.attrs(props => ({
  
 `;
 
-export const Time = styled.div.attrs(props => ({
-}))`
- font-size : 12px;
- line-height : 15px;
- display : flex;
- min-width : 95px;
- opacity : 0.7;
- 
-`;
 
 export const Clock = styled.div.attrs(props => ({
 }))`
@@ -411,6 +388,33 @@ export const Clock = styled.div.attrs(props => ({
  
 `;
 
+export const Time = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    typographyTitle: props.typographyTitle,
+    basisTitle: props.basisTitle,
+    basis : props.basis
+}))`
+ display : flex;
+ min-width : 95px;
+ opacity : 0.7;
+ 
+ ${ props => props.responsive.map(size => `
+        @media ${ device[size] } {
+            ${ props.typographyTitle ? `color: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
+            ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+            font-size : 12px;
+            line-height : 15px;
+            
+            & ${Clock} svg path{
+                ${ props.typographyTitle ? `fill: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) } !important;` : ''}
+            }
+        }`)
+ };
+ 
+ 
+`;
+
+
 
 export const SlotsContainer = styled.div.attrs(props => ({
 
@@ -420,10 +424,33 @@ export const SlotsContainer = styled.div.attrs(props => ({
 `;
 
 export const Informations = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    typographyTitle: props.typographyTitle,
+    basisTitle: props.basisTitle,
+    typographyText: props.typographyText,
+    basisText: props.basisText
 }))`
  display : flex;
  flex-direction : column;
  
+ 
+ ${ props =>  props.responsive ? props.responsive.map(size => `
+        @media ${ device[size] } {
+        
+            & h4{
+                ${ props.typographyTitle ? `color: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
+                ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+                ${ props.basisTitle ? generatePadding(props.basisTitle, size) : '' }   
+            }
+            & h5{
+                ${ props.typographyText ? `color: ${ getFormatedColor(props.typographyText[size].color, props.typographyText[size].opacity) };` : ''}
+                ${ props.typographyText ? generateFontProperties(props.typographyText, size) : '' }
+                ${ props.basisText ? generatePadding(props.basisText, size) : '' }   
+            }
+                         
+        }`) : ''
+    }; 
+    
   & h4{
     font-size : 14px;
     line-height : 18px;
@@ -464,6 +491,8 @@ export const Slot = styled.div.attrs(props => ({
     duration: props.duration,
     hours: props.hours,
     minutes: props.minutes,
+    basis : props.basis,
+    responsive : props.responsive
 
 }))`
   ${ props => `
@@ -481,12 +510,9 @@ export const Slot = styled.div.attrs(props => ({
     z-index : 1;
 
     & ${SlotContent}{
-        background : ${red};
         color : white;
         
-        & ${Clock} svg path{
-            fill : white !important;
-        }
+        
         
         & ${ Informations}{
         
@@ -510,11 +536,16 @@ export const Slot = styled.div.attrs(props => ({
        background : rgba(0,0,0,0.3);
        border-radius : 4px;
     }
-    
-    
-    
-    
   }
+  
+  ${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+            & ${SlotContent}{
+               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+            }
+         }`)
+    };
+  
 `;
 
 
@@ -1067,6 +1098,9 @@ export const Grid = styled.div.attrs(props => ({
   
 `;
 export const Filters = styled.div.attrs(props => ({
+    basis : props.basis,
+    responsive : props.responsive,
+    typographyTitle: props.typographyTitle
 }))`
   position : absolute;
   background : ${theme.grey90};
@@ -1100,16 +1134,28 @@ export const Filters = styled.div.attrs(props => ({
     &:not(:first-child){
        margin-left : 5px;
     }
-    
-    &:hover{
-        background : ${red};
-    }
-    &.active{
-        background : ${red};
-    }
   }
   
+   ${ props =>  props.responsive ? props.responsive.map(size => `
+        @media ${ device[size] } {
         
+            &>div{
+                ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+                ${ props.basisTitle ? generatePadding(props.basisTitle, size) : '' }   
+                font-size : 14px;
+                line-height : 16px;
+                color : ${theme.white};
+                
+                &:hover{
+                   background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+                }
+                &.active{
+                    background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+                }
+            }
+                     
+        }`) : ''
+    };     
         
         
   
@@ -1151,7 +1197,9 @@ export const ToRight = styled.div.attrs(props => ({
 
 export const SwitchButtons = styled.div.attrs(props => ({
     nbrColumn : props.nbrColumn,
-    index : props.index
+    index : props.index,
+    basis : props.basis,
+    responsive : props.responsive
 }))`
   background : ${theme.white};
   width : 80px;
@@ -1164,9 +1212,7 @@ export const SwitchButtons = styled.div.attrs(props => ({
                 opacity : 1;
                 cursor :pointer;
                 pointer-events: auto;
-                &:hover svg path{
-                    fill : ${red};
-                }
+                
             }
   ` : ``}
   
@@ -1183,7 +1229,6 @@ export const SwitchButtons = styled.div.attrs(props => ({
                     cursor :pointer;
                     pointer-events: auto;
                     &:hover{
-                        background : ${red};
                         
                         & svg path{
                             fill : ${theme.white};
@@ -1203,7 +1248,6 @@ export const SwitchButtons = styled.div.attrs(props => ({
                     pointer-events: auto;
                     
                     &:hover{
-                        background : ${red};
                         
                         & svg path{
                             fill : ${theme.white};
@@ -1213,4 +1257,19 @@ export const SwitchButtons = styled.div.attrs(props => ({
             ` : ``}
         ` : ''}
     }
+    
+    ${ props =>  props.responsive ? props.responsive.map(size => `
+        @media ${ device[size] } {
+            & ${ToRight}, & ${ToLeft}{
+                    &:hover{
+                        background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+                        
+                        & svg path{
+                            fill : ${theme.white};
+                        }
+                    }
+                }
+                     
+        }`) : ''
+    };
 `;

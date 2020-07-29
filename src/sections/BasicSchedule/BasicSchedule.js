@@ -20,7 +20,7 @@ import {
 import {renderView} from './View';
 import {getHoursTimeLine} from './TimeLine';
 import {renderRooms} from './Rooms';
-import {getHourFromTime, getDayFromTime, getStringDate} from "./utils";
+import {getHourFromTime, getDayFromTime, getStringDate, getBasisByType} from "./utils";
 import {fileNameFromUrl} from "../../utils/functions";
 import PopUp from './PopUp';
 import SvgArrow from '../../assets/svg/SvgArrow';
@@ -315,7 +315,7 @@ class BasicSchedule extends Component {
     render() {
         const {children, fields, name, assetsDirectory, data, locale} = this.props;
         const Template = fields.Template;
-        const FlexContainer = fields.FlexContainer;
+        const ScheduleField = fields.Schedule;
 
         const styles = {
             root: {
@@ -353,9 +353,7 @@ class BasicSchedule extends Component {
                      responsive={Template ? Template.responsiveSettings : null}
                      basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                      border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
-            ><Container
-                responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
+            ><Container>
                 <div>Programme</div>
                 <Schedule>
                     <HeadSchedule>
@@ -364,12 +362,19 @@ class BasicSchedule extends Component {
                             {
                                 this.state.formatedSchedule.map(day => {
                                     return <Day className={day.date === this.state.currentDay ? 'active' : ''}
+                                                responsive={ScheduleField.responsiveSettings}
+                                                basis={ScheduleField.settings.set1Bkg}
+                                                typographyTitle={ScheduleField.settings.set1Title}
                                                 onClick={() => this.changeCurrentDay(day.date)}>{getStringDate(day.date, locale)}</Day>
                                 })
                             }
 
                         </Days>
-                        <SwitchButtons index={this.state.index} nbrColumn={this.state.nbrColumn}>
+                        <SwitchButtons index={this.state.index}
+                                       nbrColumn={this.state.nbrColumn}
+                                       responsive={ScheduleField.responsiveSettings}
+                                       basis={ScheduleField.settings.set1Bkg}
+                        >
                             <ToLeft onClick={() => {
                                 if (this.state.index !== 0) {
                                     this.updateIndex(this.state.index - 1)
@@ -383,7 +388,7 @@ class BasicSchedule extends Component {
                         </SwitchButtons>
                     </HeadSchedule>
                     <BodyRooms translatePosition={this.state.translatePosition} transition={this.state.transition}
-                               responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                               responsive={ScheduleField ? ScheduleField.responsiveSettings : []}
                                nbrColumn={this.state.nbrColumn} index={this.state.index}>
                         <HoursLine>
                             <Label><p>ROOM</p></Label>
@@ -392,13 +397,13 @@ class BasicSchedule extends Component {
                             index={this.state.index} style={styles.root}  enableMouseEvents onChangeIndex={this.updateIndex}
                             slideStyle={styles.slideContainer} springConfig={{}} animateTransitions={false}>
                             {
-                                this.state.scheduleOfDay ? renderRooms(this.state.scheduleOfDay, styles) : null
+                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter, ScheduleField) : null
                             }
                         </SwipeableViews>
                         <ShadowLeft/>
                         <ShadowRight/>
                     </BodyRooms>
-                    <BodySchedule responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                    <BodySchedule responsive={ScheduleField ? ScheduleField.responsiveSettings : []}
                                   nbrColumn={this.state.nbrColumn} index={this.state.index}
                                   nbrQuarters={this.state.nbrQuarters} filter={this.state.filter}>
                         <HoursLine>
@@ -411,13 +416,15 @@ class BasicSchedule extends Component {
                             slideStyle={styles.slideContainer} springConfig={{}} animateTransitions={false}
                         >
                             {
-                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter) : null
+                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter, ScheduleField) : null
                             }
                         </SwipeableViews>
                         <ShadowLeft nbrQuarters={this.state.nbrQuarters}/>
                         <ShadowRight nbrQuarters={this.state.nbrQuarters}/>
                     </BodySchedule>
-                    <Filters>
+                    <Filters responsive={ScheduleField.responsiveSettings}
+                             basis={ScheduleField.settings.set1Bkg}
+                             typographyTitle={ScheduleField.settings.set1Title}>
                         {
                             this.state.types ?
                                 this.state.types.map(type => {
@@ -431,7 +438,7 @@ class BasicSchedule extends Component {
 
             </Container>
                 <PopUp open={this.state.openPopUp} closePopUp={this.closePopUp} slot={this.state.selectedSlot}
-                       allSpeakers={this.state.speakers} assetsDirectory={assetsDirectory} locale={locale}/>
+                       allSpeakers={this.state.speakers} assetsDirectory={assetsDirectory} locale={locale} fieldSettings={ScheduleField}/>
             </Wrapper>
 
         )
