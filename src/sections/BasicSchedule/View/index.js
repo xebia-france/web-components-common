@@ -1,8 +1,9 @@
 import React from 'react';
-import { Column, Head, SlotsContainer, Grid } from "../styled";
+import {Column, Head, SlotsContainer, Grid} from "../styled";
 import Slots from '../Slots';
-import { getHoursTimeLine} from "../TimeLine";
+import {getHoursTimeLine} from "../TimeLine";
 import {getTitleSettingsByType} from "../utils";
+
 
 export const renderView = (scheduleOfDay, styles, openPopUp, filter, fieldSettings) => {
 
@@ -11,9 +12,11 @@ export const renderView = (scheduleOfDay, styles, openPopUp, filter, fieldSettin
 
         return (
             <Column style={Object.assign({}, styles.slide, styles.slide1)}>
-                <Head responsive={fieldSettings.responsiveSettings} typographyTitle={fieldSettings.settings.set1Title}>{ 'no room' }</Head>
+                <Head responsive={fieldSettings.responsiveSettings}
+                      typographyTitle={fieldSettings.settings.set1Title}>{'no room'}</Head>
                 <SlotsContainer>
-                    <Slots openPopUp={openPopUp} scheduleOfDay={scheduleOfDay} slots={[]} transverses={scheduleOfDay.others} filter={filter} fieldSettings={fieldSettings} />
+                    <Slots openPopUp={openPopUp} scheduleOfDay={scheduleOfDay} slots={[]}
+                           transverses={scheduleOfDay.others} filter={filter} fieldSettings={fieldSettings}/>
                 </SlotsContainer>
                 <Grid>
                     {getHoursTimeLine(scheduleOfDay.startTime, scheduleOfDay.endTime)}
@@ -21,20 +24,19 @@ export const renderView = (scheduleOfDay, styles, openPopUp, filter, fieldSettin
             </Column>
         )
 
-    }else{
-        return scheduleOfDay.rooms.map(room => {
-            return (
+    } else {
+        return scheduleOfDay.rooms.map(room =>
                 <Column style={Object.assign({}, styles.slide, styles.slide1)}>
-                    <Head  responsive={fieldSettings.responsiveSettings} typographyTitle={fieldSettings.settings.set1Title}>{room.name}</Head>
+                    <Head responsive={fieldSettings.responsiveSettings}
+                          typographyTitle={fieldSettings.settings.set1Title}>{room.name}</Head>
                     <SlotsContainer>
-                        <Slots openPopUp={openPopUp} scheduleOfDay={scheduleOfDay} slots={room.slots} transverses={scheduleOfDay.others}  filter={filter} fieldSettings={fieldSettings} />
+                        <Slots openPopUp={openPopUp} scheduleOfDay={scheduleOfDay} slots={room.slots}
+                               transverses={scheduleOfDay.others} filter={filter} fieldSettings={fieldSettings}/>
                     </SlotsContainer>
                     <Grid>
                         {getHoursTimeLine(scheduleOfDay.startTime, scheduleOfDay.endTime)}
                     </Grid>
-                </Column>
-            )
-        })
+                </Column>)
     }
 };
 

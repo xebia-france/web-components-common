@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import SwipeableViews from 'react-swipeable-views';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
 import {
     Wrapper,
@@ -24,15 +23,7 @@ import {getHourFromTime, getDayFromTime, getStringDate, getBasisByType} from "./
 import {fileNameFromUrl} from "../../utils/functions";
 import PopUp from './PopUp';
 import SvgArrow from '../../assets/svg/SvgArrow';
-import ReactDOM from 'react-dom';
-import Flickity from "react-flickity-component";
-import "./flickity.css";
-
-const flickityOptions = {
-    freeScroll: true,
-    contain: true,
-
-}
+import Slider from "react-slick";
 
 
 class BasicSchedule extends Component {
@@ -47,7 +38,8 @@ class BasicSchedule extends Component {
             openPopUp: false,
             filter: null,
             shadowLeft: false,
-            shadowRight: true
+            shadowRight: true,
+            activeItemIndex : 0
         };
 
         this.slider = React.createRef()
@@ -73,20 +65,16 @@ class BasicSchedule extends Component {
                 types: this.getTypesList(prevState.formatedSchedule[0])
             }), () => {
                 console.log('schedule ok')
-                this.flkty.on('settle', () => {
-                    console.log(`current index is ${this.flkty.selectedIndex}`)
-                })
+
             });
 
         })
 
 
     }
+    changeActiveItem = (activeItemIndex) => this.setState({ activeItemIndex });
 
-    myCustomNext = () => {
-        // You can use Flickity API
-        this.flkty.next()
-    }
+
 
     fireOnScroll(e) {
         /* if(!this.state.shadowLeft && this.slider.current.scrollLeft !== 0){
@@ -354,6 +342,7 @@ class BasicSchedule extends Component {
         const {children, fields, name, assetsDirectory, data, locale} = this.props;
         const Template = fields.Template;
         const ScheduleField = fields.Schedule;
+        const {activeItemIndex} = this.state;
 
         const styles = {
             root: {
@@ -377,6 +366,40 @@ class BasicSchedule extends Component {
             slide3: {
                 backgroundColor: '#transparent',
             },
+        };
+
+        var settings = {
+            dots: false,
+            infinite: false,
+            speed: 500,
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            initialSlide: 0,
+            infinite : false,
+            arrows: false,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
         };
 
         if (!this.state.formatedSchedule || !this.state.scheduleOfDay) return null;
@@ -407,7 +430,6 @@ class BasicSchedule extends Component {
                                                 onClick={() => this.changeCurrentDay(day.date)}>{getStringDate(day.date, locale)}</Day>
                                 })
                             }
-s
                         </Days>
                         <SwitchButtons index={this.state.index} nbrColumn={this.state.nbrColumn}>
                             <ToLeft onClick={() => {
@@ -415,47 +437,21 @@ s
                                     this.updateIndex(this.state.index - 1)
                                 }
                             }}><SvgArrow/></ToLeft>
-                            <ToRight onClick={this.myCustomNext}><SvgArrow/></ToRight>
+                            <ToRight onClick={() => {console.log('click next')}}><SvgArrow/></ToRight>
                         </SwitchButtons>
                     </HeadSchedule>
-                    <BodyRooms translatePosition={this.state.translatePosition} transition={this.state.transition}
-                               nbrColumn={this.state.nbrColumn} index={this.state.index}>
-                        <HoursLine>
-
-                        </HoursLine>
-                        {
-                            /*
-                            <SwipeableViews
-                            index={this.state.index} style={styles.root}  enableMouseEvents onChangeIndex={this.updateIndex}
-                            slideStyle={styles.slideContainer} springConfig={{}} animateTransitions={false}>
-                            {
-                                this.state.scheduleOfDay ? renderRooms(this.state.scheduleOfDay, styles) : null
-                            }
-                        </SwipeableViews>
-                             */
-                        }
-
-                    </BodyRooms>
-
 
                     <ContainerSchedule>
                         <HoursLine>
                             <Label><p>ROOM</p></Label>
                             {getHoursTimeLine(this.state.scheduleOfDay.startTime, this.state.scheduleOfDay.endTime)}
                         </HoursLine>
-                        <Flickity flickityRef={c => this.flkty = c}
-                            className={'carousel'} // default ''
-                            elementType={'div'} // default 'div'
-                            options={flickityOptions} // takes flickity options {}
-                            disableImagesLoaded={false} // default false
-                            reloadOnUpdate // default false
-                            static // default false
-                            flickityRef={c => this.flkty = c}
-                        >
+                        <Slider {...settings}>
+
                             {
                                 this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter, ScheduleField) : null
                             }
-                        </Flickity>
+                        </Slider>
                     </ContainerSchedule>
 
 

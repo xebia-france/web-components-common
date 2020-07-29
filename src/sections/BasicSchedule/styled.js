@@ -166,22 +166,6 @@ export const HeadSchedule = styled.div.attrs(props => ({
 `;
 
 
-export const Schedule = styled.div.attrs(props => ({
-    nbrQuarters  :  props.nbrQuarters
-}))`
-  display : flex;
-  flex-direction : column;
-  position : relative;
-  background: ${theme.grey20};
-  
-  & ${Column}{
-    width : 400px;
-    ${ props => props.nbrQuarters && props.nbrQuarters !== 0 ? `height :${props.nbrQuarters * baseHeight}px;` : ``}
-  }
-  
-  
-`;
-
 
 
 
@@ -221,7 +205,7 @@ export const HoursLine = styled.div.attrs(props => ({
   z-index: 20;
   transition : margin-right 0.0s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
   background : white;
-  position : absolute;
+  position : sticky;
   left : 0;
   
   &>div{
@@ -1366,8 +1350,38 @@ export const ContainerSchedule = styled.div.attrs(props => ({
     height : 70vh;
     overflow-y : scroll;
     position : relative;
-    padding-left : 35px;
+      
+  & div.slick-track{
+    display :  flex;
+  }
   
+  &>div:nth-child(2){
+    padding-left : 35px;
+  }
+  
+  @media (max-width: 479px) {
+    &>div:nth-child(2){
+        padding-left : 25px;
+      }
+   } 
+  
+`;
+
+export const Schedule = styled.div.attrs(props => ({
+    nbrQuarters  :  props.nbrQuarters
+}))`
+  display : flex;
+  flex-direction : column;
+  position : relative;
+  background: ${theme.grey20};
+  
+  & ${Column}{
+    ${ props => props.nbrQuarters && props.nbrQuarters !== 0 ? `height :${props.nbrQuarters * baseHeight}px;` : ``}
+  }
+  
+  & ${HoursLine}{
+    ${ props => props.nbrQuarters && props.nbrQuarters !== 0 ? `margin-bottom : -${props.nbrQuarters * baseHeight + 40}px;` : ``}
+  }
   
   
 `;
