@@ -71,9 +71,21 @@ class BasicSchedule extends Component {
                 nbrColumn: prevState.formatedSchedule[0].rooms.length === 0 ? 1 : prevState.formatedSchedule[0].rooms.length,
                 nbrQuarters: this.getNumberQuarters(prevState.formatedSchedule[0].startTime, prevState.formatedSchedule[0].endTime),
                 types: this.getTypesList(prevState.formatedSchedule[0])
-            }));
+            }), () => {
+                console.log('schedule ok')
+                this.flkty.on('settle', () => {
+                    console.log(`current index is ${this.flkty.selectedIndex}`)
+                })
+            });
 
         })
+
+
+    }
+
+    myCustomNext = () => {
+        // You can use Flickity API
+        this.flkty.next()
     }
 
     fireOnScroll(e) {
@@ -395,7 +407,7 @@ class BasicSchedule extends Component {
                                                 onClick={() => this.changeCurrentDay(day.date)}>{getStringDate(day.date, locale)}</Day>
                                 })
                             }
-
+s
                         </Days>
                         <SwitchButtons index={this.state.index} nbrColumn={this.state.nbrColumn}>
                             <ToLeft onClick={() => {
@@ -403,11 +415,7 @@ class BasicSchedule extends Component {
                                     this.updateIndex(this.state.index - 1)
                                 }
                             }}><SvgArrow/></ToLeft>
-                            <ToRight onClick={() => {
-                                if (this.state.index < (this.state.nbrColumn)) {
-                                    this.updateIndex(this.state.index + 1)
-                                }
-                            }}><SvgArrow/></ToRight>
+                            <ToRight onClick={this.myCustomNext}><SvgArrow/></ToRight>
                         </SwitchButtons>
                     </HeadSchedule>
                     <BodyRooms translatePosition={this.state.translatePosition} transition={this.state.transition}
@@ -428,38 +436,21 @@ class BasicSchedule extends Component {
                         }
 
                     </BodyRooms>
-                    {
-                        /*
 
-                        <BodySchedule nbrColumn={this.state.nbrColumn} index={this.state.index}
-                                  nbrQuarters={this.state.nbrQuarters} filter={this.state.filter}  ref={this.slider} onScroll={(e) => this.fireOnScroll(e)} >
-
-                        {
-                            /*
-
-                            <Table ref={this.table} nbrColumn={this.state.nbrColumn} >
-                            {
-                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter, ScheduleField) : null
-                            }
-                            </Table>
-                        </BodySchedule>
-
-
-                             */
-                    }
 
                     <ContainerSchedule>
                         <HoursLine>
                             <Label><p>ROOM</p></Label>
                             {getHoursTimeLine(this.state.scheduleOfDay.startTime, this.state.scheduleOfDay.endTime)}
                         </HoursLine>
-                        <Flickity
+                        <Flickity flickityRef={c => this.flkty = c}
                             className={'carousel'} // default ''
                             elementType={'div'} // default 'div'
                             options={flickityOptions} // takes flickity options {}
                             disableImagesLoaded={false} // default false
                             reloadOnUpdate // default false
                             static // default false
+                            flickityRef={c => this.flkty = c}
                         >
                             {
                                 this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter, ScheduleField) : null
@@ -499,3 +490,22 @@ class BasicSchedule extends Component {
 
 BasicSchedule.defaultProps = {}
 export default BasicSchedule;
+
+
+/*
+
+                        <BodySchedule nbrColumn={this.state.nbrColumn} index={this.state.index}
+                                  nbrQuarters={this.state.nbrQuarters} filter={this.state.filter}  ref={this.slider} onScroll={(e) => this.fireOnScroll(e)} >
+
+                        {
+                            /*
+
+                            <Table ref={this.table} nbrColumn={this.state.nbrColumn} >
+                            {
+                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter, ScheduleField) : null
+                            }
+                            </Table>
+                        </BodySchedule>
+
+
+                             */

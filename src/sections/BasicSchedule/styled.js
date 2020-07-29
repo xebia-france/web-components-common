@@ -1366,6 +1366,7 @@ export const ContainerSchedule = styled.div.attrs(props => ({
     height : 70vh;
     overflow-y : scroll;
     position : relative;
+    padding-left : 35px;
   
   
   
