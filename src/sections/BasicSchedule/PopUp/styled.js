@@ -72,7 +72,7 @@ export const Day = styled.div.attrs(props => ({
          @media ${ device[size] } {
             background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
          }`)
-  };
+    };
   
 `;
 
@@ -161,7 +161,7 @@ export const Time = styled.div.attrs(props => ({
             ` : ''}
         
         }`)
- };
+    };
 `;
 
 

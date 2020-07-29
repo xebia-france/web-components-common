@@ -35,7 +35,7 @@ module.exports = {
                         limit: 50000,
                     },
                 },
-            },
+            }
         ],
     },
     externals: {

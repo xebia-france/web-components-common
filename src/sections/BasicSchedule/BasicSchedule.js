@@ -44,22 +44,22 @@ class BasicSchedule extends Component {
 
 
     componentDidMount() {
-            console.log('PROPS ON SCHEDULE', this.props)
+        console.log('PROPS ON SCHEDULE', this.props)
 
-            this.setState({
-                formatedSchedule:  this.formatSchedule(),
-                speakers:  this.formatSpeakers()
-            }, () => {
-                this.setState(prevState => ({
-                    ...prevState,
-                    scheduleOfDay: prevState.formatedSchedule[0],
-                    currentDay: prevState.formatedSchedule[0].date,
-                    nbrColumn: prevState.formatedSchedule[0].rooms.length === 0 ? 1 : prevState.formatedSchedule[0].rooms.length,
-                    nbrQuarters: this.getNumberQuarters(prevState.formatedSchedule[0].startTime, prevState.formatedSchedule[0].endTime),
-                    types : this.getTypesList(prevState.formatedSchedule[0])
-                }));
+        this.setState({
+            formatedSchedule:  this.formatSchedule(),
+            speakers:  this.formatSpeakers()
+        }, () => {
+            this.setState(prevState => ({
+                ...prevState,
+                scheduleOfDay: prevState.formatedSchedule[0],
+                currentDay: prevState.formatedSchedule[0].date,
+                nbrColumn: prevState.formatedSchedule[0].rooms.length === 0 ? 1 : prevState.formatedSchedule[0].rooms.length,
+                nbrQuarters: this.getNumberQuarters(prevState.formatedSchedule[0].startTime, prevState.formatedSchedule[0].endTime),
+                types : this.getTypesList(prevState.formatedSchedule[0])
+            }));
 
-            })
+        })
     }
 
     formatSpeakers = () => {
@@ -187,7 +187,7 @@ class BasicSchedule extends Component {
         const css = this.viewsRef.current.containerNode.style.transform;
         this.setState({
             translatePosition: css,
-           // transition: 'all 0.0s cubic-bezier(0.15,0.3,0.25,1) 0s'
+            // transition: 'all 0.0s cubic-bezier(0.15,0.3,0.25,1) 0s'
         });
 
     };
@@ -198,7 +198,7 @@ class BasicSchedule extends Component {
 
         this.setState({
             index: index,
-           // transition: 'transform 0.2s cubic-bezier(0.15,0.3,0.25,1) 0s'
+            // transition: 'transform 0.2s cubic-bezier(0.15,0.3,0.25,1) 0s'
         }, () => {
 
             const css = this.viewsRef.current.containerNode.style.transform;
@@ -343,7 +343,7 @@ class BasicSchedule extends Component {
 
         if (!this.state.formatedSchedule || !this.state.scheduleOfDay) return null;
         //console.log('FINAL SCHEDULE', this.state.formatedSchedule)
-       // console.log('SCHEDULE OF DAY', this.state.scheduleOfDay)
+        // console.log('SCHEDULE OF DAY', this.state.scheduleOfDay)
 
         return (
             <Wrapper id={removeSpaces(name)}
@@ -412,7 +412,7 @@ class BasicSchedule extends Component {
                         <SwipeableViews
                             ref={this.viewsRef}
                             index={this.state.index} onSwitching={this.switchView} onChangeIndex={this.updateIndex}
-                             enableMouseEvents style={styles.root}
+                            enableMouseEvents style={styles.root}
                             slideStyle={styles.slideContainer} springConfig={{}} animateTransitions={false}
                         >
                             {
@@ -431,7 +431,7 @@ class BasicSchedule extends Component {
                                     return <div className={this.state.filter === type ? 'active' : ''}
                                                 onClick={() => this.updateFilter(type)}>{type}</div>
                                 })
-                            : null
+                                : null
                         }
                     </Filters>
                 </Schedule>

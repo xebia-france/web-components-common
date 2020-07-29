@@ -30,11 +30,11 @@ export const Wrapper = styled.section.attrs(props => ({
              
             ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
-            ${ props.border ? 
-                    ( props.border[size].color ? 
-                        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});` 
-                                                                        : `${props.border[size].color.hex};`}` : '')
-             : ''}
+            ${ props.border ?
+    ( props.border[size].color ?
+        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});`
+            : `${props.border[size].color.hex};`}` : '')
+    : ''}
              
             &:after{
                z-index : 0;
@@ -296,7 +296,7 @@ export const Day = styled.div.attrs(props => ({
                background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
             }
          }`)
-  };
+    };
   
 `;
 
@@ -409,7 +409,7 @@ export const Time = styled.div.attrs(props => ({
                 ${ props.typographyTitle ? `fill: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) } !important;` : ''}
             }
         }`)
- };
+    };
  
  
 `;
@@ -805,7 +805,7 @@ export const BodySchedule = styled.div.attrs(props => ({
                   padding :0 calc((100% - 35px - 0px) * (2/3) ) 0 50px !important;
                 ` : `
                   padding : 0 calc((100% - 35px + 25px) * (2/3) ) 0 50px !important;`
-                }
+        }
                 
                 ${ (props.nbrColumn - props.index) <= 3  ? `
                     &>div{
@@ -820,8 +820,8 @@ export const BodySchedule = styled.div.attrs(props => ({
                 ` : ``}
                   
                 
-            ` 
-            : ''}
+            `
+    : ''}
             ${ props => props.nbrColumn === 3 ? `
                 padding :0 calc((100% - 35px) * (2/3)) 0 0 !important;
                 &>div{
@@ -876,7 +876,7 @@ export const BodySchedule = styled.div.attrs(props => ({
                   padding :0 calc((100% - 35px - 0px) * (0.53) ) 0 50px !important;
                 ` : `
                   padding : 0 calc((100% - 35px + 25px) * (0.53) ) 0 50px !important;`
-                }
+        }
                 
                 ${ (props.nbrColumn - props.index) <= 2  ? `
                     &>div{
@@ -889,8 +889,8 @@ export const BodySchedule = styled.div.attrs(props => ({
                 ` : ``}
                   
                 
-            ` 
-            : ''}
+            `
+    : ''}
             
             ${ props => props.nbrColumn === 2 ? `
                 padding :0 calc((100% - 35px) * (1/2)) 0 0 !important;
@@ -941,7 +941,7 @@ export const BodySchedule = styled.div.attrs(props => ({
                   padding :0 calc((100% - 35px - 0px) * (1/8) ) 0 50px !important;
                 ` : `
                   padding : 0 calc((100% - 35px + 25px) * (1/8) ) 0 50px !important;`
-                }
+        }
                 
                 ${ (props.nbrColumn - props.index) <= 1  ? `
                     &>div{
@@ -954,8 +954,8 @@ export const BodySchedule = styled.div.attrs(props => ({
                 ` : ``}
                   
                 
-            ` 
-            : ''}
+            `
+    : ''}
             
             ${ props => props.nbrColumn === 1 ? `
                 padding :0 0 0 0 !important;
@@ -999,7 +999,7 @@ export const BodySchedule = styled.div.attrs(props => ({
                   padding :0 calc((100% - 35px - 300px) * (1/8) ) 0 50px !important;
                 ` : `
                   padding : 0 calc((100% - 35px + 0px) * (1/8) ) 0 20px !important;`
-                }
+        }
                 
                 ${ (props.nbrColumn - props.index) <= 1  ? `
                     &>div{
@@ -1012,8 +1012,8 @@ export const BodySchedule = styled.div.attrs(props => ({
                 ` : ``}
                   
                 
-            ` 
-            : ''}
+            `
+    : ''}
             
             ${ props => props.nbrColumn === 1 ? `
                 padding :0 0 0 0 !important;
