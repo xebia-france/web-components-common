@@ -58,9 +58,11 @@
   },
   "dependencies": {
     "core-js": "3.2.1",
+    "flickity": "2.2.1",
     "lodash": "4.17.15",
     "react": "16.8.4",
     "react-dom": "16.8.4",
+    "react-flickity-component": "3.5.0",
     "react-swipeable-views": "0.13.9",
     "styled-components": "4.3.2"
   }

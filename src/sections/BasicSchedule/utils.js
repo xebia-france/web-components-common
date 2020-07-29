@@ -15,3 +15,40 @@ export const getStringDate = (date, locale) => {
     const options = { month: 'long', day: 'numeric' };
     return time.toLocaleDateString(locale, options)
 }
+
+const SET1 = ['opening', 'keynote', 'closing'];
+const SET2 = ['breakfast', 'lunch', 'break', 'party','cocktail' ];
+
+export const getBasisByType = (type, settings) => {
+
+    if(SET1.includes(type)){
+        return settings.set1Bkg;
+    }else if(SET2.includes(type)){
+        return settings.set2Bkg
+    }else{
+        return settings.set3Bkg
+    }
+
+}
+export const getTitleSettingsByType = (type, settings) => {
+
+    if(SET1.includes(type)){
+        return settings.set1Title;
+    }else if(SET2.includes(type)){
+        return settings.set2Title
+    }else{
+        return settings.set3Title
+    }
+
+}
+
+export const getTextSettingsByType = (type, settings) => {
+    if(SET1.includes(type)){
+        return settings.set1Text;
+    }else if(SET2.includes(type)){
+        return settings.set2Text;
+    }else{
+        return settings.set3Text
+    }
+
+}

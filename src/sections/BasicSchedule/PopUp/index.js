@@ -15,18 +15,18 @@ import {
     Summary,
     Speaker, Image, InfoSpeakers
 } from "./styled";
-import {getDayFromTime, getHourFromTime, getDuration,getStringDate} from "../utils";
+import {getDayFromTime, getHourFromTime, getDuration, getStringDate, getTitleSettingsByType} from "../utils";
 import SvgClock from '../../../assets/svg/SvgClock';
 import {Tag} from '../styled'
 
 
 
-const PopUp = ({open, closePopUp, openPopUp, slot, allSpeakers, assetsDirectory, locale}) => {
+const PopUp = ({open, closePopUp, openPopUp, slot, allSpeakers, assetsDirectory, locale, fieldSettings}) => {
     if (!slot || !allSpeakers) return null
     return (<PopUpContainer className={open ? 'open' : ''}  >
             <Card>
                 <Banner>
-                    <Day>{getStringDate(slot.fromTime, locale) }</Day>
+                    <Day responsive={fieldSettings.responsiveSettings} basis={fieldSettings.settings.set1Bkg} t>{getStringDate(slot.fromTime, locale) }</Day>
                     <Room>{slot.room || ''}</Room>
                     <Close onClick={() => {
                         closePopUp()
@@ -37,16 +37,15 @@ const PopUp = ({open, closePopUp, openPopUp, slot, allSpeakers, assetsDirectory,
                 </Banner>
                 <Content>
                     <InfoTime>
-
-                        <Time>{`${getHourFromTime(slot.fromTime)}-${getHourFromTime(slot.toTime)}`}</Time>
+                        <Time responsive={fieldSettings.responsiveSettings} basis={fieldSettings.settings.set1Bkg} typographyTitle={fieldSettings.settings.set1Title} >{`${getHourFromTime(slot.fromTime)}-${getHourFromTime(slot.toTime)}`}</Time>
                         <Duration>
                             <Clock><SvgClock/></Clock>
                             {`${getDuration(slot.fromTime, slot.toTime)} min`}
                         </Duration>
                     </InfoTime>
-                    <Info>
+                    <Info responsive={fieldSettings.responsiveSettings} typographyTitle={getTitleSettingsByType(slot.type, fieldSettings.settings)}>
                         <h4>{slot.title}</h4>
-                        <Tag>
+                        <Tag responsive={fieldSettings.responsiveSettings} typographyTitle={getTitleSettingsByType(slot.type, fieldSettings.settings)}>
                             {slot.type ? <div>{slot.type}</div> : null}
                             {slot.track ? <div>{slot.track}</div> : null}
                         </Tag>
@@ -55,13 +54,10 @@ const PopUp = ({open, closePopUp, openPopUp, slot, allSpeakers, assetsDirectory,
 
                     {
                         slot.speakers && slot.speakers.length !== 0 ?
-                            <InfoSpeakers>
+                            <InfoSpeakers responsive={fieldSettings.responsiveSettings} typographyTitle={getTitleSettingsByType(slot.type, fieldSettings.settings)}>
                                 {
                                     slot.speakers.map(s => {
-                                        console.log('allSpeakers :', allSpeakers)
                                         let match = allSpeakers.find(i => i.id === s.id);
-                                        console.log('id :', s.id)
-                                        console.log('match :', match)
                                         if (!match) return null;
                                         return <Speaker>
                                             <Image assetsDirectory={assetsDirectory} asset={match.imageURL}/>
@@ -71,12 +67,10 @@ const PopUp = ({open, closePopUp, openPopUp, slot, allSpeakers, assetsDirectory,
                                         </Speaker>
                                     })
                                 }
-
                             </InfoSpeakers>
                             : null
                     }
                 </Content>
-
             </Card>
         </PopUpContainer>
     )

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {
     generatePadding,
     generateBorder,
-    generateBackgroundImage, generateBackgroundImageWebp, getFormatedColor
+    generateBackgroundImage, generateBackgroundImageWebp, getFormatedColor, generateFontProperties
 } from "../../utils/StyleGenerator";
 
 import {device, size, theme} from "../../styles/constants";
@@ -89,47 +89,6 @@ export const Container = styled.div.attrs(props => ({
   display : flex;
   flex-direction : column;
   z-index : 2;
-  
-   ${ props => props.responsive.map((size, i) => `
-         @media ${ device[size] } {
-             flex-direction : ${ props.flex[size].properties.direction };
-             flex-wrap: ${ props.flex[size].properties.wrap };
-             justify-content: ${ props.flex[size].properties.justify };
-             align-items: ${ props.flex[size].properties.alignItems };
-             align-content: ${ props.flex[size].properties.alignContent };
-             margin-bottom : -${ props.flex[size].properties.gutterVertical }px;
-             
-             
-             
-             &>*{
-                width: calc(100% / ${ props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px );
-                margin-bottom : ${ props.flex[size].properties.gutterVertical }px;
-                
-                ${props.flex[size].properties.justify === 'flex-start' ? `
-                    &:not(:nth-child(${ props.flex[size].properties.columns }n) ){
-                        margin-right : ${props.flex[size].properties.gutterHorizontal}px;
-                    }
-                    
-                    `  : ''
-                }
-                ${props.flex[size].properties.justify === 'flex-end' ? `
-                    &:not(:nth-child(${ props.flex[size].properties.columns }n + 1)){
-                      margin-left : ${props.flex[size].properties.gutterHorizontal}px;
-                    }
-                    `  : ''
-                }
-                
-                ${props.flex[size].properties.justify === 'center' ? `
-                    &:not(:nth-child(${ props.flex[size].properties.columns }n + 1)){
-                      margin-left : ${props.flex[size].properties.gutterHorizontal}px;
-                    }
-                    `  : ''
-                }
-                
-             }
-             
-         }`)
-    }; 
 `;
 
 export const Test = styled.div.attrs(props => ({
@@ -170,7 +129,8 @@ export const DashContainer = styled.div.attrs(props => ({
 
 
 export const Head = styled.div.attrs(props => ({
-
+    responsive : props.responsive,
+    typographyTitle: props.typographyTitle
 }))`
     background-color : ${theme.grey90};
     padding-left : 20px;
@@ -183,6 +143,12 @@ export const Head = styled.div.attrs(props => ({
     position : sticky;
     top : 0;
     z-index : 8;
+    
+    ${ props => props.responsive.map(size => `
+        @media ${ device[size] } {
+            ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+        }`)
+    };
 `;
 
 export const Column = styled.div.attrs(props => ({
@@ -201,11 +167,17 @@ export const HeadSchedule = styled.div.attrs(props => ({
 
 
 export const Schedule = styled.div.attrs(props => ({
-
+    nbrQuarters  :  props.nbrQuarters
 }))`
   display : flex;
   flex-direction : column;
   position : relative;
+  background: ${theme.grey20};
+  
+  & ${Column}{
+    width : 400px;
+    ${ props => props.nbrQuarters && props.nbrQuarters !== 0 ? `height :${props.nbrQuarters * baseHeight}px;` : ``}
+  }
   
   
 `;
@@ -249,7 +221,7 @@ export const HoursLine = styled.div.attrs(props => ({
   z-index: 20;
   transition : margin-right 0.0s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
   background : white;
-  position : sticky;
+  position : absolute;
   left : 0;
   
   &>div{
@@ -315,9 +287,11 @@ export const HoursLine = styled.div.attrs(props => ({
 
 
 export const Day = styled.div.attrs(props => ({
-
+    basis : props.basis,
+    responsive : props.responsive,
+    typographyTitle: props.typographyTitle
 }))`
-  background-color : ${grey50};
+  background-color : ${theme.grey60};
   border-right: 1px solid rgba(255,255,255,0.5);
   padding-left : 20px;
   padding-right : 20px;
@@ -329,9 +303,20 @@ export const Day = styled.div.attrs(props => ({
   align-items : center;
   justify-content : center;
   
-  &.active{
-    background-color : ${red};
-  }
+  ${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+            ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+
+            &.active{
+               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+            }
+         }`)
+  };
+  
+  
+  
+  
+  
   
 `;
 
@@ -364,11 +349,21 @@ export const Header = styled.div.attrs(props => ({
 `;
 
 export const Tag = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    typographyTitle: props.typographyTitle,
 }))`
     display : flex;
     height : 20px;
     flex-wrap : wrap;
     overflow : hidden;
+    
+    ${ props => props.responsive.map(size => `
+        @media ${ device[size] } {
+            &>div{
+                ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+            }
+        }`)
+    };
     
    &>div{
         height : 20px;
@@ -396,16 +391,6 @@ export const Tag = styled.div.attrs(props => ({
  
 `;
 
-export const Time = styled.div.attrs(props => ({
-}))`
- font-size : 12px;
- line-height : 15px;
- display : flex;
- min-width : 95px;
- opacity : 0.7;
- 
-`;
-
 export const Clock = styled.div.attrs(props => ({
 }))`
  width : 11px;
@@ -422,6 +407,35 @@ export const Clock = styled.div.attrs(props => ({
 `;
 
 
+export const Time = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    typographyTitle: props.typographyTitle,
+    basisTitle: props.basisTitle,
+    basis : props.basis
+}))`
+ 
+ display : flex;
+ min-width : 95px;
+ opacity : 0.7;
+ 
+ ${ props => props.responsive.map(size => `
+        @media ${ device[size] } {
+            ${ props.typographyTitle ? `color: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
+            ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+            font-size : 12px;
+            line-height : 15px;
+            
+            & ${Clock} svg path{
+                ${ props.typographyTitle ? `fill: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) } !important;` : ''}
+            }
+        }`)
+ };
+    
+  
+ 
+`;
+
+
 export const SlotsContainer = styled.div.attrs(props => ({
 
 }))`
@@ -430,28 +444,52 @@ export const SlotsContainer = styled.div.attrs(props => ({
 `;
 
 export const Informations = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    typographyTitle: props.typographyTitle,
+    basisTitle: props.basisTitle,
+    typographyText: props.typographyText,
+    basisText: props.basisText
 }))`
  display : flex;
  flex-direction : column;
  
-  & h4{
-    font-size : 14px;
-    line-height : 18px;
-    margin-top : 5px;
+  
+  
+  ${ props =>  props.responsive ? props.responsive.map(size => `
+        @media ${ device[size] } {
+        
+            & h4{
+                ${ props.typographyTitle ? `color: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
+                ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+                ${ props.basisTitle ? generatePadding(props.basisTitle, size) : '' }   
+            }
+            & h5{
+                ${ props.typographyText ? `color: ${ getFormatedColor(props.typographyText[size].color, props.typographyText[size].opacity) };` : ''}
+                ${ props.typographyText ? generateFontProperties(props.typographyText, size) : '' }
+                ${ props.basisText ? generatePadding(props.basisText, size) : '' }   
+            }
+                         
+        }`) : ''
+    }; 
     
-    &.cropped{
-        overflow:hidden; 
-        white-space:nowrap; 
-        text-overflow:ellipsis; 
-    }
-   
-  }
-  & h5{
-    font-size : 12px;
-    line-height : 13px;
-    opacity : 0.4;
-    margin-top : 5px;
-  }
+    & h4{
+        font-size : 14px;
+        line-height : 18px;
+        margin-top : 5px;
+        
+        &.cropped{
+            overflow:hidden; 
+            white-space:nowrap; 
+            text-overflow:ellipsis; 
+        }
+       
+      }
+      & h5{
+        font-size : 12px;
+        line-height : 13px;
+        opacity : 0.4;
+        margin-top : 5px;
+      }
   
 `;
 export const SlotContent = styled.div.attrs(props => ({
@@ -474,13 +512,13 @@ export const Slot = styled.div.attrs(props => ({
     duration: props.duration,
     hours: props.hours,
     minutes: props.minutes,
+    basis : props.basis,
+    responsive : props.responsive
 
 }))`
   ${ props => `
     height : calc((${baseHeight}px / 15) * ${ props.duration});
     top : calc( (${baseHeight}px / 15) * ${props.minutes});
-  
-  
   `}
   width : 100%;
   padding : 4px;
@@ -520,11 +558,17 @@ export const Slot = styled.div.attrs(props => ({
        background : rgba(0,0,0,0.3);
        border-radius : 4px;
     }
-    
-    
-    
-    
   }
+  
+  ${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+            & ${SlotContent}{
+               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+            }
+         }`)
+    };
+  
+  
 `;
 
 
@@ -642,7 +686,6 @@ export const Table = styled.div.attrs(props => ({
 `;
 
 export const BodySchedule = styled.div.attrs(props => ({
-    responsive: props.responsive,
     nbrColumn : props.nbrColumn,
     index : props.index,
     nbrQuarters : props.nbrQuarters,
@@ -1152,6 +1195,9 @@ export const Grid = styled.div.attrs(props => ({
   
 `;
 export const Filters = styled.div.attrs(props => ({
+    basis : props.basis,
+    responsive : props.responsive,
+    typographyTitle: props.typographyTitle
 }))`
   position : absolute;
   background : ${theme.grey90};
@@ -1165,16 +1211,14 @@ export const Filters = styled.div.attrs(props => ({
   flex-wrap : wrap;
   justify-content : center;
   z-index : 9;
+  
   &>div{
-    background :${theme.grey60};
+    background-color :${theme.grey60};
     border-radius : 10px;
     text-transform : uppercase;
-    font-size : 14px;
-    line-height : 16px;
     display : flex;
     height : 20px;
     align-items : center;
-    color : ${theme.white};
     padding : 0 10px;
     cursor : pointer;
     transition : background 0.2s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
@@ -1186,14 +1230,30 @@ export const Filters = styled.div.attrs(props => ({
        margin-left : 5px;
     }
     
-    &:hover{
-        background : ${red};
-    }
-    &.active{
-        background : ${red};
-    }
+    
   }
   
+  ${ props =>  props.responsive ? props.responsive.map(size => `
+        @media ${ device[size] } {
+        
+            &>div{
+                ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+                ${ props.basisTitle ? generatePadding(props.basisTitle, size) : '' }   
+                font-size : 14px;
+                line-height : 16px;
+                color : ${theme.white};
+                
+                &:hover{
+                   background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+
+                }
+                &.active{
+                    background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+                }
+            }
+                     
+        }`) : ''
+    }; 
         
         
         
@@ -1298,4 +1358,15 @@ export const SwitchButtons = styled.div.attrs(props => ({
             ` : ``}
         ` : ''}
     }
+`;
+
+
+export const ContainerSchedule = styled.div.attrs(props => ({
+}))`
+    height : 70vh;
+    overflow-y : scroll;
+    position : relative;
+  
+  
+  
 `;

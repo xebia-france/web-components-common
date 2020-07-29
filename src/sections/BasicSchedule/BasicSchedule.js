@@ -14,17 +14,26 @@ import {
     BodyRooms,
     DashContainer,
     Day,
-    Days,
+    Days, ContainerSchedule,
     Schedule, Filters, SwitchButtons, ToRight, ToLeft, Table
 } from "./styled";
 import {renderView} from './View';
 import {getHoursTimeLine} from './TimeLine';
 import {renderRooms} from './Rooms';
-import {getHourFromTime, getDayFromTime, getStringDate} from "./utils";
+import {getHourFromTime, getDayFromTime, getStringDate, getBasisByType} from "./utils";
 import {fileNameFromUrl} from "../../utils/functions";
 import PopUp from './PopUp';
 import SvgArrow from '../../assets/svg/SvgArrow';
 import ReactDOM from 'react-dom';
+import Flickity from "react-flickity-component";
+import "./flickity.css";
+
+const flickityOptions = {
+    freeScroll: true,
+    contain: true,
+
+}
+
 
 class BasicSchedule extends Component {
     constructor(props) {
@@ -37,8 +46,8 @@ class BasicSchedule extends Component {
             transition: 'transform 0.0s cubic-bezier(0.15, 0.3, 0.25, 1) 0s',
             openPopUp: false,
             filter: null,
-            shadowLeft : false,
-            shadowRight : true
+            shadowLeft: false,
+            shadowRight: true
         };
 
         this.slider = React.createRef()
@@ -52,34 +61,34 @@ class BasicSchedule extends Component {
 
 
         this.setState({
-                formatedSchedule:  this.formatSchedule(),
-                speakers:  this.formatSpeakers()
-            }, () => {
-                this.setState(prevState => ({
-                    ...prevState,
-                    scheduleOfDay: prevState.formatedSchedule[0],
-                    currentDay: prevState.formatedSchedule[0].date,
-                    nbrColumn: prevState.formatedSchedule[0].rooms.length === 0 ? 1 : prevState.formatedSchedule[0].rooms.length,
-                    nbrQuarters: this.getNumberQuarters(prevState.formatedSchedule[0].startTime, prevState.formatedSchedule[0].endTime),
-                    types : this.getTypesList(prevState.formatedSchedule[0])
-                }));
+            formatedSchedule: this.formatSchedule(),
+            speakers: this.formatSpeakers()
+        }, () => {
+            this.setState(prevState => ({
+                ...prevState,
+                scheduleOfDay: prevState.formatedSchedule[0],
+                currentDay: prevState.formatedSchedule[0].date,
+                nbrColumn: prevState.formatedSchedule[0].rooms.length === 0 ? 1 : prevState.formatedSchedule[0].rooms.length,
+                nbrQuarters: this.getNumberQuarters(prevState.formatedSchedule[0].startTime, prevState.formatedSchedule[0].endTime),
+                types: this.getTypesList(prevState.formatedSchedule[0])
+            }));
 
-            })
+        })
     }
 
     fireOnScroll(e) {
-        if(!this.state.shadowLeft && this.slider.current.scrollLeft !== 0){
-            this.setState({shadowLeft : true })
-        }
-        if(this.state.shadowLeft && this.slider.current.scrollLeft === 0){
-            this.setState({shadowLeft : false })
-        }
+        /* if(!this.state.shadowLeft && this.slider.current.scrollLeft !== 0){
+             this.setState({shadowLeft : true })
+         }
+         if(this.state.shadowLeft && this.slider.current.scrollLeft === 0){
+             this.setState({shadowLeft : false })
+         }
 
-        if( this.slider.current.scrollLeft > (this.table.current.clientWidth - this.slider.current.clientWidth  - 100)  && this.state.shadowRight){
-            this.setState({shadowRight : false })
-        }else if(this.slider.current.scrollLeft < (this.table.current.clientWidth - this.slider.current.clientWidth  - 100) && !this.state.shadowRight){
-            this.setState({shadowRight : true })
-        }
+         if( this.slider.current.scrollLeft > (this.table.current.clientWidth - this.slider.current.clientWidth  - 100)  && this.state.shadowRight){
+             this.setState({shadowRight : false })
+         }else if(this.slider.current.scrollLeft < (this.table.current.clientWidth - this.slider.current.clientWidth  - 100) && !this.state.shadowRight){
+             this.setState({shadowRight : true })
+         }*/
     }
 
 
@@ -203,11 +212,8 @@ class BasicSchedule extends Component {
     }
 
 
-
-
-
     updateIndex = index => {
-        if(index > this.state.nbrColumn)return
+        if (index > this.state.nbrColumn) return
 
         this.setState({
             index: index,
@@ -230,19 +236,19 @@ class BasicSchedule extends Component {
                 scheduleOfDay: currentSchedule,
                 nbrColumn: currentSchedule.rooms.length === 0 ? 1 : currentSchedule.rooms.length,
                 nbrQuarters: this.getNumberQuarters(currentSchedule.startTime, currentSchedule.endTime),
-                types : this.getTypesList(currentSchedule)
+                types: this.getTypesList(currentSchedule)
             })
         })
     }
 
     getTypesList = (schedule) => {
-        const typesNotIncluded = ['break', 'pause', 'lunch', 'cocktail','déjeuner']
+        const typesNotIncluded = ['break', 'pause', 'lunch', 'cocktail', 'déjeuner']
         let allSLots = [];
-        schedule.rooms.forEach( room => {
-            return room.slots.forEach( slot => allSLots.push(slot))
+        schedule.rooms.forEach(room => {
+            return room.slots.forEach(slot => allSLots.push(slot))
         })
-        schedule.others.forEach( slot => allSLots.push(slot));
-        let typesList = allSLots.map( slot => slot.type);
+        schedule.others.forEach(slot => allSLots.push(slot));
+        let typesList = allSLots.map(slot => slot.type);
         console.log('typeList', typesList);
         typesList = [...new Set(typesList)].filter(f => !typesNotIncluded.includes(f));
         console.log('typesList 2', typesList);
@@ -301,16 +307,19 @@ class BasicSchedule extends Component {
 
     disableScrolling = () => {
         if (typeof window !== 'undefined' && typeof document !== `undefined`) {
-            var x=window.scrollX;
-            var y=window.scrollY;
-            window.onscroll=function(){window.scrollTo(x, y);};
+            var x = window.scrollX;
+            var y = window.scrollY;
+            window.onscroll = function () {
+                window.scrollTo(x, y);
+            };
         }
 
     }
 
     enableScrolling = () => {
         if (typeof window !== 'undefined' && typeof document !== `undefined`) {
-            window.onscroll=function(){};
+            window.onscroll = function () {
+            };
         }
     }
 
@@ -325,14 +334,14 @@ class BasicSchedule extends Component {
 
     handleEvent(e) {
         console.log('Scroll event detected!');
-        console.log('e scroll',e );
+        console.log('e scroll', e);
 
     }
 
     render() {
         const {children, fields, name, assetsDirectory, data, locale} = this.props;
         const Template = fields.Template;
-        const FlexContainer = fields.FlexContainer;
+        const ScheduleField = fields.Schedule;
 
         const styles = {
             root: {
@@ -360,7 +369,7 @@ class BasicSchedule extends Component {
 
         if (!this.state.formatedSchedule || !this.state.scheduleOfDay) return null;
         //console.log('FINAL SCHEDULE', this.state.formatedSchedule)
-       // console.log('SCHEDULE OF DAY', this.state.scheduleOfDay)
+        // console.log('SCHEDULE OF DAY', this.state.scheduleOfDay)
 
         console.log('THIS PROPS : ', this.props);
         return (
@@ -371,17 +380,18 @@ class BasicSchedule extends Component {
                      responsive={Template ? Template.responsiveSettings : null}
                      basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                      border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
-            ><Container
-                responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
+            ><Container>
                 <div>Programme</div>
-                <Schedule>
+                <Schedule nbrQuarters={this.state.nbrQuarters}>
                     <HeadSchedule>
                         <Label><p>DAY</p></Label>
                         <Days>
                             {
                                 this.state.formatedSchedule.map(day => {
                                     return <Day className={day.date === this.state.currentDay ? 'active' : ''}
+                                                responsive={ScheduleField.responsiveSettings}
+                                                basis={ScheduleField.settings.set1Bkg}
+                                                typographyTitle={ScheduleField.settings.set1Title}
                                                 onClick={() => this.changeCurrentDay(day.date)}>{getStringDate(day.date, locale)}</Day>
                                 })
                             }
@@ -401,7 +411,6 @@ class BasicSchedule extends Component {
                         </SwitchButtons>
                     </HeadSchedule>
                     <BodyRooms translatePosition={this.state.translatePosition} transition={this.state.transition}
-                               responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
                                nbrColumn={this.state.nbrColumn} index={this.state.index}>
                         <HoursLine>
 
@@ -419,36 +428,68 @@ class BasicSchedule extends Component {
                         }
 
                     </BodyRooms>
-                    <BodySchedule responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                                  nbrColumn={this.state.nbrColumn} index={this.state.index}
+                    {
+                        /*
+
+                        <BodySchedule nbrColumn={this.state.nbrColumn} index={this.state.index}
                                   nbrQuarters={this.state.nbrQuarters} filter={this.state.filter}  ref={this.slider} onScroll={(e) => this.fireOnScroll(e)} >
+
+                        {
+                            /*
+
+                            <Table ref={this.table} nbrColumn={this.state.nbrColumn} >
+                            {
+                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter, ScheduleField) : null
+                            }
+                            </Table>
+                        </BodySchedule>
+
+
+                             */
+                    }
+
+                    <ContainerSchedule>
                         <HoursLine>
                             <Label><p>ROOM</p></Label>
                             {getHoursTimeLine(this.state.scheduleOfDay.startTime, this.state.scheduleOfDay.endTime)}
                         </HoursLine>
-                        <Table ref={this.table} nbrColumn={this.state.nbrColumn} >
+                        <Flickity
+                            className={'carousel'} // default ''
+                            elementType={'div'} // default 'div'
+                            options={flickityOptions} // takes flickity options {}
+                            disableImagesLoaded={false} // default false
+                            reloadOnUpdate // default false
+                            static // default false
+                        >
                             {
-                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter) : null
+                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter, ScheduleField) : null
                             }
-                        </Table>
-                    </BodySchedule>
-                    <ShadowLeft nbrQuarters={this.state.nbrQuarters} className={this.state.shadowLeft ? 'display'  : ''}/>
-                    <ShadowRight nbrQuarters={this.state.nbrQuarters} className={this.state.shadowRight ? 'display'  : ''}/>
-                    <Filters>
+                        </Flickity>
+                    </ContainerSchedule>
+
+
+                    <ShadowLeft nbrQuarters={this.state.nbrQuarters}
+                                className={this.state.shadowLeft ? 'display' : ''}/>
+                    <ShadowRight nbrQuarters={this.state.nbrQuarters}
+                                 className={this.state.shadowRight ? 'display' : ''}/>
+                    <Filters responsive={ScheduleField.responsiveSettings}
+                             basis={ScheduleField.settings.set1Bkg}
+                             typographyTitle={ScheduleField.settings.set1Title}>
                         {
                             this.state.types ?
                                 this.state.types.map(type => {
                                     return <div className={this.state.filter === type ? 'active' : ''}
                                                 onClick={() => this.updateFilter(type)}>{type}</div>
                                 })
-                            : null
+                                : null
                         }
                     </Filters>
                 </Schedule>
 
             </Container>
                 <PopUp open={this.state.openPopUp} closePopUp={this.closePopUp} slot={this.state.selectedSlot}
-                       allSpeakers={this.state.speakers} assetsDirectory={assetsDirectory} locale={locale}/>
+                       allSpeakers={this.state.speakers} assetsDirectory={assetsDirectory} locale={locale}
+                       fieldSettings={ScheduleField}/>
             </Wrapper>
 
         )

@@ -2,17 +2,18 @@ import React from 'react';
 import { Column, Head, SlotsContainer, Grid } from "../styled";
 import Slots from '../Slots';
 import { getHoursTimeLine} from "../TimeLine";
+import {getTitleSettingsByType} from "../utils";
 
-export const renderView = (scheduleOfDay, styles, openPopUp, filter) => {
+export const renderView = (scheduleOfDay, styles, openPopUp, filter, fieldSettings) => {
 
 
     if (!scheduleOfDay.rooms || scheduleOfDay.rooms.length === 0) {
 
         return (
             <Column style={Object.assign({}, styles.slide, styles.slide1)}>
-                <Head>{ 'no room' }</Head>
+                <Head responsive={fieldSettings.responsiveSettings} typographyTitle={fieldSettings.settings.set1Title}>{ 'no room' }</Head>
                 <SlotsContainer>
-                    <Slots openPopUp={openPopUp} scheduleOfDay={scheduleOfDay} slots={[]} transverses={scheduleOfDay.others} filter={filter} />
+                    <Slots openPopUp={openPopUp} scheduleOfDay={scheduleOfDay} slots={[]} transverses={scheduleOfDay.others} filter={filter} fieldSettings={fieldSettings} />
                 </SlotsContainer>
                 <Grid>
                     {getHoursTimeLine(scheduleOfDay.startTime, scheduleOfDay.endTime)}
@@ -24,9 +25,9 @@ export const renderView = (scheduleOfDay, styles, openPopUp, filter) => {
         return scheduleOfDay.rooms.map(room => {
             return (
                 <Column style={Object.assign({}, styles.slide, styles.slide1)}>
-                    <Head>{room.name}</Head>
+                    <Head  responsive={fieldSettings.responsiveSettings} typographyTitle={fieldSettings.settings.set1Title}>{room.name}</Head>
                     <SlotsContainer>
-                        <Slots openPopUp={openPopUp} scheduleOfDay={scheduleOfDay} slots={room.slots} transverses={scheduleOfDay.others}  filter={filter} />
+                        <Slots openPopUp={openPopUp} scheduleOfDay={scheduleOfDay} slots={room.slots} transverses={scheduleOfDay.others}  filter={filter} fieldSettings={fieldSettings} />
                     </SlotsContainer>
                     <Grid>
                         {getHoursTimeLine(scheduleOfDay.startTime, scheduleOfDay.endTime)}

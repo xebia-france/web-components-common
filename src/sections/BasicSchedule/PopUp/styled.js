@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { red} from "../styled";
 import { theme,  device } from '../../../styles/constants';
-import {generateBackgroundImageWebpNoResponsive, generateBackgroundImageNoResponsive} from "../../../utils/StyleGenerator";
+import {generateBackgroundImageWebpNoResponsive, generateBackgroundImageNoResponsive, getFormatedColor, generateFontProperties} from "../../../utils/StyleGenerator";
 
 export const PopUpContainer = styled.div.attrs(props => ({
 }))`
@@ -59,12 +59,19 @@ export const Card = styled.div.attrs(props => ({
 `;
 
 export const Day = styled.div.attrs(props => ({
+    basis : props.basis,
+    responsive : props.responsive
 }))`
   display : flex;
-  background : ${red};
   color : white;
   padding : 0px 20px;
   align-items : center;
+  
+  ${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+            background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+         }`)
+  };
   
 `;
 
@@ -130,14 +137,31 @@ export const Content = styled.div.attrs(props => ({
 
 
 export const Time = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    typographyTitle: props.typographyTitle,
+    basis : props.basis
 }))`
   display : flex;
   padding : 0px 10px;
   color : white;
-  background : ${red};
-  font-size : 14px;
-  line-height : 16px;
   align-items : center;
+  
+  ${ props => props.responsive.map(size => `
+        @media ${ device[size] } {
+            ${ props.typographyTitle ? `color: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
+            ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+            font-size : 14px;
+            line-height : 16px;
+            
+            ${ props.basis  ? `
+                @media ${ device[size] } {
+                   background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+                }
+            ` : ''}
+        
+        }`)
+ };
+  
 `;
 
 
@@ -172,6 +196,8 @@ export const InfoTime = styled.div.attrs(props => ({
 `;
 
 export const Info = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    typographyTitle: props.typographyTitle
 }))`
  display : flex;
  flex-direction : column;
@@ -179,24 +205,50 @@ export const Info = styled.div.attrs(props => ({
  
  &>h4{
     margin-bottom : 10px;
-    font-size : 22px;
-    line-height : 26px;
  }
+ ${ props =>  props.responsive ? props.responsive.map(size => `
+        @media ${ device[size] } {
+        
+            & h4{
+                ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+                font-size : 22px;
+                line-height : 26px;
+            }
+            
+            & p{
+                ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+                 font-size : 14px;
+                 line-height : 24px;
+            }
+                         
+        }`) : ''
+    };
  
 `;
 export const Summary = styled.p.attrs(props => ({
 }))`
  margin-top : 50px;
- font-size : 14px;
- line-height : 24px;
- 
 `;
 
 
 export const InfoSpeakers = styled(Info).attrs(props => ({
+    responsive: props.responsive,
+    typographyTitle: props.typographyTitle,
 }))`
  flex-direction : row;
  flex-wrap : wrap;
+ 
+ ${ props =>  props.responsive ? props.responsive.map(size => `
+        @media ${ device[size] } {
+        
+            & h4{
+                ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
+                font-size : 14px;
+                line-height : 17px;
+            }
+                         
+        }`) : ''
+    };
  
 `;
 
@@ -209,8 +261,6 @@ export const Speaker = styled.div.attrs(props => ({
     margin-bottom : 10px;
     
  & h4{
-    font-size : 14px;
-    line-height : 17px;
     &>span{
         text-transform : uppercase;
     }    
