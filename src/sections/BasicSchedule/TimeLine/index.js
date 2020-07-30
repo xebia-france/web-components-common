@@ -7,6 +7,7 @@ export const getHoursTimeLine = (start, end) => {
     const hourEnd = Number((end.split(' ')[1]).split(':')[0]);
     const minutesEnd = Number((end.split(' ')[1]).split(':')[1]);
     let rows = [];
+    rows.push(<DashContainer><Dash/></DashContainer>)
 
 
     if (minutesStart !== 0) {

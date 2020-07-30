@@ -232,9 +232,7 @@ class BasicSchedule extends Component {
         })
         schedule.others.forEach( slot => allSLots.push(slot));
         let typesList = allSLots.map( slot => slot.type);
-        console.log('typeList', typesList);
         typesList = [...new Set(typesList)].filter(f => !typesNotIncluded.includes(f));
-        console.log('typesList 2', typesList);
         return typesList;
 
     }
@@ -266,8 +264,6 @@ class BasicSchedule extends Component {
         }
 
         return quarters;
-
-
     }
 
     openPopUp = (slot) => {
@@ -355,7 +351,7 @@ class BasicSchedule extends Component {
                      border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
             ><Container>
                 <div>Programme</div>
-                <Schedule>
+                <Schedule nbrColumn={this.state.nbrColumn}>
                     <HeadSchedule>
                         <Label><p>DAY</p></Label>
                         <Days>
@@ -397,7 +393,7 @@ class BasicSchedule extends Component {
                             index={this.state.index} style={styles.root}  enableMouseEvents onChangeIndex={this.updateIndex}
                             slideStyle={styles.slideContainer} springConfig={{}} animateTransitions={false}>
                             {
-                                this.state.scheduleOfDay ? renderView(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter, ScheduleField) : null
+                                this.state.scheduleOfDay ? renderRooms(this.state.scheduleOfDay, styles, this.openPopUp, this.state.filter, ScheduleField) : null
                             }
                         </SwipeableViews>
                         <ShadowLeft/>

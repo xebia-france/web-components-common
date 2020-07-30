@@ -120,6 +120,7 @@ export const DashContainer = styled.div.attrs(props => ({
    &>div:nth-child(2){
    // border-top : 1px solid grey;
    }
+   
    &>div:last-child{
        width : 5px;
    }
@@ -150,7 +151,10 @@ export const Head = styled.div.attrs(props => ({
 `;
 
 export const Column = styled.div.attrs(props => ({
-}))``;
+
+}))`
+  margin-top : 30px;
+`;
 
 
 export const HeadSchedule = styled.div.attrs(props => ({
@@ -159,16 +163,6 @@ export const HeadSchedule = styled.div.attrs(props => ({
   display : flex;
 `;
 
-
-export const Schedule = styled.div.attrs(props => ({
-
-}))`
-  display : flex;
-  flex-direction : column;
-  position : relative;
-  
-  
-`;
 
 
 
@@ -185,8 +179,8 @@ export const Label = styled.div.attrs(props => ({
     color : white;
     transform : rotate(-90deg);
     text-align : center;
-    font-size : 11px;
-    margin-top : 5px;
+    font-size : 10px;
+    margin-top : 7px;
   }
   
   @media ${ device['M'] } {
@@ -218,14 +212,14 @@ export const HoursLine = styled.div.attrs(props => ({
     align-items : flex-end;
     
     &:first-child{
-         
         
         &>p{
             position : relative;
-            top : auto;
-            right : auto;
+            top : 1px;
+            right : 2px;
             line-height : 35px;
             margin-top : 0px;
+            font-size : 10px;
         }
     }
     
@@ -278,7 +272,6 @@ export const Day = styled.div.attrs(props => ({
     typographyTitle: props.typographyTitle
 }))`
   background-color : ${grey50};
-  border-right: 1px solid rgba(255,255,255,0.5);
   padding-left : 20px;
   padding-right : 20px;
   height : 40px;
@@ -319,6 +312,51 @@ export const Days = styled.div.attrs(props => ({
 `;
 
 
+
+export const Schedule = styled.div.attrs(props => ({
+    nbrColumn : props.nbrColumn,
+}))`
+  display : flex;
+  flex-direction : column;
+  position : relative;
+  
+  @media (min-width: 1024px) {
+   
+    ${ props => props.nbrColumn <= 3  ? `
+        & ${SwitchButtons}{
+            display : none;
+        }
+        & ${Days}{
+            width : calc(100% - 35px);
+        }
+    ` : ''}
+  }
+  
+   @media (min-width: ${size.T}) and (max-width: 1023px) {
+   
+    ${ props => props.nbrColumn <= 2 ? `
+        & ${SwitchButtons}{
+            display : none;
+        }
+        & ${Days}{
+            width : calc(100% - 35px);
+        }
+    ` : ''}
+   }
+   
+   @media ${device.M} {
+     ${ props => props.nbrColumn === 1 ? `
+        & ${SwitchButtons}{
+            display : none;
+        }
+        & ${Days}{
+            width : calc(100% - 25px);
+        }
+    ` : ''}
+   }
+  
+  
+`;
 
 
 export const Header = styled.div.attrs(props => ({
@@ -586,6 +624,88 @@ export const ShadowRight = styled.div.attrs(props => ({
 
 `;
 
+
+
+
+export const SwitchButtons = styled.div.attrs(props => ({
+    nbrColumn : props.nbrColumn,
+    index : props.index,
+    basis : props.basis,
+    responsive : props.responsive
+}))`
+  background : ${theme.white};
+  width : 80px;
+  display : flex;
+  align-items :center;
+  justify-content : center;
+  
+  ${ props => props.index > 0 ? `
+            & ${ToLeft}{
+                opacity : 1;
+                cursor :pointer;
+                pointer-events: auto;
+                
+            }
+  ` : ``}
+  
+  @media ${ device['M'] } {
+      display : none;
+  }
+  
+  @media (min-width: 1024px) {
+   
+        ${ props => props.nbrColumn > 3 ? `
+            ${ (props.nbrColumn - props.index) >  3   ? `
+                & ${ToRight}{
+                    opacity : 1;
+                    cursor :pointer;
+                    pointer-events: auto;
+                    &:hover{
+                        
+                        & svg path{
+                            fill : ${theme.white};
+                        }
+                    }
+                }
+            ` : ``}
+        ` : ''}
+    }
+   @media (min-width: ${size.T}) and (max-width: 1023px) {
+   
+        ${ props => props.nbrColumn > 2 ? `
+            ${ (props.nbrColumn - props.index) > 2 ? `
+                & ${ToRight}{
+                    opacity : 1;
+                    cursor :pointer;
+                    pointer-events: auto;
+                    
+                    &:hover{
+                        
+                        & svg path{
+                            fill : ${theme.white};
+                        }
+                    }
+                }
+            ` : ``}
+        ` : ''}
+    }
+    
+    ${ props =>  props.responsive ? props.responsive.map(size => `
+        @media ${ device[size] } {
+            & ${ToRight}, & ${ToLeft}{
+                    &:hover{
+                        background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+                        
+                        & svg path{
+                            fill : ${theme.white};
+                        }
+                    }
+                }
+                     
+        }`) : ''
+    };
+`;
+
 export const BodySchedule = styled.div.attrs(props => ({
     responsive: props.responsive,
     nbrColumn : props.nbrColumn,
@@ -613,6 +733,10 @@ export const BodySchedule = styled.div.attrs(props => ({
     
   
   
+  }
+  
+  & ${HoursLine}>div:first-child{
+    height : 30px;
   }
   
   &>div:nth-child(2){    
@@ -833,6 +957,7 @@ export const BodySchedule = styled.div.attrs(props => ({
                 &>div{
                     transform : translate(0%, 0px) !important;
                 }
+                
             ` : ''}
             ${ props => props.nbrColumn === 1 ? `
                 padding :0 0 0 0 !important;
@@ -1043,14 +1168,25 @@ export const BodyRooms =  styled(BodySchedule).attrs(props => ({
 }))`
     height : auto;
     border-bottom:none;
+     pointer-events: none;
     
     & ${Head}{
         opacity : 1;
         height : 40px;
+       
     }
-    &>div:nth-child(2)>div{
+    
+    & ${HoursLine}>div:first-child{
         height : 40px;
-        overflow-y : hidden;
+    }
+    
+    & ${Column}{
+        margin-top: 0px;
+    }
+  
+    &>div:nth-child(2)>div{
+       // height : 40px;
+        //overflow-y : hidden;
     }
     /*&>div:nth-child(2)>div{
         ${props => props.translatePosition ?
@@ -1149,9 +1285,9 @@ export const Filters = styled.div.attrs(props => ({
                 line-height : 16px;
                 color : ${theme.white};
                 
-                &:hover{
+                /*&:hover{
                    background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-                }
+                }*/
                 &.active{
                     background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
                 }
@@ -1195,84 +1331,4 @@ export const ToRight = styled.div.attrs(props => ({
     &>svg{
         transform : rotate(-90deg);
     }
-`;
-
-
-export const SwitchButtons = styled.div.attrs(props => ({
-    nbrColumn : props.nbrColumn,
-    index : props.index,
-    basis : props.basis,
-    responsive : props.responsive
-}))`
-  background : ${theme.white};
-  width : 80px;
-  display : flex;
-  align-items :center;
-  justify-content : center;
-  
-  ${ props => props.index > 0 ? `
-            & ${ToLeft}{
-                opacity : 1;
-                cursor :pointer;
-                pointer-events: auto;
-                
-            }
-  ` : ``}
-  
-  @media ${ device['M'] } {
-      display : none;
-  }
-  
-  @media (min-width: 1024px) {
-   
-        ${ props => props.nbrColumn > 3 ? `
-            ${ (props.nbrColumn - props.index) >  3   ? `
-                & ${ToRight}{
-                    opacity : 1;
-                    cursor :pointer;
-                    pointer-events: auto;
-                    &:hover{
-                        
-                        & svg path{
-                            fill : ${theme.white};
-                        }
-                    }
-                }
-            ` : ``}
-        ` : ''}
-    }
-   @media (min-width: ${size.T}) and (max-width: 1023px) {
-   
-        ${ props => props.nbrColumn > 2 ? `
-            ${ (props.nbrColumn - props.index) > 2 ? `
-                & ${ToRight}{
-                    opacity : 1;
-                    cursor :pointer;
-                    pointer-events: auto;
-                    
-                    &:hover{
-                        
-                        & svg path{
-                            fill : ${theme.white};
-                        }
-                    }
-                }
-            ` : ``}
-        ` : ''}
-    }
-    
-    ${ props =>  props.responsive ? props.responsive.map(size => `
-        @media ${ device[size] } {
-            & ${ToRight}, & ${ToLeft}{
-                    &:hover{
-                        background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-                        
-                        & svg path{
-                            fill : ${theme.white};
-                        }
-                    }
-                }
-                     
-        }`) : ''
-    };
 `;

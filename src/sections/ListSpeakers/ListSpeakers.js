@@ -17,6 +17,7 @@ class ListSpeakers extends Component {
     }
 
     componentDidMount(){
+        console.log('PROPS ON LISTSPEAKERS', this.props)
     }
 
     selectCard = (i) => {
@@ -38,14 +39,14 @@ class ListSpeakers extends Component {
     }
 
     render() {
-        const {children, fields, name, assetsDirectory, speakers} = this.props;
+        const {children, fields, name, assetsDirectory, data} = this.props;
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
 
         const AssetBackground = Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null;
         const Settings = Template && Template.settings ? Template.settings : null;
 
-
+        console.log('PROPS ON LISTSPEAKERS', this.props)
         return (
             <Wrapper id={removeSpaces(name)}
                      asset={AssetBackground}
@@ -61,7 +62,7 @@ class ListSpeakers extends Component {
                     className={this.state.active ? 'active' : ''}
                 >
                     {
-                        speakers.map((speaker, i) => {
+                        data.map((speaker, i) => {
                             return <CardSpeaker
                                 key={i}
                                 configSpeakers={fields.Speakers}
