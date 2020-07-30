@@ -225,7 +225,7 @@ class BasicSchedule extends Component {
     }
 
     getTypesList = (schedule) => {
-        const typesNotIncluded = ['break', 'pause', 'lunch', 'cocktail','déjeuner']
+        const typesNotIncluded = ['break', 'pause', 'lunch', 'cocktail','déjeuner', 'breakfast', 'party', 'opening', 'closing' ]
         let allSLots = [];
         schedule.rooms.forEach( room => {
             return room.slots.forEach( slot => allSLots.push(slot))

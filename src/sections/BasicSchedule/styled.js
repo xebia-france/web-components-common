@@ -598,8 +598,8 @@ export const BodySchedule = styled.div.attrs(props => ({
   overflow : hidden;
   position : relative;
   overflow-y : scroll;
-  height : 70vh;
-  cursor : pointer;
+  height : 60vh;
+  cursor : pointer;s
   border-bottom: 1px solid ${grey50};
   background: ${theme.grey20};
   
