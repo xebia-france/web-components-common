@@ -1048,7 +1048,10 @@ export const BodyRooms =  styled(BodySchedule).attrs(props => ({
         opacity : 1;
         height : 40px;
     }
-    
+    &>div:nth-child(2)>div{
+        height : 40px;
+        overflow-y : hidden;
+    }
     /*&>div:nth-child(2)>div{
         ${props => props.translatePosition ?
     `transform : ${props.translatePosition} !important;` : ''}
