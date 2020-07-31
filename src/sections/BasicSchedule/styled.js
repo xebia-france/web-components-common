@@ -444,8 +444,6 @@ export const Time = styled.div.attrs(props => ({
         @media ${ device[size] } {
             ${ props.typographyTitle ? `color: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
             ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
-            font-size : 12px;
-            line-height : 15px;
             
             & ${Clock} svg path{
                 ${ props.typographyTitle ? `fill: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) } !important;` : ''}
@@ -482,20 +480,20 @@ export const Informations = styled.div.attrs(props => ({
             & h4{
                 ${ props.typographyTitle ? `color: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
                 ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
-                ${ props.basisTitle ? generatePadding(props.basisTitle, size) : '' }   
+                //${ props.basisTitle ? generatePadding(props.basisTitle, size) : '' }   
             }
             & h5{
                 ${ props.typographyText ? `color: ${ getFormatedColor(props.typographyText[size].color, props.typographyText[size].opacity) };` : ''}
                 ${ props.typographyText ? generateFontProperties(props.typographyText, size) : '' }
-                ${ props.basisText ? generatePadding(props.basisText, size) : '' }   
+                //${ props.basisText ? generatePadding(props.basisText, size) : '' }   
             }
                          
         }`) : ''
     }; 
     
   & h4{
-    font-size : 14px;
-    line-height : 18px;
+    //font-size : 14px;
+    //line-height : 18px;
     margin-top : 5px;
     
     &.cropped{
@@ -506,9 +504,9 @@ export const Informations = styled.div.attrs(props => ({
    
   }
   & h5{
-    font-size : 12px;
-    line-height : 13px;
-    opacity : 0.4;
+    //font-size : 12px;
+    //line-height : 13px;
+    //opacity : 0.4;
     margin-top : 5px;
   }
   
@@ -1338,9 +1336,9 @@ export const Filters = styled.div.attrs(props => ({
         
             &>div{
                 ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
-                ${ props.basisTitle ? generatePadding(props.basisTitle, size) : '' }   
-                font-size : 14px;
-                line-height : 16px;
+               // ${ props.basisTitle ? generatePadding(props.basisTitle, size) : '' }   
+                //font-size : 14px;
+              //  line-height : 16px;
                 color : ${theme.white};
                 
                 /*&:hover{
