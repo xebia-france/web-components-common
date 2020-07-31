@@ -259,8 +259,8 @@ export const InfoSpeakers = styled(Info).attrs(props => ({
         
             & h4{
                 ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
-                font-size : 14px;
-                line-height : 17px;
+                //font-size : 14px;
+                //line-height : 17px;
             }
                          
         }`) : ''
@@ -277,8 +277,8 @@ export const Speaker = styled.div.attrs(props => ({
     margin-bottom : 10px;
     
  & h4{
-    font-size : 14px;
-    line-height : 17px;
+    //font-size : 14px;
+    //line-height : 17px;
     &>span{
         text-transform : uppercase;
     }    

@@ -1345,8 +1345,8 @@ export const Filters = styled.div.attrs(props => ({
             &>div{
                 ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
                // ${ props.basisTitle ? generatePadding(props.basisTitle, size) : '' }   
-                //font-size : 14px;
-              //  line-height : 16px;
+                font-size : 14px;
+                line-height : 16px;
                 color : ${theme.white};
                 
                 /*&:hover{
