@@ -560,8 +560,6 @@ export const Slot = styled.div.attrs(props => ({
     & ${SlotContent}{
         color : white;
         
-        
-        
         & ${ Informations}{
         
         }
@@ -594,7 +592,7 @@ export const Slot = styled.div.attrs(props => ({
          }`)
     };
     
-    ${props => props.duration === 10 ? `
+    ${props => props.duration <= 10 ? `
       & ${SlotContent}{
            
             & ${ Informations}{
@@ -726,6 +724,44 @@ export const SwitchButtons = styled.div.attrs(props => ({
     };
 `;
 
+
+
+export const Grid = styled.div.attrs(props => ({
+}))`
+  position : absolute;
+  width:  100%;
+  height : 100%;
+  top :  -30px;
+  opacity : 1;
+  
+  & ${ DashContainer}{
+    background : none;
+    width : 100%;
+    border-right : 1px solid ${theme.grey60};
+    
+    & p{
+        display : none;
+    }
+    
+    &>div:last-child{
+       width : 100%;
+   }
+  }
+  
+  &:last-child{
+    &>div:last-child{
+      // width : 0;
+   }
+  }
+  
+  & ${ Dash}{
+    background : none;
+    width : 0;
+    
+  }
+  
+`;
+
 export const BodySchedule = styled.div.attrs(props => ({
     responsive: props.responsive,
     nbrColumn : props.nbrColumn,
@@ -757,6 +793,20 @@ export const BodySchedule = styled.div.attrs(props => ({
   
   & ${HoursLine}>div:first-child{
     height : 30px;
+  }
+  
+  &>div:nth-child(2){    
+  
+    &>div>div {
+        & ${ Column } ${Grid} ${DashContainer} ${Dash}:last-child{
+            border-bottom : 0px solid transparent;
+        }
+    }
+    &>div>div:last-child {
+        & ${ Column } ${Grid} ${DashContainer}{
+            border-right : 0px solid transparent;
+        }
+    }
   }
   
   &>div:nth-child(2){    
@@ -1228,41 +1278,6 @@ export const BodyRooms =  styled(BodySchedule).attrs(props => ({
 `
 
 
-export const Grid = styled.div.attrs(props => ({
-}))`
-  position : absolute;
-  width:  100%;
-  height : 100%;
-  top :  -30px;
-  opacity : 1;
-  
-  & ${ DashContainer}{
-    background : none;
-    width : 100%;
-    border-right : 1px solid ${theme.grey60};
-    
-    & p{
-        display : none;
-    }
-    
-    &>div:last-child{
-       width : 100%;
-   }
-  }
-  
-  &:last-child{
-    &>div:last-child{
-      // width : 0;
-   }
-  }
-  
-  & ${ Dash}{
-    background : none;
-    width : 0;
-    
-  }
-  
-`;
 
 
 
