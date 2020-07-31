@@ -32,6 +32,10 @@ export const Banner = styled.div.attrs(props => ({
   height : 40px;
   min-height : 40px;
   position : sticky;
+  -webkit-user-select: none; /* Safari */        
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+/Edge */
+user-select: none; /* Standard */
   
 `;
 
@@ -138,6 +142,10 @@ export const Content = styled.div.attrs(props => ({
   padding : 20px;
   overflow : scroll;
 
+    -webkit-user-select: none; /* Safari */        
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+/Edge */
+user-select: none; /* Standard */
 `;
 
 
