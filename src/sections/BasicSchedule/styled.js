@@ -438,13 +438,14 @@ export const Time = styled.div.attrs(props => ({
 }))`
  display : flex;
  min-width : 95px;
- opacity : 0.7;
  
  ${ props => props.responsive.map(size => `
         @media ${ device[size] } {
             ${ props.typographyTitle ? `color: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
             ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
-            
+            font-size : 12px;
+            line-height : 15px;
+
             & ${Clock} svg path{
                 ${ props.typographyTitle ? `fill: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) } !important;` : ''}
             }
@@ -602,7 +603,8 @@ export const Slot = styled.div.attrs(props => ({
   
     ${props => props.duration === 5 ? `
       & ${SlotContent}{
-            padding :0;
+            padding-top:0px;
+            padding-bottom:0px;
           
             & ${ Header }{
                 margin-top : -4px;
