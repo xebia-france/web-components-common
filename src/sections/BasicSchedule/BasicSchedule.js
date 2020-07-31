@@ -267,35 +267,41 @@ class BasicSchedule extends Component {
     }
 
     openPopUp = (slot) => {
+        this.disableScrolling();
         this.setState({
             openPopUp: true,
             selectedSlot: slot
         })
-        this.disableScrolling();
+
 
 
     }
     closePopUp = () => {
+        this.enableScrolling();
         this.setState({
             openPopUp: false,
             selectedSlot: null
         })
-        this.enableScrolling();
+
     }
 
 
     disableScrolling = () => {
         if (typeof window !== 'undefined' && typeof document !== `undefined`) {
-            var x=window.scrollX;
             var y=window.scrollY;
-            window.onscroll=function(){window.scrollTo(x, y);};
+           document.body.style.position = 'fixed';
+            document.body.style.top = `-${y}px`;
+
         }
 
     }
 
     enableScrolling = () => {
         if (typeof window !== 'undefined' && typeof document !== `undefined`) {
-            window.onscroll=function(){};
+            const scrollY = document.body.style.top;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            window.scrollTo(0, parseInt(scrollY || '0') * -1);
         }
     }
 

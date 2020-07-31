@@ -43,10 +43,14 @@ export const Card = styled.div.attrs(props => ({
   min-width : 500px;
   max-width : 100%;
   background :white;
-  position  : relative;
-  margin:auto;
-  margin-top : 10vh;
-  margin-bottom : 10vh;
+  //position  : relative;
+  //margin:auto;
+  //margin-top : 10vh;
+  //margin-bottom : 10vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   
   
   @media ${ device['M'] } {
