@@ -607,7 +607,13 @@ export const Slot = styled.div.attrs(props => ({
             padding-bottom:0px;
           
             & ${ Header }{
-                margin-top : -4px;
+                height : 12px;
+                 & ${ Tag }{
+                    height : 12px;
+                     &>div{
+                        height : 12px;
+                    }
+                }
             }
         }
   
