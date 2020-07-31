@@ -14,8 +14,6 @@ export const overlaped = (slot, transverse) => {
     } else {
         return false
     }
-
-
 }
 
 export const searchOverlap = (slot, transverses) => {
@@ -34,10 +32,9 @@ class Slots extends Component {
         super(props);
         this.state = {
             isSwiping: false,
-            xStart : null,
-            xEnd : null
+            xStart: null,
+            xEnd: null
         };
-
     }
 
     render() {
@@ -45,40 +42,29 @@ class Slots extends Component {
         const {scheduleOfDay, slots, transverses, openPopUp, filter, fieldSettings} = this.props;
         const all = !slots ? transverses : slots.concat(transverses);
 
-        return all.map(slot => {
-
+        return all.map((slot, i) => {
             const startDay = scheduleOfDay.startTime;
-
-            console.log('getDuration(slot.fromTime, slot.toTime)', getDuration(slot.fromTime, slot.toTime))
-
-
-            return <Slot duration={getDuration(slot.fromTime, slot.toTime)}
+            return <Slot key={i}
+                         duration={getDuration(slot.fromTime, slot.toTime)}
                          minutes={getDuration(startDay, slot.fromTime)}
-                         className={[!slot.room ? 'other' : '', slot.room && searchOverlap(slot, transverses) ? 'overlaped' : '', filter && filter !== slot.type ? 'filtered' : '' ]}
+                         className={[!slot.room ? 'other' : '', slot.room && searchOverlap(slot, transverses) ? 'overlaped' : '', filter && filter !== slot.type ? 'filtered' : '']}
                          responsive={fieldSettings.responsiveSettings}
                          basis={getBasisByType(slot.type, fieldSettings.settings)}
                          onMouseDown={(e) => {
                              this.setState({
-                                 xStart : e.clientX
+                                 xStart: e.clientX
                              })
-                             console.log('MOUSE DOWN')
-                             console.log('MOUSE DOWN e', e)
-                             console.log('X', e.clientX)
                          }}
                          onMouseUp={e => {
-                             console.log('MOUSE UP')
-                             console.log('MOUSE UP e', e)
-                             console.log('X', e.clientX)
-
                              this.setState({
-                                 xEnd : e.clientX
+                                 xEnd: e.clientX
                              }, () => {
-                                 if(this.state.xStart === this.state.xEnd){
+                                 if (this.state.xStart === this.state.xEnd) {
                                      openPopUp(slot)
                                  }
                                  this.setState({
-                                     xStart : null,
-                                     xEnd : null
+                                     xStart: null,
+                                     xEnd: null
                                  })
 
                              })
@@ -88,16 +74,23 @@ class Slots extends Component {
             >
                 <SlotContent>
                     <Header>
-                        <Tag  responsive={fieldSettings.responsiveSettings} typographyTitle={getTitleSettingsByType(slot.type, fieldSettings.settings)}>
+                        <Tag responsive={fieldSettings.responsiveSettings}
+                             typographyTitle={getTitleSettingsByType(slot.type, fieldSettings.settings)}>
                             {slot.type ? <div>{slot.type}</div> : null}
                             {slot.track ? <div>{slot.track}</div> : null}
                         </Tag>
-                        <Time responsive={fieldSettings.responsiveSettings} typographyTitle={getTextSettingsByType(slot.type, fieldSettings.settings)} basisTitle={getTextSettingsByType(slot.type, fieldSettings.settings)}>
+                        <Time responsive={fieldSettings.responsiveSettings}
+                              typographyTitle={getTextSettingsByType(slot.type, fieldSettings.settings)}
+                              basisTitle={getTextSettingsByType(slot.type, fieldSettings.settings)}>
                             <Clock><SvgClock/></Clock>
                             {getHourFromTime(slot.fromTime)} - {getHourFromTime(slot.toTime)}
                         </Time>
                     </Header>
-                    <Informations responsive={fieldSettings.responsiveSettings} typographyTitle={getTitleSettingsByType(slot.type, fieldSettings.settings)} basisTitle={getTitleSettingsByType(slot.type, fieldSettings.settings)} typographyText={getTextSettingsByType(slot.type, fieldSettings.settings)} basisText={getTextSettingsByType(slot.type, fieldSettings.settings)} >
+                    <Informations responsive={fieldSettings.responsiveSettings}
+                                  typographyTitle={getTitleSettingsByType(slot.type, fieldSettings.settings)}
+                                  basisTitle={getTitleSettingsByType(slot.type, fieldSettings.settings)}
+                                  typographyText={getTextSettingsByType(slot.type, fieldSettings.settings)}
+                                  basisText={getTextSettingsByType(slot.type, fieldSettings.settings)}>
                         <h4 className={getDuration(slot.fromTime, slot.toTime) <= 30 ? 'cropped' : ''}>{slot.title}</h4>
                         {
                             slot.speakers && slot.speakers.length !== 0 && getDuration(slot.fromTime, slot.toTime) >= 30 ?

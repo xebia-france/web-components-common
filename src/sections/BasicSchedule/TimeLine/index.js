@@ -15,7 +15,7 @@ export const getHoursTimeLine = (start, end) => {
             <DashContainer>
                 {
                     Array.from(Array((Math.ceil(minutesStart / 15))), (e, i) => {
-                        return <Dash/>
+                        return <Dash key={i}/>
                     })
                 }
             </DashContainer>);
@@ -49,7 +49,7 @@ export const getHoursTimeLine = (start, end) => {
                 <p>{hourEnd}</p>
                 {
                     Array.from(Array((Math.ceil(minutesEnd / 15))), (e, i) => {
-                        return <Dash/>
+                        return <Dash key={i}/>
                     })
                 }
             </DashContainer>);

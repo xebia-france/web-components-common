@@ -13,9 +13,9 @@ export const renderRooms = (scheduleOfDay, styles, openPopUp, filter, fieldSetti
         )
 
     }else{
-        return scheduleOfDay.rooms.map(room => {
+        return scheduleOfDay.rooms.map((room, i) => {
             return (
-                <Column style={Object.assign({}, styles.slide, styles.slide1)}>
+                <Column key={i} style={Object.assign({}, styles.slide, styles.slide1)}>
                     <Head responsive={fieldSettings.responsiveSettings}
                           typographyTitle={fieldSettings.settings.set1Title}>{room.name}</Head>
                 </Column>

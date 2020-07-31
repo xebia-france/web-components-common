@@ -17,7 +17,6 @@ class ListSpeakers extends Component {
     }
 
     componentDidMount(){
-        console.log('PROPS ON LISTSPEAKERS', this.props)
     }
 
     selectCard = (i) => {

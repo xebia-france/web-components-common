@@ -23,7 +23,6 @@ import {Tag} from '../styled'
 
 const PopUp = ({open, closePopUp, openPopUp, slot, allSpeakers, assetsDirectory, locale, fieldSettings}) => {
     if (!slot || !allSpeakers) return null
-    console.log('fieldSettings >>>>', fieldSettings)
     return (<PopUpContainer className={open ? 'open' : ''}  >
             <Card>
                 <Banner>
@@ -57,11 +56,11 @@ const PopUp = ({open, closePopUp, openPopUp, slot, allSpeakers, assetsDirectory,
                         slot.speakers && slot.speakers.length !== 0 ?
                             <InfoSpeakers responsive={fieldSettings.responsiveSettings} typographyTitle={getTitleSettingsByType(slot.type, fieldSettings.settings)}>
                                 {
-                                    slot.speakers.map(s => {
+                                    slot.speakers.map((s, i) => {
                                         let match = allSpeakers.find(i => i.id === s.id);
 
                                         if (!match) return null;
-                                        return <Speaker>
+                                        return <Speaker key={i}>
                                             <Image assetsDirectory={assetsDirectory} asset={match.imageURL}/>
                                             <div>
                                                 <h4>{match.firstName} <span>{match.lastName}</span></h4>

@@ -44,8 +44,6 @@ class BasicSchedule extends Component {
 
 
     componentDidMount() {
-        console.log('PROPS ON SCHEDULE', this.props)
-
         this.setState({
             formatedSchedule:  this.formatSchedule(),
             speakers:  this.formatSpeakers()
@@ -187,7 +185,6 @@ class BasicSchedule extends Component {
         const css = this.viewsRef.current.containerNode.style.transform;
         this.setState({
             translatePosition: css,
-            // transition: 'all 0.0s cubic-bezier(0.15,0.3,0.25,1) 0s'
         });
 
     };
@@ -198,13 +195,11 @@ class BasicSchedule extends Component {
 
         this.setState({
             index: index,
-            // transition: 'transform 0.2s cubic-bezier(0.15,0.3,0.25,1) 0s'
         }, () => {
 
             const css = this.viewsRef.current.containerNode.style.transform;
             this.setState({
                 translatePosition: css,
-                // transition: 'all 0.0s cubic-bezier(0.15,0.3,0.25,1) 0s'
             });
         });
     };
@@ -345,9 +340,6 @@ class BasicSchedule extends Component {
         };
 
         if (!this.state.formatedSchedule || !this.state.scheduleOfDay) return null;
-        //console.log('FINAL SCHEDULE', this.state.formatedSchedule)
-        // console.log('SCHEDULE OF DAY', this.state.scheduleOfDay)
-
         return (
             <Wrapper id={removeSpaces(name)}
                      asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
@@ -362,8 +354,8 @@ class BasicSchedule extends Component {
                         <Label><p>DAY</p></Label>
                         <Days>
                             {
-                                this.state.formatedSchedule.map(day => {
-                                    return <Day className={day.date === this.state.currentDay ? 'active' : ''}
+                                this.state.formatedSchedule.map((day,i) => {
+                                    return <Day key={i} className={day.date === this.state.currentDay ? 'active' : ''}
                                                 responsive={ScheduleField.responsiveSettings}
                                                 basis={ScheduleField.settings.set1Bkg}
                                                 typographyTitle={ScheduleField.settings.set1Title}
@@ -430,8 +422,8 @@ class BasicSchedule extends Component {
                              typographyTitle={ScheduleField.settings.set1Title}>
                         {
                             this.state.types ?
-                                this.state.types.map(type => {
-                                    return <div className={this.state.filter === type ? 'active' : ''}
+                                this.state.types.map((type,i) => {
+                                    return <div key={i} className={this.state.filter === type ? 'active' : ''}
                                                 onClick={() => this.updateFilter(type)}>{type}</div>
                                 })
                                 : null

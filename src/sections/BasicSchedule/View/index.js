@@ -14,7 +14,8 @@ export const renderView = (scheduleOfDay, styles, openPopUp, filter, fieldSettin
                       typographyTitle={fieldSettings.settings.set1Title}>{'no room'}</Head>
                 <SlotsContainer>
                     <Slots openPopUp={openPopUp} scheduleOfDay={scheduleOfDay} slots={[]}
-                           transverses={scheduleOfDay.others} filter={filter} fieldSettings={fieldSettings}/>                </SlotsContainer>
+                           transverses={scheduleOfDay.others} filter={filter} fieldSettings={fieldSettings}/>
+                </SlotsContainer>
                 <Grid>
                     {getHoursTimeLine(scheduleOfDay.startTime, scheduleOfDay.endTime)}
                 </Grid>
@@ -22,14 +23,15 @@ export const renderView = (scheduleOfDay, styles, openPopUp, filter, fieldSettin
         )
 
     }else{
-        return scheduleOfDay.rooms.map(room => {
+        return scheduleOfDay.rooms.map((room, i) => {
             return (
-                <Column style={Object.assign({}, styles.slide, styles.slide1)}>
+                <Column key={i} style={Object.assign({}, styles.slide, styles.slide1)}>
                     <Head responsive={fieldSettings.responsiveSettings}
                           typographyTitle={fieldSettings.settings.set1Title}>{room.name}</Head>
                     <SlotsContainer>
                         <Slots openPopUp={openPopUp} scheduleOfDay={scheduleOfDay} slots={room.slots}
-                               transverses={scheduleOfDay.others} filter={filter} fieldSettings={fieldSettings}/>                    </SlotsContainer>
+                               transverses={scheduleOfDay.others} filter={filter} fieldSettings={fieldSettings}/>
+                    </SlotsContainer>
                     <Grid>
                         {getHoursTimeLine(scheduleOfDay.startTime, scheduleOfDay.endTime)}
                     </Grid>
