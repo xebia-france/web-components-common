@@ -12,7 +12,7 @@ import {
     HeadSchedule,
     BodySchedule,
     BodyRooms,
-    DashContainer,
+    DashContainer,FiltersContainer,
     Day,
     Days,
     Schedule, Filters, SwitchButtons, ToRight, ToLeft
@@ -424,6 +424,7 @@ class BasicSchedule extends Component {
                         <ShadowLeft nbrQuarters={this.state.nbrQuarters}/>
                         <ShadowRight nbrQuarters={this.state.nbrQuarters}/>
                     </BodySchedule>
+                    <FiltersContainer>
                     <Filters responsive={ScheduleField.responsiveSettings}
                              basis={ScheduleField.settings.set1Bkg}
                              typographyTitle={ScheduleField.settings.set1Title}>
@@ -436,6 +437,7 @@ class BasicSchedule extends Component {
                                 : null
                         }
                     </Filters>
+                    </FiltersContainer>
                 </Schedule>
 
             </Container>

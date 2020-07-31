@@ -49,6 +49,8 @@ class Slots extends Component {
 
             const startDay = scheduleOfDay.startTime;
 
+            console.log('getDuration(slot.fromTime, slot.toTime)', getDuration(slot.fromTime, slot.toTime))
+
 
             return <Slot duration={getDuration(slot.fromTime, slot.toTime)}
                          minutes={getDuration(startDay, slot.fromTime)}
@@ -82,27 +84,7 @@ class Slots extends Component {
                              })
 
                          }}
-                /*onTouchStart={(e) => {
-                    console.log('ON TOUCH START',e.touches[0].clientX)
-                    this.setState({
-                        xStart : e.touches[0].clientX
-                    })
-                }}
-                onTouchEnd={e => {
-                    console.log('ON TOUCH END', e.touches[0].clientX)
-                    this.setState({
-                        xEnd :e.touches[0].clientX
-                    }, () => {
-                        if(this.state.xStart === this.state.xEnd){
-                            openPopUp(slot)
-                        }
-                        this.setState({
-                            xStart : null,
-                            xEnd : null
-                        })
 
-                    })
-                }}*/
             >
                 <SlotContent>
                     <Header>

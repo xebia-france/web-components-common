@@ -108,7 +108,7 @@ export const Dash = styled.div.attrs(props => ({
 }))`
    width : 10px;
    height : ${baseHeight}px;
-   border-bottom : 1px solid grey;
+   border-bottom :1px solid ${theme.grey60};
    
 `;
 
@@ -199,7 +199,7 @@ export const HoursLine = styled.div.attrs(props => ({
   height : fit-content;
   display : flex;
   flex-direction : column;
-  border-right : 1px solid grey;
+  border-right : 1px solid ${theme.grey60};
   z-index: 20;
   transition : margin-right 0.0s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
   background : white;
@@ -319,6 +319,8 @@ export const Schedule = styled.div.attrs(props => ({
   display : flex;
   flex-direction : column;
   position : relative;
+  border : 1px solid ${theme.grey60};
+
   
   @media (min-width: 1024px) {
    
@@ -548,6 +550,8 @@ export const Slot = styled.div.attrs(props => ({
   position : absolute;
   z-index: 3;
   
+  
+  
   &.other{
     z-index : 1;
 
@@ -587,6 +591,16 @@ export const Slot = styled.div.attrs(props => ({
             }
          }`)
     };
+    
+    ${props => props.duration <= 10 ? `
+      & ${SlotContent}{
+           
+            & ${ Informations}{
+                display : none !important;
+            }
+        }
+  
+  ` : ''}
   
 `;
 
@@ -1187,10 +1201,16 @@ export const BodyRooms =  styled(BodySchedule).attrs(props => ({
     & ${Column}{
         margin-top: 0px;
     }
+    
+    & ${Column}{
+        margin-top: 0px;
+    }
   
     &>div:nth-child(2)>div{
-       // height : 40px;
-        //overflow-y : hidden;
+      
+    }
+    &>div:nth-child(2)>div>div:last-child ${Column } ${Head}{
+       border : none;
     }
     /*&>div:nth-child(2)>div{
         ${props => props.translatePosition ?
@@ -1211,12 +1231,13 @@ export const Grid = styled.div.attrs(props => ({
   position : absolute;
   width:  100%;
   height : 100%;
-  opacity : 0.2;
+  top :  -30px;
+  opacity : 1;
   
   & ${ DashContainer}{
     background : none;
     width : 100%;
-    border-right : 1px solid grey;
+    border-right : 1px solid ${theme.grey60};
     
     & p{
         display : none;
@@ -1240,18 +1261,19 @@ export const Grid = styled.div.attrs(props => ({
   }
   
 `;
+
+
+
 export const Filters = styled.div.attrs(props => ({
     basis : props.basis,
     responsive : props.responsive,
     typographyTitle: props.typographyTitle
 }))`
-  position : absolute;
   background : ${theme.grey90};
   border-radius : 15px;
   display : flex;
   padding : 0 5px;
   padding-top : 5px;
-  bottom : 10px;
   align-self : center;
   max-width : 80%;
   flex-wrap : wrap;
@@ -1298,7 +1320,24 @@ export const Filters = styled.div.attrs(props => ({
             }
                      
         }`) : ''
-    };     
+    };  
+  
+`;
+
+export const FiltersContainer = styled.div.attrs(props => ({
+
+}))`
+  position : absolute;
+  width : calc(100%  - 35px); 
+  bottom : 20px; 
+  display : flex;
+  justify-content : center;
+  right : 0;
+  
+  @media ${device.M} {
+     width : calc(100%  - 25px); 
+  }   
+       
         
         
   
