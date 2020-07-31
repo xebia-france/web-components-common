@@ -229,7 +229,7 @@ export const HoursLine = styled.div.attrs(props => ({
     
     &>p{
         position : absolute;
-        top : -12px;
+        top : -13px;
         right : 10px;
     }
     
@@ -248,15 +248,17 @@ export const HoursLine = styled.div.attrs(props => ({
       &>div{
         &:first-child{
             &>p{
-                line-height : 28px;
-                padding-top : 10px;
+                line-height : 10px;
+                top : 14px;
+                right : none;
+                left : 3px;
             }
         }
         
         
        &>p{
-         font-size : 12px;
-         right : 8px;
+         font-size : 10px;
+         right : 7px;
        } 
       }
    }
@@ -592,7 +594,7 @@ export const Slot = styled.div.attrs(props => ({
          }`)
     };
     
-    ${props => props.duration <= 10 ? `
+    ${props => props.duration === 10 ? `
       & ${SlotContent}{
            
             & ${ Informations}{
