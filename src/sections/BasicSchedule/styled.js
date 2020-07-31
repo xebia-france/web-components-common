@@ -420,6 +420,7 @@ export const Clock = styled.div.attrs(props => ({
  width : 11px;
  height : 11px;
  margin-right : 4px;
+ margin-bottom : 2px;
  display : flex;
  align-self : center;
  

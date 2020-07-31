@@ -290,6 +290,7 @@ class BasicSchedule extends Component {
         if (typeof window !== 'undefined' && typeof document !== `undefined`) {
             var y=window.scrollY;
            document.body.style.position = 'fixed';
+           document.body.style.width = '100%';
             document.body.style.top = `-${y}px`;
 
         }

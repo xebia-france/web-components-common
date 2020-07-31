@@ -69,7 +69,6 @@ const PopUp = ({open, closePopUp, openPopUp, slot, allSpeakers, assetsDirectory,
                                         </Speaker>
                                     })
                                 }
-
                             </InfoSpeakers>
                             : null
                     }
