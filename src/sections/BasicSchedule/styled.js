@@ -602,6 +602,17 @@ export const Slot = styled.div.attrs(props => ({
   
   ` : ''}
   
+    ${props => props.duration === 5 ? `
+      & ${SlotContent}{
+            padding :0;
+          
+            & ${ Header }{
+                margin-top : -4px;
+            }
+        }
+  
+  ` : ''}
+  
 `;
 
 
@@ -798,13 +809,20 @@ export const BodySchedule = styled.div.attrs(props => ({
   &>div:nth-child(2){    
   
     &>div>div {
-        & ${ Column } ${Grid} ${DashContainer} ${Dash}:last-child{
-            border-bottom : 0px solid transparent;
+        & ${ Column } ${Grid} ${DashContainer}:last-child{
+            &>div:last-child{
+                border-bottom : 0px solid transparent;
+            }
+            
         }
     }
     &>div>div:last-child {
-        & ${ Column } ${Grid} ${DashContainer}{
-            border-right : 0px solid transparent;
+        & ${ Column } ${Grid}{
+            
+            &>div{
+                border-right : 0px solid transparent;
+            }
+           
         }
     }
   }

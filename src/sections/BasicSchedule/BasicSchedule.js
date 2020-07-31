@@ -356,7 +356,6 @@ class BasicSchedule extends Component {
                      basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                      border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
             ><Container>
-                <div>Programme</div>
                 <Schedule nbrColumn={this.state.nbrColumn}>
                     <HeadSchedule>
                         <Label><p>DAY</p></Label>
