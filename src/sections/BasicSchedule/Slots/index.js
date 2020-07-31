@@ -92,7 +92,7 @@ class Slots extends Component {
                             {slot.type ? <div>{slot.type}</div> : null}
                             {slot.track ? <div>{slot.track}</div> : null}
                         </Tag>
-                        <Time responsive={fieldSettings.responsiveSettings} typographyTitle={getTitleSettingsByType(slot.type, fieldSettings.settings)} basisTitle={getTitleSettingsByType(slot.type, fieldSettings.settings)}>
+                        <Time responsive={fieldSettings.responsiveSettings} typographyTitle={getTextSettingsByType(slot.type, fieldSettings.settings)} basisTitle={getTextSettingsByType(slot.type, fieldSettings.settings)}>
                             <Clock><SvgClock/></Clock>
                             {getHourFromTime(slot.fromTime)} - {getHourFromTime(slot.toTime)}
                         </Time>

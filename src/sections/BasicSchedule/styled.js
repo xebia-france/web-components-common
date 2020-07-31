@@ -797,9 +797,6 @@ export const BodySchedule = styled.div.attrs(props => ({
         & ${Head}{
             border-right: 1px solid rgba(255,255,255,0.5);
         }
-    
-  
-  
   }
   
   & ${HoursLine}>div:first-child{
