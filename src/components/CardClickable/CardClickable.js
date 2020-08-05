@@ -80,12 +80,12 @@ class CardClickable extends Component {
                        responsiveContent={getResponsiveKey(Template.content.images[0].asset)}
                        asset={Template.content.images[0].asset || null}
                        assetsDirectory={assetsDirectory}
-                       as={ Link.content.link[this.props.language] ? 'a' : 'div' }
-                       target={Link.settings.state.external ? '_blank' : ''}
-                       rel={Link.settings.state.external ? 'noopener' : ''}
-                       href={ Link.content.link[this.props.language] ?  Link.content.link[this.props.language] : '' }
+                       as={ Link && Link.content.link[this.props.language] ? 'a' : 'div' }
+                       target={  Link &&  Link.settings.state.external ? '_blank' : ''}
+                       rel={Link && Link.settings.state.external ? 'noopener' : ''}
+                       href={Link && Link.content.link[this.props.language] ?  Link.content.link[this.props.language] : '' }
                        onClick={(e) => {
-                           if(! Link.content.link[this.props.language] || Link.settings.state.disabled) e.preventDefault();
+                           if(!Link || (Link && !Link.content.link[this.props.language]) || ( Link && Link.settings.state.disabled)) e.preventDefault();
                        }}
                        basis={Template && Template.settings ? Template.settings.basis : {}}
                        border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}

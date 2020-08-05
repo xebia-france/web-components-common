@@ -9,7 +9,10 @@ class BlockText extends Component {
     buildComponent = (fields, field, key) => {
         if (!fields[field]) return
         switch (field) {
-            case 'Title' || 'Tagline':
+            case 'Title':
+                return <Text key={key} field={fields[field]} language={this.props.language}/>;
+
+            case 'Tagline':
                 return <Text key={key} field={fields[field]} language={this.props.language}/>;
 
             case 'Content':

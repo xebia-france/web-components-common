@@ -61,6 +61,7 @@
     "react": "16.8.4",
     "react-dom": "16.8.4",
     "react-slick": "0.27.1",
+    "react-swipeable-views": "0.13.9",
     "styled-components": "4.3.2"
   }
 }
