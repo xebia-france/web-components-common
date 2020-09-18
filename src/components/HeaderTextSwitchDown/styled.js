@@ -32,6 +32,14 @@ export const Container = styled(ContainerCommon)`
                 }
          
                 background-image : none;
+                
+                &:after{
+                   ${ props.basis[size].padding &&  props.basis[size].padding.top ? `
+                      top:${ props.basis[size].padding.top  }px;
+                      height: calc(100% - ${ props.basis[size].padding.top  }px);
+                    ` : ''}
+                   
+                }
          }`) : ''
     };
     
