@@ -1,45 +1,17 @@
+import { basisMTDforText, typographyTitle3MTD, borderMTD} from "./models/molecules.model.config";
 
-export const Text = {
+export const TextMock = {
     content: {
         text: {
             0: 'Un text',
             1: 'Some text'
         }
     },
-    responsiveSettings: ['A'],
+    responsiveSettings: ['M', 'T', 'D'],
     settings: {
-        color: {
-            A: {
-                hex: '#989898',
-                name: 'Grey',
-                rgb: '152,152,152',
-                shade: '50'
-            }
-        },
-        font: {
-            A: {
-                family: 'Arial',
-                letterSpacing: '0',
-                lineHeight: '80',
-                size: '70',
-                style: null,
-                theme: 'Title1',
-                typeface: 'sans-serif',
-                weight: ['Regular', 400]
-            }
-        },
-        text: {
-            A: {
-                align: 'center',
-                decoration: null,
-                transform: null
-            }
-        },
-        opacity: {
-            A: {
-                value: '0.95'
-            }
-        },
+        basis: basisMTDforText,
+        typography: typographyTitle3MTD,
+        border: borderMTD,
         seo: {
             tag: 'h2'
         }

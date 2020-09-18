@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, object } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
-import { Template } from '../../src/mock'
+import { Template } from '../mock'
 import BasicLayout from '../../src/sections/BasicLayout';
 
 import styled from 'styled-components';

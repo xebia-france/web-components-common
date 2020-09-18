@@ -15,6 +15,7 @@ export const Container = styled.div.attrs(props => ({
    align-items : center;
    justify-content  : center;   
    overflow : hidden;
+   z-index : 2;
    
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {

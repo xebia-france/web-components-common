@@ -9,13 +9,12 @@ const FullLayout = ({ children, fields, name, assetsDirectory }) => {
     const FlexContainer = fields.FlexContainer;
 
     return (
-        <Wrapper id={removeSpaces(name)} responsive={Template ? Template.responsiveSettings : null}
-
-                 basis={Template.settings && Template.settings.basis ? Template.settings.basis : null}
-                 border={Template.settings && Template.settings.border ? Template.settings.border : null}
-                 asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
+        <Wrapper id={removeSpaces(name)} responsive={Template ? Template.responsiveSettings : []}
+                 basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
+                 border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
+                 asset={Template && Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
                  assetsDirectory={assetsDirectory}
-                 responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : null}
+                 responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : []}
 
         >
             <Container

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs, text, number, object } from '@storybook/addon-knobs/react';
 import { withInfo } from '@storybook/addon-info';
 import HeaderPicturesOnCorners from '../../src/components/HeaderPicturesOnCorners';
-import { Text, SmallText, Template, Image, Images } from '../../src/mock';
+import { TextMock, SmallText, Template, Image, Images } from '../mock';
 
 storiesOf('Components.HeaderPicturesOnCorners', module)
     .addDecorator(withKnobs)
@@ -12,7 +12,7 @@ storiesOf('Components.HeaderPicturesOnCorners', module)
         const language = number('Language', 0);
         const fieldsMock = object('Fields', {
             Template: Template,
-            Title: Text,
+            Title: TextMock,
             Tagline : SmallText,
             Logo : Image,
             CornerImages : Images
