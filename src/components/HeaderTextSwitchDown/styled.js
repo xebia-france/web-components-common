@@ -43,7 +43,8 @@ export const Contain = styled.div`
     
     ${ props =>  ['T', 'D'].map((size, i) => `
          @media ${ device[size] } {
-            width : calc(100% / 3);
+              width : 100%;
+          //  width : calc(100% / 3);
          }`)
     };
     ${ props =>  ['M'].map((size, i) => `

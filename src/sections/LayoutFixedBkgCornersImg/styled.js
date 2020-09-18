@@ -38,8 +38,7 @@ export const ImageCorner = styled.div.attrs(props => ({
     ${ props =>  props.asset ?  props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
             ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
-            background-size : 100% auto;  
-            background-position : top;
+            background-size : 100% auto; 
             background-repeat : no-repeat;
          }
          }`)
@@ -68,18 +67,22 @@ export const Wrapper = styled.section.attrs(props => ({
        &:nth-child(1){
            top : 0;
            left: 0;
+           background-position : top;
        }
        &:nth-child(2){
            top : 0;
            right: 0;
+           background-position : top;
        }
        &:nth-child(3){
            bottom : 0;
            left: 0;
+           background-position : top;
        }
        &:nth-child(4){
            bottom : 0;
            right: 0;
+           background-position : top;
        }
    }
   
@@ -117,7 +120,7 @@ export const Wrapper = styled.section.attrs(props => ({
          @media ${ device[size] } {
              &:before{
                z-index : 0;
-               position : fixed;
+               position : absolute;
                width : 100%;
                height : 100%;
                content : ''; 
@@ -126,9 +129,18 @@ export const Wrapper = styled.section.attrs(props => ({
             }
             .no-webp &:before{
                ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+               background-size : 100% auto;
+               background-attachment : fixed;
+               background-position : top;
+               background-repeat : no-repeat;
+               
             }
             .webp &:before{
-               ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''}  
+               ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''} 
+               background-size : 100% auto;
+               background-attachment : fixed; 
+               background-position : top;
+               background-repeat : no-repeat;
             }
          
          }`) : ''
@@ -143,7 +155,7 @@ export const Container = styled.div.attrs(props => ({
     flex: props.flex
 
 }))`
-  max-width : 1280px;
+  //max-width : 1280px;
   margin: auto;
   width : inherit;
   display : flex;
