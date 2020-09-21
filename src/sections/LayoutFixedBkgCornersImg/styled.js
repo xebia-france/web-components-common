@@ -38,7 +38,7 @@ export const ImageCorner = styled.div.attrs(props => ({
     ${ props =>  props.asset ?  props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
             ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
-            background-size : 100% auto; 
+            background-size :cover; 
             background-repeat : no-repeat;
          }
          }`)
@@ -88,7 +88,8 @@ export const Wrapper = styled.section.attrs(props => ({
   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-             
+            ${ props.basis ? generateSize(props.basis, size) : '' }       
+            ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
             ${ props.border ? 
@@ -129,7 +130,7 @@ export const Wrapper = styled.section.attrs(props => ({
             }
             .no-webp &:before{
                ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
-               background-size : 100% auto;
+               background-size :cover;
                background-attachment : fixed;
                background-position : top;
                background-repeat : no-repeat;
@@ -137,7 +138,7 @@ export const Wrapper = styled.section.attrs(props => ({
             }
             .webp &:before{
                ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''} 
-               background-size : 100% auto;
+               background-size :cover ;
                background-attachment : fixed; 
                background-position : top;
                background-repeat : no-repeat;
@@ -146,6 +147,10 @@ export const Wrapper = styled.section.attrs(props => ({
          }`) : ''
     };
 `;
+
+export const WrapperTwin = styled(Wrapper)`
+    height : auto !important;
+`
 
 
 

@@ -4,7 +4,7 @@ import {ContainerCommon, ContentCommon, CTACommon, ImageContainerCommon, TextCom
 
 export const Container = styled(ContainerCommon)`
     align-items : flex-start;
-    justify-content  : flex-start;
+    justify-content  : center;
 `;
 
 export const CallToActions = styled.div.attrs(props => ({
