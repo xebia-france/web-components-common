@@ -19,6 +19,9 @@ export const Wrapper = styled.section.attrs(props => ({
   width: 100%;  
   position : relative;
   overflow : hidden;
+   -webkit-backface-visibility: hidden;
+   -webkit-transform: translateZ(0);
+  
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
              
