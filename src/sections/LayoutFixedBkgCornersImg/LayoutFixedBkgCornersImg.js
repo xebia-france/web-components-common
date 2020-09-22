@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import {Wrapper, Container, ImageCorner, WrapperTwin, ParallaxWrapper} from './styled';
+import {Wrapper, Container, ImageCorner, WrapperTwin} from './styled';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
 import {useWindowSize} from '../../utils/customHooks';
-import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
 
 const buildComponent = (fields, field, index, assetsDirectory) => {
@@ -55,7 +54,6 @@ const LayoutFixedBkgCornersImg = ({children, fields, name, assetsDirectory}) => 
                          border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
                 >
 
-                        <ParallaxWrapper/>
                         {['CornerImages'].map((fieldName, i) => buildComponent(fields, fieldName, i, assetsDirectory))}
                     {
                         size.width > 767 &&
@@ -76,7 +74,6 @@ const LayoutFixedBkgCornersImg = ({children, fields, name, assetsDirectory}) => 
                         responsive={Template ? Template.responsiveSettings : null}
                         basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                         border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}>
-                        <ParallaxWrapper/>
                         <Container
                             responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
                             flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>

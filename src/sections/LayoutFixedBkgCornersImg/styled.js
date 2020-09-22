@@ -49,13 +49,6 @@ export const ImageCorner = styled.div.attrs(props => ({
    }     
 `;
 
-export const ParallaxWrapper = styled.div.attrs(props => ({
-
-
-}))`
-  
-`;
-
 export const Wrapper = styled.section.attrs(props => ({
     responsive: props.responsive,
     responsiveContent: props.responsiveContent,
