@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Container} from './styled';
 import Text from '../../functional/Text';
 import Content from '../../functional/Content';
@@ -8,41 +8,39 @@ import Image from "../../functional/Image";
 import PropTypes from 'prop-types';
 import {getTemplatePropsWithImage} from "../../utils/gettersProperties";
 
-class Card extends Component {
-    buildComponent = (fields, field, key) => {
-        if (!fields[field]) return
-        switch (field) {
-            case 'Title':
-                return <Text key={key} field={fields[field]} language={this.props.language}/>;
 
-            case 'Tagline':
-                return <Text key={key} field={fields[field]} language={this.props.language}/>;
+const buildComponent = (fields, field,language,assetsDirectory,  key) => {
+    if (!fields[field]) return
+    switch (field) {
+        case 'Title':
+            return <Text key={key} field={fields[field]} language={language}/>;
 
-            case 'Content':
-                return <Content key={key} field={fields[field]} language={this.props.language}/>;
+        case 'Tagline':
+            return <Text key={key} field={fields[field]} language={language}/>;
 
-            case 'Image':
-                return <Image key={key} field={fields[field]} language={this.props.language}
-                              assetsDirectory={this.props.assetsDirectory}/>
+        case 'Content':
+            return <Content key={key} field={fields[field]} language={language}/>;
 
-            case 'CTA':
-                return <CTA key={key} field={fields[field]} language={this.props.language}/>;
-            default :
-                return null;
-        }
+        case 'Image':
+            return <Image key={key} field={fields[field]} language={language}
+                          assetsDirectory={assetsDirectory}/>
+
+        case 'CTA':
+            return <CTA key={key} field={fields[field]} language={language}/>;
+        default :
+            return null;
     }
+}
 
-    render() {
-        const {fields, order, assetsDirectory} = this.props;
+const Card = ({fields, order, assetsDirectory, language}) => {
         return (
             <Container  {...getTemplatePropsWithImage(fields.Template)} assetsDirectory={assetsDirectory}>
                 {
-                    order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                        : ['Title', 'Tagline', 'Content', 'Image', 'CTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                    order ? order.map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))
+                        : ['Title', 'Tagline', 'Content', 'Image', 'CTA'].map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))
                 }
             </Container>
         );
-    }
 }
 
 

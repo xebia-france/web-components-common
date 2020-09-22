@@ -1,5 +1,5 @@
 import React from 'react';
-import {Wrapper, Container, ImageCorner, WrapperTwin} from './styled';
+import {Wrapper, Container, ImageCorner, WrapperTwin, ParallaxWrapper} from './styled';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
 import {useWindowSize} from '../../utils/customHooks';
 
@@ -36,10 +36,9 @@ const getCornerImages = (field, assetsDirectory) => {
                          index={i + 1}>
             </ImageCorner>);
     });
-
 }
 
-const LayoutFixedBkgCornersImg = ({children, fields, name, assetsDirectory}) => {// = ({children, fields, name, assetsDirectory}) => {
+const LayoutFixedBkgCornersImg = ({children, fields, name, assetsDirectory}) => {
         const size = useWindowSize();
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
@@ -52,9 +51,9 @@ const LayoutFixedBkgCornersImg = ({children, fields, name, assetsDirectory}) => 
                          basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                          border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
                 >
-                    {
-                        ['CornerImages'].map((fieldName, i) => buildComponent(fields, fieldName, i, assetsDirectory))
-                    }
+
+                        <ParallaxWrapper/>
+                        {['CornerImages'].map((fieldName, i) => buildComponent(fields, fieldName, i, assetsDirectory))}
                     {
                         size.width > 767 &&
                         (<Container
@@ -74,6 +73,7 @@ const LayoutFixedBkgCornersImg = ({children, fields, name, assetsDirectory}) => 
                         responsive={Template ? Template.responsiveSettings : null}
                         basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                         border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}>
+                        <ParallaxWrapper/>
                         <Container
                             responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
                             flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>

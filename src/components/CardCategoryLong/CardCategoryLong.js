@@ -77,8 +77,6 @@ class CardCategoryLong extends Component {
         const {fields, order, assetsDirectory, data} = this.props;
         if(!data) return null
 
-
-
         return (
             <Container {...getTemplatePropsWithImage(fields.Template)} assetsDirectory={assetsDirectory}>
                 {

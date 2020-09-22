@@ -49,6 +49,13 @@ export const ImageCorner = styled.div.attrs(props => ({
    }     
 `;
 
+export const ParallaxWrapper = styled.div.attrs(props => ({
+
+
+}))`
+  
+`;
+
 export const Wrapper = styled.section.attrs(props => ({
     responsive: props.responsive,
     responsiveContent: props.responsiveContent,
@@ -119,7 +126,7 @@ export const Wrapper = styled.section.attrs(props => ({
     
     ${ props =>  props.responsiveContent ? props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-             &:before{
+             /*&:before{
                z-index : 0;
                position : absolute;
                width : 100%;
@@ -142,7 +149,29 @@ export const Wrapper = styled.section.attrs(props => ({
                background-attachment : fixed; 
                background-position : top;
                background-repeat : no-repeat;
+            }*/
+            
+            
+            & ${ParallaxWrapper}{
+                width :  100%;
+                height : 100%;
+                position : fixed;
+                
             }
+            
+            .no-webp & ${ParallaxWrapper}{
+                   ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+                       background-size :cover;
+                       background-position : top;
+                       background-repeat : no-repeat;
+                   
+                }
+                .webp & ${ParallaxWrapper}{
+                   ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''} 
+                   background-size :cover ;
+                   background-position : top;
+                   background-repeat : no-repeat;
+                }
          
          }`) : ''
     };
