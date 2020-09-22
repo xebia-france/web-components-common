@@ -70,7 +70,16 @@ export const Wrapper = styled.section.attrs(props => ({
   width: 100%;  
   position : relative;
   overflow : hidden;
+  
+    
+  
+   
+                
+                
   & ${ ImageCorner }{
+      -webkit-backface-visibility: hidden;
+   -webkit-transform: translateZ(0);
+       
        &:nth-child(1){
            top : 0;
            left: 0;
@@ -126,39 +135,16 @@ export const Wrapper = styled.section.attrs(props => ({
     
     ${ props =>  props.responsiveContent ? props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-             /*&:before{
+             
+            & ${ParallaxWrapper}{
+                position : fixed;
                z-index : 0;
-               position : absolute;
                width : 100%;
                height : 100%;
-               content : ''; 
-               top : 0;
-               left : 0;
-            }
-            .no-webp &:before{
-               ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
-               background-size :cover;
-               background-attachment : fixed;
-               background-position : top;
-               background-repeat : no-repeat;
                
+
+    
             }
-            .webp &:before{
-               ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''} 
-               background-size :cover ;
-               background-attachment : fixed; 
-               background-position : top;
-               background-repeat : no-repeat;
-            }*/
-            
-            
-            & ${ParallaxWrapper}{
-                width :  100%;
-                height : 100%;
-                position : fixed;
-                
-            }
-            
             .no-webp & ${ParallaxWrapper}{
                    ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
                        background-size :cover;
@@ -194,6 +180,9 @@ export const Container = styled.div.attrs(props => ({
   width : inherit;
   display : flex;
   z-index : 2;
+  
+  -webkit-backface-visibility: hidden;
+   -webkit-transform: translateZ(0);
   
   
    ${ props => props.responsive.map((size, i) => `
