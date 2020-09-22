@@ -62,6 +62,7 @@ export const Wrapper = styled.section.attrs(props => ({
     basis: props.basis,
     border: props.border,
     asset : props.asset,
+    positionY : props.positionY,
     assetsDirectory : props.assetsDirectory
 
 }))`
@@ -70,15 +71,8 @@ export const Wrapper = styled.section.attrs(props => ({
   width: 100%;  
   position : relative;
   overflow : hidden;
-  
-    
-  
-   
-                
                 
   & ${ ImageCorner }{
-      -webkit-backface-visibility: hidden;
-   -webkit-transform: translateZ(0);
        
        &:nth-child(1){
            top : 0;
@@ -136,28 +130,28 @@ export const Wrapper = styled.section.attrs(props => ({
     ${ props =>  props.responsiveContent ? props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
              
-            & ${ParallaxWrapper}{
-                position : fixed;
+            &:before{
                z-index : 0;
                width : 100%;
                height : 100%;
+               position : absolute;
+               content : ''; 
+               transform: translateY(${ -(props.positionY)}px);
                
-
-    
             }
-            .no-webp & ${ParallaxWrapper}{
-                   ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
-                       background-size :cover;
-                       background-position : top;
-                       background-repeat : no-repeat;
-                   
-                }
-                .webp & ${ParallaxWrapper}{
-                   ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''} 
-                   background-size :cover ;
+            .no-webp &:before{
+               ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
+                   background-size :cover;
                    background-position : top;
                    background-repeat : no-repeat;
-                }
+               
+            }
+            .webp &:before{
+               ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''} 
+               background-size :cover ;
+               background-position : top;
+               background-repeat : no-repeat;
+            }
          
          }`) : ''
     };

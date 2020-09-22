@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react'
 import {Wrapper, Container, ImageCorner, WrapperTwin, ParallaxWrapper} from './styled';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
 import {useWindowSize} from '../../utils/customHooks';
+import { useScrollPosition } from '@n8tb1t/use-scroll-position'
+
 
 const buildComponent = (fields, field, index, assetsDirectory) => {
     if (!fields[field]) return
@@ -42,8 +44,19 @@ const LayoutFixedBkgCornersImg = ({children, fields, name, assetsDirectory}) => 
         const size = useWindowSize();
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
+        const [positionY, setPositionY] = useState(0)
+
+
+        useScrollPosition(({ prevPos, currPos }) => {
+            console.log(currPos.x)
+            console.log(currPos.y)
+            setPositionY(currPos.y)
+        })
+
+
         return (<>
                 <Wrapper id={removeSpaces(name)}
+                         positionY={positionY}
                          asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
                          assetsDirectory={assetsDirectory}
                          responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : null}
