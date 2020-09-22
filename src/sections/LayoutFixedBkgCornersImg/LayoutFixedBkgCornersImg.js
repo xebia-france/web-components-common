@@ -44,19 +44,9 @@ const LayoutFixedBkgCornersImg = ({children, fields, name, assetsDirectory}) => 
         const size = useWindowSize();
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
-        const [positionY, setPositionY] = useState(0)
-
-
-        useScrollPosition(({ prevPos, currPos }) => {
-            console.log(currPos.x)
-            console.log(currPos.y)
-            setPositionY(currPos.y)
-        })
-
 
         return (<>
                 <Wrapper id={removeSpaces(name)}
-                         positionY={positionY}
                          asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
                          assetsDirectory={assetsDirectory}
                          responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : null}

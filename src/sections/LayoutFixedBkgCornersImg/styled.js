@@ -62,7 +62,6 @@ export const Wrapper = styled.section.attrs(props => ({
     basis: props.basis,
     border: props.border,
     asset : props.asset,
-    positionY : props.positionY,
     assetsDirectory : props.assetsDirectory
 
 }))`
@@ -136,7 +135,6 @@ export const Wrapper = styled.section.attrs(props => ({
                height : 100%;
                position : absolute;
                content : ''; 
-               transform: translateY(${ -(props.positionY)}px);
                
             }
             .no-webp &:before{
