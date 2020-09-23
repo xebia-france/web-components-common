@@ -5,6 +5,7 @@ import {ImageContainerCommon} from "../../styles/common.styled";
 export const Container = styled(ContainerCommon)`
     cursor : pointer;
     overflow : visible;
+    flex-direction : column;
     
     & ${ImageContainerCommon}{
         transition : transform 0.25s 0s cubic-bezier(0.32, 0.01, 0, 1);
