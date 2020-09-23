@@ -36,7 +36,6 @@ const CardZoom = ({fields, order, assetsDirectory, language}) => {
         const Link = fields.CTA;
         return (
             <Container  {...getTemplatePropsWithImage(fields.Template)} assetsDirectory={assetsDirectory}
-                        as={Link && Link.content.link[language] ? 'a' : 'div'}
                         target={Link && Link.settings.state.external ? '_blank' : ''}
                         rel={Link && Link.settings.state.external ? 'noopener' : ''}
                         href={Link && Link.content.link[language] ? Link.content.link[language] : ''}
