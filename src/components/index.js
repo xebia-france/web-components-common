@@ -11,6 +11,7 @@ export { default as CardDuo } from './CardDuo';
 export { default as CardImageLeft } from './CardImageLeft';
 export { default as CardMultiCTA } from './CardMultiCTA';
 export { default as CardIframe } from './CardIframe';
+export { default as CardZoom } from './CardZoom';
 export { default as BlockText } from './BlockText';
 export { default as HeaderCategory } from './HeaderCategory';
 export { default as HeaderPicturesOnCorners } from './HeaderPicturesOnCorners';

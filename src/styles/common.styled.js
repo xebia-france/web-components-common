@@ -160,6 +160,10 @@ export const ImageContainerCommon = styled.div.attrs(props => ({
             ${ props.border ?
                 ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
             : ''}
+            
+            ${ props.basis ?
+                ( props.basis[size].color ? `background-color : ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity ) }; ` : '' )
+            : ''}
                
             align-self:${ props.basis[size].alignment.horizontal || '' };
           
