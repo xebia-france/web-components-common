@@ -4,11 +4,18 @@ import {getResponsiveKey, removeSpaces} from "../../utils/functions";
 import Card from './Card';
 
 class ListCardCustomContent extends Component {
+
     render() {
+
+        console.log('PROPS LISTCUSTOMCONTENT', this.props)
+
+        return <div>test 2</div>;
+        /*
         const {children, fields, name, assetsDirectory, data} = this.props;
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
         const CTA = fields.CTA;
+
 
         return (
             <Wrapper id={removeSpaces(name)}
@@ -38,7 +45,7 @@ class ListCardCustomContent extends Component {
                     {children}
                 </Container>
             </Wrapper>
-        );
+        );*/
     }
 };
 
