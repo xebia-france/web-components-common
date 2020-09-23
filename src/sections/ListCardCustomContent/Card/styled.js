@@ -64,7 +64,7 @@ export const ImageBackground = styled.div.attrs(props => ({
     height : 100%;
 `;
 
-export const Formation = styled.div.attrs(props => ({
+export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
     responsiveContent: props.responsiveContent,
     asset: props.asset,

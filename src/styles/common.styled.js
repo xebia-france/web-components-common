@@ -192,7 +192,7 @@ export const CTACommon = styled.a.attrs(props => ({
     icon: props.icon,
     animateUnderline : props.animateUnderline || null
 }))`
-    transition : all 0.25s ease;
+    transition : color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
     border-style : solid;
     display : flex;
     align-items: center;
@@ -200,7 +200,7 @@ export const CTACommon = styled.a.attrs(props => ({
     cursor : pointer;
     overflow : hidden;
     & p, & i{
-       transition : all 0.25s ease;
+       transition : color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
     }
     
    ${ props => props.responsive.map(size => `

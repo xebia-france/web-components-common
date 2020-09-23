@@ -1,27 +1,30 @@
 import React, {Component} from 'react';
-import {Formation, RightContent, ImageBackground, LeftContent, NextSession, IconContainer, NextSessionPromo} from './styled';
+import {Container, RightContent, ImageBackground, LeftContent, NextSession, IconContainer, NextSessionPromo} from './styled';
 import {TextCommon, ContentCommon, CTACommon} from '../../../styles/common.styled'
 import {fileNameFromUrl} from '../../../utils/functions'
 
 class Card extends Component {
 
 
+
     render() {
         const {data, i, assetsDirectory, config, configCard, CTA} = this.props;
+        console.log('DATA', data);
 
         const Settings = configCard && configCard.settings ? configCard.settings : null;
         const Responsive = configCard && configCard.responsiveSettings ? configCard.responsiveSettings : [];
 
         if (!data) return null
 
-        return <Formation
+        return <Container
             responsive={Responsive}
             responsiveContent={configCard.responsiveContent}
             basis={Settings ? Settings.basis : {}}
             border={Settings ? Settings.border : {}}>
             <LeftContent key={i}
                          as={'a'}
-                         href={data.slug ? `/${data.slug}` : ''}
+                         target={data.link && data.link.startsWith('http') ? '_blank' : '_self'}
+                         href={data.link ? `${data.link}` : ''}
                          responsive={config.responsiveSettings}
                          basis={config.settings.image}>
                 <ImageBackground
@@ -30,29 +33,23 @@ class Card extends Component {
                     basis={config.settings.image}
                     alt={data.name}
                     assetsDirectory={assetsDirectory}
-                    asset={fileNameFromUrl(data.image.file.url)}
+                    asset={fileNameFromUrl(data.smallImage.file.url)}
                 />
             </LeftContent>
 
             <RightContent responsive={config.responsiveSettings} basis={config.settings.image}>
-                {
-                   /*
-
-                   <TextCommon
-                    responsive={config.responsiveSettings}
-                    typography={config.settings.category}
-                    basis={config.settings.category}
-                    border={null}
-                    as={'p'}
-                >
-                    {  }
-                </TextCommon>
-
-
-
-                    */
-
+                { data.subTitle &&
+                    <TextCommon
+                     responsive={config.responsiveSettings}
+                     typography={config.settings.tagline}
+                     basis={config.settings.tagline}
+                     border={null}
+                     as={'p'}
+                 >
+                        {data.subTitle}
+                 </TextCommon>
                 }
+
                 <TextCommon
                     responsive={config.responsiveSettings}
                     typography={config.settings.title}
@@ -60,7 +57,7 @@ class Card extends Component {
                     border={null}
                     as={'h3'}
                 >
-                    {data.name}
+                    {data.title}
                 </TextCommon>
                 <ContentCommon
                     responsive={config.responsiveSettings}
@@ -78,7 +75,8 @@ class Card extends Component {
                     typography={CTA.settings.typography}
                     border={CTA.settings.border}
                     icon={CTA.settings.icon}
-                    href={data.slug ? `/${data.slug}` : ''}
+                    href={data.link}
+                    target={data.link && data.link.startsWith('http') ? '_blank' : '_self'}
                 >
                     {
                         CTA.content.icon && CTA.content.icon[this.props.language] ?
@@ -88,7 +86,7 @@ class Card extends Component {
                     <p> {CTA.content.text ? CTA.content.text[this.props.language] : ''}</p>
                 </CTACommon>
             </RightContent>
-        </Formation>;
+        </Container>;
     }
 }
 

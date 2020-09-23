@@ -1,21 +1,18 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Wrapper, Container} from './styled';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
 import Card from './Card';
 
-class ListCardCustomContent extends Component {
+const ListCardCustomContent = ({children, fields, name, assetsDirectory, data, language, locale}) => {
 
-    render() {
+        //console.log('PROPS LISTCUSTOMCONTENT', this.props)
 
-        console.log('PROPS LISTCUSTOMCONTENT', this.props)
 
-        return <div>test 2</div>;
-        /*
-        const {children, fields, name, assetsDirectory, data} = this.props;
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
         const CTA = fields.CTA;
 
+        const contents = data.map(content => content.node_locale === locale ? content : null).filter(n => n);
 
         return (
             <Wrapper id={removeSpaces(name)}
@@ -30,23 +27,22 @@ class ListCardCustomContent extends Component {
                     responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
                     flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
                     {
-                        data.map((category, i) => {
+                        contents.map((content, i) => {
                             return <Card
                                 key={i}
-                                config={fields.Category}
+                                config={fields.CustomContentType}
                                 configCard={fields.TemplateCard}
-                                data={category} i={i}
+                                data={content} i={i}
                                 assetsDirectory={assetsDirectory}
                                 CTA={CTA}
-                                language={this.props.language}
+                                language={language}
                             />
                         })
                     }
                     {children}
                 </Container>
             </Wrapper>
-        );*/
-    }
+        );
 };
 
 ListCardCustomContent.defaultProps = {}
