@@ -70,7 +70,7 @@ class NavigationBar extends Component {
 
     onTopPage = () => {
         const currentScrollY = window.scrollY;
-        if(currentScrollY < 100) return true;
+        if(currentScrollY < 200) return true;
         return false;
     }
 
