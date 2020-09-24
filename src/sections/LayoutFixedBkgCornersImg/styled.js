@@ -8,6 +8,12 @@ import {
     getFormatedSizeProperty
 } from "../../utils/StyleGenerator";
 
+export const MainWrapper = styled.div`
+    position : relative;
+    overflow : hidden;
+`
+
+
 export const ImageCorner = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis,
@@ -150,6 +156,15 @@ export const Wrapper = styled.section.attrs(props => ({
 
 export const WrapperTwin = styled(Wrapper)`
     height : auto !important;
+    
+    @media ${ device.T }{
+            position : absolute;
+            top : 0;
+    }
+    @media ${ device.D }{
+            position : absolute;
+            top : 0;
+    }
 `
 
 
@@ -210,4 +225,6 @@ export const Container = styled.div.attrs(props => ({
              
          }`)
     }; 
+    
+    
 `;

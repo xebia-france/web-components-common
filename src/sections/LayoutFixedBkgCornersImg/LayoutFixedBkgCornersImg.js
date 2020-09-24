@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
-import {Wrapper, Container, ImageCorner, WrapperTwin} from './styled';
+import React, {useState} from 'react'
+import {Wrapper, Container, ImageCorner, WrapperTwin, MainWrapper} from './styled';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
-import {useWindowSize} from '../../utils/customHooks';
 
 
 const buildComponent = (fields, field, index, assetsDirectory) => {
@@ -40,49 +39,78 @@ const getCornerImages = (field, assetsDirectory) => {
 }
 
 const LayoutFixedBkgCornersImg = ({children, fields, name, assetsDirectory}) => {
-        const size = useWindowSize();
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
 
-        return (<>
-                <Wrapper id={removeSpaces(name)}
+
+        return <MainWrapper>
+            <Wrapper id={removeSpaces(name)}
+                     asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
+                     assetsDirectory={assetsDirectory}
+                     responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : null}
+                     responsive={Template ? Template.responsiveSettings : null}
+                     basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
+                     border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
+            >
+
+                {['CornerImages'].map((fieldName, i) => buildComponent(fields, fieldName, i, assetsDirectory))}
+
+            </Wrapper>
+            <WrapperTwin
+                asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
+                assetsDirectory={assetsDirectory}
+                responsiveContent={[]}
+                responsive={Template ? Template.responsiveSettings : null}
+                basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
+                border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}>
+                <Container
+                    responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                    flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
+                    {children}
+                </Container>
+            </WrapperTwin>
+        </MainWrapper>
+
+
+        /* return (<>
+                 <Wrapper id={removeSpaces(name)}
+                          asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
+                          assetsDirectory={assetsDirectory}
+                          responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : null}
+                          responsive={Template ? Template.responsiveSettings : null}
+                          basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
+                          border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
+                 >
+
+                         { ['CornerImages'].map((fieldName, i) => buildComponent(fields, fieldName, i, assetsDirectory))}
+                     {
+                         size.width > 767 &&
+                         (<Container
+                             responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                             flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
+
+                             {children}
+                         </Container>)
+                     }
+                 </Wrapper>
+                 {
+                     size.width <= 767 &&
+                     (<WrapperTwin
                          asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
                          assetsDirectory={assetsDirectory}
-                         responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : null}
+                         responsiveContent={[]}
                          responsive={Template ? Template.responsiveSettings : null}
                          basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
-                         border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
-                >
-
-                        {['CornerImages'].map((fieldName, i) => buildComponent(fields, fieldName, i, assetsDirectory))}
-                    {
-                        size.width > 767 &&
-                        (<Container
-                            responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                            flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
-
-                            {children}
-                        </Container>)
-                    }
-                </Wrapper>
-                {
-                    size.width <= 767 &&
-                    (<WrapperTwin
-                        asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
-                        assetsDirectory={assetsDirectory}
-                        responsiveContent={[]}
-                        responsive={Template ? Template.responsiveSettings : null}
-                        basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
-                        border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}>
-                        <Container
-                            responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                            flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
-                            {children}
-                        </Container>
-                    </WrapperTwin>)
-                }
-            </>
-        );
+                         border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}>
+                         <Container
+                             responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                             flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
+                             {children}
+                         </Container>
+                     </WrapperTwin>)
+                 }
+             </>
+         );*/
     }
 ;
 
