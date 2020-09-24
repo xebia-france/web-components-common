@@ -6,7 +6,7 @@ import CTA from '../../functional/CTA'
 import Image from "../../functional/Image";
 
 import PropTypes from 'prop-types';
-import {getTemplatePropsWithImage} from "../../utils/gettersProperties";
+import {getContentProps, getTemplatePropsWithImage} from "../../utils/gettersProperties";
 
 
 const buildComponent = (fields, field,language,assetsDirectory,  key) => {
@@ -26,7 +26,7 @@ const buildComponent = (fields, field,language,assetsDirectory,  key) => {
                           assetsDirectory={assetsDirectory}/>
 
         case 'ImageTopRight':
-            return <Image className={'onTopLeft'} key={key} field={fields[field]} language={language}
+            return <Image className={'onTopRight'} key={key} field={fields[field]} language={language}
                           assetsDirectory={assetsDirectory}/>
 
         case 'CTA':
@@ -37,8 +37,12 @@ const buildComponent = (fields, field,language,assetsDirectory,  key) => {
 }
 
 const CardImgTopCorners = ({fields, order, assetsDirectory, language}) => {
+
+        const ContentBold = fields.ContentBold ?  {...getContentProps(fields.ContentBold)} : null;
+
+        console.log('contentbold field', ContentBold);
         return (
-            <Container  {...getTemplatePropsWithImage(fields.Template)} assetsDirectory={assetsDirectory}>
+            <Container  {...getTemplatePropsWithImage(fields.Template)} contentBold={ContentBold} assetsDirectory={assetsDirectory}>
                 {
                     order ? order.map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))
                         : ['Title', 'Tagline', 'Content', 'ImageTopLeft', 'ImageTopRight', 'CTA'].map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))

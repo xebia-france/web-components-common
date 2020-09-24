@@ -5,7 +5,7 @@ import {getImageProps} from "../utils/gettersProperties";
 import {getResponsiveKey} from "../utils/functions";
 import {generatePictureWebP} from "../utils/gettersCommonElement";
 
-const Image = ({field, language, assetsDirectory}) => {
+const Image = ({field, language, assetsDirectory, className}) => {
     const responsiveKey = getResponsiveKey(field.content.images[0].asset)[0];
     const image = field.content.images[0];
     const file = image.asset[responsiveKey].fileName ? image.asset[responsiveKey].fileName : null;
@@ -13,7 +13,7 @@ const Image = ({field, language, assetsDirectory}) => {
 
     if (!file) return null;
     return (
-        <ImageContainerCommon {...getImageProps(field)}>
+        <ImageContainerCommon {...getImageProps(field)} className={className}>
             { generatePictureWebP(`${assetsDirectory || ''}${ file }`,alt )}
         </ImageContainerCommon>
     )
