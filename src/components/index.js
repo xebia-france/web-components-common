@@ -24,4 +24,5 @@ export { default as HeaderTextSwitchDown } from './HeaderTextSwitchDown';
 export { default as ButtonScrollTop } from './ButtonScrollTop';
 export { default as CardDuplicableCTA } from './CardDuplicableCTA';
 export { default as CardCTALinedUp } from './CardCTALinedUp';
+export { default as CardImgTopCorners } from './CardImgTopCorners';
 export { default as TemplatePageFormation } from '../components/TemplatePageFormation';
