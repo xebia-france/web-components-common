@@ -140,6 +140,7 @@ export const Wrapper = styled.section.attrs(props => ({
 
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
+    basis: props.basis,
     flex: props.flex
 
 }))`
@@ -152,6 +153,8 @@ export const Container = styled.div.attrs(props => ({
   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
+             ${ props.basis ? generateSize(props.basis, size) : '' }                
+
              flex-direction : ${ props.flex[size].properties.direction };
              flex-wrap: ${ props.flex[size].properties.wrap };
              justify-content: ${ props.flex[size].properties.justify };

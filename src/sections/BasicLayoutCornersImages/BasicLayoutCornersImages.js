@@ -62,8 +62,9 @@ class BasicLayoutCornersImages extends Component{// = ({children, fields, name, 
                 }
                 <Container
                     responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                    flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
 
+                    basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
+                    flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
                     {children}
                 </Container>
             </Wrapper>
