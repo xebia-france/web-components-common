@@ -2,8 +2,10 @@ import styled from 'styled-components';
 import {ContainerCommon} from '../../styles/common.styled';
 import {ImageContainerCommon} from "../../styles/common.styled";
 
-export const Container = styled(ContainerCommon)`
-    cursor : pointer;
+export const Container = styled(ContainerCommon).attrs(props => ({
+    disabledLink : props.disabledLink,
+}))`
+    cursor : ${props => props.disabledLink ? 'auto' : 'pointer'};
     overflow : visible;
     flex-direction : column;
     

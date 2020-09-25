@@ -6,7 +6,7 @@ import CTA from '../../functional/CTA'
 import Image from "../../functional/Image";
 
 import PropTypes from 'prop-types';
-import {getTemplatePropsWithImage} from "../../utils/gettersProperties";
+import {getContentProps, getTemplatePropsWithImage} from "../../utils/gettersProperties";
 
 
 const buildComponent = (fields, field,language,assetsDirectory,  key) => {
@@ -33,8 +33,10 @@ const buildComponent = (fields, field,language,assetsDirectory,  key) => {
 }
 
 const Card = ({fields, order, assetsDirectory, language}) => {
-        return (
-            <Container  {...getTemplatePropsWithImage(fields.Template)} assetsDirectory={assetsDirectory}>
+    const ContentBold = fields.ContentBold ?  {...getContentProps(fields.ContentBold)} : null;
+
+    return (
+            <Container  {...getTemplatePropsWithImage(fields.Template)} contentBold={ContentBold} assetsDirectory={assetsDirectory}>
                 {
                     order ? order.map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))
                         : ['Title', 'Tagline', 'Content', 'Image', 'CTA'].map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))

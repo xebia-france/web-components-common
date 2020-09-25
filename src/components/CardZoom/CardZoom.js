@@ -33,7 +33,9 @@ const buildComponent = (fields, field,language,assetsDirectory,  key) => {
 }
 
 const CardZoom = ({fields, order, assetsDirectory, language}) => {
+        console.log('on card zoom', fields)
         const Link = fields.CTA;
+
         return (
             <Container  {...getTemplatePropsWithImage(fields.Template)} assetsDirectory={assetsDirectory}
                         target={Link && Link.settings.state.external ? '_blank' : ''}
@@ -42,6 +44,7 @@ const CardZoom = ({fields, order, assetsDirectory, language}) => {
                         onClick={(e) => {
                             if (!Link || (Link && !Link.content.link[language]) || (Link && Link.settings.state.disabled)) e.preventDefault();
                         }}
+                        disabledLink={Link && Link.settings.state.disabled ? true  : false}
             >
                 {
                     order ? order.map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))

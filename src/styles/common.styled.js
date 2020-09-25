@@ -153,7 +153,16 @@ export const ImageContainerCommon = styled.div.attrs(props => ({
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
          
-            ${ props.basis ? generateSize(props.basis, size) : '' }      
+            ${ props.basis ? generateSize(props.basis, size) : '' }   
+            ${
+                props.basis && props.basis[size].size && props.basis[size].size.width === '0' ? `
+                display : none;
+                visibility:hidden;
+                ` : ''
+       
+            }
+            
+               
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' }   
             ${ props.border ? generateBorder(props.border, size) : '' } 
