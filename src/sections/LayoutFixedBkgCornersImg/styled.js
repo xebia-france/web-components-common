@@ -181,8 +181,6 @@ export const Container = styled.div.attrs(props => ({
   display : flex;
   z-index : 2;
   
-  -webkit-backface-visibility: hidden;
-   -webkit-transform: translateZ(0);
   
   
    ${ props => props.responsive.map((size, i) => `
