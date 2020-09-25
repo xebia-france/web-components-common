@@ -55,16 +55,20 @@ class Card extends Component {
                     {data.subTitle}
                 </TextCommon>
                 }
+                {
+                    data.title && <TextCommon
+                        responsive={config.responsiveSettings}
+                        typography={config.settings.title}
+                        basis={config.settings.title}
+                        border={null}
+                        as={'h3'}
+                    >
+                        {data.title}
+                    </TextCommon>
+                }
 
-                <TextCommon
-                    responsive={config.responsiveSettings}
-                    typography={config.settings.title}
-                    basis={config.settings.title}
-                    border={null}
-                    as={'h3'}
-                >
-                    {data.title}
-                </TextCommon>
+
+                {data.shortPresentation &&
                 <ContentCommon
                     responsive={config.responsiveSettings}
                     typography={config.settings.text}
@@ -73,7 +77,8 @@ class Card extends Component {
                         __html: data.shortPresentation.childMarkdownRemark ? data.shortPresentation.childMarkdownRemark.html :
                             <p></p>
                     }}
-                />
+                />}
+
                 {
                     CTA && <CTACommon
                         animateUnderline

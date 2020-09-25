@@ -23,8 +23,6 @@ export const Partner = styled.div.attrs(props => ({
    position : relative;
    overflow : hidden;
    
-   
-   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
          
