@@ -10,7 +10,7 @@ const ListCardCustomContent = ({children, fields, name, assetsDirectory, data, l
 
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
-        const CTA = fields.CTA;
+        const CTA = fields.CTA ;
 
         const contents = data.map(content => content.node_locale === locale ? content : null).filter(n => n);
 

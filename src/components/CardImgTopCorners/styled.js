@@ -31,10 +31,11 @@ export const Container = styled(ContainerCommon).attrs(props => ({
          }`) : ''
     }
     
-    @media ${ device.M } {
-        & ${ ContentCommon }{
-            display : none;
-        }
-    }
+    /*
+        @media ${ device.M } {
+            & ${ ContentCommon }{
+                display : none;
+            }
+    }*/
     
 `;
