@@ -5,14 +5,11 @@ import Card from './Card';
 
 const ListCardCustomContent = ({children, fields, name, assetsDirectory, data, language, locale}) => {
 
-        //console.log('PROPS LISTCUSTOMCONTENT', this.props)
-
 
         const Template = fields.Template;
         const FlexContainer = fields.FlexContainer;
         const CTA = fields.CTA ;
 
-        const contents = data.map(content => content.node_locale === locale ? content : null).filter(n => n);
 
         return (
             <Wrapper id={removeSpaces(name)}
@@ -27,7 +24,7 @@ const ListCardCustomContent = ({children, fields, name, assetsDirectory, data, l
                     responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
                     flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
                     {
-                        contents.map((content, i) => {
+                        data.map((content, i) => {
                             return <Card
                                 key={i}
                                 config={fields.CustomContentType}

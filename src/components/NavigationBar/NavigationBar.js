@@ -286,7 +286,6 @@ class NavigationBar extends Component {
                                     </Locale>
                                     : null
                             }
-
                         </nav>
                     </Links>
                 </FixedBar>

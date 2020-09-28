@@ -25,13 +25,13 @@ export const theme = {
 
 export const size = {
     M: '425px',
-    T: '768px',
+    T: '769px',
     D: '1280px'
 };
 
 export const device = {
     A: `(min-width: 0px) `,
-    M: `(max-width: ${ '767px' }) `,
+    M: `(max-width: ${ '768px' }) `,
     T: `(min-width: ${ size.T }) and (max-width: 1279px)`,
     D: `(min-width: ${ size.D })`
 };
