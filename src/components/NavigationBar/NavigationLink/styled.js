@@ -58,7 +58,7 @@ export const Element = styled.li.attrs(props => ({
         }
         
         & ${ArrowContainer}{
-            transform : rotate(0deg);
+            transform : rotate(180deg);
             opacity: 0;
         }
         

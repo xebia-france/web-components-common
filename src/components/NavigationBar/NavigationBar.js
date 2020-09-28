@@ -11,7 +11,7 @@ import {
     LanguageSelector,
     CheckContainer,
     ArrowContainer,
-    LinkLanguage, FixedBar, Logo, ContainerLeft, LinksChildren
+    LinkLanguage, FixedBar, Logo, ContainerLeft, LinksChildren, BackgroundNavigation
 } from './styled'
 import PropTypes from 'prop-types';
 import {getImages} from "../../utils/gettersCommonElement";
@@ -26,8 +26,10 @@ class NavigationBar extends Component {
         super(props);
         this.state = {
             open: false,
-            prevScrollpos:   typeof window !== `undefined` ? window.pageYOffset : 0,
-            visible: true
+            prevScrollpos: typeof window !== `undefined` ? window.pageYOffset : 0,
+            visible: true,
+            currentOpenedLinkIndex: null,
+            displayBackground : false
         };
     }
 
@@ -47,14 +49,14 @@ class NavigationBar extends Component {
     }
 
     componentWillUnmount() {
-        if (typeof window !== 'undefined'  && typeof document !== `undefined`) {
+        if (typeof window !== 'undefined' && typeof document !== `undefined`) {
             window.removeEventListener("scroll", this.handleScroll);
 
         }
     }
 
     handleScroll = () => {
-        const { prevScrollpos } = this.state;
+        const {prevScrollpos} = this.state;
 
 
         const currentScrollPos = window.pageYOffset;
@@ -70,10 +72,9 @@ class NavigationBar extends Component {
 
     onTopPage = () => {
         const currentScrollY = window.scrollY;
-        if(currentScrollY < 100) return true;
+        if (currentScrollY < 100) return true;
         return false;
     }
-
 
 
     getUrlWithLocale = (locale, currentPath) => {
@@ -110,25 +111,44 @@ class NavigationBar extends Component {
         return false;
     }
 
+    setCurrentOpenedLinkIndex = (i, hadChild) => {
+        if (this.state.currentOpenedLinkIndex === i) {
+            this.setState({
+                currentOpenedLinkIndex: null,
+                displayBackground : false
+            })
+        } else {
+            this.setState({
+                currentOpenedLinkIndex: i,
+                displayBackground : hadChild ? true : false
+            })
+        }
+    }
+
     getRenderLinks = (links, slugParent = null) => {
-        const { TemplateLinks,TemplateSubLinks, NavigationLinks, NavigationSubLinks } = this.props.fields
+        const {TemplateLinks, TemplateSubLinks, NavigationLinks, NavigationSubLinks} = this.props.fields
         const LinksConfig = !slugParent ? NavigationLinks : NavigationSubLinks;
-        const TemplateConfig = !slugParent ? TemplateLinks :TemplateSubLinks
+        const TemplateConfig = !slugParent ? TemplateLinks : TemplateSubLinks
 
         return links.map((link, i) => {
 
             const Arrow = link.childrens ? <ArrowContainer><SvgArrow/></ArrowContainer> : null;
             const Childrens = link.childrens ?
-                <LinksChildren {...getTemplateProps(TemplateSubLinks)} basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>{this.getRenderLinks(link.childrens, link.slug)}</LinksChildren> : null;
+                <LinksChildren {...getTemplateProps(TemplateSubLinks)}
+                               basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>{this.getRenderLinks(link.childrens, link.slug)}</LinksChildren> : null;
             const hadChildren = link.childrens && link.childrens.length !== 0 ? true : false;
 
             switch (link.type) {
                 case 'anchor':
-                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig}
+                    return <NavigationLink key={`${i}-${link.name}`}
+                                           open={!slugParent && i === this.state.currentOpenedLinkIndex}
+                                           Template={TemplateConfig}
                                            TemplateSubLinks={TemplateSubLinks}
                                            hadChildren={hadChildren}>
                         <Link {...this.getLinkProps(LinksConfig)}
-                              onClick={() => this.setState({open: !this.state.open})}
+                              onClick={() => {
+                                  if (!slugParent) this.setCurrentOpenedLinkIndex(i, hadChildren)
+                              }}
                               href={slugParent ? `${ this.getLocalePath()}/${slugParent}#${link.slug}` : `${this.getLocalePath()}/#${link.slug}`}>{link.name}
                             {Arrow}
                         </Link>
@@ -136,9 +156,14 @@ class NavigationBar extends Component {
                     </NavigationLink>;
 
                 case 'external':
-                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={TemplateSubLinks}
-                                           hadChildren={hadChildren}>
+                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig}
+                                           TemplateSubLinks={TemplateSubLinks}
+                                           hadChildren={hadChildren}
+                                           open={!slugParent && i === this.state.currentOpenedLinkIndex}>
                         <Link {...this.getLinkProps(LinksConfig)}
+                              onClick={() => {
+                                  if (!slugParent) this.setCurrentOpenedLinkIndex(i, hadChildren)
+                              }}
                               target={'_blank'} rel={'noopener'} href={`${link.urlLink}`}>{link.name}
                             {Arrow}
                         </Link>
@@ -146,9 +171,14 @@ class NavigationBar extends Component {
                     </NavigationLink>;
 
                 case 'internal':
-                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={TemplateSubLinks}
-                                           hadChildren={hadChildren}>
+                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig}
+                                           TemplateSubLinks={TemplateSubLinks}
+                                           hadChildren={hadChildren}
+                                           open={!slugParent && i === this.state.currentOpenedLinkIndex}>
                         <Link {...this.getLinkProps(LinksConfig)}
+                              onClick={() => {
+                                  if (!slugParent) this.setCurrentOpenedLinkIndex(i, hadChildren)
+                              }}
                               className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
                               href={`${ this.getLocalePath()}/${link.slug}`}>
                             {link.name}
@@ -158,9 +188,15 @@ class NavigationBar extends Component {
                     </NavigationLink>;
 
                 case 'null':
-                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={TemplateSubLinks}
-                                           hadChildren={hadChildren}>
-                        <Link {...this.getLinkProps(LinksConfig)}>
+                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig}
+                                           TemplateSubLinks={TemplateSubLinks}
+                                           hadChildren={hadChildren}
+                                           open={!slugParent && i === this.state.currentOpenedLinkIndex}>
+                        <Link {...this.getLinkProps(LinksConfig)}
+                              onClick={() => {
+                                  if (!slugParent) this.setCurrentOpenedLinkIndex(i, hadChildren)
+                              }}
+                        >
                             {link.name}
                             {Arrow}
                         </Link>
@@ -182,6 +218,7 @@ class NavigationBar extends Component {
         const LinksConfig = fields['NavigationLinks'];
         return (
             <Container>
+                <BackgroundNavigation {...getTemplateProps(TemplateLinks)} show={this.state.displayBackground}/>
                 <FixedBar {...getTemplateProps(TemplateLeft)}
                           className={[this.state.open ? 'open' : '', !this.state.visible && !this.onTopPage() ? 'hidden' : '', this.linkIsOpen() ? 'linkOpened' : '']}>
                     <ContainerLeft {...getTemplateProps(TemplateLeft)}>
