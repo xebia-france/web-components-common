@@ -76,8 +76,8 @@ export const CheckContainer = styled.div`
 
 export const ArrowContainer = styled.div`
   display : none;
-  width : 40px;
-  height : 40px;
+  width : 30px;
+  height : 30px;
   cursor : pointer;
   position : absolute;
   right : 0;
@@ -90,9 +90,10 @@ export const ArrowContainer = styled.div`
   @media  ${ device.T }, ${ device.D } {
     display : flex;
     position : relative;
-    width :30px;
-    height : 32px;
+    width :22px;
+    height : 22px;
     padding-top : 2px;
+    margin-left : 5px;
   }
 `;
 

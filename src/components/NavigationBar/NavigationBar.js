@@ -20,6 +20,7 @@ import {getTemplateProps} from "../../utils/gettersProperties";
 import NavigationLink from './NavigationLink';
 import SvgCheck from '../../assets/svg/SvgCheck'
 import SvgArrow from '../../assets/svg/SvgArrow'
+import SvgArrowCentered from '../../assets/svg/SvgArrowCentered'
 
 class NavigationBar extends Component {
     constructor(props) {
@@ -132,7 +133,7 @@ class NavigationBar extends Component {
 
         return links.map((link, i) => {
 
-            const Arrow = link.childrens ? <ArrowContainer><SvgArrow/></ArrowContainer> : null;
+            const Arrow = link.childrens ? <ArrowContainer><SvgArrowCentered/></ArrowContainer> : null;
             const Childrens = link.childrens ?
                 <LinksChildren {...getTemplateProps(TemplateSubLinks)}
                                basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>{this.getRenderLinks(link.childrens, link.slug)}</LinksChildren> : null;
