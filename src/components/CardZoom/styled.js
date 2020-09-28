@@ -14,6 +14,6 @@ export const Container = styled(ContainerCommon).attrs(props => ({
          transform : scale(1, 1);
     }   
     &:hover ${ImageContainerCommon}{
-        transform : scale(1.05, 1.05);
+        transform : scale(1.1, 1.1);
     }
 `;
