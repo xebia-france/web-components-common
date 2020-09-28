@@ -74,12 +74,14 @@ export const Wrapper = styled.section.attrs(props => ({
            right: 0;
        }
        &:nth-child(3){
-           bottom : 0;
+           bottom :0;
            left: 0;
+           background-position : bottom;
        }
        &:nth-child(4){
            bottom : 0;
            right: 0;
+           background-position : bottom;
        }
    }
   

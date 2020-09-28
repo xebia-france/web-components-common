@@ -3,7 +3,7 @@ import {device} from "../../styles/constants";
 import {
     generatePadding,
     generateBorder,
-    generateBackgroundImage, getFormatedColor, generateBackgroundImageWebp
+    generateBackgroundImage, getFormatedColor, generateBackgroundImageWebp, generateSize
 } from "../../utils/StyleGenerator";
 
 export const Wrapper = styled.section.attrs(props => ({
@@ -23,6 +23,7 @@ export const Wrapper = styled.section.attrs(props => ({
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
              
+             ${ props.basis ? generateSize(props.basis, size) : '' } 
             ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
             ${ props.border ?
