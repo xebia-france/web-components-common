@@ -110,6 +110,20 @@ class NavigationBar extends Component {
         return false;
     }
 
+
+    /*setOpenLinkIndex = (i) => {
+        if(this.state.openLinkIndex === i){
+            this.setState({
+                openLinkIndex: null
+            })
+        }else{
+            this.setState({
+                openLinkIndex: i
+            })
+        }
+
+    }*/
+
     getRenderLinks = (links, slugParent = null) => {
         const { TemplateLinks,TemplateSubLinks, NavigationLinks, NavigationSubLinks } = this.props.fields
         const LinksConfig = !slugParent ? NavigationLinks : NavigationSubLinks;
@@ -137,7 +151,7 @@ class NavigationBar extends Component {
 
                 case 'external':
                     return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={TemplateSubLinks}
-                                           hadChildren={hadChildren}>
+                                           hadChildren={hadChildren} >
                         <Link {...this.getLinkProps(LinksConfig)}
                               target={'_blank'} rel={'noopener'} href={`${link.urlLink}`}>{link.name}
                             {Arrow}
@@ -147,7 +161,7 @@ class NavigationBar extends Component {
 
                 case 'internal':
                     return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={TemplateSubLinks}
-                                           hadChildren={hadChildren}>
+                                           hadChildren={hadChildren} >
                         <Link {...this.getLinkProps(LinksConfig)}
                               className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
                               href={`${ this.getLocalePath()}/${link.slug}`}>
@@ -159,7 +173,7 @@ class NavigationBar extends Component {
 
                 case 'null':
                     return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig} TemplateSubLinks={TemplateSubLinks}
-                                           hadChildren={hadChildren}>
+                                           hadChildren={hadChildren} >
                         <Link {...this.getLinkProps(LinksConfig)}>
                             {link.name}
                             {Arrow}
