@@ -18,7 +18,6 @@ export const Element = styled.li.attrs(props => ({
                 background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
                 ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };
-
                ` : ''}
                
                &.open{
@@ -27,8 +26,8 @@ export const Element = styled.li.attrs(props => ({
                         ${ props.hadChildren ? `
                             &:after{
                                 ${ props.basisSubLink ?
-                                ( props.basisSubLink[size].color ? `border-bottom : 20px solid ${ getFormatedColor(props.basisSubLink[size].color, props.basisSubLink[size].opacity ) }; ` : '' )
-                            : ''}
+    ( props.basisSubLink[size].color ? `border-bottom : 20px solid ${ getFormatedColor(props.basisSubLink[size].color, props.basisSubLink[size].opacity ) }; ` : '' )
+    : ''}
                             }
                         
                         ` : ''}
@@ -36,7 +35,6 @@ export const Element = styled.li.attrs(props => ({
                 }
          }`)
     };
-
     &.open{
         &>${Link}{
             position : relative;

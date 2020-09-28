@@ -16,18 +16,12 @@ class NavigationLink extends Component {
         return (
             <Element hadChildren={hadChildren} {...getTemplateProps(Template)}
                      basisSubLink={TemplateSubLinks.settings.basis}
-                     className={['navigation-link', this.state.open ? 'open' : 'closed']}
-                     onClick={() => {
-                         this.setState({
-                             open: !this.state.open
-                         })
-
-
-                         localStorage.setItem('scrollPosition', 0);
-                     }}
-                     onBlur={() => this.setState({
-                         open: false
-                     })}>
+                     className={['navigation-link', this.state.open ? 'open' : 'closed']} onClick={() => {
+                this.setState({
+                    open: !this.state.open
+                })
+                localStorage.setItem('scrollPosition', 0);
+            }}>
                 {children}
             </Element>
         );

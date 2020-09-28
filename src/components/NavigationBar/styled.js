@@ -38,7 +38,7 @@ export const BubbleContainer = styled.div.attrs(props => ({
                width : 24px;
             ` } 
          }`
-    )};
+)};
     
   &>svg{
     width : 100%;
@@ -110,7 +110,6 @@ export const Link = styled.a.attrs(props => ({
     cursor : pointer:
     z-index : 2;
     cursor : pointer;
-
   
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
@@ -121,8 +120,8 @@ export const Link = styled.a.attrs(props => ({
             ${ props.typography ? generateFontProperties(props.typography, size) : '' }
             ${ props.border ? generateBorder(props.border, size) : '' }
             ${ props.border ?
-                ( props.border[size].color.basic ? `border-color : ${ getFormatedColor(props.border[size].color.basic, props.border[size].opacity.basic ) }; ` : '' )
-            : ''} 
+    ( props.border[size].color.basic ? `border-color : ${ getFormatedColor(props.border[size].color.basic, props.border[size].opacity.basic ) }; ` : '' )
+    : ''} 
             
             background-color: ${ getFormatedColor(props.basis[size].color.basic, props.basis[size].opacity.basic )} ;
             color:${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
@@ -137,18 +136,17 @@ export const Link = styled.a.attrs(props => ({
             &:hover{
                background-color: ${ getFormatedColor(props.basis[size].color.hover, props.basis[size].opacity.hover )} ;
                color:${ getFormatedColor( props.typography[size].color.hover, props.typography[size].opacity.hover )};
-
                ${ props.border ?
-                    ( props.border[size].color.hover ? `border-color : ${ getFormatedColor(props.border[size].color.hover, props.border[size].opacity.hover ) }; ` : '' )
-                : ''}
+    ( props.border[size].color.hover ? `border-color : ${ getFormatedColor(props.border[size].color.hover, props.border[size].opacity.hover ) }; ` : '' )
+    : ''}
             }
             
             &.selected{
                background-color: ${ getFormatedColor(props.basis[size].color.active, props.basis[size].opacity.active )} ;
                color:${ getFormatedColor( props.typography[size].color.active, props.typography[size].opacity.active )};
                 ${ props.border ?
-                    ( props.border[size].color.active ? `border-color : ${ getFormatedColor(props.border[size].color.active, props.border[size].opacity.active ) }; ` : '' )
-                : ''}
+    ( props.border[size].color.active ? `border-color : ${ getFormatedColor(props.border[size].color.active, props.border[size].opacity.active ) }; ` : '' )
+    : ''}
             }
          }`)
     };
@@ -192,8 +190,8 @@ export const LinkLanguage = styled.a.attrs(props => ({
             ${ props.typography ? generateFontProperties(props.typography, size) : '' }
             ${ props.border ? generateBorder(props.border, size) : '' }
             ${ props.border ?
-                ( props.border[size].color.basic ? `border-color : ${ getFormatedColor(props.border[size].color.basic, props.border[size].opacity.basic ) }; ` : '' )
-            : ''} 
+    ( props.border[size].color.basic ? `border-color : ${ getFormatedColor(props.border[size].color.basic, props.border[size].opacity.basic ) }; ` : '' )
+    : ''} 
             
             background-color: ${ getFormatedColor(props.basis[size].color.basic, props.basis[size].opacity.basic )} ;
             align-self:${ props.basis[size].alignment.horizontal || '' };
@@ -208,7 +206,6 @@ export const Links = styled(ContainerCommon).attrs(props => ({
 }))`
    transition : transform .2s cubic-bezier(.25,.46,.45,.94) 0ms;
    position: relative;
-
     &>nav{
         z-index: 2;
         height : inherit;
@@ -232,14 +229,14 @@ export const Links = styled(ContainerCommon).attrs(props => ({
         &>nav{
         
             overflow-y: scroll;
-            ${ props => 
-                props.basisTemplateLeft ? `
+            ${ props =>
+    props.basisTemplateLeft ? `
                     height : calc(100vh - ${isNumber(props.basisTemplateLeft['M'].size.height)
-                    ? `${ props.basisTemplateLeft['M'].size.height }px`
-                    : props.basisTemplateLeft['M'].size.height});
+        ? `${ props.basisTemplateLeft['M'].size.height }px`
+        : props.basisTemplateLeft['M'].size.height});
                 
                 ` : ''
-            }
+    }
             &>ul{
                position : relative;
                display : flex;
@@ -345,7 +342,7 @@ export const CurrentLocale = styled.div.attrs(props => ({
                 }
             ` : '' } 
          }`
-    )};
+)};
   
   &>${LinkLanguage}{
     z-index : 2;
@@ -401,8 +398,8 @@ export const FixedBar = styled.div.attrs(props => ({
          
              ${ props.basis ? `
                     max-height : ${isNumber(props.basis[size].size.height)
-                    ? `${ props.basis[size].size.height }px`
-                    : props.basis[size].size.height};
+    ? `${ props.basis[size].size.height }px`
+    : props.basis[size].size.height};
                 
                 ` : ''}
                 
@@ -502,13 +499,12 @@ export const ContainerLeft = styled(ContainerCommon).attrs(props => ({
          
              ${ props.basis ? `
                     min-height : ${isNumber(props.basis[size].size.height)
-                    ? `${ props.basis[size].size.height }px`
-                    : props.basis[size].size.height};
+    ? `${ props.basis[size].size.height }px`
+    : props.basis[size].size.height};
                 
                 ` : ''}
          }`)
     };
-
 `
 
 export const LinksChildren = styled.ul.attrs(props => ({
@@ -520,7 +516,6 @@ export const LinksChildren = styled.ul.attrs(props => ({
     position : relative;
     overflow : hidden;
     display : none;
-
     ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
          
@@ -529,16 +524,15 @@ export const LinksChildren = styled.ul.attrs(props => ({
             ${ props.basis ? generateMargin(props.basis, size) : '' } 
             ${ props.border ?  generateBorder(props.border, size) : '' }    
             ${ props.border ?
-                ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
-            : ''}
+    ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
+    : ''}
             ${ props.basis &&  props.basis[size].shadow ?
-                (  props.basis[size].shadow.value !== 'none' ? `box-shadow : ${ props.basis[size].shadow.value }; ` : '' )
-            : ''}
+    (  props.basis[size].shadow.value !== 'none' ? `box-shadow : ${ props.basis[size].shadow.value }; ` : '' )
+    : ''}
              
            background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
            ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };
-
                ` : ''}
                
                
@@ -553,8 +547,8 @@ export const LinksChildren = styled.ul.attrs(props => ({
          
              ${ props.basisLinks ? `
                     height : calc(100vh - ${isNumber(props.basisLinks[size].size.height)
-                    ? `${ props.basisLinks[size].size.height }px`
-                    : props.basisLinks[size].size.height});
+    ? `${ props.basisLinks[size].size.height }px`
+    : props.basisLinks[size].size.height});
                 
                 ` : ''}
             
@@ -567,5 +561,4 @@ export const LinksChildren = styled.ul.attrs(props => ({
         width : 100%;
         
     }
-
 `
