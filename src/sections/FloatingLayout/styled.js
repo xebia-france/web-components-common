@@ -12,14 +12,22 @@ export const Wrapper = styled.section.attrs(props => ({
     basis: props.basis,
     border: props.border,
     asset : props.asset,
-    assetsDirectory : props.assetsDirectory
+    assetsDirectory : props.assetsDirectory,
+    appear : props.appear
 
 }))`
   display : flex;
   flex-direction : column;
   width: 100%;  
-  position : relative;
+  position : fixed;
   overflow : hidden;
+  z-index : 3;
+  opacity : 0;
+  top : 0;
+  left : 0;
+  transition : opacity .3s cubic-bezier(.25,.46,.45,.94) 0ms;
+  
+  ${props => props.appear ? `opacity : 1;` : ' opacity : 0;'}
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
              

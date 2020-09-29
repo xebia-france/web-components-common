@@ -30,3 +30,34 @@ export const useWindowSize = () => {
 
     return windowSize;
 }
+
+
+export const useWindowScroll = () => {
+    // Initialize state with undefined width/height so server and client renders match
+    // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
+    const [windowScroll, setWindowScroll] = useState({
+        x: undefined,
+        y: undefined,
+    });
+
+    useEffect(() => {
+        // Handler to call on window resize
+        function handleResize() {
+            // Set window width/height to state
+            setWindowScroll({
+                y: window.scrollY,
+            });
+        }
+
+        // Add event listener
+        window.addEventListener("scroll", handleResize);
+
+        // Call handler right away so state gets updated with initial window size
+        handleResize();
+
+        // Remove event listener on cleanup
+        return () => window.removeEventListener("scroll", handleResize);
+    }, []); // Empty array ensures that effect is only run on mount
+
+    return windowScroll;
+}
