@@ -4,6 +4,7 @@ import Text from '../../functional/Text';
 import Content from '../../functional/Content';
 import CTA from '../../functional/CTA'
 import Image from "../../functional/Image";
+import ImageClickable from '../../functional/ImageClickable';
 
 import PropTypes from 'prop-types';
 import {getTemplatePropsWithImage} from "../../utils/gettersProperties";
@@ -22,8 +23,9 @@ const buildComponent = (fields, field,language,assetsDirectory,  key) => {
             return <Content key={key} field={fields[field]} language={language}/>;
 
         case 'Image':
-            return <Image key={key} field={fields[field]} language={language}
-                          assetsDirectory={assetsDirectory}/>
+            const Link = fields.CTA;
+            return <ImageClickable key={key} field={fields[field]} language={language}
+                          assetsDirectory={assetsDirectory} Link={Link && Link.content.link[language] && !Link.settings.state.disabled ? Link : null}/>
 
         case 'CTA':
             return <CTA key={key} field={fields[field]} language={language}/>;
