@@ -23,6 +23,7 @@ export const Wrapper = styled.section.attrs(props => ({
   overflow : hidden;
   z-index : 3;
   opacity : 0;
+  -webkit-transform: translateZ(0);
   
   left : 0;
   transition : opacity .8s cubic-bezier(.25,.46,.45,.94) 0ms;
@@ -41,7 +42,10 @@ export const Wrapper = styled.section.attrs(props => ({
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
              
-            ${ props.basis ? generatePadding(props.basis, size) : '' }
+            //${ props.basis ? generatePadding(props.basis, size) : '' }
+            
+            
+            
             ${ props.border ?  generateBorder(props.border, size) : '' }        
             ${ props.border ? 
                     ( props.border[size].color ? 
@@ -65,6 +69,18 @@ export const Wrapper = styled.section.attrs(props => ({
 
                ` : ''}
             }
+         }`)
+    }; 
+    
+    ${ props => ['T', 'D'].map((size, i) => `
+         @media ${ device[size] } {
+            padding-top : 0;
+            
+            ${ props.basis[size].padding && props.basis[size].padding.top && props.basis[size].padding.top !== '0' ?
+            `  top : ${ props.basis[size].padding.top }px;`
+            : ''}
+            
+             
          }`)
     }; 
     
