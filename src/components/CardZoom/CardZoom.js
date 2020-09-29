@@ -43,7 +43,6 @@ const CardZoom = ({fields, order, assetsDirectory, language}) => {
                         onClick={(e) => {
                             if (!Link || (Link && !Link.content.link[language]) || (Link && Link.settings.state.disabled)) e.preventDefault();
                         }}
-                        as={Link && Link.content.link[language] && !Link.settings.state.disabled  ? 'a' : 'div'}
                         disabledLink={Link && Link.settings.state.disabled ? true  : false}
             >
                 {
