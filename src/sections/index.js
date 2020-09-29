@@ -10,6 +10,7 @@ export { default as FullLayout } from './FullLayout';
 export { default as FullLayoutImageLeft } from './FullLayoutImageLeft';
 export { default as LayoutCustomContainer } from './LayoutCustomContainer';
 export { default as LayoutFixedBkgCornersImg } from './LayoutFixedBkgCornersImg';
+export { default as LayoutFloatingButton } from './LayoutFloatingButton';
 export { default as ListCardCustomContent } from './ListCardCustomContent';
 export { default as ListCategories } from './ListCategories';
 export { default as ListFormations } from './ListFormations';
