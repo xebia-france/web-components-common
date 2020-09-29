@@ -2,10 +2,10 @@ import React from 'react';
 import {Wrapper, Container} from './styled';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
 
-
-const LayoutFloatingButton = ({children, fields, name, assetsDirectory}) => {
+const FloatingLayout = ({children, fields, name, assetsDirectory, language}) => {
     const Template = fields.Template;
     const FlexContainer = fields.FlexContainer;
+    console.log('props layoutFloatingbutton', language, fields)
 
     return (
         <Wrapper id={removeSpaces(name)}
@@ -26,7 +26,7 @@ const LayoutFloatingButton = ({children, fields, name, assetsDirectory}) => {
     );
 };
 
-LayoutFloatingButton.defaultProps = {
+FloatingLayout.defaultProps = {
     fields: {
         Template: {
             content: {},
@@ -80,4 +80,4 @@ LayoutFloatingButton.defaultProps = {
     }
 }
 
-export default LayoutFloatingButton;
+export default FloatingLayout;

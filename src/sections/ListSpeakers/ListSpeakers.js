@@ -45,7 +45,6 @@ class ListSpeakers extends Component {
         const AssetBackground = Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null;
         const Settings = Template && Template.settings ? Template.settings : null;
 
-        console.log('PROPS ON LISTSPEAKERS', this.props)
         return (
             <Wrapper id={removeSpaces(name)}
                      asset={AssetBackground}

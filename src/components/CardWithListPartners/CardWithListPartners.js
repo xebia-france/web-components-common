@@ -57,7 +57,6 @@ const buildComponent = (fields, field,language,assetsDirectory, data,  key) => {
 const CardWithListPartners = ({fields, order, assetsDirectory, language, data}) => {
     const ContentBold = fields.ContentBold ?  {...getContentProps(fields.ContentBold)} : null;
 
-    console.log('DATA ON PARNErS : ', data);
     return (
         <Wrapper  {...getTemplatePropsWithImage(fields.Template)} contentBold={ContentBold} assetsDirectory={assetsDirectory}>
             {

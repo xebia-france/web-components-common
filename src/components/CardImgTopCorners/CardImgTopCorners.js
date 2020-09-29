@@ -40,7 +40,6 @@ const CardImgTopCorners = ({fields, order, assetsDirectory, language}) => {
 
         const ContentBold = fields.ContentBold ?  {...getContentProps(fields.ContentBold)} : null;
 
-        console.log('contentbold field', ContentBold);
         return (
             <Container  {...getTemplatePropsWithImage(fields.Template)} contentBold={ContentBold} assetsDirectory={assetsDirectory}>
                 {
