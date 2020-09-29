@@ -23,9 +23,19 @@ export const Wrapper = styled.section.attrs(props => ({
   overflow : hidden;
   z-index : 3;
   opacity : 0;
-  top : 0;
+  
   left : 0;
-  transition : opacity .3s cubic-bezier(.25,.46,.45,.94) 0ms;
+  transition : opacity .8s cubic-bezier(.25,.46,.45,.94) 0ms;
+  
+   @media ${ device.D } {
+    top : 0;
+   }
+   @media ${ device.T } {
+    top : 0;
+   }
+   @media ${ device.M } {
+    bottom : 0;
+   }
   
   ${props => props.appear ? `opacity : 1;` : ' opacity : 0;'}
    ${ props => props.responsive.map((size, i) => `
