@@ -3,7 +3,7 @@ import {device} from "../../styles/constants";
 import {
     generatePadding, generateSize,
     generateBorder,
-    generateBackgroundImage, getFormatedColor, generateBackgroundImageWebp
+    generateBackgroundImage, getFormatedColor, generateBackgroundImageWebp, generateMargin
 } from "../../utils/StyleGenerator";
 
 export const Wrapper = styled.section.attrs(props => ({
@@ -42,7 +42,8 @@ export const Wrapper = styled.section.attrs(props => ({
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
              
-            //${ props.basis ? generatePadding(props.basis, size) : '' }
+            ${ props.basis ? generatePadding(props.basis, size) : '' }
+            ${ props.basis ? generateMargin(props.basis, size) : '' }
             
             
             
@@ -69,18 +70,6 @@ export const Wrapper = styled.section.attrs(props => ({
 
                ` : ''}
             }
-         }`)
-    }; 
-    
-    ${ props => ['T', 'D'].map((size, i) => `
-         @media ${ device[size] } {
-            padding-top : 0;
-            
-            ${ props.basis[size].padding && props.basis[size].padding.top && props.basis[size].padding.top !== '0' ?
-            `  top : ${ props.basis[size].padding.top }px;`
-            : ''}
-            
-             
          }`)
     }; 
     
