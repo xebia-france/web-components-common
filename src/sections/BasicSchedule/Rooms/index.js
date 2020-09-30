@@ -8,7 +8,7 @@ export const renderRooms = (scheduleOfDay, styles, openPopUp, filter, fieldSetti
         return (
             <Column style={Object.assign({}, styles.slide, styles.slide1)}>
                 <Head responsive={fieldSettings.responsiveSettings}
-                      typographyTitle={fieldSettings.settings.set1Title}>{'no room'}</Head>
+                      typographyTitle={fieldSettings.settings.set1Title}>{''}</Head>
             </Column>
         )
 

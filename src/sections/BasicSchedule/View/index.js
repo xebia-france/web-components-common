@@ -11,7 +11,7 @@ export const renderView = (scheduleOfDay, styles, openPopUp, filter, fieldSettin
         return (
             <Column style={Object.assign({}, styles.slide, styles.slide1)}>
                 <Head responsive={fieldSettings.responsiveSettings}
-                      typographyTitle={fieldSettings.settings.set1Title}>{'no room'}</Head>
+                      typographyTitle={fieldSettings.settings.set1Title}>{''}</Head>
                 <SlotsContainer>
                     <Slots openPopUp={openPopUp} scheduleOfDay={scheduleOfDay} slots={[]}
                            transverses={scheduleOfDay.others} filter={filter} fieldSettings={fieldSettings}/>
