@@ -20,6 +20,7 @@ export { default as ImageOnlyOnMobile } from './ImageOnlyOnMobile';
 export { default as ImageOnlyOnTabletAndDesktop } from './ImageOnlyOnTabletAndDesktop';
 export { default as NavigationBarExtentedTop } from './NavigationBarExtentedTop';
 export { default as NavigationBar } from './NavigationBar';
+export { default as NavigationBarFromLeft } from './NavigationBarFromLeft';
 export { default as NavigationBasic } from './NavigationBasic';
 export { default as FooterBasic } from './FooterBasic';
 export { default as HeaderBasic } from './HeaderBasic';
