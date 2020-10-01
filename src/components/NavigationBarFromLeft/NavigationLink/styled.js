@@ -22,11 +22,14 @@ export const Element = styled.li.attrs(props => ({
                
                &.open{
                     &>${Link}{
-                        
+                       &>span{
+                           border-bottom-width:3px;
+                           border-bottom-style:solid;
+                       }
                         ${ props.hadChildren ? `
                             &:after{
                                 ${ props.basisSubLink ?
-    ( props.basisSubLink[size].color ? `border-bottom : 20px solid ${ getFormatedColor(props.basisSubLink[size].color, props.basisSubLink[size].opacity ) }; ` : '' )
+    ( props.basisSubLink[size].color ? `border-right : 24px solid ${ getFormatedColor(props.basisSubLink[size].color, props.basisSubLink[size].opacity ) }; ` : '' )
     : ''}
                             }
                         
@@ -39,18 +42,18 @@ export const Element = styled.li.attrs(props => ({
         &>${Link}{
             position : relative;
             ${ props => props.hadChildren ? `
-                padding-bottom : 40px;
+                //padding-bottom : 40px;
                 
                 &:after{
                     position : absolute;
                     content : '';
-                    width : 0px;
-                    height : 40px;
-                    left : 40px;
-                    bottom : 0px;
-                    border-right : 20px solid transparent;
-                    border-left : 20px solid transparent;
-                    border-top : none;
+                    width : 48px;
+                    height : 0px;
+                    top : 0;
+                    right : 0;
+                    border-bottom : 24px solid transparent;
+                    border-left : none;
+                    border-top : 24px solid transparent;
                     display : block;
                 }
             
@@ -58,12 +61,13 @@ export const Element = styled.li.attrs(props => ({
         }
         
         & ${ArrowContainer}{
-            transform : rotate(180deg);
-           // opacity: 0;
+            //transform : rotate(180deg);
+            opacity: 0;
         }
         
         & ${LinksChildren}{
             display : block;
+            
         }
         
         
@@ -73,11 +77,13 @@ export const Element = styled.li.attrs(props => ({
     @media  ${ device.T }, ${ device.D }{
         &.open{
             &>${Link}{
+            
+            
                 ${ props => props.hadChildren ? `
-                    padding-bottom : 0px;
+                    //padding-bottom : 0px;
                     
                     &:after{
-                        bottom : -1px;
+                       // bottom : -1px;
                     }
                 
                 ` : ''}
@@ -85,7 +91,7 @@ export const Element = styled.li.attrs(props => ({
             & ${LinksChildren}{
                 display : flex;
                 flex-direction : column;
-                justify-content : center;
+                transform : translateX(0%);
             }
             
             

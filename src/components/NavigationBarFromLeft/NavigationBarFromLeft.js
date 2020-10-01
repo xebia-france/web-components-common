@@ -11,7 +11,7 @@ import {
     LanguageSelector,
     CheckContainer,
     ArrowContainer,
-    LinkLanguage, FixedBar, Logo, ContainerLeft, LinksChildren, BackgroundNavigation
+    LinkLanguage, FixedBar, Logo, ContainerLeft, LinksChildren, BackgroundNavigation, ChildrensContainer
 } from './styled'
 import PropTypes from 'prop-types';
 import {getImages} from "../../utils/gettersCommonElement";
@@ -127,7 +127,7 @@ class NavigationBarFromLeft extends Component {
     }
 
     getRenderLinks = (links, slugParent = null) => {
-        const {TemplateLinks, TemplateSubLinks, NavigationLinks, NavigationSubLinks} = this.props.fields
+        const {TemplateLinks, TemplateSubLinks, NavigationLinks, NavigationSubLinks, TemplateLeft} = this.props.fields
         const LinksConfig = !slugParent ? NavigationLinks : NavigationSubLinks;
         const TemplateConfig = !slugParent ? TemplateLinks : TemplateSubLinks
 
@@ -135,8 +135,16 @@ class NavigationBarFromLeft extends Component {
 
             const Arrow = link.childrens ? <ArrowContainer><SvgArrowCentered/></ArrowContainer> : null;
             const Childrens = link.childrens ?
-                <LinksChildren {...getTemplateProps(TemplateSubLinks)}
-                               basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>{this.getRenderLinks(link.childrens, link.slug)}</LinksChildren> : null;
+                <ChildrensContainer {...getTemplateProps(TemplateSubLinks)}
+                           basisTemplateLeft={TemplateLeft && TemplateLeft.settings ? TemplateLeft.settings.basis : null}
+                           basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>
+                    <LinksChildren {...getTemplateProps(TemplateSubLinks)}
+                               basisTemplateLeft={TemplateLeft && TemplateLeft.settings ? TemplateLeft.settings.basis : null}
+                               basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>
+                        {this.getRenderLinks(link.childrens, link.slug)}
+                               </LinksChildren>
+                </ChildrensContainer> : null;
+
             const hadChildren = link.childrens && link.childrens.length !== 0 ? true : false;
 
             switch (link.type) {
@@ -150,7 +158,8 @@ class NavigationBarFromLeft extends Component {
                               onClick={() => {
                                   if (!slugParent) this.setCurrentOpenedLinkIndex(i, hadChildren)
                               }}
-                              href={slugParent ? `${ this.getLocalePath()}/${slugParent}#${link.slug}` : `${this.getLocalePath()}/#${link.slug}`}>{link.name}
+                              href={slugParent ? `${ this.getLocalePath()}/${slugParent}#${link.slug}` : `${this.getLocalePath()}/#${link.slug}`}>
+                            <span>{link.name}</span>
                             {Arrow}
                         </Link>
                         {Childrens}
@@ -165,7 +174,8 @@ class NavigationBarFromLeft extends Component {
                               onClick={() => {
                                   if (!slugParent) this.setCurrentOpenedLinkIndex(i, hadChildren)
                               }}
-                              target={'_blank'} rel={'noopener'} href={`${link.urlLink}`}>{link.name}
+                              target={'_blank'} rel={'noopener'} href={`${link.urlLink}`}>
+                            <span>{link.name}</span>
                             {Arrow}
                         </Link>
                         {Childrens}
@@ -182,7 +192,7 @@ class NavigationBarFromLeft extends Component {
                               }}
                               className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
                               href={`${ this.getLocalePath()}/${link.slug}`}>
-                            {link.name}
+                            <span>{link.name}</span>
                             {Arrow}
                         </Link>
                         {Childrens}
@@ -198,7 +208,7 @@ class NavigationBarFromLeft extends Component {
                                   if (!slugParent) this.setCurrentOpenedLinkIndex(i, hadChildren)
                               }}
                         >
-                            {link.name}
+                            <span>{link.name}</span>
                             {Arrow}
                         </Link>
                         {Childrens}
@@ -219,7 +229,6 @@ class NavigationBarFromLeft extends Component {
         const LinksConfig = fields['NavigationLinks'];
         return (
             <Container>
-                <BackgroundNavigation {...getTemplateProps(TemplateLinks)} show={this.state.displayBackground}/>
                 <FixedBar {...getTemplateProps(TemplateLeft)}
                           className={[this.state.open ? 'open' : '', !this.state.visible && !this.onTopPage() ? 'hidden' : '', this.linkIsOpen() ? 'linkOpened' : '']}>
                     <ContainerLeft {...getTemplateProps(TemplateLeft)}>
