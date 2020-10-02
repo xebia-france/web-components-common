@@ -230,7 +230,12 @@ class NavigationBarFromLeft extends Component {
         return (
             <Container>
                 <FixedBar {...getTemplateProps(TemplateLeft)}
-                          className={[this.state.open ? 'open' : '', !this.state.visible && !this.onTopPage() ? 'hidden' : '', this.linkIsOpen() ? 'linkOpened' : '']}>
+                          className={[this.state.open ? 'open' : '', !this.state.visible && !this.onTopPage() ? 'hidden' : '', this.linkIsOpen() ? 'linkOpened' : '']}
+                          onClick={() => {
+                              console.log('click on fiixed bar');
+                              if(this.state.open === true){ }
+                          }}
+                >
                     <ContainerLeft {...getTemplateProps(TemplateLeft)}>
                         <Logo>
                             {
@@ -249,6 +254,7 @@ class NavigationBarFromLeft extends Component {
 
                         <Toggle className={this.state.open ? 'open' : ''}
                                 onClick={() => {
+                                    console.log('click on toggle');
                                     this.setState({open: !this.state.open}, () => {
                                         if(!this.state.open){
                                             this.setState({

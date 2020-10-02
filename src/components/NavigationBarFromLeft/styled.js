@@ -404,7 +404,7 @@ export const FixedBar = styled.div.attrs(props => ({
     position : fixed;
     display : flex;
     width : 100%;
-    transition : transform .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+    transition : transform .2s cubic-bezier(.25,.46,.45,.94) 0ms, max-height .0s cubic-bezier(.25,.46,.45,.94) 0.7s;
     transform : translateY(0);
     
    
@@ -441,6 +441,8 @@ export const FixedBar = styled.div.attrs(props => ({
                 
                     &.open{
                         max-height : 100%;
+                        transition : transform .2s cubic-bezier(.25,.46,.45,.94) 0ms, max-height .0s cubic-bezier(.25,.46,.45,.94) 0.0s;
+
                     }
          }`)
     };
