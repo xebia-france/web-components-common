@@ -20,11 +20,17 @@ export const Element = styled.li.attrs(props => ({
                   background:${ props.basis[size].color.gradient  };
                ` : ''}
                
+               &:not(.open){
+                    &>${Link}{
+                       &>span{
+                            border-color : transparent;
+                       }
+                    }   
+               }
                &.open{
                     &>${Link}{
                        &>span{
-                           border-bottom-width:3px;
-                           border-bottom-style:solid;
+                           
                        }
                         ${ props.hadChildren ? `
                             &:after{
@@ -67,6 +73,7 @@ export const Element = styled.li.attrs(props => ({
         
         & ${LinksChildren}{
             display : block;
+            z-index : 10;
             
         }
         

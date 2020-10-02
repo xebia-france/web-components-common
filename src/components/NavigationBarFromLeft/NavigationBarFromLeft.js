@@ -11,7 +11,7 @@ import {
     LanguageSelector,
     CheckContainer,
     ArrowContainer,
-    LinkLanguage, FixedBar, Logo, ContainerLeft, LinksChildren, BackgroundNavigation, ChildrensContainer
+    LinkLanguage, FixedBar, Logo, ContainerLeft, LinksChildren, BackgroundNavigation, ChildrensContainer, Toggle, IconToggle
 } from './styled'
 import PropTypes from 'prop-types';
 import {getImages} from "../../utils/gettersCommonElement";
@@ -247,16 +247,43 @@ class NavigationBarFromLeft extends Component {
                                     </a>
                             }</Logo>
 
+                        <Toggle className={this.state.open ? 'open' : ''}
+                                onClick={() => {
+                                    this.setState({open: !this.state.open}, () => {
+                                        if(!this.state.open){
+                                            this.setState({
+                                                currentOpenedLinkIndex: null,
+                                                displayBackground : false
+                                            })
+                                        }
+                                    })
+                                }}
+                                responsive={this.getLinkProps(LinksConfig).responsive}
+                                typography={this.getLinkProps(LinksConfig).typography}
+                                basis={this.getLinkProps(LinksConfig).basis}
+                                basisTemplateLeft={getTemplateProps(TemplateLeft).basis}
+                        >
+                            <IconToggle/>
+                            <span>{this.state.open ? 'fermer' : 'menu'}</span>
+                        </Toggle>
 
-                        <Hamburger className={this.state.open ? 'open' : ''}
-                                   {...getTemplateProps(TemplateBurger)}
-                                   onClick={() => this.setState({open: !this.state.open})}>
-                            <LineWrapper>
-                                <div/>
-                                <div/>
-                                <div/>
-                            </LineWrapper>
-                        </Hamburger>
+                        {
+                            /*
+                            *
+
+                            <Hamburger className={this.state.open ? 'open' : ''}
+                                       {...getTemplateProps(TemplateBurger)}
+                                       onClick={() => this.setState({open: !this.state.open})}>
+                                <LineWrapper>
+                                    <div/>
+                                    <div/>
+                                    <div/>
+                                </LineWrapper>
+                            </Hamburger>
+
+                            *
+                            * */
+                        }
                     </ContainerLeft>
 
                     <Links {...getTemplateProps(TemplateLinks)}

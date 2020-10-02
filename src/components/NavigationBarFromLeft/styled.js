@@ -134,6 +134,8 @@ export const Link = styled.a.attrs(props => ({
           
                
            &>span{
+                border-bottom-width:3px;
+                border-bottom-style:solid;
                 border-color : ${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
            }
 
@@ -215,7 +217,7 @@ export const Links = styled(ContainerCommon).attrs(props => ({
     responsive : props.responsive,
     basisTemplateLeft : props.basisTemplateLeft
 }))`
-   transition : transform .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+   transition : transform 0.7s cubic-bezier(0.32, 0.01, 0, 1);
    position: relative;
     &>nav{
         z-index: 2;
@@ -235,7 +237,14 @@ export const Links = styled(ContainerCommon).attrs(props => ({
                    height : calc(100vh - ${isNumber(props.basisTemplateLeft[size].size.height) ? `${ props.basisTemplateLeft[size].size.height }px` : props.basisTemplateLeft[size].size.height});
                         
             ` : ''
-        }
+            }
+            
+            
+            transform : translateX(-100%);
+            
+            &.open{
+                transform : translateX(0%);
+            }
             
             
          }`
@@ -655,4 +664,97 @@ export const BackgroundNavigation = styled.div.attrs(props => ({
        display : none;
     }
     
-`
+`;
+
+
+export const IconToggle = styled.div.attrs(props => ({
+
+}))`
+    position : relative;
+    width : 24px;
+    margin : 6px 10px 0 0;
+    height : 2px;
+    transition : transform 0.3s;
+    
+    &:after{
+        content: '';
+        display: block;
+        top: 5px;
+        right: 0;
+        width: 50%;
+        height: 2px;
+        position: absolute;
+        transition: transform 0.3s;
+    }
+    
+`;
+
+export const Toggle = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    basis: props.basis,
+    basisTemplateLeft : props.basisTemplateLeft,
+    typography: props.typography
+}))`
+    z-index: 10;
+    display : flex;
+    transition : color 0.25s ease, border-color 0.25s ease;
+    border-style : solid;
+    display : flex;
+    align-self: center !important;
+    position : relative;
+    cursor : pointer:
+    z-index : 2;
+    cursor : pointer;
+    //position : absolute;
+    //right : 0;
+    //top: 0;
+    
+    &>span{
+        font-size : 16px;
+        line-height : 16px;
+    }
+  
+   ${ props => props.responsive.map(size => `
+         @media ${ device[size] } {
+            ${ props.typography ? generateFontProperties(props.typography, size) : '' }
+           
+            background-color: ${ getFormatedColor(props.basis[size].color.basic, props.basis[size].opacity.basic )} ;
+            color:${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
+            align-self:${ props.basis[size].alignment.horizontal || '' };
+            
+            & ${IconToggle}, & ${IconToggle}:after{
+                background :${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )}; 
+            }
+            
+            &.open{
+               background-color: ${ getFormatedColor(props.basis[size].color.active, props.basis[size].opacity.active )} ;
+               color:${ getFormatedColor( props.typography[size].color.active, props.typography[size].opacity.active )};
+            
+                & ${IconToggle}, & ${IconToggle}:after{
+                    background :${ getFormatedColor( props.typography[size].color.active, props.typography[size].opacity.active )}; 
+                }
+            }
+         }`)
+    };
+    
+    &.open{
+        & ${IconToggle}{
+            transform: rotate(45deg);
+            width: 18px;
+            margin-top: 8px;
+            
+            &:after{
+                top: 0;
+                width: 100%;
+                transform: rotate(-90deg);
+            }
+        }
+    
+    }
+    
+    
+    
+    
+    
+    
+`;
