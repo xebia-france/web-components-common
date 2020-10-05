@@ -406,48 +406,46 @@ export const FixedBar = styled.div.attrs(props => ({
     width : 100%;
     transition : transform .2s cubic-bezier(.25,.46,.45,.94) 0ms, max-height .0s cubic-bezier(.25,.46,.45,.94) 0.7s;
     transform : translateY(0);
-    
-   
+    top : 0;
+    flex-direction : column;
+    overflow : hidden;
     
     &.hidden{
         transform : translateY(-100%);
     }
     
-     @media  ${ device.T }, ${ device.D }{
-        flex-direction : column;
-        
-        &.linkOpened.hidden{
-            transform : translateY(0);
-        }
+    &.open{
+        max-height : 100%;
+        transition : transform .2s cubic-bezier(.25,.46,.45,.94) 0ms, max-height .0s cubic-bezier(.25,.46,.45,.94) 0.0s;
     }
     
-     @media  ${ device.M }{
-        flex-direction : column;
-        
-        &.open.hidden{
-            transform : translateY(0);
-        }
+    &.open.hidden{
+        transform : translateY(0);
     }
     
-    ${ props => ['M'].map((size, i) => `
+     ${ props => ['T', 'D'].map((size, i) => `
          @media ${ device[size] } {
-         
-             ${ props.basis ? `
-                    max-height : ${isNumber(props.basis[size].size.height)
-    ? `${ props.basis[size].size.height }px`
-    : props.basis[size].size.height};
-                
-                ` : ''}
-                
-                    &.open{
-                        max-height : 100%;
-                        transition : transform .2s cubic-bezier(.25,.46,.45,.94) 0ms, max-height .0s cubic-bezier(.25,.46,.45,.94) 0.0s;
-
-                    }
+            &.linkOpened.hidden{
+                transform : translateY(0);
+            }
+            
+            &.visible{
+                transform : translateY(0);
+            }
          }`)
     };
     
-    
+    ${ props => ['M', 'T', 'D'].map((size, i) => `
+         @media ${ device[size] } {
+             ${ props.basis ? `
+                    max-height : ${isNumber(props.basis[size].size.height) ? `${ props.basis[size].size.height }px` : props.basis[size].size.height};
+                
+                ` : ''}
+                    ${ContainerLeft}{
+                        min-height : ${isNumber(props.basis[size].size.height) ? `${ props.basis[size].size.height }px` : props.basis[size].size.height};
+                    }
+         }`)
+    };
 `
 
 
@@ -759,4 +757,35 @@ export const Toggle = styled.div.attrs(props => ({
     
     
     
+`;
+
+export const ClosingArea = styled.div.attrs(props => ({
+    open : props.open,
+    openSubLink : props.openSubLink
+}))`
+   position : absolute;
+   width : 0;
+   height : 0;
+   top : 0;
+   right : 0;
+   display : none;
+   z-index : 6;
+   
+   
+   
+   
+   ${ props => ['T', 'D'].map(size => `
+         @media ${ device[size] } {
+           ${props.open ? `
+                display : block;
+                width : calc(100% * (2/3));
+                height : 100%;
+           ` : ''}
+           
+           ${props.openSubLink ? `
+                width : calc(100% * (1/3));
+           ` : ''}
+           
+         }`)
+    };
 `;

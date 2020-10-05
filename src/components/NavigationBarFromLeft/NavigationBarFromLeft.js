@@ -11,7 +11,16 @@ import {
     LanguageSelector,
     CheckContainer,
     ArrowContainer,
-    LinkLanguage, FixedBar, Logo, ContainerLeft, LinksChildren, BackgroundNavigation, ChildrensContainer, Toggle, IconToggle
+    LinkLanguage,
+    FixedBar,
+    Logo,
+    ContainerLeft,
+    LinksChildren,
+    BackgroundNavigation,
+    ChildrensContainer,
+    Toggle,
+    IconToggle,
+    ClosingArea
 } from './styled'
 import PropTypes from 'prop-types';
 import {getImages} from "../../utils/gettersCommonElement";
@@ -30,7 +39,7 @@ class NavigationBarFromLeft extends Component {
             prevScrollpos: typeof window !== `undefined` ? window.pageYOffset : 0,
             visible: true,
             currentOpenedLinkIndex: null,
-            displayBackground : false
+            displayBackground: false
         };
     }
 
@@ -58,16 +67,16 @@ class NavigationBarFromLeft extends Component {
 
     handleScroll = () => {
         const {prevScrollpos} = this.state;
-
-
         const currentScrollPos = window.pageYOffset;
         const currentScrollY = window.scrollY;
-        const visible = prevScrollpos > currentScrollPos;
+        const visible = prevScrollpos >= currentScrollPos || prevScrollpos === 0;
 
         this.setState({
             scrollY: window.scrollY,
             prevScrollpos: currentScrollPos,
-            visible
+            visible: visible
+        }, () => {
+            console.log(this.state)
         });
     };
 
@@ -116,14 +125,40 @@ class NavigationBarFromLeft extends Component {
         if (this.state.currentOpenedLinkIndex === i) {
             this.setState({
                 currentOpenedLinkIndex: null,
-                displayBackground : false
+                displayBackground: false
             })
         } else {
             this.setState({
                 currentOpenedLinkIndex: i,
-                displayBackground : hadChild ? true : false
+                displayBackground: hadChild ? true : false
             })
         }
+    }
+
+    disableScrolling = () => {
+        if (typeof window !== 'undefined' && typeof document !== `undefined`) {
+            var y = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+            document.body.style.top = `-${y}px`;
+
+        }
+        this.setState({
+            visible: true
+        })
+
+    }
+
+    enableScrolling = () => {
+        if (typeof window !== 'undefined' && typeof document !== `undefined`) {
+            const scrollY = document.body.style.top;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        }
+        this.setState({
+            visible: true
+        })
     }
 
     getRenderLinks = (links, slugParent = null) => {
@@ -136,13 +171,13 @@ class NavigationBarFromLeft extends Component {
             const Arrow = link.childrens ? <ArrowContainer><SvgArrowCentered/></ArrowContainer> : null;
             const Childrens = link.childrens ?
                 <ChildrensContainer {...getTemplateProps(TemplateSubLinks)}
-                           basisTemplateLeft={TemplateLeft && TemplateLeft.settings ? TemplateLeft.settings.basis : null}
-                           basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>
+                                    basisTemplateLeft={TemplateLeft && TemplateLeft.settings ? TemplateLeft.settings.basis : null}
+                                    basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>
                     <LinksChildren {...getTemplateProps(TemplateSubLinks)}
-                               basisTemplateLeft={TemplateLeft && TemplateLeft.settings ? TemplateLeft.settings.basis : null}
-                               basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>
+                                   basisTemplateLeft={TemplateLeft && TemplateLeft.settings ? TemplateLeft.settings.basis : null}
+                                   basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>
                         {this.getRenderLinks(link.childrens, link.slug)}
-                               </LinksChildren>
+                    </LinksChildren>
                 </ChildrensContainer> : null;
 
             const hadChildren = link.childrens && link.childrens.length !== 0 ? true : false;
@@ -230,12 +265,20 @@ class NavigationBarFromLeft extends Component {
         return (
             <Container>
                 <FixedBar {...getTemplateProps(TemplateLeft)}
-                          className={[this.state.open ? 'open' : '', !this.state.visible && !this.onTopPage() ? 'hidden' : '', this.linkIsOpen() ? 'linkOpened' : '']}
-                          onClick={() => {
-                              console.log('click on fiixed bar');
-                              if(this.state.open === true){ }
-                          }}
+                          className={[
+                              this.state.open ? 'open' : '',
+                              this.state.visible ? 'visible' : '',
+                              (!this.state.visible && !this.onTopPage()) ? 'hidden' : '',
+                              this.linkIsOpen() ? 'linkOpened' : '']}
                 >
+                    <ClosingArea open={this.state.open} openSubLink={this.state.currentOpenedLinkIndex !== null}
+                                 onClick={() => {
+                                     this.setState({
+                                         open: false,
+                                         currentOpenedLinkIndex: null
+                                     });
+                                     this.enableScrolling();
+                                 }}/>
                     <ContainerLeft {...getTemplateProps(TemplateLeft)}>
                         <Logo>
                             {
@@ -254,13 +297,15 @@ class NavigationBarFromLeft extends Component {
 
                         <Toggle className={this.state.open ? 'open' : ''}
                                 onClick={() => {
-                                    console.log('click on toggle');
                                     this.setState({open: !this.state.open}, () => {
-                                        if(!this.state.open){
+                                        if (!this.state.open) {
+                                            this.enableScrolling();
                                             this.setState({
                                                 currentOpenedLinkIndex: null,
-                                                displayBackground : false
+                                                displayBackground: false
                                             })
+                                        } else {
+                                            this.disableScrolling();
                                         }
                                     })
                                 }}
