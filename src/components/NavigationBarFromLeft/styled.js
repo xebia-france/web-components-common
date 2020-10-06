@@ -175,19 +175,27 @@ export const ArrowContainer = styled.div.attrs(props => ({
   &>svg{
     width : 100%;
   } 
-  ${ props => props.responsive.map(size => `
+  ${ props => ['T', 'D'].map(size => `
          @media ${ device[size] } {
-            ${ props.typography && props.typography[size].font.lineHeight ?
-        `
+            ${ props.typography && props.typography[size].font.lineHeight ? `
             top : 5px;
             width : ${ props.typography[size].font.lineHeight - 10 }px;
             height : ${ props.typography[size].font.lineHeight - 10 }px;
-        
-        
         `
         : ''}
          
             
+         }`)
+    };
+    
+  ${ props => ['M'].map(size => `
+         @media ${ device[size] } {
+            ${ props.typography && props.typography[size].font.lineHeight ? `
+            top : ${ (props.typography[size].font.lineHeight - 10) / 2 }px;
+            width : ${ props.typography[size].font.lineHeight - 10 }px;
+            height : ${ props.typography[size].font.lineHeight - 10 }px;
+        `
+        : ''}
          }`)
     };
   
