@@ -157,9 +157,17 @@ export const ChildrenContainer = styled.div.attrs(props => ({
         position : absolute;
         display : block;
     }
+    @media  ${ device.M }{
+        width : 100%;
+    }
 `;
 
-export const ArrowContainer = styled.div`
+export const ArrowContainer = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    basis: props.basis,
+    typography: props.typography,
+    border: props.border
+}))`
   display : none;
   width : 30px;
   height : 30px;
@@ -171,6 +179,22 @@ export const ArrowContainer = styled.div`
   &>svg{
     width : 100%;
   } 
+  ${ props => props.responsive.map(size => `
+         @media ${ device[size] } {
+            ${ props.typography && props.typography[size].font.lineHeight ?
+        `
+            top : 5px;
+            width : ${ props.typography[size].font.lineHeight - 10 }px;
+            height : ${ props.typography[size].font.lineHeight - 10 }px;
+        
+        
+        `
+        : ''}
+         
+            
+         }`)
+    };
+  
   
   @media  ${ device.T }, ${ device.D } {
     display : flex;
@@ -194,6 +218,7 @@ export const Link = styled.a.attrs(props => ({
     cursor : pointer:
     z-index : 2;
     cursor : pointer;
+    width : 100%;
   
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {

@@ -27,7 +27,7 @@ const Links = ({links, fields, currentOpenedLinkIndex, setCurrentOpenedLinkIndex
             hadChildren: hadChildren
         }
 
-        const Arrow = link.childrens ? <ArrowContainer><SvgArrowCentered/></ArrowContainer> : null;
+        const Arrow = link.childrens ? <ArrowContainer {...getLinkProps(LinksConfig)}><SvgArrowCentered/></ArrowContainer> : null;
         const Childrens = link.childrens ?
             <ChildrenContainer {...getTemplateProps(TemplateSubLinks)} basisTemplateLeft={basisTemplateLeft} basisLinks={basisTemplateLinks}>
                 <LinksChildren {...getTemplateProps(TemplateSubLinks)} basisTemplateLeft={basisTemplateLeft} basisLinks={basisTemplateLinks}>

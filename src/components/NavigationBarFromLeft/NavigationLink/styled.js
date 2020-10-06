@@ -10,6 +10,10 @@ export const Element = styled.li.attrs(props => ({
     basisSubLink : props.basisSubLink,
     basisLink : props.basisLink
 }))`
+    display : flex;
+    align-items: center;
+
+    
     ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
                 background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
@@ -18,6 +22,7 @@ export const Element = styled.li.attrs(props => ({
                ` : ''}
                
                &:not(.open){
+                    
                     &>${Link}{
                        &>span{
                             border-color : transparent;
@@ -84,6 +89,7 @@ export const Element = styled.li.attrs(props => ({
     
     @media  ${ device.M }{
         position : relative;
+        flex-direction:  column;
         
         &.open{
             &>${Link}{
