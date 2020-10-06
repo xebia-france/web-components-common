@@ -7,10 +7,9 @@ export const Element = styled.li.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis,
     hadChildren : props.hadChildren,
-    basisSubLink : props.basisSubLink
+    basisSubLink : props.basisSubLink,
+    basisLink : props.basisLink
 }))`
-    
-    
     ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
                 background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
@@ -33,11 +32,9 @@ export const Element = styled.li.attrs(props => ({
                        }
                         ${ props.hadChildren ? `
                             &:after{
-                                ${ props.basisSubLink ?
-                                    ( props.basisSubLink[size].color ? `border-right : 24px solid ${ getFormatedColor(props.basisSubLink[size].color, props.basisSubLink[size].opacity ) }; ` : '' )
-                                    : ''}
+                                ${ props.basisSubLink ? ( props.basisSubLink[size].color ? 
+                                `border-right : 24px solid ${ getFormatedColor(props.basisSubLink[size].color, props.basisSubLink[size].opacity ) }; ` : '' ) : ''}
                             }
-                        
                         ` : ''}
                     }
                     
@@ -48,7 +45,6 @@ export const Element = styled.li.attrs(props => ({
                     & ${LinksChildren}{
                         display : block;
                         z-index : 10;
-                        
                     }
                 }
          }`)
@@ -63,9 +59,6 @@ export const Element = styled.li.attrs(props => ({
                         transform : translateX(0%);
                     }
                     &>${Link}{
-                       &>span{
-                           
-                       }
                         ${ props.hadChildren ? `
                             &:after{
                                 position : absolute;
@@ -83,7 +76,6 @@ export const Element = styled.li.attrs(props => ({
                                     : ''}
                                     
                             }
-                        
                         ` : ''}
                     }
                 }
@@ -96,7 +88,6 @@ export const Element = styled.li.attrs(props => ({
         &.open{
             &>${Link}{
                 ${ props => props.hadChildren ? `
-                    
                     &:after{
                         position : absolute;
                         content : '';
@@ -108,11 +99,8 @@ export const Element = styled.li.attrs(props => ({
                         border-left : 24px solid transparent;
                         display : block;
                         
-                        ${ props.basisSubLink ?
-                                    ( props.basisSubLink['M'].color ? `border-bottom : 24px solid ${ getFormatedColor(props.basisSubLink['M'].color, props.basisSubLink['M'].opacity ) }; ` : '' )
-                                    : ''}
+                        ${ props.basisSubLink ? ( props.basisSubLink['M'].color ? `border-bottom : 24px solid ${ getFormatedColor(props.basisSubLink['M'].color, props.basisSubLink['M'].opacity ) }; ` : '' ) : ''}
                     }
-                
                 ` : ''}
             }
             & ${LinksChildren}{

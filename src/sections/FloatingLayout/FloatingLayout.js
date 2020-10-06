@@ -1,7 +1,6 @@
 import React, {useRef, useEffect, useState} from 'react';
 import {Wrapper, Container} from './styled';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
-import { useWindowScroll} from "../../utils/customHooks";
 
 const FloatingLayout = ({children, fields, name, assetsDirectory, language}) => {
     const Template = fields.Template;

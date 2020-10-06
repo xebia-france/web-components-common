@@ -1,23 +1,16 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Container,
-    Links,
+    LinksContainer,
     Link,
-    Hamburger,
-    LineWrapper,
-    FixedContainer,
     Locale,
     CurrentLocale,
     LanguageSelector,
     CheckContainer,
-    ArrowContainer,
     LinkLanguage,
     FixedBar,
     Logo,
     ContainerLeft,
-    LinksChildren,
-    BackgroundNavigation,
-    ChildrensContainer,
     Toggle,
     IconToggle,
     ClosingArea
@@ -25,363 +18,155 @@ import {
 import PropTypes from 'prop-types';
 import {getImages} from "../../utils/gettersCommonElement";
 import {getTemplateProps} from "../../utils/gettersProperties";
+import {getLinkProps, getUrlWithLocale, linkIsOpen, enableScrolling, disableScrolling, onTopPage} from "./utils";
+import SvgCheck from '../../assets/svg/SvgCheck';
+import Links from './Links';
 
-import NavigationLink from './NavigationLink';
-import SvgCheck from '../../assets/svg/SvgCheck'
-import SvgArrow from '../../assets/svg/SvgArrow'
-import SvgArrowCentered from '../../assets/svg/SvgArrowCentered'
 
-class NavigationBarFromLeft extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false,
-            prevScrollpos: typeof window !== `undefined` ? window.pageYOffset : 0,
-            visible: true,
-            currentOpenedLinkIndex: null,
-            displayBackground: false
-        };
-    }
+const NavigationBarFromLeft = ({fields, locales, locale, location, menu, language, assetsDirectory}) => {
+    const [open, setOpen] = useState(false);
+    const [visible, setVisible] = useState(true);
+    const [scrollY, setScrollY] = useState(0);
+    const [currentOpenedLinkIndex, setCurrentOpenedLinkIndex] = useState(null);
+    const [displayBackground, setDisplayBackground] = useState(false);
+    const [precedentScrollY, setPrecedentScrollY] = useState(undefined);
 
-    componentDidMount() {
-        if (typeof window !== 'undefined' && typeof document !== `undefined`) {
-            window.addEventListener("scroll", this.handleScroll);
+    useEffect(() => {
 
+        function handleScroll() {
+            const currentScrollPos = window.pageYOffset;
+            const currentScrollY = window.scrollY;
+            const isVisible = precedentScrollY >= currentScrollPos || precedentScrollY === 0;
+
+            setScrollY(currentScrollY);
+            setPrecedentScrollY(currentScrollPos);
+            setVisible(isVisible);
         }
+
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
 
         if (localStorage.getItem('scrollPosition')) {
             const localStorageScrollPosition = Number(localStorage.getItem('scrollPosition'));
-            if (typeof window !== 'undefined' && (!this.props.location.hash || this.props.location.hash === '')) {
+            if (typeof window !== 'undefined' && (!location.hash || location.hash === '')) {
                 window.scrollTo(0, localStorageScrollPosition);
                 localStorage.removeItem('scrollPosition');
             }
         }
-    }
 
-    componentWillUnmount() {
-        if (typeof window !== 'undefined' && typeof document !== `undefined`) {
-            window.removeEventListener("scroll", this.handleScroll);
-
-        }
-    }
-
-    handleScroll = () => {
-        const {prevScrollpos} = this.state;
-        const currentScrollPos = window.pageYOffset;
-        const currentScrollY = window.scrollY;
-        const visible = prevScrollpos >= currentScrollPos || prevScrollpos === 0;
-
-        this.setState({
-            scrollY: window.scrollY,
-            prevScrollpos: currentScrollPos,
-            visible: visible
-        }, () => {
-            console.log(this.state)
-        });
-    };
-
-    onTopPage = () => {
-        const currentScrollY = window.scrollY;
-        if (currentScrollY < 100) return true;
-        return false;
-    }
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [scrollY]);
 
 
-    getUrlWithLocale = (locale, currentPath) => {
-        let result = currentPath.split('/');
-        result.splice(1, 1, locale.split('-')[0]);
-        return result.join('/')
-    }
+    const {TemplateLeft, TemplateLinks, TemplateSubLinks, NavigationLinks, NavigationSubLinks} = fields;
 
-    getLocalePath = () => {
-        if (this.props.locales.length > 1) {
-            return `/${this.props.locale.split('-')[0]}`
-        } else {
-            return ``
-        }
-    }
-
-    getLinkProps = (field) => {
-        return {
-            responsive: field ? field.responsiveSettings : [],
-            typography: field && field.settings.typography ? field.settings.typography : null,
-            basis: field && field.settings.basis ? field.settings.basis : null,
-            border: field && field.settings.border ? field.settings.border : null,
-        }
-    }
-
-    linkIsOpen = () => {
-        if (typeof window !== 'undefined' && typeof document !== `undefined`) {
-            if (document.querySelector('li.navigation-link.open') !== null) {
-                return true
-            } else {
-                return false;
-            }
-        }
-        return false;
-    }
-
-    setCurrentOpenedLinkIndex = (i, hadChild) => {
-        if (this.state.currentOpenedLinkIndex === i) {
-            this.setState({
-                currentOpenedLinkIndex: null,
-                displayBackground: false
-            })
-        } else {
-            this.setState({
-                currentOpenedLinkIndex: i,
-                displayBackground: hadChild ? true : false
-            })
-        }
-    }
-
-    disableScrolling = () => {
-        if (typeof window !== 'undefined' && typeof document !== `undefined`) {
-            var y = window.scrollY;
-            document.body.style.position = 'fixed';
-            document.body.style.width = '100%';
-            document.body.style.top = `-${y}px`;
-
-        }
-        this.setState({
-            visible: true
-        })
-
-    }
-
-    enableScrolling = () => {
-        if (typeof window !== 'undefined' && typeof document !== `undefined`) {
-            const scrollY = document.body.style.top;
-            document.body.style.position = '';
-            document.body.style.top = '';
-            window.scrollTo(0, parseInt(scrollY || '0') * -1);
-        }
-        this.setState({
-            visible: true
-        })
-    }
-
-    getRenderLinks = (links, slugParent = null) => {
-        const {TemplateLinks, TemplateSubLinks, NavigationLinks, NavigationSubLinks, TemplateLeft} = this.props.fields
-        const LinksConfig = !slugParent ? NavigationLinks : NavigationSubLinks;
-        const TemplateConfig = !slugParent ? TemplateLinks : TemplateSubLinks
-
-        return links.map((link, i) => {
-
-            const Arrow = link.childrens ? <ArrowContainer><SvgArrowCentered/></ArrowContainer> : null;
-            const Childrens = link.childrens ?
-                <ChildrensContainer {...getTemplateProps(TemplateSubLinks)}
-                                    basisTemplateLeft={TemplateLeft && TemplateLeft.settings ? TemplateLeft.settings.basis : null}
-                                    basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>
-                    <LinksChildren {...getTemplateProps(TemplateSubLinks)}
-                                   basisTemplateLeft={TemplateLeft && TemplateLeft.settings ? TemplateLeft.settings.basis : null}
-                                   basisLinks={TemplateLinks && TemplateLinks.settings && TemplateLinks.settings.basis ? TemplateLinks.settings.basis : null}>
-                        {this.getRenderLinks(link.childrens, link.slug)}
-                    </LinksChildren>
-                </ChildrensContainer> : null;
-
-            const hadChildren = link.childrens && link.childrens.length !== 0 ? true : false;
-
-            switch (link.type) {
-                case 'anchor':
-                    return <NavigationLink key={`${i}-${link.name}`}
-                                           open={!slugParent && i === this.state.currentOpenedLinkIndex}
-                                           Template={TemplateConfig}
-                                           TemplateSubLinks={TemplateSubLinks}
-                                           hadChildren={hadChildren}>
-                        <Link {...this.getLinkProps(LinksConfig)}
-                              onClick={() => {
-                                  if (!slugParent) this.setCurrentOpenedLinkIndex(i, hadChildren)
-                              }}
-                              href={slugParent ? `${ this.getLocalePath()}/${slugParent}#${link.slug}` : `${this.getLocalePath()}/#${link.slug}`}>
-                            <span>{link.name}</span>
-                            {Arrow}
-                        </Link>
-                        {Childrens}
-                    </NavigationLink>;
-
-                case 'external':
-                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig}
-                                           TemplateSubLinks={TemplateSubLinks}
-                                           hadChildren={hadChildren}
-                                           open={!slugParent && i === this.state.currentOpenedLinkIndex}>
-                        <Link {...this.getLinkProps(LinksConfig)}
-                              onClick={() => {
-                                  if (!slugParent) this.setCurrentOpenedLinkIndex(i, hadChildren)
-                              }}
-                              target={'_blank'} rel={'noopener'} href={`${link.urlLink}`}>
-                            <span>{link.name}</span>
-                            {Arrow}
-                        </Link>
-                        {Childrens}
-                    </NavigationLink>;
-
-                case 'internal':
-                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig}
-                                           TemplateSubLinks={TemplateSubLinks}
-                                           hadChildren={hadChildren}
-                                           open={!slugParent && i === this.state.currentOpenedLinkIndex}>
-                        <Link {...this.getLinkProps(LinksConfig)}
-                              onClick={() => {
-                                  if (!slugParent) this.setCurrentOpenedLinkIndex(i, hadChildren)
-                              }}
-                              className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
-                              href={`${ this.getLocalePath()}/${link.slug}`}>
-                            <span>{link.name}</span>
-                            {Arrow}
-                        </Link>
-                        {Childrens}
-                    </NavigationLink>;
-
-                case 'null':
-                    return <NavigationLink key={`${i}-${link.name}`} Template={TemplateConfig}
-                                           TemplateSubLinks={TemplateSubLinks}
-                                           hadChildren={hadChildren}
-                                           open={!slugParent && i === this.state.currentOpenedLinkIndex}>
-                        <Link {...this.getLinkProps(LinksConfig)}
-                              onClick={() => {
-                                  if (!slugParent) this.setCurrentOpenedLinkIndex(i, hadChildren)
-                              }}
-                        >
-                            <span>{link.name}</span>
-                            {Arrow}
-                        </Link>
-                        {Childrens}
-                    </NavigationLink>;
-
-                default :
-                    return null;
-            }
-        })
-    }
-
-    render() {
-        const {fields, locales, locale, location, menu, language, assetsDirectory} = this.props;
-
-        const TemplateLeft = fields['TemplateLeft'];
-        const TemplateLinks = fields['TemplateLinks'];
-        const TemplateBurger = fields['TemplateBurger'];
-        const LinksConfig = fields['NavigationLinks'];
-        return (
-            <Container>
-                <FixedBar {...getTemplateProps(TemplateLeft)}
-                          className={[
-                              this.state.open ? 'open' : '',
-                              this.state.visible ? 'visible' : '',
-                              (!this.state.visible && !this.onTopPage()) ? 'hidden' : '',
-                              this.linkIsOpen() ? 'linkOpened' : '']}
-                >
-                    <ClosingArea open={this.state.open} openSubLink={this.state.currentOpenedLinkIndex !== null}
-                                 onClick={() => {
-                                     this.setState({
-                                         open: false,
-                                         currentOpenedLinkIndex: null
-                                     });
-                                     this.enableScrolling();
-                                 }}/>
-                    <ContainerLeft {...getTemplateProps(TemplateLeft)}>
-                        <Logo>
-                            {
-                                locales && locales.length > 1 ?
-                                    <a href={`/${locale.split('-')[0]}`} onClick={() => {
-                                        localStorage.setItem('scrollPosition', 0);
-                                    }}>
-                                        {fields['Image'] ? getImages(fields['Image'], language) : null}
-                                    </a>
-                                    : <a href={`/`} onClick={() => {
-                                        localStorage.setItem('scrollPosition', 0);
-                                    }}>
-                                        {fields['Image'] ? getImages(fields['Image'], language) : null}
-                                    </a>
-                            }</Logo>
-
-                        <Toggle className={this.state.open ? 'open' : ''}
-                                onClick={() => {
-                                    this.setState({open: !this.state.open}, () => {
-                                        if (!this.state.open) {
-                                            this.enableScrolling();
-                                            this.setState({
-                                                currentOpenedLinkIndex: null,
-                                                displayBackground: false
-                                            })
-                                        } else {
-                                            this.disableScrolling();
-                                        }
-                                    })
-                                }}
-                                responsive={this.getLinkProps(LinksConfig).responsive}
-                                typography={this.getLinkProps(LinksConfig).typography}
-                                basis={this.getLinkProps(LinksConfig).basis}
-                                basisTemplateLeft={getTemplateProps(TemplateLeft).basis}
-                        >
-                            <IconToggle/>
-                            <span>{this.state.open ? 'fermer' : 'menu'}</span>
-                        </Toggle>
-
+    return (
+        <Container>
+            <FixedBar {...getTemplateProps(TemplateLeft)}
+                      className={[
+                          open ? 'open' : '',
+                          visible ? 'visible' : '',
+                          (!visible && !onTopPage()) ? 'hidden' : '',
+                          linkIsOpen() ? 'linkOpened' : '']}
+            >
+                <ClosingArea open={open} openSubLink={currentOpenedLinkIndex !== null}
+                             onClick={() => {
+                                 setOpen(false);
+                                 setCurrentOpenedLinkIndex(null);
+                                 enableScrolling();
+                                 setVisible(true);
+                             }}/>
+                <ContainerLeft {...getTemplateProps(TemplateLeft)}>
+                    <Logo>
                         {
-                            /*
-                            *
+                            locales && locales.length > 1 ?
+                                <a href={`/${locale.split('-')[0]}`} onClick={() => {
+                                    localStorage.setItem('scrollPosition', 0);
+                                }}>
+                                    {fields['Image'] ? getImages(fields['Image'], language) : null}
+                                </a>
+                                : <a href={`/`} onClick={() => {
+                                    localStorage.setItem('scrollPosition', 0);
+                                }}>
+                                    {fields['Image'] ? getImages(fields['Image'], language) : null}
+                                </a>
+                        }</Logo>
 
-                            <Hamburger className={this.state.open ? 'open' : ''}
-                                       {...getTemplateProps(TemplateBurger)}
-                                       onClick={() => this.setState({open: !this.state.open})}>
-                                <LineWrapper>
-                                    <div/>
-                                    <div/>
-                                    <div/>
-                                </LineWrapper>
-                            </Hamburger>
-
-                            *
-                            * */
-                        }
-                    </ContainerLeft>
-
-                    <Links {...getTemplateProps(TemplateLinks)}
-                           basisTemplateLeft={TemplateLeft && TemplateLeft.settings ? TemplateLeft.settings.basis : null}
-                           className={this.state.open ? 'open' : ''}
-
+                    <Toggle className={open ? 'open' : ''}
+                            {...getLinkProps(NavigationLinks)}
+                            basisTemplateLeft={getTemplateProps(TemplateLeft).basis}
+                            onClick={() => {
+                                if (open) {
+                                    setOpen(false);
+                                    setCurrentOpenedLinkIndex(null);
+                                    enableScrolling();
+                                    setVisible(true)
+                                } else {
+                                    setOpen(true);
+                                    disableScrolling();
+                                    setVisible(true);
+                                }
+                            }}
                     >
-                        <nav>
-                            <ul>{menu ? this.getRenderLinks(menu) : null}</ul>
-                            {
-                                locales && locales.length > 1 ?
-                                    <Locale>
-                                        <CurrentLocale>
-                                            <LinkLanguage {...this.getLinkProps(LinksConfig)}>
-                                                {locale.split('-')[0]}
-                                            </LinkLanguage>
-                                        </CurrentLocale>
-                                        <LanguageSelector>
-                                            {
-                                                locales.map((l) => {
-                                                    return <Link key={l}
-                                                                 {...this.getLinkProps(LinksConfig)}
-                                                                 className={l === locale ? '' : ''}
-                                                                 href={this.getUrlWithLocale(l, location.pathname)}
-                                                                 onClick={() => {
-                                                                     localStorage.setItem('scrollPosition', this.state.scrollY);
-                                                                 }}
-                                                    >
-                                                        {l.split('-')[0]}
-                                                        <CheckContainer className={l === locale ? 'selected' : ''}>
-                                                            <SvgCheck/>
-                                                        </CheckContainer>
-                                                    </Link>
-                                                })
-                                            }
-                                        </LanguageSelector>
-                                    </Locale>
-                                    : null
-                            }
-                        </nav>
-                    </Links>
-                </FixedBar>
-            </Container>
-        );
-    }
-}
+                        <IconToggle/>
+                        <span>{open ? 'fermer' : 'menu'}</span>
+                    </Toggle>
+                </ContainerLeft>
 
+                <LinksContainer {...getTemplateProps(TemplateLinks)}
+                                basisTemplateLeft={TemplateLeft && TemplateLeft.settings ? TemplateLeft.settings.basis : null}
+                                className={open ? 'open' : ''}
+                >
+                    <nav>
+                        <ul>
+                            {menu && <Links links={menu}
+                                            fields={fields}
+                                            currentOpenedLinkIndex={currentOpenedLinkIndex}
+                                            setCurrentOpenedLinkIndex={setCurrentOpenedLinkIndex}
+                                            displayBackground={displayBackground}
+                                            setDisplayBackground={setDisplayBackground}
+                                            locales={locales}
+                                            locale={locale}
+                                            location={location}
+                                            slugParent={null}/>
+                            }
+                        </ul>
+                        {
+                            locales && locales.length > 1 ?
+                                <Locale>
+                                    <CurrentLocale>
+                                        <LinkLanguage {...getLinkProps(NavigationLinks)}>
+                                            {locale.split('-')[0]}
+                                        </LinkLanguage>
+                                    </CurrentLocale>
+                                    <LanguageSelector>
+                                        {
+                                            locales.map((l) => {
+                                                return <Link key={l}
+                                                             {...getLinkProps(NavigationLinks)}
+                                                             className={l === locale ? '' : ''}
+                                                             href={getUrlWithLocale(l, location.pathname)}
+                                                             onClick={() => {
+                                                                 localStorage.setItem('scrollPosition', windowScroll);
+                                                             }}
+                                                >
+                                                    {l.split('-')[0]}
+                                                    <CheckContainer className={l === locale ? 'selected' : ''}>
+                                                        <SvgCheck/>
+                                                    </CheckContainer>
+                                                </Link>
+                                            })
+                                        }
+                                    </LanguageSelector>
+                                </Locale>
+                                : null
+                        }
+                    </nav>
+                </LinksContainer>
+            </FixedBar>
+        </Container>
+    )
+}
 
 NavigationBarFromLeft.defaultProps = {};
 

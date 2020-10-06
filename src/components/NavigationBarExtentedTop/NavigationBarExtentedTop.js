@@ -31,10 +31,10 @@ class NavigationBarExtentedTop extends Component {
             switch (link.type) {
                 case 'anchor':
                     return <li><Link
-                        responsive={this.props.fields['Links'].responsiveSettings}
-                        basis={this.props.fields['Links'].settings.basis}
-                        typography={this.props.fields['Links'].settings.typography}
-                        border={this.props.fields['Links'].settings.border}
+                        responsive={this.props.fields['LinksContainer'].responsiveSettings}
+                        basis={this.props.fields['LinksContainer'].settings.basis}
+                        typography={this.props.fields['LinksContainer'].settings.typography}
+                        border={this.props.fields['LinksContainer'].settings.border}
                         href={slugParent ? `/${this.props.locale.split('-')[0]}/${slugParent}#${link.slug}` : `/${this.props.locale.split('-')[0]}/#${link.slug}`}>{link.name}</Link>
                         <ul>
                         {
@@ -45,10 +45,10 @@ class NavigationBarExtentedTop extends Component {
 
                 case 'external':
                     return <li><Link
-                        responsive={this.props.fields['Links'].responsiveSettings}
-                        basis={this.props.fields['Links'].settings.basis}
-                        typography={this.props.fields['Links'].settings.typography}
-                        border={this.props.fields['Links'].settings.border}
+                        responsive={this.props.fields['LinksContainer'].responsiveSettings}
+                        basis={this.props.fields['LinksContainer'].settings.basis}
+                        typography={this.props.fields['LinksContainer'].settings.typography}
+                        border={this.props.fields['LinksContainer'].settings.border}
                         rel={'noopener'}
                         target={'_blank'} href={`${link.urlLink}`}>{link.name}</Link>
                         <ul>
@@ -60,10 +60,10 @@ class NavigationBarExtentedTop extends Component {
 
                 case 'internal':
                     return <li><Link
-                        responsive={this.props.fields['Links'].responsiveSettings}
-                        basis={this.props.fields['Links'].settings.basis}
-                        typography={this.props.fields['Links'].settings.typography}
-                        border={this.props.fields['Links'].settings.border}
+                        responsive={this.props.fields['LinksContainer'].responsiveSettings}
+                        basis={this.props.fields['LinksContainer'].settings.basis}
+                        typography={this.props.fields['LinksContainer'].settings.typography}
+                        border={this.props.fields['LinksContainer'].settings.border}
                         className={this.props.location.pathname.includes(link.slug) ? 'selected' : ''}
                         href={`/${this.props.locale.split('-')[0]}/${link.slug}`}>{link.name}</Link>
                         <ul>
@@ -75,10 +75,10 @@ class NavigationBarExtentedTop extends Component {
 
                 case 'null':
                     return <li><Link
-                        responsive={this.props.fields['Links'].responsiveSettings}
-                        basis={this.props.fields['Links'].settings.basis}
-                        typography={this.props.fields['Links'].settings.typography}
-                        border={this.props.fields['Links'].settings.border}
+                        responsive={this.props.fields['LinksContainer'].responsiveSettings}
+                        basis={this.props.fields['LinksContainer'].settings.basis}
+                        typography={this.props.fields['LinksContainer'].settings.typography}
+                        border={this.props.fields['LinksContainer'].settings.border}
                     >{link.name}</Link>
                         <ul>
                         {
@@ -151,10 +151,10 @@ class NavigationBarExtentedTop extends Component {
                         <Locale>
                             {
                                 locales.map((l) => {
-                                    return <Link responsive={this.props.fields['Links'].responsiveSettings}
-                                                 basis={this.props.fields['Links'].settings.basis}
-                                                 typography={this.props.fields['Links'].settings.typography}
-                                                 border={this.props.fields['Links'].settings.border}
+                                    return <Link responsive={this.props.fields['LinksContainer'].responsiveSettings}
+                                                 basis={this.props.fields['LinksContainer'].settings.basis}
+                                                 typography={this.props.fields['LinksContainer'].settings.typography}
+                                                 border={this.props.fields['LinksContainer'].settings.border}
                                                  className={l === locale ? 'selected' : ''}
                                                  href={this.getUrlWithLocale(l, location.pathname)}
                                     >

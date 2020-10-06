@@ -74,6 +74,91 @@ export const CheckContainer = styled.div`
   }
 `;
 
+
+export const LinksChildren = styled.ul.attrs(props => ({
+    responsive: props.responsive,
+    basis: props.basis,
+    border : props.border,
+    basisLinks : props.basisLinks,
+    basisTemplateLeft: props.basisTemplateLeft
+}))`
+    position : relative;
+    overflow : hidden;
+    display : none;
+    
+    
+    ${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+         
+            ${ props.basis ? generateSize(props.basis, size) : '' }       
+            ${ props.basis ? generatePadding(props.basis, size) : '' }       
+            ${ props.basis ? generateMargin(props.basis, size) : '' } 
+            ${ props.border ?  generateBorder(props.border, size) : '' }    
+            ${ props.border ? ( props.border[size].color ?
+    `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' ) : ''}
+            ${ props.basis &&  props.basis[size].shadow ? (  props.basis[size].shadow.value !== 'none' ?
+    `box-shadow : ${ props.basis[size].shadow.value }; ` : '' ) : ''}
+            background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+            ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+                  background:${ props.basis[size].color.gradient  };` : ''}
+           }
+            
+            
+         }`)
+    };
+    ${ props => ['T', 'D'].map((size, i) => `
+        transition : transform 0.7s cubic-bezier(0.32, 0.01, 0, 1);
+        
+         @media ${ device[size] } {
+             ${ props.basisTemplateLeft ? `
+                height : 100%;
+                padding-top : ${isNumber(props.basisTemplateLeft[size].size.height) ? `${ props.basisTemplateLeft[size].size.height }px` : props.basisLinks[size].size.height};                
+              
+               ` : ''}
+            
+         }`)
+    };
+    
+    @media  ${ device.T }, ${ device.D }{
+        display : block;
+        transform : translateX(-101%);
+    }
+`;
+
+
+export const ChildrenContainer = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    basis: props.basis,
+    border : props.border,
+    basisLinks : props.basisLinks,
+    basisTemplateLeft: props.basisTemplateLeft
+}))`
+    position : relative;
+    overflow : hidden;
+ 
+    ${ props => ['T', 'D'].map((size, i) => `
+        transition : transform 0.7s cubic-bezier(0.32, 0.01, 0, 1);
+        
+         @media ${ device[size] } {
+             ${ props.basisTemplateLeft ? `
+                height : 100vh;
+                top : -${isNumber(props.basisTemplateLeft[size].size.height) ? `${ props.basisTemplateLeft[size].size.height }px` : props.basisLinks[size].size.height};
+                //padding-top : ${isNumber(props.basisTemplateLeft[size].size.height) ? `${ props.basisTemplateLeft[size].size.height }px` : props.basisLinks[size].size.height};
+                width : 100%;
+                left : 100%;
+                
+               
+               ` : ''}
+            
+         }`)
+    };
+    
+    @media  ${ device.T }, ${ device.D }{
+        position : absolute;
+        display : block;
+    }
+`;
+
 export const ArrowContainer = styled.div`
   display : none;
   width : 30px;
@@ -94,6 +179,7 @@ export const ArrowContainer = styled.div`
   }
 `;
 
+
 export const Link = styled.a.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis,
@@ -102,7 +188,7 @@ export const Link = styled.a.attrs(props => ({
 }))`
     transition : color 0.25s ease, border-color 0.25s ease;
     border-style : solid;
-    display : flex;
+   // display : flex;
     align-items: center;
     position : relative;
     cursor : pointer:
@@ -130,23 +216,21 @@ export const Link = styled.a.attrs(props => ({
                     stroke :${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )} !important;
                 }
             }
-            
-          
                
            &>span{
+            
+                display:inline;
                 border-bottom-width:3px;
                 border-bottom-style:solid;
                 border-color : ${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
            }
-
-            
          
             &:hover{
                background-color: ${ getFormatedColor(props.basis[size].color.hover, props.basis[size].opacity.hover )} ;
                color:${ getFormatedColor( props.typography[size].color.hover, props.typography[size].opacity.hover )};
                
-               ${ props.border ?
-                ( props.border[size].color.hover ? `border-color : ${ getFormatedColor(props.border[size].color.hover, props.border[size].opacity.hover ) }; ` : '' )
+               ${ props.border ? ( props.border[size].color.hover ? 
+                `border-color : ${ getFormatedColor(props.border[size].color.hover, props.border[size].opacity.hover ) }; ` : '' )
                 : ''}
                 &>span{
                     border-color : ${ getFormatedColor( props.typography[size].color.hover, props.typography[size].opacity.hover )};
@@ -154,12 +238,15 @@ export const Link = styled.a.attrs(props => ({
     
             }
             
-            &.selected{
+            &.selected, &.active{
                background-color: ${ getFormatedColor(props.basis[size].color.active, props.basis[size].opacity.active )} ;
                color:${ getFormatedColor( props.typography[size].color.active, props.typography[size].opacity.active )};
-                ${ props.border ?
-    ( props.border[size].color.active ? `border-color : ${ getFormatedColor(props.border[size].color.active, props.border[size].opacity.active ) }; ` : '' )
-    : ''}
+                ${ props.border ? ( props.border[size].color.active ? 
+                `border-color : ${ getFormatedColor(props.border[size].color.active, props.border[size].opacity.active ) }; ` : '' ) : ''}
+            
+                 &>span{
+                    border-color : ${ getFormatedColor( props.typography[size].color.active, props.typography[size].opacity.active )} !important;
+                 }
             }
          }`)
     };
@@ -175,9 +262,6 @@ export const Link = styled.a.attrs(props => ({
     `
     : ''}
     }
-    
-    
-    
 `;
 
 
@@ -192,7 +276,6 @@ export const LinkLanguage = styled.a.attrs(props => ({
     display : flex;
     align-items: center;
     z-index : 2;
-    
   
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
@@ -213,7 +296,7 @@ export const LinkLanguage = styled.a.attrs(props => ({
     
 `;
 
-export const Links = styled(ContainerCommon).attrs(props => ({
+export const LinksContainer = styled(ContainerCommon).attrs(props => ({
     responsive : props.responsive,
     basisTemplateLeft : props.basisTemplateLeft
 }))`
@@ -223,10 +306,11 @@ export const Links = styled(ContainerCommon).attrs(props => ({
         z-index: 2;
         height : inherit;
         
-        &>ul{
-        
-            
-        }
+        &>ul{}
+    }
+    
+    &>nav>ul>li:not(.open)>${Link}.active span{
+        border-bottom-color : transparent !important;
     }
     
     ${ props => ['T', 'D'].map((size, i) => `
@@ -285,24 +369,12 @@ export const Links = styled(ContainerCommon).attrs(props => ({
         }
     }
     
-    
-    
     @media  ${ device.T }, ${ device.D }{
         overflow : visible;
-        
         & nav{
-            
             &>ul{
                 display : flex;
                 flex-direction : column;
-                
-                &>li{
-                   // height : 100% !important;
-                    
-                    &>a{
-                       // height : 100%;
-                    }
-                }
             }
         }
     }
@@ -446,82 +518,10 @@ export const FixedBar = styled.div.attrs(props => ({
                     }
          }`)
     };
-`
-
-
-
-export const LineWrapper = styled.div`
-  width : calc(100% - 100%/3 ) ;
-  
-  &>div{
-    width : 100%;
-    height : 2px;
-    outline : 1px solid transparent;
-    display : block;
-    transform-origin : 50% 50%;
-    position: relative;
-    transform : translateY(0);
-    transition : transform .2s cubic-bezier(.25,.46,.45,.94) 0ms;
-    
-    &:nth-child(2), &:nth-child(3){
-        margin-top : 6px;
-    }
-  }
 `;
 
-export const Hamburger = styled.label.attrs(props => ({
-    responsive: props.responsive,
-    basis: props.basis
-}))`
-      display: none;
-      cursor: pointer;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index : 5;
-      
-      ${ props => props.responsive.map(size => `
-         @media ${ device[size] } {
-            ${ props.basis ? `
-                ${ generateSize(props.basis, size) }
-            
-                & ${LineWrapper} div{
-                    background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-                }
-            ` : '' } 
-         }`)
-    }; 
-      
-    @media  ${ device.M } {
-        display : flex;
-        align-items : center;
-    }
-    
-    & ${LineWrapper}{
-      
-        &>div:nth-child(2){
-            transform : scaleX(1);
-        }
-      }
-    }
-      
-    &.open{   
-        &, &:hover{
-      
-            & ${LineWrapper}{
-                &>div:nth-child(1){
-                    transform : translateY(8px) rotate(45deg);
-                }
-                &>div:nth-child(2){
-                    transform : scaleX(0);
-                }
-                &>div:nth-child(3){
-                    transform :translateY(-8px) rotate(-45deg);
-                }
-              }
-          }
-      }  
-`;
+
+
 
 export const ContainerLeft = styled(ContainerCommon).attrs(props => ({
     responsive: props.responsive,
@@ -541,135 +541,12 @@ export const ContainerLeft = styled(ContainerCommon).attrs(props => ({
                 ` : ''}
          }`)
     };
-`
-
-export const LinksChildren = styled.ul.attrs(props => ({
-    responsive: props.responsive,
-    basis: props.basis,
-    border : props.border,
-    basisLinks : props.basisLinks,
-    basisTemplateLeft: props.basisTemplateLeft
-}))`
-    position : relative;
-    overflow : hidden;
-    display : none;
-    
-    
-    
-    ${ props => props.responsive.map((size, i) => `
-         @media ${ device[size] } {
-         
-            ${ props.basis ? generateSize(props.basis, size) : '' }       
-            ${ props.basis ? generatePadding(props.basis, size) : '' }       
-            ${ props.basis ? generateMargin(props.basis, size) : '' } 
-            ${ props.border ?  generateBorder(props.border, size) : '' }    
-            ${ props.border ?
-    ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
-    : ''}
-            ${ props.basis &&  props.basis[size].shadow ?
-    (  props.basis[size].shadow.value !== 'none' ? `box-shadow : ${ props.basis[size].shadow.value }; ` : '' )
-    : ''}
-            background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-           ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
-                  background:${ props.basis[size].color.gradient  };
-               ` : ''}
-                
-            
-           
-           
-           
-           }
-            
-            
-         }`)
-    };
-    ${ props => ['T', 'D'].map((size, i) => `
-        transition : transform 0.7s cubic-bezier(0.32, 0.01, 0, 1);
-        
-         @media ${ device[size] } {
-             ${ props.basisTemplateLeft ? `
-                height : 100%;
-                padding-top : ${isNumber(props.basisTemplateLeft[size].size.height) ? `${ props.basisTemplateLeft[size].size.height }px` : props.basisLinks[size].size.height};                
-              
-               ` : ''}
-            
-         }`)
-    };
-    
-    @media  ${ device.T }, ${ device.D }{
-        display : block;
-        transform : translateX(-101%);
-    }
 `;
 
 
-export const ChildrensContainer = styled.div.attrs(props => ({
-    responsive: props.responsive,
-    basis: props.basis,
-    border : props.border,
-    basisLinks : props.basisLinks,
-    basisTemplateLeft: props.basisTemplateLeft
-}))`
-    position : relative;
-    overflow : hidden;
- 
-    ${ props => ['T', 'D'].map((size, i) => `
-        transition : transform 0.7s cubic-bezier(0.32, 0.01, 0, 1);
-        
-         @media ${ device[size] } {
-             ${ props.basisTemplateLeft ? `
-                height : 100vh;
-                top : -${isNumber(props.basisTemplateLeft[size].size.height) ? `${ props.basisTemplateLeft[size].size.height }px` : props.basisLinks[size].size.height};
-                //padding-top : ${isNumber(props.basisTemplateLeft[size].size.height) ? `${ props.basisTemplateLeft[size].size.height }px` : props.basisLinks[size].size.height};
-                width : 100%;
-                left : 100%;
-                
-               
-               ` : ''}
-            
-         }`)
-    };
-    
-    @media  ${ device.T }, ${ device.D }{
-        position : absolute;
-        display : block;
-    }
-`;
-
-export const BackgroundNavigation = styled.div.attrs(props => ({
-    show : props.show,
-    responsive : props.responsive,
-    basis : props.basis,
-}))`
-    ${ props => ['T', 'D'].map((size, i) => `
-         @media ${ device[size] } {
-         
-             ${ props.basis ? `
-             
-             background-color:${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-             ` : `
-             background-color : transparent;
-             `}
-         }`)
-    };
-    
-    
-    display : ${props => props.show ? 'block' : 'none'};
-    position  : fixed;
-    width : 100%;
-    height : 100vh;
-    content: '';
-    
-    @media  ${ device.M }{
-       display : none;
-    }
-    
-`;
 
 
-export const IconToggle = styled.div.attrs(props => ({
-
-}))`
+export const IconToggle = styled.div.attrs(props => ({}))`
     position : relative;
     width : 24px;
     margin : 6px 10px 0 0;
@@ -705,9 +582,6 @@ export const Toggle = styled.div.attrs(props => ({
     cursor : pointer:
     z-index : 2;
     cursor : pointer;
-    //position : absolute;
-    //right : 0;
-    //top: 0;
     
     &>span{
         font-size : 16px;
@@ -751,12 +625,6 @@ export const Toggle = styled.div.attrs(props => ({
         }
     
     }
-    
-    
-    
-    
-    
-    
 `;
 
 export const ClosingArea = styled.div.attrs(props => ({
@@ -770,9 +638,6 @@ export const ClosingArea = styled.div.attrs(props => ({
    right : 0;
    display : none;
    z-index : 6;
-   
-   
-   
    
    ${ props => ['T', 'D'].map(size => `
          @media ${ device[size] } {

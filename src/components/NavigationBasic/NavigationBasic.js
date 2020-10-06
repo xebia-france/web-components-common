@@ -74,8 +74,8 @@ class NavigationBasic extends Component {
 
     getRenderLinks = (links, slugParent = null) => {
         return links.map((link, i) => {
-            const responsiveSettings = this.props.fields['Links'].responsiveSettings;
-            const {basis, typography, border} = this.props.fields['Links'].settings;
+            const responsiveSettings = this.props.fields['LinksContainer'].responsiveSettings;
+            const {basis, typography, border} = this.props.fields['LinksContainer'].settings;
 
             const Arrow = link.childrens ? <ArrowContainer><SvgArrowTop/></ArrowContainer> : null;
             const Childrens = link.childrens ? <ul>{this.getRenderLinks(link.childrens, link.slug)}</ul> : null;
@@ -137,7 +137,7 @@ class NavigationBasic extends Component {
                 <FixedContainer responsive={fields['Bar'].responsiveSettings}
                                 basis={fields['Bar'].settings.basis}
                                 burger={fields['Bar'].settings.burger}
-                                basisLink={fields['Links'].settings.basis}
+                                basisLink={fields['LinksContainer'].settings.basis}
                                 className={[this.state.open ? 'open' : '', this.state.scrollY && this.state.scrollY > 100 ? 'scrolled' : '']}
                 >
                     <Top>
@@ -177,10 +177,10 @@ class NavigationBasic extends Component {
                                     <Locale>
                                         <CurrentLocale responsive={fields['Bar'].responsiveSettings}
                                                        svg={fields['Bar'].settings.svg}>
-                                            <LinkLanguage responsive={this.props.fields['Links'].responsiveSettings}
-                                                          basis={this.props.fields['Links'].settings.basis}
-                                                          typography={this.props.fields['Links'].settings.typography}
-                                                          border={this.props.fields['Links'].settings.border}
+                                            <LinkLanguage responsive={this.props.fields['LinksContainer'].responsiveSettings}
+                                                          basis={this.props.fields['LinksContainer'].settings.basis}
+                                                          typography={this.props.fields['LinksContainer'].settings.typography}
+                                                          border={this.props.fields['LinksContainer'].settings.border}
                                             >
                                                 {locale.split('-')[0]}
                                             </LinkLanguage>
@@ -193,10 +193,10 @@ class NavigationBasic extends Component {
                                             {
                                                 locales.map((l) => {
                                                     return <Link key={l}
-                                                                 responsive={this.props.fields['Links'].responsiveSettings}
-                                                                 basis={this.props.fields['Links'].settings.basis}
-                                                                 typography={this.props.fields['Links'].settings.typography}
-                                                                 border={this.props.fields['Links'].settings.border}
+                                                                 responsive={this.props.fields['LinksContainer'].responsiveSettings}
+                                                                 basis={this.props.fields['LinksContainer'].settings.basis}
+                                                                 typography={this.props.fields['LinksContainer'].settings.typography}
+                                                                 border={this.props.fields['LinksContainer'].settings.border}
                                                                  className={l === locale ? '' : ''}
                                                                  href={this.getUrlWithLocale(l, location.pathname)}
                                                                  onClick={() => {
