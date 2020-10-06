@@ -143,13 +143,9 @@ export const ChildrenContainer = styled.div.attrs(props => ({
              ${ props.basisTemplateLeft ? `
                 height : 100vh;
                 top : -${isNumber(props.basisTemplateLeft[size].size.height) ? `${ props.basisTemplateLeft[size].size.height }px` : props.basisLinks[size].size.height};
-                //padding-top : ${isNumber(props.basisTemplateLeft[size].size.height) ? `${ props.basisTemplateLeft[size].size.height }px` : props.basisLinks[size].size.height};
                 width : 100%;
                 left : 100%;
-                
-               
                ` : ''}
-            
          }`)
     };
     
