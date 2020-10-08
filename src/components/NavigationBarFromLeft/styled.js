@@ -178,7 +178,7 @@ export const ArrowContainer = styled.div.attrs(props => ({
   ${ props => ['T', 'D'].map(size => `
          @media ${ device[size] } {
             ${ props.typography && props.typography[size].font.lineHeight ? `
-            top : 5px;
+            top : 7px;
             width : ${ props.typography[size].font.lineHeight - 10 }px;
             height : ${ props.typography[size].font.lineHeight - 10 }px;
         `
