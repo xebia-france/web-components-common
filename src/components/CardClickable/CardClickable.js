@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Container, Text, Content, ImageContainer} from './styled';
 import PropTypes from 'prop-types';
 import {getResponsiveKey} from "../../utils/functions";
+import {getContentProps} from "../../utils/gettersProperties";
 
 const buildComponent = (fields, field, language, assetsDirectory, key) => {
     if (!fields[field]) return
@@ -71,6 +72,8 @@ const getImages = (field, language, assetsDirectory) => {
 const CardClickable = ({fields, order, assetsDirectory, language}) => {
     const Template = fields.Template;
     const Link = fields.Link;
+    const ContentBold = fields.ContentBold ?  {...getContentProps(fields.ContentBold)} : null;
+
 
     return (
         <Container responsive={Template ? Template.responsiveSettings : []}
@@ -86,6 +89,7 @@ const CardClickable = ({fields, order, assetsDirectory, language}) => {
                    }}
                    basis={Template && Template.settings ? Template.settings.basis : {}}
                    border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
+                   contentBold={ContentBold}
         >
             {
                 order ? order.map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))

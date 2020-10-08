@@ -18,6 +18,4 @@ export const Container = styled(ContainerCommon).attrs(props => ({
             }
          }`) : ''
     }
-    
-
 `;

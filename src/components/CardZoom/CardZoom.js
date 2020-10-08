@@ -7,7 +7,7 @@ import Image from "../../functional/Image";
 import ImageClickable from '../../functional/ImageClickable';
 
 import PropTypes from 'prop-types';
-import {getTemplatePropsWithImage} from "../../utils/gettersProperties";
+import {getContentProps, getTemplatePropsWithImage} from "../../utils/gettersProperties";
 
 
 const buildComponent = (fields, field,language,assetsDirectory,  key) => {
@@ -36,9 +36,10 @@ const buildComponent = (fields, field,language,assetsDirectory,  key) => {
 
 const CardZoom = ({fields, order, assetsDirectory, language}) => {
         const Link = fields.CTA;
+        const ContentBold = fields.ContentBold ?  {...getContentProps(fields.ContentBold)} : null;
 
         return (
-            <Container  {...getTemplatePropsWithImage(fields.Template)} assetsDirectory={assetsDirectory}
+            <Container  {...getTemplatePropsWithImage(fields.Template)} contentBold={ContentBold} assetsDirectory={assetsDirectory}
                         target={Link && Link.settings.state.external ? '_blank' : ''}
                         rel={Link && Link.settings.state.external ? 'noopener' : ''}
                         href={Link && Link.content.link[language] ? Link.content.link[language] : ''}

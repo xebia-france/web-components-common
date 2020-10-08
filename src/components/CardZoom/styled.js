@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 import {ContainerCommon} from '../../styles/common.styled';
 import {ImageContainerCommon} from "../../styles/common.styled";
+import { device} from "../../styles/constants";
+import { ContentCommon} from "../../styles/common.styled";
+import { getFormatedColor, generateFontProperties} from "../../utils/StyleGenerator";
 
 export const Container = styled(ContainerCommon).attrs(props => ({
     disabledLink : props.disabledLink,
+    contentBold : props.contentBold,
+    contentBoldResponsive: props.contentBold ? props.contentBold.responsive : [],
+    contentBoldTypography : props.contentBold ? props.contentBold.typography : {}
 }))`
     cursor : ${props => props.disabledLink ? 'auto' : 'pointer'};
     overflow : visible;
@@ -16,4 +22,15 @@ export const Container = styled(ContainerCommon).attrs(props => ({
     &:hover ${ImageContainerCommon}{
         transform :  ${props => props.disabledLink ? 'scale(1.0, 1.0)' : 'scale(1.1, 1.1)'} ;
     }
+    
+    ${ props =>  props.contentBold ? props.contentBoldResponsive.map(size => `
+         @media ${ device[size] } {
+            
+            & ${ ContentCommon } b, & ${ ContentCommon } strong{
+                color:${ getFormatedColor(props.contentBoldTypography[size].color, props.contentBoldTypography[size].opacity) };
+                ${ props.contentBoldTypography ?  generateFontProperties(props.contentBoldTypography, size) : '' }
+            }
+         }`) : ''
+    }
+    
 `;
