@@ -1,18 +1,9 @@
 import styled from 'styled-components';
-import {ContainerCommon ,ContentCommon, TextCommon, ImageContainerCommon, CTACommon } from '../../styles/common.styled';
+import {ContainerCommon} from '../../styles/common.styled';
 import { device} from "../../styles/constants";
-import {isNumber} from "../../utils/functions";
 import {generateSize} from "../../utils/StyleGenerator";
 
 export const Container = styled(ContainerCommon)``;
-
-export const Text = styled(TextCommon)``;
-
-export const Content = styled(ContentCommon)``;
-
-export const ImageContainer = styled(ImageContainerCommon)``;
-
-export const CTA = styled(CTACommon)``;
 
 export const Iframe = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -31,7 +22,6 @@ export const Iframe = styled.div.attrs(props => ({
                     & iframe {
                         ${ props.basis ? generateSize(props.basis, size) : '' }
                     }
-                
                 `       
               : ''}
          }`)

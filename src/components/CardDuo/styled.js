@@ -8,7 +8,7 @@ import {
     getFormatedColor,
     generateBackgroundImageWebp
 } from '../../utils/StyleGenerator';
-import {ContainerCommon, ContentCommon, CTACommon, ImageContainerCommon, TextCommon} from "../../styles/common.styled";
+import {ContainerCommon, ImageContainerCommon} from "../../styles/common.styled";
 
 export const Container = styled.div``;
 
@@ -77,10 +77,4 @@ export const Between = styled.div.attrs(props => ({
  
 `;
 
-export const Text = styled(TextCommon)``;
-
-export const Content = styled(ContentCommon)``;
-
 export const ImageContainer = styled(ImageContainerCommon)``;
-
-export const CTA = styled(CTACommon)``;

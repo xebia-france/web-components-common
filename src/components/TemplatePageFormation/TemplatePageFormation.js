@@ -24,7 +24,6 @@ import {generatePictureWebP} from "../../utils/gettersCommonElement";
 
 class TemplatePageFormation extends Component {
 
-
     getContentProps = (settings) => {
         return {
             responsive: settings.Content.responsiveSettings,

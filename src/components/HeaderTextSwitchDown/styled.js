@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { device } from '../../styles/constants';
-import {ContainerCommon, ContentCommon, CTACommon, ImageContainerCommon, TextCommon} from "../../styles/common.styled";
+import {ContainerCommon} from "../../styles/common.styled";
 import { generateBackgroundImage, generateBackgroundImageWebp } from "../../utils/StyleGenerator";
 
 export const Container = styled(ContainerCommon)`
@@ -9,7 +9,6 @@ export const Container = styled(ContainerCommon)`
     
     ${ props =>  props.responsiveContent ? ['M'].map((size, i) => `
          @media ${ device[size] } {
-         
                 &:before{
                    z-index : 1;
                    position : absolute;
@@ -83,11 +82,3 @@ export const CallToActions = styled.div.attrs(props => ({
             justify-content:${ props.basis[size].alignment.horizontal || '' };
         }`)};
 `;
-
-export const Text = styled(TextCommon)``;
-
-export const Content = styled(ContentCommon)``;
-
-export const ImageContainer = styled(ImageContainerCommon)``;
-
-export const CTA = styled(CTACommon)``;

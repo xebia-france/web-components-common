@@ -1,142 +1,59 @@
-import React, {Component} from 'react';
-import {Container, Text, Content, ImageContainer, CTA, LinedCTA} from './styled';
+import React from 'react';
+import {Container, LinedCTA} from './styled';
 import PropTypes from 'prop-types';
-import {getResponsiveKey} from "../../utils/functions";
-import {generatePictureWebP} from "../../utils/gettersCommonElement";
+import Text from '../../functional/Text';
+import Content from '../../functional/Content';
+import Image from "../../functional/Image";
+import CTA from '../../functional/CTA'
+import {getTemplatePropsWithImage} from "../../utils/gettersProperties";
 
-class CardCTALinedUp extends Component {
-    buildComponent = (fields, field, key) => {
-        if (!fields[field]) return
-        switch (field) {
-            case 'Title':
-                return <Text
-                    key={key}
-                    responsive={fields[field].responsiveSettings}
-                    typography={fields[field].settings.typography}
-                    basis={fields[field].settings.basis}
-                    border={fields[field].settings.border}
-                    as={fields[field].settings.seo.tag || 'h2'}
-                >
-                    {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
-                </Text>;
+const buildComponent = (fields, field,language,assetsDirectory,  key) => {
+    if (!fields[field]) return
+    switch (field) {
+        case 'Title':
+            return <Text key={key} field={fields[field]} language={language}/>;
 
-            case 'Tagline':
-                return <Text
-                    key={key}
-                    responsive={fields[field].responsiveSettings}
-                    typography={fields[field].settings.typography}
-                    basis={fields[field].settings.basis}
-                    border={fields[field].settings.border}
-                    as={fields[field].settings.seo.tag || 'h2'}
-                >
-                    {fields[field].content.text ? fields[field].content.text[this.props.language] : 'no text'}
-                </Text>;
+        case 'Tagline':
+            return <Text key={key} field={fields[field]} language={language}/>;
 
-            case 'Content':
-                return <Content
-                    key={key}
-                    responsive={fields[field].responsiveSettings}
-                    typography={fields[field].settings.typography}
-                    basis={fields[field].settings.basis}
-                    dangerouslySetInnerHTML={{
-                        __html: fields[field].content.html ? fields[field].content.html[this.props.language] :
-                            <p>no content</p>
-                    }}
-                />
+        case 'Content':
+            return <Content key={key} field={fields[field]} language={language}/>;
 
-            case 'Image':
-                return this.getImages(fields[field]);
-            case 'DupCTA' :
+        case 'Image':
+            return <Image key={key} field={fields[field]} language={language}
+                          assetsDirectory={assetsDirectory}/>
 
-                return this.getAllCTA();
+        case 'DupCTA' :
+            return getAllCTA(fields,language);
 
-            default :
-                return null;
-        }
-    }
-
-    getAllCTA = () => {
-        return (<LinedCTA>
-            {
-
-                Object.keys(this.props.fields).map((key, i) => {
-                    if (key.includes('DupCTA')) {
-                        return Object.assign(this.props.fields[key])
-                    }
-                }).filter(el => el)
-                    .map((cta, i) => <CTA
-                        key={i}
-                        responsive={cta.responsiveSettings}
-                        basis={cta.settings.basis}
-                        typography={cta.settings.typography}
-                        border={cta.settings.border}
-                        icon={cta.settings.icon}
-                        href={cta.content.link && !cta.settings.state.disabled ? cta.content.link[this.props.language] : ''}
-                        target={cta.settings.state.external ? '_blank' : ''}
-                        rel={cta.settings.state.external ? 'noopener' : ''}
-                        className={cta.settings.state.disabled ? 'disabled' : ''}
-                        onClick={(e) => {
-                            if (cta.settings.state.disabled) e.preventDefault();
-                        }
-                        }
-                    >
-                        {
-                            cta.content.icon && cta.content.icon[this.props.language] ?
-                                <i>{cta.content.icon[this.props.language]}</i>
-                                : null
-                        }
-                        <p>
-
-                            {cta.content.text ? cta.content.text[this.props.language] : ''}</p>
-                    </CTA>)
-
-
-            }
-        </LinedCTA>)
-
-    }
-
-    getImages = field => {
-        const responsiveContent = getResponsiveKey(field.content.images[0].asset)[0];
-        return field.content.images.map((image, i) => {
-            const file = image.asset[responsiveContent].fileName ? image.asset[responsiveContent].fileName : null;
-            if (!file) {
-                return null
-            } else {
-                return (
-                    <ImageContainer key={i}
-                                    responsive={field.responsiveSettings}
-                                    basis={field.settings.basis}
-                                    border={field.settings.border}>
-                        { generatePictureWebP(`${this.props.assetsDirectory || ''}${ file }`, image.alt[this.props.language]) }
-                    </ImageContainer>);
-            }
-
-        });
-    }
-
-    render() {
-        const {fields, order, assetsDirectory} = this.props;
-
-        const Template = fields.Template;
-
-        return (
-            <Container responsive={Template ? Template.responsiveSettings : []}
-                       responsiveContent={getResponsiveKey(Template.content.images[0].asset)}
-                       asset={Template.content.images[0].asset || null}
-                       assetsDirectory={assetsDirectory}
-                       basis={Template && Template.settings ? Template.settings.basis : null}
-                       border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
-            >
-                {
-                    order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                        : ['Title', 'Tagline', 'Content', 'Image', 'DupCTA'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                }
-            </Container>
-        );
+        default :
+            return null;
     }
 }
 
+const getAllCTA = (fields, language) => {
+    return (<LinedCTA>
+        {
+            Object.keys(fields).map((key, i) => {
+                if (key.includes('DupCTA')) {
+                    return Object.assign(fields[key])
+                }
+            }).filter(el => el)
+                .map((cta, i) => <CTA key={i} field={cta} language={language}/>)
+        }
+    </LinedCTA>)
+}
+
+const CardCTALinedUp  = ({fields, order, assetsDirectory, language}) => {
+    return (
+        <Container {...getTemplatePropsWithImage(fields.Template)} assetsDirectory={assetsDirectory}>
+            {
+                order ? order.map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))
+                    : ['Title', 'Tagline', 'Content', 'Image', 'DupCTA'].map((fieldName, i) =>  buildComponent(fields, fieldName, language, assetsDirectory, i))
+            }
+        </Container>
+    );
+}
 
 CardCTALinedUp.defaultProps = {};
 

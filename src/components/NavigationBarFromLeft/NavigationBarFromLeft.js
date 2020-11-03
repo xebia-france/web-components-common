@@ -132,7 +132,7 @@ const NavigationBarFromLeft = ({fields, locales, locale, location, menu, languag
                             }
                         </ul>
                         {
-                            locales && locales.length > 1 ?
+                            /*locales && locales.length > 1 ?
                                 <Locale>
                                     <CurrentLocale>
                                         <LinkLanguage {...getLinkProps(NavigationLinks)}>
@@ -159,7 +159,7 @@ const NavigationBarFromLeft = ({fields, locales, locale, location, menu, languag
                                         }
                                     </LanguageSelector>
                                 </Locale>
-                                : null
+                                : null*/
                         }
                     </nav>
                 </LinksContainer>

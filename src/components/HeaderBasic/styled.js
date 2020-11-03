@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { device } from '../../styles/constants';
-import {ContainerCommon, ContentCommon, CTACommon, ImageContainerCommon, TextCommon} from "../../styles/common.styled";
+import {ContainerCommon} from "../../styles/common.styled";
 
 export const Container = styled(ContainerCommon)`
     align-items : flex-start;
@@ -27,11 +27,3 @@ export const CallToActions = styled.div.attrs(props => ({
             justify-content:${ props.basis[size].alignment.horizontal || '' };
         }`)};
 `;
-
-export const Text = styled(TextCommon)``;
-
-export const Content = styled(ContentCommon)``;
-
-export const ImageContainer = styled(ImageContainerCommon)``;
-
-export const CTA = styled(CTACommon)``;

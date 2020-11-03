@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import {device} from '../../styles/constants';
 import {generatePadding, generateSize, generateMargin, getFormatedColor, generateBackgroundImage, getFormatedSizeProperty, generateBackgroundImageWebp} from "../../utils/StyleGenerator";
-import {TextCommon} from "../../styles/common.styled";
 
 export const ImageCorner = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -74,7 +73,6 @@ export const Container = styled.div.attrs(props => ({
     }; 
 `;
 
-export const Text = styled(TextCommon)``;
 
 export const Logo = styled.div.attrs(props => ({
     responsive: props.responsive,

@@ -1,24 +1,9 @@
-import React, {Component} from 'react';
-import {
-   Partner, ImageContainer
-
-} from './styled';
+import React from 'react';
+import {Partner, ImageContainer} from './styled';
 import { fileNameFromUrl } from '../../../utils/functions'
 import {generatePictureWebP} from "../../../utils/gettersCommonElement";
 
-class CardPartner extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
-    componentDidMount() {
-
-    }
-
-    render() {
-        const {partner, i, assetsDirectory, config, configCard} = this.props;
-
+const CardPartner = ({partner, i, assetsDirectory, config, configCard}) => {
         const Settings = configCard && configCard.settings ? configCard.settings : null;
         const Responsive = configCard && configCard.responsiveSettings ? configCard.responsiveSettings : [];
         if(!partner) return null
@@ -39,7 +24,7 @@ class CardPartner extends Component {
                 { generatePictureWebP(`${assetsDirectory || ''}${ fileNameFromUrl(partner.logo.file.url) }`,partner.name )}
             </ImageContainer>
         </Partner>;
-    }
+
 }
 
 CardPartner.propTypes = {};

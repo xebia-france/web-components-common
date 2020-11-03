@@ -216,7 +216,6 @@ export const Link = styled.a.attrs(props => ({
 }))`
     transition : color 0.25s ease, border-color 0.25s ease;
     border-style : solid;
-   // display : flex;
     align-items: center;
     position : relative;
     cursor : pointer:
@@ -351,21 +350,16 @@ export const LinksContainer = styled(ContainerCommon).attrs(props => ({
                         
             ` : ''
             }
-            
-            
             transform : translateX(-100%);
             
             &.open{
                 transform : translateX(0%);
             }
-            
-            
          }`
     )};
     
     
     @media  ${ device.M }{
-        
         &>nav{
             padding-bottom : 50px;
         }
@@ -376,14 +370,9 @@ export const LinksContainer = styled(ContainerCommon).attrs(props => ({
         }
     
         &>nav{
-        
             overflow-y: scroll;
-            ${ props =>
-    props.basisTemplateLeft ? `
-                    height : calc(100vh - ${isNumber(props.basisTemplateLeft['M'].size.height)
-        ? `${ props.basisTemplateLeft['M'].size.height }px`
-        : props.basisTemplateLeft['M'].size.height});
-                
+            ${ props => props.basisTemplateLeft ? `
+                    height : calc(100vh - ${isNumber(props.basisTemplateLeft['M'].size.height) ? `${ props.basisTemplateLeft['M'].size.height }px` : props.basisTemplateLeft['M'].size.height});
                 ` : ''
     }
             &>ul{

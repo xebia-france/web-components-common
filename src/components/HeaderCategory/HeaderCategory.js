@@ -1,83 +1,62 @@
-import React, {Component} from 'react';
-import {Container, Text, Content, ImageContainer, CTA, Contain} from './styled';
+import React from 'react';
+import {Container, ImageContainer, CTA, Contain} from './styled';
 import PropTypes from 'prop-types';
-import {fileNameFromUrl, getResponsiveKey} from "../../utils/functions";
+import {fileNameFromUrl} from "../../utils/functions";
 import {generatePictureWebP} from "../../utils/gettersCommonElement";
+import {getContentProps, getCTAProps, getTextProps} from "../../utils/gettersProperties";
+import {TextCommon, ContentCommon} from '../../styles/common.styled';
 
-class HeaderCategory extends Component {
-    buildComponent = (fields, field, key) => {
-        const {data} = this.props
-        if (!fields[field]) return
-        switch (field) {
-            case 'Title':
-                return <Text
-                    responsive={fields[field].responsiveSettings}
-                    typography={fields[field].settings.typography}
-                    basis={fields[field].settings.basis}
-                    border={fields[field].settings.border}
-                    as={'p'}
-                >
-                    {data.name}
-                </Text>
-
-            case 'Content':
-                return <Content
-                    key={key}
-                    responsive={fields[field].responsiveSettings}
-                    typography={fields[field].settings.typography}
-                    basis={fields[field].settings.basis}
-                    dangerouslySetInnerHTML={{
-                        __html: data.title && data.title.childMarkdownRemark ?
-                            data.title.childMarkdownRemark.html
-                            : <p></p>
-                    }}
-                />
-
-            case 'Image':
-                return this.getImages(fields[field]);
-
-            case 'CTA':
-                return <CTA
-                    key={key}
-                    responsive={fields[field].responsiveSettings}
-                    basis={fields[field].settings.basis}
-                    typography={fields[field].settings.typography}
-                    border={fields[field].settings.border}
-                    icon={fields[field].settings.icon}
-                    href={data.slug ? `/${data.slug}` : ''}
-                >
-                    {
-                        fields[field].content.icon && fields[field].content.icon[this.props.language] ?
-                            <i>{fields[field].content.icon[this.props.language]}</i>
-                            : null
-                    }
-                    <p> {fields[field].content.text ? fields[field].content.text[this.props.language] : ''}</p>
-
-                </CTA>;
-
-            default :
-                return null;
-        }
+const getImages = (field,assetsDirectory, data) => {
+    if (!data.logo.file) {
+        return null
+    } else {
+        return (
+            <ImageContainer responsive={field.responsiveSettings}
+                            basis={field.settings.basis}
+                            border={field.settings.border}>
+                {generatePictureWebP(`${assetsDirectory || ''}${ fileNameFromUrl(data.logo.file.url) }`, data.name)}
+            </ImageContainer>);
     }
 
+}
 
-    getImages = field => {
-        if (!this.props.data.logo.file) {
-            return null
-        } else {
-            return (
-                <ImageContainer responsive={field.responsiveSettings}
-                                basis={field.settings.basis}
-                                border={field.settings.border}>
-                    { generatePictureWebP(`${this.props.assetsDirectory || ''}${ fileNameFromUrl(this.props.data.logo.file.url) }`,this.props.data.name )}
-                </ImageContainer>);
-        }
+const buildComponent = (fields, field,language,assetsDirectory,  key, data) => {
+    if (!fields[field]) return
+    switch (field) {
+        case 'Title':
+            return <TextCommon key={key} {...getTextProps(field)}>{data.name}</TextCommon>
 
+        case 'Content':
+            return <ContentCommon  {...getContentProps(field)} key={key}
+                                   dangerouslySetInnerHTML={{
+                                       __html: data.title && data.title.childMarkdownRemark ?
+                                           data.title.childMarkdownRemark.html
+                                           : <p></p>
+                                   }}
+            />
+
+        case 'Image':
+            return this.getImages(fields[field],assetsDirectory, data);
+
+        case 'CTA':
+            return <CTA {...getCTAProps(field)} key={key}
+                icon={fields[field].settings.icon}
+                href={data.slug ? `/${data.slug}` : ''}
+            >
+                {
+                    fields[field].content.icon && fields[field].content.icon[language] ?
+                        <i>{fields[field].content.icon[language]}</i>
+                        : null
+                }
+                <p> {fields[field].content.text ? fields[field].content.text[language] : ''}</p>
+            </CTA>;
+
+        default :
+            return null;
     }
+}
 
-    render() {
-        const {fields, order, assetsDirectory, data} = this.props;
-
+const HeaderCategory = ({fields, order, assetsDirectory, datafields, data}) => {
         const Template = fields.Template;
 
         const images = {
@@ -102,15 +81,13 @@ class HeaderCategory extends Component {
             >
                 <Contain>
                     {
-                        order ? order.map((fieldName, i) => this.buildComponent(fields, fieldName, i))
-                            : ['Title', 'Content'].map((fieldName, i) => this.buildComponent(fields, fieldName, i))
+                        order ? order.map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i, data))
+                            : ['Title', 'Content'].map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i, data))
                     }
                 </Contain>
             </Container>
         );
-    }
 }
-
 
 HeaderCategory.defaultProps = {};
 

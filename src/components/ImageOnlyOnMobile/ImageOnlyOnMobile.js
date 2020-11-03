@@ -2,10 +2,8 @@ import React from 'react';
 import {Container} from './styled';
 import Image from "../../functional/Image";
 import {useWindowSize} from '../../utils/customHooks';
-
 import PropTypes from 'prop-types';
 import {getTemplatePropsWithImage} from "../../utils/gettersProperties";
-
 
 const buildComponent = (fields, field, language, assetsDirectory, key) => {
     if (!fields[field]) return
@@ -34,7 +32,6 @@ const ImageOnlyOnMobile = ({fields, order, assetsDirectory, language}) => {
         </Container>
     );
 }
-
 
 ImageOnlyOnMobile.defaultProps = {};
 

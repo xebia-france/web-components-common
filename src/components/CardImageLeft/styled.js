@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {ContainerCommon ,ContentCommon, TextCommon, ImageContainerCommon, CTACommon } from '../../styles/common.styled';
+import {ContainerCommon} from '../../styles/common.styled';
 import {device} from "../../styles/constants";
 import {generateMargin, generateBorder, generatePadding, generateSize, getFormatedColor} from "../../utils/StyleGenerator";
 
@@ -14,15 +14,6 @@ export const RightContent = styled.div`
    z-index : 2;
 `;
 
-export const Text = styled(TextCommon)``;
-
-export const Content = styled(ContentCommon)``;
-
-export const ImageContainer = styled(ImageContainerCommon)``;
-
-export const CTA = styled(CTACommon)``;
-
-
 export const ImageBackground = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis,
@@ -31,7 +22,6 @@ export const ImageBackground = styled.div.attrs(props => ({
     assetsDirectory : props.assetsDirectory
 }))`
     overflow : hidden;
-   // -webkit-mask-image: -webkit-radial-gradient(white, black);
     border-style : solid;
     z-index : 2;
     
@@ -51,7 +41,6 @@ export const ImageBackground = styled.div.attrs(props => ({
     }; 
     
     ${ props =>  `
-        
             background-image : url(${ `${ props.assetsDirectory  || ''}${  props.asset }`});    
             background-size : cover;
             background-position : center;

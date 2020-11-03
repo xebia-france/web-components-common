@@ -1,9 +1,5 @@
-import React, {Component} from 'react';
-import {
-    Wrapper,
-    Container
-} from './styled';
-
+import React from 'react';
+import {Wrapper, Container} from './styled';
 import Text from '../../functional/Text';
 import Content from '../../functional/Content';
 import CTA from '../../functional/CTA'
@@ -52,8 +48,6 @@ const buildComponent = (fields, field,language,assetsDirectory, data,  key) => {
     }
 }
 
-
-
 const CardWithListPartners = ({fields, order, assetsDirectory, language, data}) => {
     const ContentBold = fields.ContentBold ?  {...getContentProps(fields.ContentBold)} : null;
 
@@ -66,50 +60,6 @@ const CardWithListPartners = ({fields, order, assetsDirectory, language, data}) 
         </Wrapper>
     );
 }
-
-/*
-
-class CardWithListPartners extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    componentDidMount(){
-    }
-
-
-    render() {
-        const {children, fields, name, assetsDirectory, data} = this.props;
-        const Template = fields.Template;
-        const FlexContainer = fields.FlexContainer;
-        return (
-            <Wrapper id={removeSpaces(name)}
-                     asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
-                     assetsDirectory={assetsDirectory}
-                     responsiveContent={Template && Template.content.images && Template.content.images[0].asset ? getResponsiveKey(Template.content.images[0].asset) : null}
-                     responsive={Template ? Template.responsiveSettings : null}
-                     basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
-                     border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
-            >
-
-                <Container
-                    responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
-                    flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
-                    {
-                        data.map((partner, i) => {
-                            return <CardPartner
-                                key={i}
-                                config={fields.Partners}
-                                configCard={fields.TemplateCard}
-                                partner={partner} i={i}
-                                assetsDirectory={assetsDirectory}/>
-                        })
-                    }
-                </Container>
-            </Wrapper>
-        );
-    }
-};*/
 
 CardWithListPartners.defaultProps = {}
 

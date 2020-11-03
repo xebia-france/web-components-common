@@ -4,7 +4,7 @@ import {CTACommon} from "../styles/common.styled";
 import {getCTAProps} from "../utils/gettersProperties";
 
 
-const CTA = ({field, language}) => {
+const CTA = ({field, language, animateUnderline = false}) => {
     const content = field.content.text && field.content.text[language] ? field.content.text[language] : null;
     const icon = field.content.icon && field.content.icon[language] ? field.content.icon[language] : null;
 
@@ -13,6 +13,7 @@ const CTA = ({field, language}) => {
     if (!content && !icon) return null;
     return (
         <CTACommon {...getCTAProps(field)}
+                   animateUnderline={animateUnderline}
                    href={link}
                    target={field.settings.state.external ? '_blank' : ''}
                    rel={field.settings.state.external ? 'noopener' : ''}

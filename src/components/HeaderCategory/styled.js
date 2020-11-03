@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {ContainerCommon ,ContentCommon, TextCommon, ImageContainerCommon, CTACommon } from '../../styles/common.styled';
+import {ContainerCommon , ImageContainerCommon, CTACommon } from '../../styles/common.styled';
 import {device} from "../../styles/constants";
 import { generateBackgroundImage, generateBackgroundImageWebp} from "../../utils/StyleGenerator";
 
@@ -36,9 +36,6 @@ export const Container = styled(ContainerCommon)`
     };
 `;
 
-export const Text = styled(TextCommon)``;
-
-export const Content = styled(ContentCommon)``;
 
 export const ImageContainer = styled(ImageContainerCommon)``;
 

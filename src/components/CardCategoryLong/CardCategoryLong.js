@@ -33,7 +33,6 @@ class CardCategoryLong extends Component {
                                         : <p></p>
                                 }}
                 />
-                //return <ContentMarkdownRemark key={key} field={fields[field]} content={data.presentation}/>
 
             case 'Image':
                 return this.getImage(fields[field]);

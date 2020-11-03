@@ -45,7 +45,6 @@ const Card = ({fields, order, assetsDirectory, language}) => {
         );
 }
 
-
 Card.defaultProps = {};
 
 Card.propTypes = {
