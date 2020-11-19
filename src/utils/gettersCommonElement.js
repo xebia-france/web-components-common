@@ -32,7 +32,6 @@ const generatePictureWebP = (src, alt) => {
         }
     }
 
-
     if(extension === 'png'){
         return (
             <picture>
@@ -54,8 +53,6 @@ const generatePictureWebP = (src, alt) => {
     else {
         return (<img alt={alt} src={src}/>)
     }
-
-
 }
 
 export {

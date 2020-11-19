@@ -12,7 +12,7 @@ class FooterBasic extends Component {
 
         return links.map((link, i) => {
 
-            const fieldLinks = this.props.fields['LinksContainer'];
+            const fieldLinks = this.props.fields['LinksContainer']  || this.props.fields['Links'];
             const settings = fieldLinks.settings;
             switch (link.type) {
                 case 'anchor':
