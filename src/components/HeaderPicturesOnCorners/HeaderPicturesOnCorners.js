@@ -35,7 +35,7 @@ const buildComponent = (fields, field, language, assetsDirectory, key) => {
         case 'Image' :
             return <Logo key={key}
                          role={'img'}
-                         {...getImageProps(field)}
+                         {...getImageProps(fields[field])}
                          alt={fields[field].content.images[0].alt[language]}
                          responsiveContent={getResponsiveKey(fields[field].content.images[0].asset)}
                          asset={fields[field].content.images[0].asset}
@@ -46,6 +46,7 @@ const buildComponent = (fields, field, language, assetsDirectory, key) => {
 }
 
 const HeaderPicturesOnCorners = ({fields, order, assetsDirectory, language}) => {
+    console.log(fields);
     return (
         <Container {...getTemplateProps(fields.Template)}>
             {
