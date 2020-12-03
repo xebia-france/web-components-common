@@ -1,8 +1,5 @@
-// Path is in Node for free and will make simple resolving of directories no
-// matter which part of your file system your library lives in
 const path = require('path');
 
-// Webpack is just a bunch of keys on module.exports!
 module.exports = {
     // This is where our app starts. This is why we have done all this importing
     // and exporting, to get to here

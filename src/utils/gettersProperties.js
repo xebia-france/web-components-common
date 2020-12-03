@@ -20,20 +20,21 @@ const getTemplatePropsWithImage = (field) => {
 
 
 const getTextProps = (field) => {
+    console.log('field', field);
     return {
         responsive: field ? field.responsiveSettings : [],
-        typography: field && field.settings.typography ? field.settings.typography : null,
-        basis: field && field.settings.basis ?  field.settings.basis : null,
-        border: field && field.settings.border ? field.settings.border  : null,
-        as: field && field.settings.seo ? field.settings.seo.tag : 'p'
+        typography: field && field.settings && field.settings.typography ? field.settings.typography : null,
+        basis: field && field.settings && field.settings.basis ?  field.settings.basis : null,
+        border: field && field.settings && field.settings.border ? field.settings.border  : null,
+        as: field &&  field.settings && field.settings.seo ? field.settings.seo.tag : 'p'
     }
 }
 
 const getContentProps = (field) => {
     return {
         responsive: field.responsiveSettings,
-        typography: field.settings.typography,
-        basis: field.settings.basis
+        typography:  field && field.settings && field.settings.typography,
+        basis:  field && field.settings && field.settings.basis
     }
 }
 

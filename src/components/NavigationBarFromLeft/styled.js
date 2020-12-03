@@ -588,6 +588,7 @@ export const Toggle = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis,
     basisTemplateLeft : props.basisTemplateLeft,
+    basisImage : props.basisImage,
     typography: props.typography
 }))`
     z-index: 10;
@@ -641,8 +642,29 @@ export const Toggle = styled.div.attrs(props => ({
                 transform: rotate(-90deg);
             }
         }
-    
     }
+    
+    ${ props => ['T', 'D'].map(size => `
+         @media ${ device[size] } {
+            position : absolute;
+            
+         
+             ${ props.basisImage ? `
+                   ${ props.basisImage[size].margin && props.basisImage[size].margin.top && props.basisImage[size].margin.top !== '0' ?
+        `
+            top : ${ props.basisImage[size].margin.top }px;
+            right : ${ props.basisImage[size].margin.top }px;
+        
+        `
+        : `
+            top : 30px;
+            right : 30px;
+        `}
+                
+                ` : ''}
+         
+         }`)
+    };
 `;
 
 export const ClosingArea = styled.div.attrs(props => ({

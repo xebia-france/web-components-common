@@ -267,9 +267,6 @@ class BasicSchedule extends Component {
             openPopUp: true,
             selectedSlot: slot
         })
-
-
-
     }
     closePopUp = () => {
         this.enableScrolling();

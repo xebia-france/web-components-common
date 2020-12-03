@@ -24,10 +24,10 @@ const buildComponent = (fields, field,language,assetsDirectory,  key, data) => {
     if (!fields[field]) return
     switch (field) {
         case 'Title':
-            return <TextCommon key={key} {...getTextProps(field)}>{data.name}</TextCommon>
+            return <TextCommon key={key} {...getTextProps(fields[field])}>{data.name}</TextCommon>
 
         case 'Content':
-            return <ContentCommon  {...getContentProps(field)} key={key}
+            return <ContentCommon  {...getContentProps(fields[field])} key={key}
                                    dangerouslySetInnerHTML={{
                                        __html: data.title && data.title.childMarkdownRemark ?
                                            data.title.childMarkdownRemark.html
@@ -56,7 +56,8 @@ const buildComponent = (fields, field,language,assetsDirectory,  key, data) => {
     }
 }
 
-const HeaderCategory = ({fields, order, assetsDirectory, datafields, data}) => {
+const HeaderCategory = ({fields, order, assetsDirectory, datafields, data, language}) => {
+
         const Template = fields.Template;
 
         const images = {

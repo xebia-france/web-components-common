@@ -17,7 +17,7 @@ import {
 } from './styled'
 import PropTypes from 'prop-types';
 import {getImages} from "../../utils/gettersCommonElement";
-import {getTemplateProps} from "../../utils/gettersProperties";
+import {getImageProps, getTemplateProps} from "../../utils/gettersProperties";
 import {getLinkProps, getUrlWithLocale, linkIsOpen, enableScrolling, disableScrolling, onTopPage} from "./utils";
 import SvgCheck from '../../assets/svg/SvgCheck';
 import Links from './Links';
@@ -95,6 +95,7 @@ const NavigationBarFromLeft = ({fields, locales, locale, location, menu, languag
                     <Toggle className={open ? 'open' : ''}
                             {...getLinkProps(NavigationLinks)}
                             basisTemplateLeft={getTemplateProps(TemplateLeft).basis}
+                            basisImage={getImageProps(fields['Image']).basis}
                             onClick={() => {
                                 if (open) {
                                     setOpen(false);
