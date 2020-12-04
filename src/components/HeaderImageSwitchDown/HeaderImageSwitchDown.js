@@ -1,11 +1,12 @@
 import React from 'react';
-import {Container} from './styled';
+import {Container, CallToActions, ContainerImage, Layout} from './styled';
 import PropTypes from 'prop-types';
 import Text from '../../functional/Text';
 import Content from '../../functional/Content';
 import CTA from '../../functional/CTA'
 import Image from "../../functional/Image";
 import {getTemplatePropsWithImage} from "../../utils/gettersProperties";
+import {getResponsiveKey} from "../../utils/functions";
 
 
 const getAllCTA = (fields, field, language) => {
@@ -17,7 +18,7 @@ const getAllCTA = (fields, field, language) => {
         .map((cta, i) => <CTA key={i} field={cta} language={language} animateUnderline={cta.settings.state && cta.settings.state.animation && cta.settings.state.animation === 'underline' ? true : false }/>);
 }
 
-const buildComponent = (fields, field, language, assetsDirectory, key) => {
+const buildComponent = (fields, field,language,assetsDirectory,  key) => {
     if (!fields[field]) return
     switch (field) {
         case 'Title':
@@ -35,27 +36,37 @@ const buildComponent = (fields, field, language, assetsDirectory, key) => {
 
         case 'DupCTA':
             return getAllCTA(fields, field, language)
+
         default :
             return null;
     }
 }
 
-const CardDuplicableCTA = ({fields, order, assetsDirectory, language}) => {
+const HeaderImageSwitchDown = ({fields, order, assetsDirectory, language}) =>  {
     return (
-        <Container {...getTemplatePropsWithImage(fields.Template)}>
-            {
-                order ? order.map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))
-                    : ['Title', 'Tagline', 'Content', 'Image', 'DupCTA'].map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))
-            }
-        </Container>
-    );
+        <Layout>
+            <Container  {...getTemplatePropsWithImage(fields.Template)}>
+                {
+                    order ? order.map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))
+                        : ['Title', 'Tagline', 'Content', 'DupCTA'].map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))
+                }
+                <Image field={fields['Image']} language={language}
+                       assetsDirectory={assetsDirectory}/>
+
+            </Container>
+            <ContainerImage assetsDirectory={assetsDirectory} responsiveContent={getResponsiveKey(fields['Image'].content.images[0].asset)}
+            asset={fields['Image'].content.images[0].asset || null}>
+                image
+            </ContainerImage>
+        </Layout>
+        );
 }
 
-CardDuplicableCTA.defaultProps = {};
+HeaderImageSwitchDown.defaultProps = {};
 
-CardDuplicableCTA.propTypes = {
+HeaderImageSwitchDown.propTypes = {
     fields: PropTypes.object.isRequired,
     language: PropTypes.number.isRequired
 };
 
-export default CardDuplicableCTA;
+export default HeaderImageSwitchDown;

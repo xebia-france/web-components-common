@@ -15,6 +15,7 @@ export { default as CardWithListPartners } from './CardWithListPartners';
 export { default as CardZoom } from './CardZoom';
 export { default as BlockText } from './BlockText';
 export { default as HeaderCategory } from './HeaderCategory';
+export { default as HeaderImageSwitchDown } from './HeaderImageSwitchDown';
 export { default as HeaderPicturesOnCorners } from './HeaderPicturesOnCorners';
 export { default as ImageOnlyOnMobile } from './ImageOnlyOnMobile';
 export { default as ImageOnlyOnTabletAndDesktop } from './ImageOnlyOnTabletAndDesktop';
