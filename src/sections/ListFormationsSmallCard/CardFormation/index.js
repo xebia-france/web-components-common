@@ -64,15 +64,15 @@ const CardFormation = ({data, i, assetsDirectory, config, configCard, configTitl
     })
 
 
-    const Settings = configCard && configCard.settings ? configCard.settings : null;
-    const Responsive = configCard && configCard.responsiveSettings ? configCard.responsiveSettings : [];
-
     if (!data) return null
 
     const sessions = data.sessions && data.sessions.value ? JSON.parse(data.sessions.value) : null;
 
     const nextSession = sessions ? getNextSession(sessions) : null;
     const nextPromo = sessions ? getNextPromo(sessions) : null;
+
+    const Settings = configCard && configCard.settings ? configCard.settings : null;
+    const Responsive = configCard && configCard.responsiveSettings ? configCard.responsiveSettings : [];
 
 
     return <Container
@@ -84,6 +84,8 @@ const CardFormation = ({data, i, assetsDirectory, config, configCard, configTitl
         typographyCTA={CTA.settings.typography}
 
     >
+
+
         <Formation
             responsive={Responsive}
             responsiveContent={configCard.responsiveContent}
@@ -93,13 +95,16 @@ const CardFormation = ({data, i, assetsDirectory, config, configCard, configTitl
             <Content>
                 {
                     data.badge !== null && data.badge.length !== 0 ?
-                        <Badges>{getBadges(data.badge, config, data.name)}</Badges>
+                        <Badges>
+                            {
+                                getBadges(data.badge, config, data.name)
+                            }
+                        </Badges>
 
                         : <ImageCard
-                            key={i}
                             responsive={config.responsiveSettings}
                             basis={config.settings.image}
-                            alt={name}
+                            alt={data.name}
                         ><SvgFormation/></ImageCard>
                 }
                 <ContentCard>

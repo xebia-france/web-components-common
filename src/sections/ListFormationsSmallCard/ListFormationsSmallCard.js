@@ -21,7 +21,7 @@ const ListFormationsSmallCard = ({children, fields, name, assetsDirectory, data,
                 flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
                 {children}
                 {
-                    data.map((formation, i) => {
+                    data && data.map((formation, i) => {
                         return <CardFormation
                             key={i}
                             config={fields.Formations}
