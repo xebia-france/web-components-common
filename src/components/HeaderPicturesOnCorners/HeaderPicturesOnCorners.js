@@ -46,7 +46,6 @@ const buildComponent = (fields, field, language, assetsDirectory, key) => {
 }
 
 const HeaderPicturesOnCorners = ({fields, order, assetsDirectory, language}) => {
-    console.log(fields);
     return (
         <Container {...getTemplateProps(fields.Template)}>
             {

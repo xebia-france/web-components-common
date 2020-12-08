@@ -13,11 +13,13 @@ export const ContainerImage = styled.div.attrs(props => ({
     asset: props.asset,
     assetsDirectory: props.assetsDirectory
 }))`
-    height: inherit;
+    
     position : relative;
     
     ${ props => ['T', 'D'].map(size => `
         @media ${ device[size] } {
+            height: inherit;
+            
              &:before{
                z-index : 1;
                position : absolute;
@@ -36,6 +38,14 @@ export const ContainerImage = styled.div.attrs(props => ({
         }`
 
 )};
+
+
+    ${ props => ['M'].map(size => `
+        @media ${ device[size] } {
+             height: 0;
+        }`
+
+    )};
 `;
 
 export const Layout = styled.div.attrs(props => ({

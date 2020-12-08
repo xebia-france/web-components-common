@@ -14,6 +14,7 @@ export { default as FloatingLayout } from './FloatingLayout';
 export { default as ListCardCustomContent } from './ListCardCustomContent';
 export { default as ListCategories } from './ListCategories';
 export { default as ListFormations } from './ListFormations';
+export { default as ListFormationsSmallCard } from './ListFormationsSmallCard';
 export { default as ListPartners } from './ListPartners';
 export { default as ListSpeakers } from './ListSpeakers';
 export { default as ListSpeakersFlipCard } from './ListSpeakersFlipCard';

@@ -20,7 +20,6 @@ const getTemplatePropsWithImage = (field) => {
 
 
 const getTextProps = (field) => {
-    console.log('field', field);
     return {
         responsive: field ? field.responsiveSettings : [],
         typography: field && field.settings && field.settings.typography ? field.settings.typography : null,

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, CallToActions, ContainerImage, Layout} from './styled';
+import {Container, ContainerImage, Layout} from './styled';
 import PropTypes from 'prop-types';
 import Text from '../../functional/Text';
 import Content from '../../functional/Content';
