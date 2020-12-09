@@ -1,9 +1,8 @@
 import React from 'react';
-import {Wrapper, List} from './styled';
+import {Wrapper, List, WrapperCategory} from './styled';
 import {getResponsiveKey, removeSpaces} from "../../utils/functions";
 import CardFormation from './CardFormation';
 import {getTextProps, getTemplateProps} from "../../utils/gettersProperties";
-
 import {TextCommon, ContainerCommon} from "../../styles/common.styled";
 
 const isOdd = (num) => { return num % 2;}
@@ -40,10 +39,10 @@ const ListAllFormationsWithFilter = ({children, fields, name, assetsDirectory, d
                  basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                  border={Template && Template.settings && Template.settings.border ? Template.settings.border : null}
         >
-                {
+             {
                     categories.map((category, i) => {
-                        const configTemplate = isOdd(i) ? fields.TemplateEven : fields.TemplateOdd;
-                        return <ContainerCommon  {...getTemplateProps(configTemplate)}>
+                        const configTemplate = isOdd(i) ? fields.TemplateOdd : fields.TemplateEven;
+                        return  <WrapperCategory  {...getTemplateProps(configTemplate)}>
                             <TextCommon {...getTextProps(fields.Title)}>{category.name}</TextCommon>
                             <List
                                 responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
@@ -58,11 +57,12 @@ const ListAllFormationsWithFilter = ({children, fields, name, assetsDirectory, d
                                             assetsDirectory={assetsDirectory}
                                             language={language}
                                             CTA={fields.CTA}
+                                            configTitle={fields.Title}
                                         />
                                     })
                                 }
                             </List>
-                        </ContainerCommon>
+                        </WrapperCategory>
                     })
                 }
         </Wrapper>

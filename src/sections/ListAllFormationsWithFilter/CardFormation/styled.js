@@ -18,6 +18,7 @@ export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis,
     typographyCTA: props.typographyCTA,
+    typographyTitle: props.typographyTitle,
 }))`
     display : flex;
     position : relative;
@@ -41,6 +42,19 @@ export const Container = styled.div.attrs(props => ({
                
                 & p{
                     color:${ getFormatedColor(props.typographyCTA[size].color.hover, props.typographyCTA[size].opacity.hover )};
+                }
+           }
+           
+           & svg{
+                width : 10px;
+                margin-right : 10px;
+                align-self : flex-start;
+                ${ props.typographyCTA[size].font.lineHeight ?
+                `height : ${ props.typographyCTA[size].font.lineHeight }px;`
+                : ''}
+                
+                & path{
+                     ${ props.typographyTitle ? `fill :  ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
                 }
            }
              

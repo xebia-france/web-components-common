@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {device} from "../../styles/constants";
 import {
-    generatePadding,
+    generatePadding, generateSize, generateMargin,
     generateBorder, generateBackgroundImage, generateBackgroundImageWebp, getFormatedColor
 } from "../../utils/StyleGenerator";
 
@@ -22,7 +22,8 @@ export const Wrapper = styled.section.attrs(props => ({
   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-             
+            ${ props.basis ? generateMargin(props.basis, size) : '' } 
+    
             ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
             ${ props.border ?
@@ -75,14 +76,19 @@ export const Wrapper = styled.section.attrs(props => ({
 
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
+    basis: props.basis,
     flex: props.flex
 
 }))`
   width : inherit;
   display : flex;
+  margin:auto;
+
   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
+         
+         ${ props.basis ? generateSize(props.basis, size) : '' }  
              flex-direction : ${ props.flex[size].properties.direction };
              flex-wrap: ${ props.flex[size].properties.wrap };
              justify-content: ${ props.flex[size].properties.justify };

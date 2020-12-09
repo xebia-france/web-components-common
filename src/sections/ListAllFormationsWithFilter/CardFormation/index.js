@@ -13,10 +13,10 @@ import {TextCommon, CTACommon} from '../../../styles/common.styled'
 import {fileNameFromUrl} from '../../../utils/functions'
 import SvgElearning from '../../../assets/svg/SvgElearning';
 import SvgFormation from '../../../assets/svg/SvgFormation';
-import SvgPromo from '../../../assets/svg/SvgPromo';
+import SvgDotList from '../../../assets/svg/SvgDotList';
 import {generatePictureWebP} from "../../../utils/gettersCommonElement";
 
-const CardFormation = ({data, i, assetsDirectory, configCard, CTA}) => {
+const CardFormation = ({data, i, assetsDirectory, configCard,configTitle, CTA}) => {
 
     if (!data) return null
 
@@ -33,6 +33,7 @@ const CardFormation = ({data, i, assetsDirectory, configCard, CTA}) => {
         basis={Settings ? Settings.basis : {}}
         border={Settings ? Settings.border : {}}
         typographyCTA={CTA.settings.typography}
+        typographyTitle={configTitle.settings.typography}
 
     >
         <CTACommon
@@ -44,6 +45,8 @@ const CardFormation = ({data, i, assetsDirectory, configCard, CTA}) => {
             icon={CTA.settings.icon}
             href={data.slug ? `/${data.category[0].slug}/${data.slug}` : ''}
         >
+
+            <SvgDotList/>
             <p> {data.name ? data.name : ''}</p>
         </CTACommon>
     </Container>

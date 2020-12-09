@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {device} from "../../styles/constants";
 import {
-    generatePadding,
+    generatePadding,generateSize, generateMargin,
     generateBorder,
     generateBackgroundImage, getFormatedColor, generateBackgroundImageWebp
 } from "../../utils/StyleGenerator";
@@ -22,7 +22,7 @@ export const Wrapper = styled.section.attrs(props => ({
   overflow : hidden;
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-             
+            ${ props.basis ? generateMargin(props.basis, size) : '' } 
             ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
             ${ props.border ?
@@ -74,6 +74,45 @@ export const Wrapper = styled.section.attrs(props => ({
 `;
 
 
+export const WrapperCategory = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    basis: props.basis,
+    border: props.border,
+
+}))`
+display : flex;
+  flex-direction : column;
+  width: 100%;  
+  position : relative;
+  overflow : hidden;
+  z-index : 2;
+   ${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+            ${ props.basis ? generateMargin(props.basis, size) : '' } 
+            ${ props.basis ? generatePadding(props.basis, size) : '' }
+            ${ props.border ?  generateBorder(props.border, size) : '' }        
+            ${ props.border ?
+    ( props.border[size].color ?
+        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});`
+            : `${props.border[size].color.hex};`}` : '')
+    : ''}
+             
+               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+           ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+                  background:${ props.basis[size].color.gradient  };
+
+               ` : ''}
+               
+          &>*{
+             ${ props.basis ? generateSize(props.basis, size) : 'width : inherit;' } 
+             align-self : center;
+          }     
+            
+         }`)
+    }; 
+`;
+
+
 export const List = styled.div.attrs(props => ({
     responsive: props.responsive,
     flex: props.flex
@@ -81,12 +120,13 @@ export const List = styled.div.attrs(props => ({
 }))`
   //max-width : 1280px;
   margin: auto;
-  width : inherit;
+  
   display : flex;
   z-index : 2;
   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
+             
              flex-direction : ${ props.flex[size].properties.direction };
              flex-wrap: ${ props.flex[size].properties.wrap };
              justify-content: ${ props.flex[size].properties.justify };

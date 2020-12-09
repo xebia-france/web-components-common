@@ -19,6 +19,7 @@ const FullLayout = ({ children, fields, name, assetsDirectory }) => {
         >
             <Container
                 responsive={FlexContainer ? FlexContainer.responsiveSettings : []}
+                basis={Template && Template.settings && Template.settings.basis ? Template.settings.basis : null}
                 flex={FlexContainer && FlexContainer.settings ? FlexContainer.settings.flex : {}}>
                 {children}
             </Container>
