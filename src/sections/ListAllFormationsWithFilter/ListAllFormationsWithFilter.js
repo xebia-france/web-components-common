@@ -30,6 +30,7 @@ const ListAllFormationsWithFilter = ({children, fields, name, assetsDirectory, d
         formationsByCategory[category.slug] = data.filter(formation => formation.category.some(c => c.slug === category.slug))
     })
 
+
     return (
         <Wrapper id={removeSpaces(name)}
                  asset={Template && Template.content.images && Template.content.images[0].asset ? Template.content.images[0].asset : null}
