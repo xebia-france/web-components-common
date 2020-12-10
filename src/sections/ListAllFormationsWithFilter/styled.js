@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {device} from "../../styles/constants";
 import {
     generatePadding,generateSize, generateMargin,
-    generateBorder,
+    generateBorder,generateFontProperties,
     generateBackgroundImage, getFormatedColor, generateBackgroundImageWebp
 } from "../../utils/StyleGenerator";
 
@@ -86,6 +86,8 @@ display : flex;
   position : relative;
   overflow : hidden;
   z-index : 2;
+  
+  
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
             ${ props.basis ? generateMargin(props.basis, size) : '' } 
@@ -165,4 +167,128 @@ export const List = styled.div.attrs(props => ({
              
          }`)
     }; 
+`;
+
+
+export const Selector = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    basis: props.basis,
+    typography: props.typography,
+    border: props.border,
+    icon: props.icon,
+}))`
+
+    
+    transition : color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+    border-style : solid;
+    display : flex;
+    align-items: center;
+    z-index : 2;
+    cursor : pointer;
+   // overflow : hidden;
+    position : relative;
+    
+   
+   &>svg{
+        position : absolute;
+        height : inherit;
+        width : 12px;
+        right : 12px;
+   }
+   
+    & select, & option, & i, & svg path{
+       transition : color 0.25s ease,fill 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+    }
+
+    & select{
+        cursor : pointer;
+        outline:none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }    
+    
+    
+       ${ props => props.responsive.map(size => `
+             @media ${ device[size] } {
+             
+               align-self:${ props.basis[size].alignment.horizontal || '' };
+                ${ props.basis ? generateMargin(props.basis, size) : '' } 
+
+                &:hover{
+                    &>svg path{
+                        fill : ${ getFormatedColor(props.border[size].color.hover, props.border[size].opacity.hover)};     
+                      
+                   }
+                }
+
+               & select{
+               
+                   background-color: ${ getFormatedColor(props.basis[size].color.basic, props.basis[size].opacity.basic )} ;
+        
+                    ${ props.basis ? generateSize(props.basis, size) : '' } 
+                    ${ props.basis ? generatePadding(props.basis, size) : '' }       
+                    ${ props.border ? generateBorder(props.border, size) : '' }
+                    ${ props.border ?
+            ( props.border[size].color.basic ? `border-color : ${ getFormatedColor(props.border[size].color.basic, props.border[size].opacity.basic ) }; ` : '' )
+            : ''} 
+                 
+                    box-shadow : ${ props.basis[size].shadow.value || '' };
+        
+                    & i {
+                        
+                        ${ props.icon ? `color: ${ getFormatedColor(props.icon[size].color.basic, props.icon[size].opacity.basic) };` : ''}
+                        ${ props.icon ? generateFontProperties(props.icon, size) : '' }
+                        ${ props.icon ? generatePadding(props.icon, size) : '' }
+                    }
+                 
+                    
+                        
+                        color:${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
+                        ${ props.typography ? generateFontProperties(props.typography, size) : '' }
+                    
+                 
+                    &:hover{
+                        background-color:${ getFormatedColor( props.basis[size].color.hover, props.basis[size].opacity.hover)};
+                        border-color : ${ getFormatedColor(props.border[size].color.hover, props.border[size].opacity.hover)};     
+                       
+                        
+                         color:${ getFormatedColor(props.typography[size].color.hover, props.typography[size].opacity.hover )};
+                        
+                       
+                        & i {
+                            ${ props.icon ? `color:${ getFormatedColor(props.icon[size].color.hover, props.icon[size].opacity.hover )};` : ''}
+                        }
+                    }
+                    
+                    &.disabled{
+                        cursor : default;
+                        background-color:${ getFormatedColor(props.basis[size].color.disabled, props.basis[size].opacity.disabled)};
+                        border-color : ${ getFormatedColor(props.border[size].color.disabled, props.border[size].opacity.disabled)};     
+                      
+                        
+                            color:${getFormatedColor(props.typography[size].color.disabled, props.typography[size].opacity.disabled)};
+                        
+                       
+                        & i {
+                           ${ props.icon ? `color:${ getFormatedColor(props.icon[size].color.disabled, props.icon[size].opacity.disabled)};` : ''}
+                        }
+                       
+                        &:hover{
+                            background-color:${ getFormatedColor(props.basis[size].color.disabled, props.basis[size].opacity.disabled )};
+                            border-color : ${ getFormatedColor(props.border[size].color.disabled, props.border[size].opacity.disabled )};     
+                      
+                           
+                                color:${ getFormatedColor(props.typography[size].color.disabled, props.typography[size].opacity.disabled )};
+                            
+                           
+                            & i {
+                               ${ props.icon ? `color:${ getFormatedColor(props.icon[size].color.disabled, props.icon[size].opacity.disabled )};` : ''}
+                            }
+                        }
+                    
+                    }
+                   
+               }
+    }`)};
 `;

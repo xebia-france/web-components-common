@@ -1,20 +1,7 @@
 import React from 'react';
-import {
-    Formation,
-    ContentCard,
-    ImageCard,
-    Content,
-    NextSession,
-    IconContainer,
-    NextSessionPromo,
-    NextSessionDefault, Container, Badges
-} from './styled';
-import {TextCommon, CTACommon} from '../../../styles/common.styled'
-import {fileNameFromUrl} from '../../../utils/functions'
-import SvgElearning from '../../../assets/svg/SvgElearning';
-import SvgFormation from '../../../assets/svg/SvgFormation';
+import {Container} from './styled';
+import { CTACommon} from '../../../styles/common.styled'
 import SvgDotList from '../../../assets/svg/SvgDotList';
-import {generatePictureWebP} from "../../../utils/gettersCommonElement";
 
 const CardFormation = ({data, i, assetsDirectory, configCard,configTitle, CTA}) => {
 
@@ -22,7 +9,6 @@ const CardFormation = ({data, i, assetsDirectory, configCard,configTitle, CTA}) 
 
     const Settings = configCard && configCard.settings ? configCard.settings : null;
     const Responsive = configCard && configCard.responsiveSettings ? configCard.responsiveSettings : [];
-
 
     return <Container
         key={i}

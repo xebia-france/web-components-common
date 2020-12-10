@@ -1,5 +1,3 @@
-
-
 const hexToRgb = hex => {
     if (!hex) return;
     let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -34,7 +32,7 @@ const isNumber = value => /^\d+$/.test(value);
 
 const removeSpaces = string => string.replace(/ /g, "");
 
-const fileNameFromUrl = ( url ) => {
+const fileNameFromUrl = (url) => {
     return url.substring(url.lastIndexOf('/') + 1)
 }
 
@@ -56,7 +54,9 @@ const getExtensionFileName = (fileName) => {
 const extractWithoutExtension = (fileName) => {
     return fileName.split('.').slice(0, -1).join('.')
 }
-
+const isOdd = (num) => {
+    return num % 2;
+}
 
 export {
     hexToRgb,
@@ -64,6 +64,6 @@ export {
     RGBAtoString,
     isResponsiveProps,
     getResponsiveKey,
-    isNumber,
+    isNumber, isOdd,
     removeSpaces, fileNameFromUrl, naiveCopy, getExtensionFileName, extractWithoutExtension
 };
