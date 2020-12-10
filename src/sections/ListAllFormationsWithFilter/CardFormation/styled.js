@@ -45,7 +45,7 @@ export const Container = styled.div.attrs(props => ({
                 }
            }
            
-           & svg{
+           &  ${CTACommon} svg{
                 width : 10px;
                 margin-right : 10px;
                 align-self : flex-start;
