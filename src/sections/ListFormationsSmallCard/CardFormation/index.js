@@ -201,22 +201,24 @@ const CardFormation = ({data, i, assetsDirectory, config, configCard, configTitl
         }
         {
             !nextSession && !nextPromo ?
-                <NextSessionDefault>
+                <NextSession responsive={config.responsiveSettings}
+                                    basis={config.settings.session}
+                                    noBackground>
                     <div>
                         <TextCommon responsive={config.responsiveSettings}
                                     typography={config.settings.textSession}
                                     basis={config.settings.textSession}
                                     border={null}
                                     as={'p'}
-                        ></TextCommon>
+                        >À venir</TextCommon>
                         <TextCommon responsive={config.responsiveSettings}
                                     typography={config.settings.taglineSession}
                                     basis={config.settings.taglineSession}
                                     border={null}
                                     as={'p'}
-                        ></TextCommon>
+                        >prochaine session</TextCommon>
                     </div>
-                </NextSessionDefault>
+                </NextSession>
                 : null
         }
     </Container>

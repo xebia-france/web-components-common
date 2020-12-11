@@ -55,7 +55,9 @@ export const ImageCard = styled.div.attrs(props => ({
     assetsDirectory : props.assetsDirectory
 }))`
     z-index : 2;
-    margin-bottom : 10px;
+    //margin-bottom : 10px;
+    
+    
     
     ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
@@ -174,7 +176,11 @@ export const Badges = styled.div.attrs(props => ({
 
 }))`
    display : flex;
-   flex-direction :  column;   
+   flex-direction :  column; 
+   
+   & ${ImageCard}:nth-child(2){
+       margin-top : 10px;
+   }  
 `;
 
 export const NextSession = styled.div.attrs(props => ({
@@ -206,7 +212,7 @@ export const NextSession = styled.div.attrs(props => ({
               ` : ''}
               
               ${props.noBackground ? `
-                border-top : 1px solid rgba(0,0,0,0.5);
+                border-top : 1px solid rgba(0,0,0,0.15);
 
               ` : ''}
 
@@ -219,7 +225,7 @@ export const NextSessionPromo = styled(NextSession)`
    padding : 10px 10px 10px 10px;
 `
 
-export const NextSessionDefault = styled.div`
+export const NextSessionDefault = styled(NextSession)`
    background : none;
 `
 export const IconContainer = styled.div.attrs(props => ({
