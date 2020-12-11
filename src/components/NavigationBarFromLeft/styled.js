@@ -246,7 +246,8 @@ export const Link = styled.a.attrs(props => ({
             }
                
            &>span{
-            
+               // transition : color 0.25s ease, border-color 0.25s ease;
+                color : inherit;
                 display:inline;
                 border-bottom-width:3px;
                 border-bottom-style:solid;
@@ -261,6 +262,7 @@ export const Link = styled.a.attrs(props => ({
                 `border-color : ${ getFormatedColor(props.border[size].color.hover, props.border[size].opacity.hover ) }; ` : '' )
                 : ''}
                 &>span{
+                    color:${ getFormatedColor( props.typography[size].color.hover, props.typography[size].opacity.hover )};
                     border-color : ${ getFormatedColor( props.typography[size].color.hover, props.typography[size].opacity.hover )};
                }
     
