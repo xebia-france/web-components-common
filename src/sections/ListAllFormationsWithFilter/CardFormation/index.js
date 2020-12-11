@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container} from './styled';
+import {Container, SvgContainer} from './styled';
 import { CTACommon} from '../../../styles/common.styled'
 import SvgDotList from '../../../assets/svg/SvgDotList';
 
@@ -32,7 +32,13 @@ const CardFormation = ({data, i, assetsDirectory, configCard,configTitle, CTA}) 
             href={data.slug ? `/${data.category[0].slug}/${data.slug}` : ''}
         >
 
-            <SvgDotList/>
+            <SvgContainer
+                responsive={Responsive}
+                typographyCTA={CTA.settings.typography}
+                typographyTitle={configTitle.settings.typography}
+            >
+                <SvgDotList/>
+            </SvgContainer>
             <p> {data.name ? data.name : ''}</p>
         </CTACommon>
     </Container>

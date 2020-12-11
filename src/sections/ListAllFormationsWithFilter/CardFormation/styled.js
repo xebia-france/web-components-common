@@ -14,6 +14,37 @@ import {
 import { CTACommon} from "../../../styles/common.styled";
 
 
+export const SvgContainer = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    typographyCTA: props.typographyCTA,
+    typographyTitle: props.typographyTitle,
+}))`
+${ props => props.responsive.map((size, i) => `
+         @media ${ device[size] } {
+             width : 10px;
+             margin-right : 10px;
+             align-self : flex-start;
+              ${ props.typographyCTA[size].font.lineHeight ?
+                `height : ${ props.typographyCTA[size].font.lineHeight }px;`
+                : ''}
+                
+           & svg{
+                width : 100%;
+                height : 100%;
+               
+                
+                
+                & path{
+                     ${ props.typographyTitle ? `fill :  ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
+                }
+           }
+             
+           
+         }`)
+    };
+`;
+
+
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis,
@@ -45,7 +76,7 @@ export const Container = styled.div.attrs(props => ({
                 }
            }
            
-           &  ${CTACommon} svg, & ${CTACommon} ${CTACommon} svg{
+           /*&  ${CTACommon} svg, & ${CTACommon} ${CTACommon} svg{
                 width : 10px;
                 margin-right : 10px;
                 align-self : flex-start;
@@ -56,7 +87,7 @@ export const Container = styled.div.attrs(props => ({
                 & path{
                      ${ props.typographyTitle ? `fill :  ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
                 }
-           }
+           }*/
              
             &:after{
                z-index : 1;
