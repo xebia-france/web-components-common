@@ -12,6 +12,7 @@ const Links = ({links, fields, currentOpenedLinkIndex, setCurrentOpenedLinkIndex
     const TemplateConfig = !slugParent ? TemplateLinks : TemplateSubLinks;
     const basisTemplateLeft = getTemplateProps(TemplateLeft).basis;
     const basisTemplateLinks = getTemplateProps(TemplateLinks).basis;
+    const noDepth = NavigationSubLinks.settings.state && NavigationSubLinks.settings.state.noDepth === true ? true : false
 
     const toggleLink = (i) => (currentOpenedLinkIndex === i) ? setCurrentOpenedLinkIndex(null) : setCurrentOpenedLinkIndex(i);
 
@@ -49,7 +50,7 @@ const Links = ({links, fields, currentOpenedLinkIndex, setCurrentOpenedLinkIndex
             case 'anchor':
                 return <NavigationLink {...params} >
                     <Link {...getLinkProps(LinksConfig)}
-                          href={slugParent ? `${localePath}/${slugParent}#${link.slug}` : `${localePath}/#${link.slug}`}
+                          href={slugParent && !noDepth  ? `${localePath}/${slugParent}#${link.slug}` : `${localePath}/#${link.slug}`}
                           onClick={() => { if (!slugParent) { toggleLink(i)}}}
                     >
                         <span>{link.name}</span>
@@ -74,7 +75,7 @@ const Links = ({links, fields, currentOpenedLinkIndex, setCurrentOpenedLinkIndex
                 return <NavigationLink {...params}>
                     <Link {...getLinkProps(LinksConfig)}
                           className={location.pathname.includes(`/${link.slug}`) ? 'active' : ''}
-                          href={slugParent ? `${localePath}/${slugParent}/${link.slug}` : `${localePath}/${link.slug}`}
+                          href={slugParent && !noDepth ? `${localePath}/${slugParent}/${link.slug}` : `${localePath}/${link.slug}`}
                           onClick={() => { if (!slugParent) { toggleLink(i)}}}
                     >
                         <span>{link.name}</span>
