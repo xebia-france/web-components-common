@@ -33,8 +33,9 @@ const buildComponent = (fields, field, language, assetsDirectory, key) => {
 }
 
 const HeaderTextSwitchDown = ({fields, order, assetsDirectory, language}) => {
+
     return (
-        <Container {...getTemplatePropsWithImage(fields.Template)}>
+        <Container {...getTemplatePropsWithImage(fields.Template)} assetsDirectory={assetsDirectory}>
             <Contain>
                 {
                     order ? order.map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))
