@@ -349,3 +349,50 @@ export const PartnershipList = styled.div.attrs(props => ({
  
 `;
 
+
+export const ArrowContainer = styled.div.attrs(props => ({
+    responsive: props.responsive,
+    basis: props.basis,
+    typography: props.typography,
+    border: props.border
+}))`
+  z-index :  2;
+  width : 30px;
+  height : 30px;
+  cursor : pointer;
+  position : absolute;
+  right : 20px;
+  
+  &>svg{
+    width : 100%;
+  } 
+  ${ props => props.responsive.map(size => `
+         @media ${ device[size] } {
+            ${ props.typography && props.typography[size].font.lineHeight ? `
+             &>svg path, &>svg g, &>svg g polygon {
+                fill : ${ getFormatedColor(props.typography[size].color, props.typography[size].opacity) }
+              } 
+        `
+    : ''}
+         
+            
+         }`)
+    };
+`;
+
+
+export const AdditionalToggle = styled(ContainerCommon)`
+ cursor  : pointer;
+ position: relative;
+`;
+export const AdditionalInformation = styled(ContainerCommon).attrs(props => ({
+    displayAdditional : props.displayAdditional
+}))`
+ cursor  : pointer;
+ display : none;
+ 
+ ${ props => props.displayAdditional ? 'display : flex;' : 'display : none;' }
+ 
+ 
+`;
+

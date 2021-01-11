@@ -7,7 +7,7 @@ import {
     Main,
     Blocks,
     Trainers,
-    PartnershipList, PromotionBanner, ContainerBanner, Contain
+    PartnershipList, PromotionBanner, ContainerBanner, Contain, ArrowContainer, AdditionalInformation, AdditionalToggle
 } from './styled';
 import {IconContainer} from "./ItemSession/styled";
 import {fileNameFromUrl} from "../../utils/functions";
@@ -18,11 +18,19 @@ import InsertBlock from './InsertBlock';
 import InfoBlock from './InfoBlock';
 import CTA from '../../functional/CTA';
 import SvgPromo from '../../assets/svg/SvgPromo'
+import SvgArrowCentered from '../../assets/svg/SvgArrowCentered'
 
-import {getTemplateProps, getTextProps} from "../../utils/gettersProperties";
+import {getTemplateProps, getTextProps, getContentProps} from "../../utils/gettersProperties";
 import {generatePictureWebP} from "../../utils/gettersCommonElement";
 
 class TemplatePageFormation extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            displayAdditional: false
+        };
+    }
 
     getContentProps = (settings) => {
         return {
@@ -66,7 +74,11 @@ class TemplatePageFormation extends Component {
 
     render() {
         const {fields, assetsDirectory, data, language} = this.props;
-        if(!data ) return null;
+
+        console.log('FIELDS TEMPLATE FORMATION', fields);
+        console.log('DATA TEMPLATE FORMATION', data);
+
+        if (!data) return null;
         const sessions = data && data.sessions && data.sessions.value ? JSON.parse(data.sessions.value) : null;
 
         const images = {
@@ -196,13 +208,27 @@ class TemplatePageFormation extends Component {
 
         }
 
+
+        const AdditionalInfoSettings = {
+            Template: fields.AdditionalInfoTemplate,
+            TemplateSubBlock: fields.AdditionalInfoSubBlockTemplate,
+            Title: fields.AdditionalInfoTitle,
+            Heading1: fields.MainHeading1,
+            Heading2: fields.MainHeading2,
+            Heading3: fields.MainHeading3,
+            Content: fields.MainContent,
+            ContentBold: fields.ContentMainBold,
+            ContentLink: fields.ContentMainLink
+
+        }
         return (
             <Container>
                 <Header {...this.getTemplateProps(HeaderSettings.Template)} asset={images}
                         assetsDirectory={assetsDirectory}>
                     {
                         sessions && this.promoExist(sessions.schedule) ?
-                            <ContainerBanner {...this.getTemplateProps(MainSettings.Template)} basisHeader={HeaderSettings.Template.settings.basis}>
+                            <ContainerBanner {...this.getTemplateProps(MainSettings.Template)}
+                                             basisHeader={HeaderSettings.Template.settings.basis}>
                                 <PromotionBanner  {...getTemplateProps(Promo.Template)} >
                                     <TextCommon {...getTextProps(Promo.Title)} >Promotion</TextCommon>
                                     <IconContainer
@@ -245,7 +271,7 @@ class TemplatePageFormation extends Component {
                                         responsive={Badges.Image.responsiveSettings}
                                         basis={Badges.Image.settings.basis}
                                         border={Badges.Image.settings.border}>
-                                        { generatePictureWebP(`${assetsDirectory || ''}${ fileNameFromUrl(b.image.file.url) }`,`${b.name}` ) }
+                                        {generatePictureWebP(`${assetsDirectory || ''}${ fileNameFromUrl(b.image.file.url) }`, `${b.name}`)}
                                     </ImageContainerCommon>
                                 }) : null
                             }
@@ -304,7 +330,37 @@ class TemplatePageFormation extends Component {
                                getContentProps={this.getContentProps}/>
                     <InfoBlock element={Validation} language={language} data={data.validation}
                                getContentProps={this.getContentProps}/>
+
+                    {
+                        data.additionalInformation && data.additionalInformation.childMarkdownRemark ?
+                            <>
+                                <AdditionalToggle  {...this.getTemplateProps(AdditionalInfoSettings.Template)}
+                                                   onClick={() => {  this.setState(prevState => ({
+                                                       displayAdditional: !prevState.displayAdditional
+                                                   })); }}
+                                >
+                                    <TextCommon {...getTextProps(AdditionalInfoSettings.Title)}>
+                                        {fields['AdditionalInfoTitle'].content.text ? fields['AdditionalInfoTitle'].content.text[language] : ''}
+                                    </TextCommon>
+                                    <ArrowContainer {...getContentProps(AdditionalInfoSettings.Title)}><SvgArrowCentered/></ArrowContainer>
+
+
+
+                                </AdditionalToggle>
+                                <AdditionalInformation displayAdditional={this.state.displayAdditional}  {...this.getTemplateProps(AdditionalInfoSettings.TemplateSubBlock)}>
+                                    <Content {...this.getContentProps(AdditionalInfoSettings)}
+                                             dangerouslySetInnerHTML={{
+                                                 __html: data.additionalInformation && data.additionalInformation.childMarkdownRemark ?
+                                                     data.additionalInformation.childMarkdownRemark.html
+                                                     : <p></p>
+                                             }}
+                                    />
+                                </AdditionalInformation>
+                            </>
+                            : null
+                    }
                 </Blocks>
+
                 {
                     data.trainers && data.trainers.length !== 0 ?
                         <Trainers  {...this.getTemplateProps(MainSettings.Template)}>
