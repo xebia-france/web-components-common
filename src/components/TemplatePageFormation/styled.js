@@ -358,10 +358,13 @@ export const ArrowContainer = styled.div.attrs(props => ({
 }))`
   z-index :  2;
   width : 30px;
-  height : 30px;
+  height : 100%;
   cursor : pointer;
   position : absolute;
-  right : 20px;
+  right : 30px;
+  top : 0;
+  display : flex;
+  align-items : center;
   
   &>svg{
     width : 100%;
@@ -381,9 +384,24 @@ export const ArrowContainer = styled.div.attrs(props => ({
 `;
 
 
-export const AdditionalToggle = styled(ContainerCommon)`
+export const AdditionalToggle = styled(ContainerCommon).attrs(props => ({
+    displayAdditional : props.displayAdditional
+}))`
  cursor  : pointer;
  position: relative;
+ 
+ ${ props => props.displayAdditional ? `
+    ${ArrowContainer}{
+        transform : rotate(180deg);
+    }
+ 
+ `  : `
+  ${ArrowContainer}{
+        transform : rotate(0deg);
+    }
+ ` }
+ 
+ 
 `;
 export const AdditionalInformation = styled(ContainerCommon).attrs(props => ({
     displayAdditional : props.displayAdditional

@@ -646,7 +646,7 @@ export const Toggle = styled.div.attrs(props => ({
         }
     }
     
-    ${ props => ['T', 'D'].map(size => `
+    ${ props => ['M','T', 'D'].map(size => `
          @media ${ device[size] } {
             position : absolute;
             

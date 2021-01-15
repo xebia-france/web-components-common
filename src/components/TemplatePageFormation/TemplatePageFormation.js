@@ -338,6 +338,7 @@ class TemplatePageFormation extends Component {
                                                    onClick={() => {  this.setState(prevState => ({
                                                        displayAdditional: !prevState.displayAdditional
                                                    })); }}
+                                                   displayAdditional={this.state.displayAdditional}
                                 >
                                     <TextCommon {...getTextProps(AdditionalInfoSettings.Title)}>
                                         {fields['AdditionalInfoTitle'].content.text ? fields['AdditionalInfoTitle'].content.text[language] : ''}
