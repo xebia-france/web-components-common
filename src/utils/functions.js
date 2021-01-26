@@ -21,9 +21,6 @@ const RGBAtoString = (rgb, opacity) => {
     return 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + opacity + ')';
 };
 
-const isResponsiveProps = props => {
-    return (props.hasOwnProperty('M') || props.hasOwnProperty('T') || props.hasOwnProperty('D'));
-};
 const getResponsiveKey = props => {
     return Object.keys(props);
 };
@@ -34,6 +31,10 @@ const removeSpaces = string => string.replace(/ /g, "");
 
 const fileNameFromUrl = (url) => {
     return url.substring(url.lastIndexOf('/') + 1)
+}
+
+const getExtensionFileName = (fileName) => {
+    return fileName.substr(fileName.lastIndexOf('.') + 1);
 }
 
 function naiveCopy(mainObj) {
@@ -47,13 +48,10 @@ function naiveCopy(mainObj) {
 }
 
 
-const getExtensionFileName = (fileName) => {
-    return fileName.substr(fileName.lastIndexOf('.') + 1);
-}
-
-const extractWithoutExtension = (fileName) => {
+const extractFileNameWithoutExtension = (fileName) => {
     return fileName.split('.').slice(0, -1).join('.')
 }
+
 const isOdd = (num) => {
     return num % 2;
 }
@@ -62,8 +60,7 @@ export {
     hexToRgb,
     RGBtoString,
     RGBAtoString,
-    isResponsiveProps,
     getResponsiveKey,
     isNumber, isOdd,
-    removeSpaces, fileNameFromUrl, naiveCopy, getExtensionFileName, extractWithoutExtension
+    removeSpaces, fileNameFromUrl, naiveCopy, getExtensionFileName, extractFileNameWithoutExtension
 };

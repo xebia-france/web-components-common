@@ -1,5 +1,5 @@
 import {getExtensionFileName, isNumber} from "./functions";
-import {extractWithoutExtension} from "./functions";
+import {extractFileNameWithoutExtension} from "./functions";
 
 const generatePadding = (prop, size, subProp) => {
     if (subProp) {
@@ -313,7 +313,7 @@ const generateBackgroundImageWebp = (prop, size, assetsDirectory) => {
     const extension = getExtensionFileName(path);
 
     if (extension === 'png' || extension === 'jpeg' || extension === 'jpg') {
-        const pathWebp = `${  extractWithoutExtension(path) }.webp`;
+        const pathWebp = `${  extractFileNameWithoutExtension(path) }.webp`;
 
         return `
             background-image : url('${ pathWebp }');
@@ -336,7 +336,7 @@ const generateBackgroundImageWebpNoResponsive = (fileName, assetsDirectory) => {
     const extension = getExtensionFileName(path);
 
     if (extension === 'png' || extension === 'jpeg' || extension === 'jpg') {
-        const pathWebp = `${  extractWithoutExtension(path) }.webp`;
+        const pathWebp = `${  extractFileNameWithoutExtension(path) }.webp`;
 
         return `
             background-image : url('${ pathWebp }');

@@ -42,21 +42,21 @@ export const useWindowScroll = () => {
 
     useEffect(() => {
         // Handler to call on window resize
-        function handleResize() {
+        function handleScroll() {
             // Set window width/height to state
             setWindowScroll({
-                y: window.scrollY,
+                y: window.scrollY
             });
         }
 
         // Add event listener
-        window.addEventListener("scroll", handleResize);
+        window.addEventListener("scroll", handleScroll);
 
         // Call handler right away so state gets updated with initial window size
-        handleResize();
+        handleScroll();
 
         // Remove event listener on cleanup
-        return () => window.removeEventListener("scroll", handleResize);
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []); // Empty array ensures that effect is only run on mount
 
     return windowScroll;
