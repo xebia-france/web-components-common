@@ -31,3 +31,4 @@ export { default as CardDuplicableCTA } from './CardDuplicableCTA';
 export { default as CardCTALinedUp } from './CardCTALinedUp';
 export { default as CardImgTopCorners } from './CardImgTopCorners';
 export { default as TemplatePageFormation } from '../components/TemplatePageFormation';
+export { default as FirstEasterEgg } from '../components/FirstEasterEgg';
