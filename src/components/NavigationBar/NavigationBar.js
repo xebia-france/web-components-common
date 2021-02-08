@@ -93,12 +93,13 @@ class NavigationBar extends Component {
     }
 
     getLinkProps = (field) => {
-        return {
+        const result = {
             responsive: field ? field.responsiveSettings : [],
             typography: field && field.settings.typography ? field.settings.typography : null,
             basis: field && field.settings.basis ? field.settings.basis : null,
             border: field && field.settings.border ? field.settings.border : null,
         }
+        return result
     }
 
     linkIsOpen = () => {
@@ -131,6 +132,7 @@ class NavigationBar extends Component {
         const LinksConfig = !slugParent ? NavigationLinks : NavigationSubLinks;
         const TemplateConfig = !slugParent ? TemplateLinks : TemplateSubLinks
 
+        console.log('links map', links);
         return links.map((link, i) => {
 
             const Arrow = link.childrens ? <ArrowContainer><SvgArrowCentered/></ArrowContainer> : null;
@@ -212,11 +214,11 @@ class NavigationBar extends Component {
 
     render() {
         const {fields, locales, locale, location, menu, language, assetsDirectory} = this.props;
-
         const TemplateLeft = fields['TemplateLeft'];
         const TemplateLinks = fields['TemplateLinks'];
         const TemplateBurger = fields['TemplateBurger'];
         const LinksConfig = fields['NavigationLinks'];
+        
         return (
             <Container>
                 <BackgroundNavigation {...getTemplateProps(TemplateLinks)} show={this.state.displayBackground}/>
@@ -250,45 +252,48 @@ class NavigationBar extends Component {
                         </Hamburger>
                     </ContainerLeft>
 
-                    <Links {...getTemplateProps(TemplateLinks)}
+
+                        <Links {...getTemplateProps(TemplateLinks)}
                            basisTemplateLeft={TemplateLeft && TemplateLeft.settings ? TemplateLeft.settings.basis : null}
                            className={this.state.open ? 'open' : ''}
 
                     >
                         <nav>
-                            <ul>{menu ? this.getRenderLinks(menu) : null}</ul>
-                            {
-                                locales && locales.length > 1 ?
-                                    <Locale>
-                                        <CurrentLocale>
-                                            <LinkLanguage {...this.getLinkProps(LinksConfig)}>
-                                                {locale.split('-')[0]}
-                                            </LinkLanguage>
-                                        </CurrentLocale>
-                                        <LanguageSelector>
-                                            {
-                                                locales.map((l) => {
-                                                    return <Link key={l}
-                                                                 {...this.getLinkProps(LinksConfig)}
-                                                                 className={l === locale ? '' : ''}
-                                                                 href={this.getUrlWithLocale(l, location.pathname)}
-                                                                 onClick={() => {
-                                                                     localStorage.setItem('scrollPosition', this.state.scrollY);
-                                                                 }}
-                                                    >
-                                                        {l.split('-')[0]}
-                                                        <CheckContainer className={l === locale ? 'selected' : ''}>
-                                                            <SvgCheck/>
-                                                        </CheckContainer>
-                                                    </Link>
-                                                })
-                                            }
-                                        </LanguageSelector>
-                                    </Locale>
-                                    : null
-                            }
-                        </nav>
-                    </Links>
+                             <ul>{menu ? this.getRenderLinks(menu) : null}</ul>
+                                    {
+                                        locales && locales.length > 1 ?
+                                            <Locale>
+                                                <CurrentLocale>
+                                                    <LinkLanguage {...this.getLinkProps(LinksConfig)}>
+                                                        {locale.split('-')[0]}
+                                                    </LinkLanguage>
+                                                </CurrentLocale>
+                                                <LanguageSelector>
+                                                    {
+                                                        locales.map((l) => {
+                                                            return <Link key={l}
+                                                                         {...this.getLinkProps(LinksConfig)}
+                                                                         className={l === locale ? '' : ''}
+                                                                         href={this.getUrlWithLocale(l, location.pathname)}
+                                                                         onClick={() => {
+                                                                             localStorage.setItem('scrollPosition', this.state.scrollY);
+                                                                         }}
+                                                            >
+                                                                {l.split('-')[0]}
+                                                                <CheckContainer className={l === locale ? 'selected' : ''}>
+                                                                    <SvgCheck/>
+                                                                </CheckContainer>
+                                                            </Link>
+                                                        })
+                                                    }
+                                                </LanguageSelector>
+                                            </Locale>
+                                            : null
+                                    }
+                                </nav>
+                            </Links>
+
+
                 </FixedBar>
             </Container>
         );

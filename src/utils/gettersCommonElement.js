@@ -21,8 +21,6 @@ const getImages = (field, language) => {
     });
 }
 
-
-
 const generatePictureWebP = (src, alt) => {
     const extension = getExtensionFileName(src);
     const srcWithoutExtension = extractFileNameWithoutExtension(src);

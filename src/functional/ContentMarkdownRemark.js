@@ -12,6 +12,9 @@ const ContentMarkdownRemark = ({ field, content}) => {
     );
 };
 
-ContentMarkdownRemark.defaultProps = {}
+ContentMarkdownRemark.propTypes = {
+    field : PropTypes.object,
+    content : PropTypes.object
+}
 
 export default ContentMarkdownRemark;

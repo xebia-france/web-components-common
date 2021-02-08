@@ -85,7 +85,8 @@ class NavigationBasic extends Component {
                     return <NavigationLink key={`${i}-${link.name}`}>
                         <Link responsive={responsiveSettings} basis={basis} typography={typography} border={border}
                               onClick={() => this.setState({open: !this.state.open})}
-                              href={slugParent ? `${ this.getLocalePath()}/${slugParent}#${link.slug}` : `${this.getLocalePath()}/#${link.slug}`}>{link.name}
+                              href={slugParent ? `${ this.getLocalePath()}/${slugParent}#${link.slug}` : `${this.getLocalePath()}/#${link.slug}`}>
+                            {link.name}
                             {Arrow}
                         </Link>
                         {Childrens}
@@ -94,7 +95,8 @@ class NavigationBasic extends Component {
                 case 'external':
                     return <NavigationLink key={`${i}-${link.name}`}>
                         <Link responsive={responsiveSettings} basis={basis} typography={typography} border={border}
-                              target={'_blank'} rel={'noopener'} href={`${link.urlLink}`}>{link.name}
+                              target={'_blank'} rel={'noopener'} href={`${link.urlLink}`}>
+                            {link.name}
                             {Arrow}
                         </Link>
                         {Childrens}

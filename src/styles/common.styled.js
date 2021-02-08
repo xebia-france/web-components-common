@@ -11,7 +11,6 @@ import {
 import {device} from "./constants";
 import isEmpty from "lodash/isEmpty";
 
-
 export const ContainerCommon = styled.div.attrs(props => ({
     responsive: props.responsive,
     responsiveContent: props.responsiveContent,

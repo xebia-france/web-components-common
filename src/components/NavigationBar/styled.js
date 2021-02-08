@@ -329,7 +329,7 @@ export const CurrentLocale = styled.div.attrs(props => ({
   justify-content : center;
   cursor : pointer;
  
-    ${ props => props.responsive.map((size, i) => `
+    ${ props => props.responsive && props.responsive.map((size, i) => `
          @media ${ device[size] } {
             ${ props.svg ?  generateSize(props.svg, size) : `width : 24px;`}
             

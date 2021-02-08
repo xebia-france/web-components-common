@@ -15,6 +15,12 @@ describe('utils functions', () => {
 
     // hexToRgb
 
+    it('function hexToRgb - should return undefined if value of hexadecimal is undefined', () => {
+        const hexa = null;
+        const expectedResult = undefined
+        expect(hexToRgb(hexa)).toEqual(expectedResult);
+    });
+
     it('function hexToRgb - should return rgb value of hexadecimal color', () => {
         const hexa = "#FFFFFF";
         const expectedResult = {r: 255, g: 255, b: 255}
@@ -29,6 +35,10 @@ describe('utils functions', () => {
 
     // RGBtoString
 
+    it('function RGBtoString - should return undefined if rgb parameter not defined', () => {
+        const rgbObject = null
+        expect(RGBtoString(rgbObject)).toEqual(undefined);
+    });
     it('function RGBtoString - should return rgb string from rgb object', () => {
         const rgbObject = {r: 255, g: 255, b: 255};
         const expectedResult = 'rgb(255,255,255)';
@@ -36,6 +46,13 @@ describe('utils functions', () => {
     });
 
     // RGBAtoString
+
+    it('function RGBAtoString - should return undefined if rgb parameter not defined', () => {
+        const rgbObject = null;
+        const opacity = 1;
+        const expectedResult = 'rgba(255,255,255,1)';
+        expect(RGBAtoString(rgbObject, opacity)).toEqual(undefined);
+    });
 
     it('function RGBAtoString - should return rgba string from rgb object and opacity', () => {
         const rgbObject = {r: 255, g: 255, b: 255};
