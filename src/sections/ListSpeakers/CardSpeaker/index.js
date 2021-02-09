@@ -11,6 +11,8 @@ import {
 } from './styled';
 import TextElement from '../TextElement'
 import IconElement from '../IconElement'
+import {fileNameFromUrl} from "../../../utils/functions";
+
 
 class CardSpeaker extends Component {
     constructor(props) {
@@ -39,6 +41,7 @@ class CardSpeaker extends Component {
         const Settings = configCard && configCard.settings ? configCard.settings : null;
         const Responsive = configCard && configCard.responsiveSettings ? configCard.responsiveSettings : [];
         if(!speaker) return null
+        console.log('speaker.imageURL', speaker.imageURL)
         return <Card
             responsive={Responsive}
             basis={Settings ? Settings.basis : {}}
@@ -51,7 +54,7 @@ class CardSpeaker extends Component {
             className={selected ? 'selected' : ''}>
             <Contain>
                 <Above>
-                    <Portrait asset={speaker.imageURL} assetsDirectory={assetsDirectory}>
+                    <Portrait asset={fileNameFromUrl(speaker.imageURL)} assetsDirectory={assetsDirectory}>
                     </Portrait>
                     <TextContent>
                         <TextElement field={configSpeakers} property={'name'}

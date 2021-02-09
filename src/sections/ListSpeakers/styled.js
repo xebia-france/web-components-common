@@ -203,7 +203,7 @@ export const Container = styled.div.attrs(props => ({
         }
     }
     
-    @media (min-width: 768px) and (max-width : 1023px) {
+   /* @media (min-width: 768px) and (max-width : 1023px) {
         ${ props => `
              flex-direction : ${ props.flex['T'].properties.direction };
              flex-wrap: ${ props.flex['T'].properties.wrap };
@@ -290,7 +290,7 @@ export const Container = styled.div.attrs(props => ({
                     }
                 }
             ` : '' }
-    }
+    }*/
    
     @media ${ device.D } {
         ${ props => `
