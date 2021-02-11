@@ -33,8 +33,9 @@ const buildComponent = (fields, field,language,assetsDirectory,  key) => {
 }
 
 const HeaderBasic = ({fields, order, assetsDirectory, language}) =>  {
+    console.log('assetsDirectory', assetsDirectory);
         return (
-            <Container  {...getTemplatePropsWithImage(fields.Template)}>
+            <Container  {...getTemplatePropsWithImage(fields.Template)}  assetsDirectory={assetsDirectory}>
                 {
                     order ? order.map((fieldName, i) => buildComponent(fields, fieldName, language, assetsDirectory, i))
                         : ['Title', 'Tagline', 'Content', 'Image'].map((fieldName, i) =>buildComponent(fields, fieldName, language, assetsDirectory, i))
