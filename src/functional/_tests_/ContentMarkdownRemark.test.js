@@ -21,7 +21,7 @@ describe('functional -  ContentMarkdownRemark', () => {
     it('should return ok', () => {
         expect(true).toEqual(true);
     });
-    it('should return null if field has not html accorting to content passed on props', () => {
+    it('should return null if field has not html value according to content passed on props', () => {
         const {container} = render(<ContentMarkdownRemark field={mockField} content={mockField.content}/>);
         expect(container.firstChild).toEqual(null);
     });

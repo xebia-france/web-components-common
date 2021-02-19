@@ -9,13 +9,13 @@ const buildComponent = (fields, field,language, key) => {
     if (!fields[field]) return
     switch (field) {
         case 'Title':
-            return <Text key={key} field={fields[field]} language={language}/>;
+            return <Text   key={key} field={fields[field]} language={language}/>;
 
         case 'Tagline':
-            return <Text key={key} field={fields[field]} language={language}/>;
+            return <Text data-testid="blocktext-tagline" key={key} field={fields[field]} language={language}/>;
 
         case 'Content':
-            return <Content key={key} field={fields[field]} language={language}/>;
+            return <Content data-testid="blocktext-content" key={key} field={fields[field]} language={language}/>;
 
         default :
             return null;
@@ -23,7 +23,7 @@ const buildComponent = (fields, field,language, key) => {
 }
 
 const BlockText = ({fields, order, language}) => {
-    return (<Container {...getTemplateProps(fields.Template)}>
+    return (<Container {...getTemplateProps(fields.Template)} data-testid="blocktext-container">
         {
             order ? order.map((fieldName, i) => buildComponent(fields, fieldName,language, i))
                 : ['Title', 'Tagline', 'Content'].map((fieldName, i) => buildComponent(fields, fieldName,language, i))

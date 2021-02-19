@@ -9,18 +9,19 @@ const ImageClickable = ({field, language, assetsDirectory, className, Link}) => 
     const responsiveKey = getResponsiveKey(field.content.images[0].asset)[0];
     const image = field.content.images[0];
     const file = image.asset[responsiveKey].fileName ? image.asset[responsiveKey].fileName : null;
-    const alt = image.alt && image.alt[language]? image.alt[language] : '';
+    const alt = image.alt && image.alt[language] ? image.alt[language] : '';
 
     if (!file) return null;
-    if(!Link){
+    if (!Link) {
         return (
             <ImageContainerCommon {...getImageProps(field)} className={className}>
-                { generatePictureWebP(`${assetsDirectory || ''}${ file }`,alt )}
+                {generatePictureWebP(`${assetsDirectory || ''}${ file }`, alt)}
             </ImageContainerCommon>
         )
-    }else{
+    } else {
         return (
-            <ImageContainerCommon {...getImageProps(field)} className={className}
+            <ImageContainerCommon {...getImageProps(field)}
+                                  className={className}
                                   as={Link && Link.content.link[language] ? 'a' : 'div'}
                                   target={Link && Link.settings.state.external ? '_blank' : ''}
                                   rel={Link && Link.settings.state.external ? 'noopener' : ''}
@@ -28,14 +29,20 @@ const ImageClickable = ({field, language, assetsDirectory, className, Link}) => 
                                   onClick={(e) => {
                                       if (!Link || (Link && !Link.content.link[language]) || (Link && Link.settings.state.disabled)) e.preventDefault();
                                   }}
+                                  data-testid="cta"
             >
-                { generatePictureWebP(`${assetsDirectory || ''}${ file }`,alt )}
+                {generatePictureWebP(`${assetsDirectory || ''}${ file }`, alt)}
             </ImageContainerCommon>
         )
     }
-
 };
 
-ImageClickable.defaultProps = {}
+ImageClickable.defaultProps = {
+    field: PropTypes.object,
+    language: PropTypes.number,
+    assetsDirectory: PropTypes.string,
+    className: PropTypes.string,
+    Link: PropTypes.object
+};
 
 export default ImageClickable;

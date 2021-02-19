@@ -19,6 +19,11 @@ const Image = ({field, language, assetsDirectory, className}) => {
     )
 };
 
-Image.defaultProps = {}
+Image.propTypes = {
+    field : PropTypes.object,
+    language : PropTypes.number,
+    assetsDirectory : PropTypes.string,
+    className : PropTypes.string
+};
 
 export default Image;

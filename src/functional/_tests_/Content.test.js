@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, fireEvent, screen} from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 import Content from '../Content';
 import {settingsText} from "../../test/mock/fields-data/organism.model.config";
 
@@ -28,7 +28,7 @@ describe('functional -  Content', () => {
         expect(container.firstChild).toEqual(null);
     });
 
-    it('should return null if field has not html accorting to language', () => {
+    it('should return null if field has not html value according to language', () => {
         const {container} = render(<Content field={mockField} language={1}/>);
         expect(container.firstChild).toEqual(null);
     });
@@ -40,7 +40,6 @@ describe('functional -  Content', () => {
     });
 
     it('should render html depending on language', () => {
-
         const {container} = render(<Content field={mockField} language={mockLanguage}/>);
         expect(screen.getByText('this is a parapgraph')).toBeInTheDocument;
         expect(container.querySelector('p')).toBeDefined;

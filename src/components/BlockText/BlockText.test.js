@@ -1,10 +1,113 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import {render, screen, fireEvent} from '@testing-library/react'
 import BlockText from './BlockText';
-import {Template, TextMock, ContentMock} from "../../../stories/mock";
-import Text from '../../functional/Text';
-import Content from '../../functional/Content';
+import {
+    settingsTagline,
+    settingsTemplate,
+    settingsText,
+    settingsTitle
+} from "../../test/mock/fields-data/organism.model.config";
 
+
+
+const mockFields = {
+    Template : {
+        content : {},
+        responsiveSettings: ['M', 'T', 'D'],
+        settings : settingsTemplate.defaultValue
+    },
+    Title : {
+        content : {
+            text: {
+                0: 'title',
+            }
+        },
+        responsiveSettings: ['M', 'T', 'D'],
+        settings : settingsTitle.defaultValue
+    },
+    Tagline : {
+        content : {
+            text: {
+                0: 'tagline',
+            }
+        },
+        responsiveSettings: ['M', 'T', 'D'],
+        settings : settingsTagline.defaultValue
+    },
+    Content : {
+        content : {
+            html: {
+                0: '<p>content</p'
+            }
+        },
+        responsiveSettings: ['M', 'T', 'D'],
+        settings : settingsText.defaultValue
+    }
+}
+
+const mockLanguage = 0;
+
+describe('BlockText', () => {
+    it('should render correctly', () => {
+        render(<BlockText language={mockLanguage} fields={mockFields} order={['Title', 'Tagline', 'Content']}/>)
+        expect(screen.getByTestId('blocktext-container')).toBeDefined;
+        // screen.debug()
+    });
+
+    it('should render component with all child by default when order prop is not defined', () => {
+        const {container} = render(<BlockText language={mockLanguage} fields={mockFields}/>)
+        const childNodes = container.firstChild.childNodes;
+
+        expect(childNodes.length).toEqual(3);
+
+        expect(container.firstChild.querySelector('h2')).toStrictEqual(childNodes[0]);
+        expect(container.firstChild.querySelector('h4')).toStrictEqual(childNodes[1]);
+        expect(container.firstChild.querySelector('div')).toStrictEqual(childNodes[2]);
+    });
+
+    it('should render component with only child defined on order property ', () => {
+        const {container} = render(<BlockText language={mockLanguage} fields={mockFields} order={['Title']}/>)
+        const childNodes = container.firstChild.childNodes;
+
+        expect(childNodes.length).toEqual(1);
+        expect(container.firstChild.querySelector('h2')).toStrictEqual(childNodes[0]);
+    });
+
+    it('should render component with only child defined on order property ', () => {
+        const {container} = render(<BlockText language={mockLanguage} fields={mockFields} order={['Title','Tagline']}/>)
+
+        const childNodes = container.firstChild.childNodes;
+
+        expect(childNodes.length).toEqual(2);
+        expect(container.firstChild.querySelector('h2')).toStrictEqual(childNodes[0]);
+        expect(container.firstChild.querySelector('h4')).toStrictEqual(childNodes[1]);
+    });
+
+    it('should render component with children order according to order property', () => {
+        const {container} = render(<BlockText language={mockLanguage} fields={mockFields} order={['Title','Content','Tagline']}/>)
+
+        const childNodes = container.firstChild.childNodes;
+        expect(childNodes.length).toEqual(3);
+
+        expect(container.firstChild.querySelector('h2')).toStrictEqual(childNodes[0]);
+        expect(container.firstChild.querySelector('div')).toStrictEqual(childNodes[1]);
+        expect(container.firstChild.querySelector('h4')).toStrictEqual(childNodes[2]);
+    });
+
+    it('should render component with child null when fieldName passed on order prop does not correspond with any existant field', () => {
+        const {container} = render(<BlockText language={mockLanguage} fields={mockFields} order={['Test']}/>)
+
+        const childNodes = container.firstChild.childNodes;
+
+        expect(childNodes.length).toEqual(0);
+        expect(childNodes[0]).toBeNull;
+
+        //screen.debug()
+    });
+})
+
+
+/*
 const fieldsMock =  {
     Template: {
         content: {},
@@ -70,4 +173,4 @@ describe('BlockText', () => {
         const component = shallow(<BlockText fields={fieldsMock} language={0}/>);
         expect(component.children()).toHaveLength(3);
     });
-});
+});*/

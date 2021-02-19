@@ -9,6 +9,9 @@ const TextCustomContent = ({field, content}) => {
     return (<TextCommon {...getTextProps(field)}>{ content }</TextCommon>);
 };
 
-TextCustomContent.defaultProps = {}
+TextCustomContent.propTypes = {
+    field: PropTypes.object,
+    content: PropTypes.string
+};
 
 export default TextCustomContent;

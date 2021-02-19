@@ -1,39 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1611841049700" clover="3.2.0">
-  <project timestamp="1611841049700" name="All files">
-    <metrics statements="267" coveredstatements="249" conditionals="521" coveredconditionals="252" methods="72" coveredmethods="46" elements="860" coveredelements="547" complexity="0" loc="267" ncloc="267" packages="7" files="23" classes="23"/>
-    <package name="src.components.BlockText">
-      <metrics statements="15" coveredstatements="13" conditionals="20" coveredconditionals="6" methods="7" coveredmethods="4"/>
+<coverage generated="1613653349772" clover="3.2.0">
+  <project timestamp="1613653349772" name="All files">
+    <metrics statements="259" coveredstatements="250" conditionals="633" coveredconditionals="429" methods="80" coveredmethods="70" elements="972" coveredelements="749" complexity="0" loc="259" ncloc="259" packages="5" files="20" classes="20"/>
+    <package name="components.BlockText">
+      <metrics statements="15" coveredstatements="14" conditionals="20" coveredconditionals="13" methods="7" coveredmethods="7"/>
       <file name="BlockText.js" path="/Users/paque/Desktop/works/web-components-common/src/components/BlockText/BlockText.js">
-        <metrics statements="13" coveredstatements="12" conditionals="8" coveredconditionals="6" methods="4" coveredmethods="4"/>
+        <metrics statements="13" coveredstatements="12" conditionals="8" coveredconditionals="7" methods="4" coveredmethods="4"/>
         <line num="8" count="1" type="stmt"/>
-        <line num="9" count="16" type="cond" truecount="1" falsecount="1"/>
-        <line num="10" count="16" type="cond" truecount="3" falsecount="1"/>
-        <line num="12" count="7" type="stmt"/>
-        <line num="15" count="5" type="stmt"/>
-        <line num="18" count="4" type="stmt"/>
+        <line num="9" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="12" type="cond" truecount="3" falsecount="1"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
         <line num="25" count="1" type="stmt"/>
-        <line num="26" count="7" type="stmt"/>
+        <line num="26" count="6" type="stmt"/>
         <line num="28" count="10" type="cond" truecount="2" falsecount="0"/>
-        <line num="29" count="6" type="stmt"/>
+        <line num="29" count="3" type="stmt"/>
         <line num="34" count="1" type="stmt"/>
         <line num="36" count="1" type="stmt"/>
       </file>
       <file name="styled.js" path="/Users/paque/Desktop/works/web-components-common/src/components/BlockText/styled.js">
-        <metrics statements="2" coveredstatements="1" conditionals="12" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
+        <metrics statements="2" coveredstatements="2" conditionals="12" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <line num="5" count="6" type="stmt"/>
+        <line num="20" count="18" type="stmt"/>
       </file>
     </package>
-    <package name="src.functional">
-      <metrics statements="15" coveredstatements="12" conditionals="14" coveredconditionals="10" methods="3" coveredmethods="2"/>
+    <package name="functional">
+      <metrics statements="53" coveredstatements="52" conditionals="126" coveredconditionals="121" methods="11" coveredmethods="11"/>
+      <file name="CTA.js" path="/Users/paque/Desktop/works/web-components-common/src/functional/CTA.js">
+        <metrics statements="8" coveredstatements="8" conditionals="29" coveredconditionals="29" methods="2" coveredmethods="2"/>
+        <line num="6" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="7" count="16" type="cond" truecount="4" falsecount="0"/>
+        <line num="8" count="16" type="cond" truecount="4" falsecount="0"/>
+        <line num="10" count="16" type="cond" truecount="4" falsecount="0"/>
+        <line num="12" count="16" type="cond" truecount="4" falsecount="0"/>
+        <line num="13" count="14" type="stmt"/>
+        <line num="21" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="32" count="1" type="stmt"/>
+      </file>
+      <file name="CTACustomLink.js" path="/Users/paque/Desktop/works/web-components-common/src/functional/CTACustomLink.js">
+        <metrics statements="7" coveredstatements="7" conditionals="34" coveredconditionals="34" methods="2" coveredmethods="2"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="16" type="cond" truecount="4" falsecount="0"/>
+        <line num="8" count="16" type="cond" truecount="4" falsecount="0"/>
+        <line num="10" count="16" type="cond" truecount="4" falsecount="0"/>
+        <line num="11" count="14" type="stmt"/>
+        <line num="19" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="30" count="1" type="stmt"/>
+      </file>
       <file name="Content.js" path="/Users/paque/Desktop/works/web-components-common/src/functional/Content.js">
         <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
         <line num="6" count="2" type="stmt"/>
-        <line num="7" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="8" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="9" count="2" type="stmt"/>
+        <line num="7" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="5" type="stmt"/>
         <line num="14" count="2" type="stmt"/>
       </file>
       <file name="ContentMarkdownRemark.js" path="/Users/paque/Desktop/works/web-components-common/src/functional/ContentMarkdownRemark.js">
@@ -44,142 +65,174 @@
         <line num="10" count="2" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
       </file>
+      <file name="Image.js" path="/Users/paque/Desktop/works/web-components-common/src/functional/Image.js">
+        <metrics statements="8" coveredstatements="8" conditionals="10" coveredconditionals="9" methods="1" coveredmethods="1"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="7" type="stmt"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="11" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="7" type="cond" truecount="4" falsecount="0"/>
+        <line num="14" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="6" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+      </file>
+      <file name="ImageClickable.js" path="/Users/paque/Desktop/works/web-components-common/src/functional/ImageClickable.js">
+        <metrics statements="11" coveredstatements="10" conditionals="37" coveredconditionals="33" methods="2" coveredmethods="2"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="27" type="stmt"/>
+        <line num="10" count="27" type="stmt"/>
+        <line num="11" count="27" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="27" type="cond" truecount="4" falsecount="0"/>
+        <line num="14" count="27" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="26" type="cond" truecount="1" falsecount="1"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="22" count="26" type="stmt"/>
+        <line num="30" count="2" type="cond" truecount="7" falsecount="0"/>
+        <line num="40" count="1" type="stmt"/>
+      </file>
       <file name="Text.js" path="/Users/paque/Desktop/works/web-components-common/src/functional/Text.js">
-        <metrics statements="5" coveredstatements="2" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="11" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+      </file>
+      <file name="TextCustomContent.js" path="/Users/paque/Desktop/works/web-components-common/src/functional/TextCustomContent.js">
+        <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="7" count="1" type="stmt"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="9" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
+        <line num="8" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="src.styles">
-      <metrics statements="16" coveredstatements="10" conditionals="123" coveredconditionals="3" methods="20" coveredmethods="3"/>
+    <package name="styles">
+      <metrics statements="16" coveredstatements="13" conditionals="123" coveredconditionals="43" methods="20" coveredmethods="12"/>
       <file name="common.styled.js" path="/Users/paque/Desktop/works/web-components-common/src/styles/common.styled.js">
-        <metrics statements="13" coveredstatements="7" conditionals="123" coveredconditionals="3" methods="20" coveredmethods="3"/>
-        <line num="14" count="4" type="stmt"/>
+        <metrics statements="13" coveredstatements="10" conditionals="123" coveredconditionals="43" methods="20" coveredmethods="12"/>
+        <line num="14" count="10" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
         <line num="62" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="84" count="4" type="stmt"/>
-        <line num="90" count="0" type="stmt"/>
-        <line num="105" count="4" type="stmt"/>
-        <line num="113" count="12" type="stmt"/>
-        <line num="143" count="4" type="stmt"/>
-        <line num="152" count="0" type="stmt"/>
-        <line num="195" count="4" type="stmt"/>
-        <line num="214" count="0" type="stmt"/>
-        <line num="314" count="4" type="stmt"/>
+        <line num="84" count="13" type="stmt"/>
+        <line num="90" count="39" type="stmt"/>
+        <line num="105" count="10" type="stmt"/>
+        <line num="113" count="21" type="stmt"/>
+        <line num="143" count="18" type="stmt"/>
+        <line num="152" count="54" type="stmt"/>
+        <line num="195" count="28" type="stmt"/>
+        <line num="214" count="84" type="stmt"/>
+        <line num="314" count="10" type="stmt"/>
         <line num="329" count="0" type="stmt"/>
       </file>
       <file name="constants.js" path="/Users/paque/Desktop/works/web-components-common/src/styles/constants.js">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="4" type="stmt"/>
-        <line num="26" count="4" type="stmt"/>
-        <line num="32" count="4" type="stmt"/>
+        <line num="1" count="10" type="stmt"/>
+        <line num="26" count="10" type="stmt"/>
+        <line num="32" count="10" type="stmt"/>
       </file>
     </package>
-    <package name="src.test.mock.fields-data">
+    <package name="test.mock.fields-data">
       <metrics statements="51" coveredstatements="51" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="atom.model.config.js" path="/Users/paque/Desktop/works/web-components-common/src/test/mock/fields-data/atom.model.config.js">
         <metrics statements="31" coveredstatements="31" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="4" type="stmt"/>
-        <line num="9" count="4" type="stmt"/>
-        <line num="18" count="4" type="stmt"/>
-        <line num="25" count="4" type="stmt"/>
-        <line num="32" count="4" type="stmt"/>
-        <line num="34" count="4" type="stmt"/>
-        <line num="41" count="4" type="stmt"/>
-        <line num="49" count="4" type="stmt"/>
-        <line num="59" count="4" type="stmt"/>
-        <line num="70" count="4" type="stmt"/>
-        <line num="82" count="4" type="stmt"/>
-        <line num="84" count="4" type="stmt"/>
-        <line num="85" count="4" type="stmt"/>
-        <line num="87" count="4" type="stmt"/>
-        <line num="88" count="4" type="stmt"/>
-        <line num="90" count="4" type="stmt"/>
-        <line num="97" count="4" type="stmt"/>
-        <line num="103" count="4" type="stmt"/>
-        <line num="110" count="4" type="stmt"/>
-        <line num="117" count="4" type="stmt"/>
-        <line num="124" count="4" type="stmt"/>
-        <line num="131" count="4" type="stmt"/>
-        <line num="138" count="4" type="stmt"/>
-        <line num="146" count="4" type="stmt"/>
-        <line num="154" count="4" type="stmt"/>
-        <line num="165" count="4" type="stmt"/>
-        <line num="175" count="4" type="stmt"/>
-        <line num="186" count="4" type="stmt"/>
-        <line num="197" count="4" type="stmt"/>
-        <line num="205" count="4" type="stmt"/>
-        <line num="210" count="4" type="stmt"/>
+        <line num="1" count="12" type="stmt"/>
+        <line num="9" count="12" type="stmt"/>
+        <line num="18" count="12" type="stmt"/>
+        <line num="25" count="12" type="stmt"/>
+        <line num="32" count="12" type="stmt"/>
+        <line num="34" count="12" type="stmt"/>
+        <line num="41" count="12" type="stmt"/>
+        <line num="49" count="12" type="stmt"/>
+        <line num="59" count="12" type="stmt"/>
+        <line num="70" count="12" type="stmt"/>
+        <line num="82" count="12" type="stmt"/>
+        <line num="84" count="12" type="stmt"/>
+        <line num="85" count="12" type="stmt"/>
+        <line num="87" count="12" type="stmt"/>
+        <line num="88" count="12" type="stmt"/>
+        <line num="90" count="12" type="stmt"/>
+        <line num="97" count="12" type="stmt"/>
+        <line num="103" count="12" type="stmt"/>
+        <line num="110" count="12" type="stmt"/>
+        <line num="117" count="12" type="stmt"/>
+        <line num="124" count="12" type="stmt"/>
+        <line num="131" count="12" type="stmt"/>
+        <line num="138" count="12" type="stmt"/>
+        <line num="146" count="12" type="stmt"/>
+        <line num="154" count="12" type="stmt"/>
+        <line num="165" count="12" type="stmt"/>
+        <line num="175" count="12" type="stmt"/>
+        <line num="186" count="12" type="stmt"/>
+        <line num="197" count="12" type="stmt"/>
+        <line num="205" count="12" type="stmt"/>
+        <line num="210" count="12" type="stmt"/>
       </file>
       <file name="molecules.model.config.js" path="/Users/paque/Desktop/works/web-components-common/src/test/mock/fields-data/molecules.model.config.js">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="14" count="3" type="stmt"/>
-        <line num="35" count="3" type="stmt"/>
-        <line num="68" count="3" type="stmt"/>
-        <line num="80" count="3" type="stmt"/>
-        <line num="96" count="3" type="stmt"/>
-        <line num="150" count="3" type="stmt"/>
-        <line num="204" count="3" type="stmt"/>
-        <line num="258" count="3" type="stmt"/>
-        <line num="318" count="3" type="stmt"/>
+        <line num="14" count="11" type="stmt"/>
+        <line num="35" count="11" type="stmt"/>
+        <line num="68" count="11" type="stmt"/>
+        <line num="80" count="11" type="stmt"/>
+        <line num="96" count="11" type="stmt"/>
+        <line num="150" count="11" type="stmt"/>
+        <line num="204" count="11" type="stmt"/>
+        <line num="258" count="11" type="stmt"/>
+        <line num="318" count="11" type="stmt"/>
       </file>
       <file name="organism.model.config.js" path="/Users/paque/Desktop/works/web-components-common/src/test/mock/fields-data/organism.model.config.js">
         <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="29" count="3" type="stmt"/>
-        <line num="84" count="3" type="stmt"/>
-        <line num="134" count="3" type="stmt"/>
-        <line num="170" count="3" type="stmt"/>
-        <line num="203" count="3" type="stmt"/>
-        <line num="210" count="3" type="stmt"/>
-        <line num="221" count="3" type="stmt"/>
-        <line num="233" count="3" type="stmt"/>
-        <line num="241" count="3" type="stmt"/>
-        <line num="248" count="3" type="stmt"/>
-        <line num="276" count="3" type="stmt"/>
+        <line num="29" count="11" type="stmt"/>
+        <line num="84" count="11" type="stmt"/>
+        <line num="134" count="11" type="stmt"/>
+        <line num="170" count="11" type="stmt"/>
+        <line num="203" count="11" type="stmt"/>
+        <line num="210" count="11" type="stmt"/>
+        <line num="221" count="11" type="stmt"/>
+        <line num="233" count="11" type="stmt"/>
+        <line num="241" count="11" type="stmt"/>
+        <line num="248" count="11" type="stmt"/>
+        <line num="276" count="11" type="stmt"/>
       </file>
     </package>
-    <package name="src.utils">
-      <metrics statements="124" coveredstatements="117" conditionals="364" coveredconditionals="233" methods="42" coveredmethods="37"/>
+    <package name="utils">
+      <metrics statements="124" coveredstatements="120" conditionals="364" coveredconditionals="252" methods="42" coveredmethods="40"/>
       <file name="StyleGenerator.js" path="/Users/paque/Desktop/works/web-components-common/src/utils/StyleGenerator.js">
         <metrics statements="50" coveredstatements="47" conditionals="286" coveredconditionals="195" methods="13" coveredmethods="13"/>
-        <line num="4" count="5" type="stmt"/>
-        <line num="5" count="14" type="cond" truecount="1" falsecount="1"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="302" type="cond" truecount="1" falsecount="1"/>
         <line num="6" count="0" type="stmt"/>
-        <line num="24" count="14" type="stmt"/>
-        <line num="43" count="5" type="stmt"/>
-        <line num="44" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="302" type="stmt"/>
+        <line num="43" count="11" type="stmt"/>
+        <line num="44" count="158" type="cond" truecount="1" falsecount="1"/>
         <line num="45" count="0" type="stmt"/>
-        <line num="63" count="2" type="stmt"/>
-        <line num="82" count="5" type="stmt"/>
-        <line num="83" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="63" count="158" type="stmt"/>
+        <line num="82" count="11" type="stmt"/>
+        <line num="83" count="159" type="cond" truecount="1" falsecount="1"/>
         <line num="84" count="0" type="stmt"/>
-        <line num="122" count="3" type="stmt"/>
-        <line num="161" count="5" type="stmt"/>
-        <line num="162" count="26" type="stmt"/>
-        <line num="202" count="5" type="stmt"/>
-        <line num="203" count="4" type="stmt"/>
-        <line num="259" count="5" type="stmt"/>
-        <line num="260" count="26" type="cond" truecount="2" falsecount="0"/>
-        <line num="261" count="1" type="stmt"/>
-        <line num="263" count="25" type="stmt"/>
-        <line num="267" count="5" type="stmt"/>
+        <line num="122" count="159" type="stmt"/>
+        <line num="161" count="11" type="stmt"/>
+        <line num="162" count="251" type="stmt"/>
+        <line num="202" count="11" type="stmt"/>
+        <line num="203" count="187" type="stmt"/>
+        <line num="259" count="11" type="stmt"/>
+        <line num="260" count="1544" type="cond" truecount="2" falsecount="0"/>
+        <line num="261" count="100" type="stmt"/>
+        <line num="263" count="1444" type="stmt"/>
+        <line num="267" count="11" type="stmt"/>
         <line num="268" count="6" type="stmt"/>
         <line num="269" count="6" type="stmt"/>
-        <line num="278" count="5" type="stmt"/>
+        <line num="278" count="11" type="stmt"/>
         <line num="279" count="7" type="stmt"/>
         <line num="280" count="5" type="stmt"/>
-        <line num="287" count="5" type="stmt"/>
+        <line num="287" count="11" type="stmt"/>
         <line num="288" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="289" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="290" count="1" type="stmt"/>
-        <line num="297" count="5" type="stmt"/>
+        <line num="297" count="11" type="stmt"/>
         <line num="298" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="299" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="300" count="1" type="stmt"/>
-        <line num="307" count="5" type="stmt"/>
+        <line num="307" count="11" type="stmt"/>
         <line num="308" count="5" type="cond" truecount="2" falsecount="0"/>
         <line num="310" count="4" type="cond" truecount="1" falsecount="1"/>
         <line num="311" count="4" type="stmt"/>
@@ -187,7 +240,7 @@
         <line num="314" count="3" type="stmt"/>
         <line num="316" count="3" type="stmt"/>
         <line num="322" count="1" type="stmt"/>
-        <line num="330" count="5" type="stmt"/>
+        <line num="330" count="11" type="stmt"/>
         <line num="331" count="5" type="cond" truecount="2" falsecount="0"/>
         <line num="333" count="4" type="cond" truecount="1" falsecount="1"/>
         <line num="334" count="4" type="stmt"/>
@@ -217,146 +270,70 @@
       </file>
       <file name="functions.js" path="/Users/paque/Desktop/works/web-components-common/src/utils/functions.js">
         <metrics statements="28" coveredstatements="28" conditionals="8" coveredconditionals="8" methods="12" coveredmethods="11"/>
-        <line num="1" count="6" type="stmt"/>
+        <line num="1" count="13" type="stmt"/>
         <line num="2" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="3" count="2" type="stmt"/>
         <line num="4" count="2" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
         <line num="7" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="14" count="6" type="stmt"/>
+        <line num="14" count="13" type="stmt"/>
         <line num="15" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="16" count="1" type="stmt"/>
-        <line num="19" count="6" type="stmt"/>
+        <line num="19" count="13" type="stmt"/>
         <line num="20" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="21" count="1" type="stmt"/>
-        <line num="24" count="6" type="stmt"/>
-        <line num="25" count="5" type="stmt"/>
+        <line num="24" count="13" type="stmt"/>
+        <line num="25" count="39" type="stmt"/>
         <line num="28" count="34" type="stmt"/>
-        <line num="30" count="6" type="stmt"/>
-        <line num="32" count="6" type="stmt"/>
+        <line num="30" count="13" type="stmt"/>
+        <line num="32" count="13" type="stmt"/>
         <line num="33" count="1" type="stmt"/>
-        <line num="36" count="6" type="stmt"/>
-        <line num="37" count="20" type="stmt"/>
+        <line num="36" count="13" type="stmt"/>
+        <line num="37" count="38" type="stmt"/>
         <line num="41" count="1" type="stmt"/>
         <line num="44" count="1" type="stmt"/>
         <line num="45" count="3" type="stmt"/>
         <line num="47" count="1" type="stmt"/>
-        <line num="51" count="6" type="stmt"/>
-        <line num="52" count="18" type="stmt"/>
-        <line num="55" count="6" type="stmt"/>
+        <line num="51" count="13" type="stmt"/>
+        <line num="52" count="36" type="stmt"/>
+        <line num="55" count="13" type="stmt"/>
         <line num="56" count="2" type="stmt"/>
       </file>
       <file name="gettersCommonElement.js" path="/Users/paque/Desktop/works/web-components-common/src/utils/gettersCommonElement.js">
         <metrics statements="18" coveredstatements="18" conditionals="18" coveredconditionals="16" methods="3" coveredmethods="3"/>
-        <line num="6" count="1" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
         <line num="7" count="4" type="stmt"/>
         <line num="9" count="4" type="stmt"/>
         <line num="10" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="11" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="12" count="1" type="stmt"/>
         <line num="14" count="3" type="stmt"/>
-        <line num="24" count="1" type="stmt"/>
-        <line num="25" count="11" type="stmt"/>
-        <line num="26" count="11" type="stmt"/>
-        <line num="28" count="11" type="cond" truecount="3" falsecount="1"/>
-        <line num="29" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="3" type="stmt"/>
+        <line num="25" count="29" type="stmt"/>
+        <line num="26" count="29" type="stmt"/>
+        <line num="28" count="29" type="cond" truecount="3" falsecount="1"/>
+        <line num="29" count="29" type="cond" truecount="2" falsecount="0"/>
         <line num="30" count="1" type="stmt"/>
-        <line num="34" count="10" type="cond" truecount="2" falsecount="0"/>
-        <line num="35" count="4" type="stmt"/>
+        <line num="34" count="28" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="22" type="stmt"/>
         <line num="43" count="6" type="cond" truecount="4" falsecount="0"/>
         <line num="44" count="5" type="stmt"/>
         <line num="53" count="1" type="stmt"/>
       </file>
       <file name="gettersProperties.js" path="/Users/paque/Desktop/works/web-components-common/src/utils/gettersProperties.js">
-        <metrics statements="12" coveredstatements="8" conditionals="52" coveredconditionals="14" methods="6" coveredmethods="2"/>
-        <line num="3" count="3" type="stmt"/>
-        <line num="4" count="7" type="stmt"/>
-        <line num="11" count="3" type="stmt"/>
+        <metrics statements="12" coveredstatements="11" conditionals="52" coveredconditionals="33" methods="6" coveredmethods="5"/>
+        <line num="3" count="10" type="stmt"/>
+        <line num="4" count="6" type="stmt"/>
+        <line num="11" count="10" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
-        <line num="22" count="3" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="32" count="3" type="stmt"/>
-        <line num="33" count="4" type="stmt"/>
-        <line num="40" count="3" type="stmt"/>
-        <line num="41" count="0" type="stmt"/>
-        <line num="50" count="3" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
-      </file>
-    </package>
-    <package name="stories.mock">
-      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="Content.js" path="/Users/paque/Desktop/works/web-components-common/stories/mock/Content.js">
-        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="3" count="1" type="stmt"/>
-      </file>
-      <file name="Image.js" path="/Users/paque/Desktop/works/web-components-common/stories/mock/Image.js">
-        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-      </file>
-      <file name="Images.js" path="/Users/paque/Desktop/works/web-components-common/stories/mock/Images.js">
-        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-      </file>
-      <file name="Template.js" path="/Users/paque/Desktop/works/web-components-common/stories/mock/Template.js">
-        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="13" count="1" type="stmt"/>
-      </file>
-      <file name="Text.js" path="/Users/paque/Desktop/works/web-components-common/stories/mock/Text.js">
-        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
-      </file>
-      <file name="index.js" path="/Users/paque/Desktop/works/web-components-common/stories/mock/index.js">
-        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      </file>
-    </package>
-    <package name="stories.mock.models">
-      <metrics statements="40" coveredstatements="40" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="atom.model.config.js" path="/Users/paque/Desktop/works/web-components-common/stories/mock/models/atom.model.config.js">
-        <metrics statements="31" coveredstatements="31" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
-        <line num="25" count="1" type="stmt"/>
-        <line num="32" count="1" type="stmt"/>
-        <line num="34" count="1" type="stmt"/>
-        <line num="41" count="1" type="stmt"/>
-        <line num="48" count="1" type="stmt"/>
-        <line num="55" count="1" type="stmt"/>
-        <line num="63" count="1" type="stmt"/>
-        <line num="73" count="1" type="stmt"/>
-        <line num="84" count="1" type="stmt"/>
-        <line num="96" count="1" type="stmt"/>
-        <line num="98" count="1" type="stmt"/>
-        <line num="99" count="1" type="stmt"/>
-        <line num="101" count="1" type="stmt"/>
-        <line num="102" count="1" type="stmt"/>
-        <line num="104" count="1" type="stmt"/>
-        <line num="111" count="1" type="stmt"/>
-        <line num="117" count="1" type="stmt"/>
-        <line num="124" count="1" type="stmt"/>
-        <line num="131" count="1" type="stmt"/>
-        <line num="138" count="1" type="stmt"/>
-        <line num="145" count="1" type="stmt"/>
-        <line num="152" count="1" type="stmt"/>
-        <line num="163" count="1" type="stmt"/>
-        <line num="173" count="1" type="stmt"/>
-        <line num="184" count="1" type="stmt"/>
-        <line num="195" count="1" type="stmt"/>
-        <line num="203" count="1" type="stmt"/>
-        <line num="208" count="1" type="stmt"/>
-      </file>
-      <file name="molecules.model.config.js" path="/Users/paque/Desktop/works/web-components-common/stories/mock/models/molecules.model.config.js">
-        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="35" count="1" type="stmt"/>
-        <line num="68" count="1" type="stmt"/>
-        <line num="80" count="1" type="stmt"/>
-        <line num="96" count="1" type="stmt"/>
-        <line num="150" count="1" type="stmt"/>
-        <line num="204" count="1" type="stmt"/>
-        <line num="258" count="1" type="stmt"/>
-        <line num="318" count="1" type="stmt"/>
+        <line num="22" count="10" type="stmt"/>
+        <line num="23" count="13" type="stmt"/>
+        <line num="32" count="10" type="stmt"/>
+        <line num="33" count="8" type="stmt"/>
+        <line num="40" count="10" type="stmt"/>
+        <line num="41" count="28" type="stmt"/>
+        <line num="50" count="10" type="stmt"/>
+        <line num="51" count="32" type="stmt"/>
       </file>
     </package>
   </project>
