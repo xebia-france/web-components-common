@@ -281,7 +281,7 @@ export const Link = styled.a.attrs(props => ({
                ${ props.border ? generateBorderColor(props.border, size, 'active') : '' }
             
                 &>span{
-                    ${ props.border ? generateBorderColor(props.typography, size, 'active') : '' } 
+                   border-color : ${ getFormatedColor( props.typography[size].color.active, props.typography[size].opacity.active )} !important;
                 }
             }
          }`)
