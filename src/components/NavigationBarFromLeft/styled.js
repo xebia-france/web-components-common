@@ -1,7 +1,15 @@
 import styled from "styled-components";
 import {device} from "../../styles/constants";
 import {isNumber} from "../../utils/functions";
-import {generateSize,generatePadding, generateMargin, getFormatedColor, generateFontProperties, generateBorder} from "../../utils/StyleGenerator";
+import {
+    generateSize,
+    generatePadding,
+    generateMargin,
+    getFormatedColor,
+    generateFontProperties,
+    generateBorder,
+    generateBorderColor, generateBackground, generateTextColor
+} from "../../utils/StyleGenerator";
 import {ContainerCommon} from "../../styles/common.styled";
 
 export const Container = styled.div.attrs(props => ({
@@ -94,11 +102,12 @@ export const LinksChildren = styled.ul.attrs(props => ({
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' } 
             ${ props.border ?  generateBorder(props.border, size) : '' }    
-            ${ props.border ? ( props.border[size].color ?
-    `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' ) : ''}
+            ${ props.border ?  generateBorderColor(props.border, size) : '' } 
+          
             ${ props.basis &&  props.basis[size].shadow ? (  props.basis[size].shadow.value !== 'none' ?
     `box-shadow : ${ props.basis[size].shadow.value }; ` : '' ) : ''}
-            background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+    
+            ${props.basis ? generateBackground(props.basis, size) : ''}
             ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };` : ''}
            }
@@ -231,12 +240,11 @@ export const Link = styled.a.attrs(props => ({
             ${ props.basis ? generateMargin(props.basis, size) : ''}
             ${ props.typography ? generateFontProperties(props.typography, size) : '' }
             ${ props.border ? generateBorder(props.border, size) : '' }
-            ${ props.border ?
-    ( props.border[size].color.basic ? `border-color : ${ getFormatedColor(props.border[size].color.basic, props.border[size].opacity.basic ) }; ` : '' )
-    : ''} 
+            ${ props.border ? generateBorderColor(props.border, size, 'basic') : '' }
             
-            background-color: ${ getFormatedColor(props.basis[size].color.basic, props.basis[size].opacity.basic )} ;
-            color:${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
+            ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
+            ${props.typography ? generateTextColor(props.typography, size, 'basic') : ''}
+            
             align-self:${ props.basis[size].alignment.horizontal || '' };
             
             & ${CheckContainer}, & ${ArrowContainer}{
@@ -251,32 +259,30 @@ export const Link = styled.a.attrs(props => ({
                 display:inline;
                 border-bottom-width:3px;
                 border-bottom-style:solid;
-                border-color : ${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
+                ${ props.border ? generateBorderColor(props.typography, size, 'basic') : '' }
            }
          
             &:hover{
-               background-color: ${ getFormatedColor(props.basis[size].color.hover, props.basis[size].opacity.hover )} ;
-               color:${ getFormatedColor( props.typography[size].color.hover, props.typography[size].opacity.hover )};
+               ${props.basis ? generateBackground(props.basis, size, 'hover') : ''}
+               ${props.typography ? generateTextColor(props.typography, size, 'hover') : ''}
+               ${ props.border ? generateBorderColor(props.border, size, 'hover') : '' }
                
-               ${ props.border ? ( props.border[size].color.hover ? 
-                `border-color : ${ getFormatedColor(props.border[size].color.hover, props.border[size].opacity.hover ) }; ` : '' )
-                : ''}
+              
                 &>span{
-                    color:${ getFormatedColor( props.typography[size].color.hover, props.typography[size].opacity.hover )};
-                    border-color : ${ getFormatedColor( props.typography[size].color.hover, props.typography[size].opacity.hover )};
+                    ${props.typography ? generateTextColor(props.typography, size, 'hover') : ''}
+                    ${ props.border ? generateBorderColor(props.typography, size, 'hover') : '' }                    
                }
     
             }
             
             &.selected, &.active{
-               background-color: ${ getFormatedColor(props.basis[size].color.active, props.basis[size].opacity.active )} ;
-               color:${ getFormatedColor( props.typography[size].color.active, props.typography[size].opacity.active )};
-                ${ props.border ? ( props.border[size].color.active ? 
-                `border-color : ${ getFormatedColor(props.border[size].color.active, props.border[size].opacity.active ) }; ` : '' ) : ''}
+               ${props.basis ? generateBackground(props.basis, size, 'active') : ''}
+               ${props.typography ? generateTextColor(props.typography, size, 'active') : ''}
+               ${ props.border ? generateBorderColor(props.border, size, 'active') : '' }
             
-                 &>span{
-                    border-color : ${ getFormatedColor( props.typography[size].color.active, props.typography[size].opacity.active )} !important;
-                 }
+                &>span{
+                    ${ props.border ? generateBorderColor(props.typography, size, 'active') : '' } 
+                }
             }
          }`)
     };
@@ -315,11 +321,9 @@ export const LinkLanguage = styled.a.attrs(props => ({
             ${ props.basis ? generateMargin(props.basis, size) : ''}
             ${ props.typography ? generateFontProperties(props.typography, size) : '' }
             ${ props.border ? generateBorder(props.border, size) : '' }
-            ${ props.border ?
-    ( props.border[size].color.basic ? `border-color : ${ getFormatedColor(props.border[size].color.basic, props.border[size].opacity.basic ) }; ` : '' )
-    : ''} 
+            ${ props.border ? generateBorderColor(props.border, size, 'basic') : '' }
+            ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
             
-            background-color: ${ getFormatedColor(props.basis[size].color.basic, props.basis[size].opacity.basic )} ;
             align-self:${ props.basis[size].alignment.horizontal || '' };
          }`)
     };
@@ -612,18 +616,18 @@ export const Toggle = styled.div.attrs(props => ({
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
             ${ props.typography ? generateFontProperties(props.typography, size) : '' }
-           
-            background-color: ${ getFormatedColor(props.basis[size].color.basic, props.basis[size].opacity.basic )} ;
-            color:${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
+            ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
+            ${props.typography ? generateTextColor(props.typography, size, 'basic') : ''}
             align-self:${ props.basis[size].alignment.horizontal || '' };
             
             & ${IconToggle}, & ${IconToggle}:after{
+                
                 background :${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )}; 
             }
             
             &.open{
-               background-color: ${ getFormatedColor(props.basis[size].color.active, props.basis[size].opacity.active )} ;
-               color:${ getFormatedColor( props.typography[size].color.active, props.typography[size].opacity.active )};
+                ${props.basis ? generateBackground(props.basis, size, 'active') : ''}
+                ${props.typography ? generateTextColor(props.typography, size, 'active') : ''}
             
                 & ${IconToggle}, & ${IconToggle}:after{
                     background :${ getFormatedColor( props.typography[size].color.active, props.typography[size].opacity.active )}; 

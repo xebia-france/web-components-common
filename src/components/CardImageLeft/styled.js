@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 import {ContainerCommon} from '../../styles/common.styled';
 import {device} from "../../styles/constants";
-import {generateMargin, generateBorder, generatePadding, generateSize, getFormatedColor} from "../../utils/StyleGenerator";
+import {
+    generateMargin,
+    generateBorder,
+    generatePadding,
+    generateSize,
+    getFormatedColor,
+    generateBorderColor
+} from "../../utils/StyleGenerator";
 
 export const Container = styled(ContainerCommon)`
     flex-direction : row;
@@ -31,10 +38,8 @@ export const ImageBackground = styled.div.attrs(props => ({
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' }   
             ${ props.border ? generateBorder(props.border, size) : '' } 
-            ${ props.border ?
-                ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
-            : ''}
-               
+            ${ props.border ? generateBorderColor(props.border, size) : '' } 
+            
             align-self:${ props.basis[size].alignment.horizontal || '' };
           
          }`)

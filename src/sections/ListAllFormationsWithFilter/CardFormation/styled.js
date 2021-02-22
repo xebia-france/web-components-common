@@ -7,9 +7,9 @@ import {
     generatePadding,
     generateSize,
     generateBackgroundImage,
-    generateBackgroundImageWebp,
+    generateBackgroundImageWebp, generateBackground,
     generateBackgroundImageWebpNoResponsive,
-    generateBackgroundImageNoResponsive
+    generateBackgroundImageNoResponsive, generateBorderColor, generateTextColor
 } from "../../../utils/StyleGenerator";
 import { CTACommon} from "../../../styles/common.styled";
 
@@ -62,32 +62,17 @@ export const Container = styled.div.attrs(props => ({
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' } 
             ${ props.border ?  generateBorder(props.border, size) : '' }    
-            ${ props.border ?
-    ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
-    : ''}
+            ${ props.border ?  generateBorderColor(props.border, size) : '' }    
+           
             ${ props.basis &&  props.basis[size].shadow ?
-    (  props.basis[size].shadow.value !== 'none' ? `box-shadow : ${ props.basis[size].shadow.value }; ` : '' )
-    : ''}
+                (props.basis[size].shadow.value !== 'none' ? `box-shadow : ${ props.basis[size].shadow.value }; ` : '' )
+            : ''}
     
            &:hover ${CTACommon}{
-               
                 & p{
-                    color:${ getFormatedColor(props.typographyCTA[size].color.hover, props.typographyCTA[size].opacity.hover )};
+                    ${props.typographyCTA ? generateTextColor(props.typographyCTA, size, 'hover') : ''};
                 }
            }
-           
-           /*&  ${CTACommon} svg, & ${CTACommon} ${CTACommon} svg{
-                width : 10px;
-                margin-right : 10px;
-                align-self : flex-start;
-                ${ props.typographyCTA[size].font.lineHeight ?
-                `height : ${ props.typographyCTA[size].font.lineHeight }px;`
-                : ''}
-                
-                & path{
-                     ${ props.typographyTitle ? `fill :  ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
-                }
-           }*/
              
             &:after{
                z-index : 1;
@@ -99,8 +84,8 @@ export const Container = styled.div.attrs(props => ({
                   top:${ props.basis[size].background.top  }px;
                 ` : 'top : 0;'}
                left : 0;
-               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-                ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+               ${props.basis ? generateBackground(props.basis, size): ''}
+               ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };
 
                ` : ''}

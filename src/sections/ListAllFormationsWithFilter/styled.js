@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import {device} from "../../styles/constants";
 import {
-    generatePadding,generateSize, generateMargin,
-    generateBorder,generateFontProperties,
-    generateBackgroundImage, getFormatedColor, generateBackgroundImageWebp
+    generatePadding, generateSize, generateMargin,
+    generateBorder, generateFontProperties, generateBackground,
+    generateBackgroundImage, getFormatedColor, generateBackgroundImageWebp, generateBorderColor, generateTextColor
 } from "../../utils/StyleGenerator";
 
 export const Wrapper = styled.section.attrs(props => ({
@@ -25,12 +25,8 @@ export const Wrapper = styled.section.attrs(props => ({
             ${ props.basis ? generateMargin(props.basis, size) : '' } 
             ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
-            ${ props.border ?
-    ( props.border[size].color ?
-        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});`
-            : `${props.border[size].color.hex};`}` : '')
-    : ''}
-             
+            ${ props.border ?  generateBorderColor(props.border, size) : '' }        
+                
             &:after{
                z-index : 0;
                position : absolute;
@@ -41,10 +37,9 @@ export const Wrapper = styled.section.attrs(props => ({
                   top:${ props.basis[size].background.top  }px;
                 ` : 'top : 0;'}
                left : 0;
-               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-           ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+               ${props.basis ? generateBackground(props.basis, size): ''}
+               ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };
-
                ` : ''}
             }
          }`)
@@ -93,13 +88,9 @@ display : flex;
             ${ props.basis ? generateMargin(props.basis, size) : '' } 
             ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
-            ${ props.border ?
-    ( props.border[size].color ?
-        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});`
-            : `${props.border[size].color.hex};`}` : '')
-    : ''}
-             
-               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+            ${ props.border ?  generateBorderColor(props.border, size) : '' }        
+           
+           ${props.basis ? generateBackground(props.basis, size): ''}
            ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };
 
@@ -135,8 +126,6 @@ export const List = styled.div.attrs(props => ({
              align-items: ${ props.flex[size].properties.alignItems };
              align-content: ${ props.flex[size].properties.alignContent };
              margin-bottom : -${ props.flex[size].properties.gutterVertical }px;
-             
-             
              
              &>*{
                 width: calc(100% / ${ props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px );
@@ -213,7 +202,9 @@ export const Selector = styled.div.attrs(props => ({
              @media ${ device[size] } {
              
                align-self:${ props.basis[size].alignment.horizontal || '' };
-                ${ props.basis ? generateMargin(props.basis, size) : '' } 
+               ${ props.basis ? generateMargin(props.basis, size) : '' } 
+               ${props.typography ? generateTextColor(props.typography, size, 'basic') : ''}
+               ${ props.typography ? generateFontProperties(props.typography, size) : '' }
 
                 &:hover{
                     &>svg path{
@@ -223,72 +214,49 @@ export const Selector = styled.div.attrs(props => ({
                 }
 
                & select{
-               
-                   background-color: ${ getFormatedColor(props.basis[size].color.basic, props.basis[size].opacity.basic )} ;
-        
+                    ${props.basis ? generateBackground(props.basis, size, 'basic'): ''}        
                     ${ props.basis ? generateSize(props.basis, size) : '' } 
                     ${ props.basis ? generatePadding(props.basis, size) : '' }       
                     ${ props.border ? generateBorder(props.border, size) : '' }
-                    ${ props.border ?
-            ( props.border[size].color.basic ? `border-color : ${ getFormatedColor(props.border[size].color.basic, props.border[size].opacity.basic ) }; ` : '' )
-            : ''} 
-                 
+                    ${ props.border ? generateBorderColor(props.border, size, 'basic') : '' }
                     box-shadow : ${ props.basis[size].shadow.value || '' };
         
                     & i {
-                        
-                        ${ props.icon ? `color: ${ getFormatedColor(props.icon[size].color.basic, props.icon[size].opacity.basic) };` : ''}
+                        ${props.icon ? generateTextColor(props.icon, size, 'basic') : ''}
                         ${ props.icon ? generateFontProperties(props.icon, size) : '' }
                         ${ props.icon ? generatePadding(props.icon, size) : '' }
                     }
                  
-                    
-                        
-                        color:${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
-                        ${ props.typography ? generateFontProperties(props.typography, size) : '' }
-                    
-                 
                     &:hover{
-                        background-color:${ getFormatedColor( props.basis[size].color.hover, props.basis[size].opacity.hover)};
-                        border-color : ${ getFormatedColor(props.border[size].color.hover, props.border[size].opacity.hover)};     
-                       
+                        ${props.basis ? generateBackground(props.basis, size, 'hover') : ''}
+                        ${props.border ? generateBorderColor(props.border, size, 'hover') : ''}
+                        ${props.typography ? generateTextColor(props.typography, size, 'hover') : ''}
                         
-                         color:${ getFormatedColor(props.typography[size].color.hover, props.typography[size].opacity.hover )};
-                        
-                       
                         & i {
-                            ${ props.icon ? `color:${ getFormatedColor(props.icon[size].color.hover, props.icon[size].opacity.hover )};` : ''}
+                            ${props.icon ? generateTextColor(props.icon, size, 'hover') : ''}
                         }
                     }
                     
                     &.disabled{
                         cursor : default;
-                        background-color:${ getFormatedColor(props.basis[size].color.disabled, props.basis[size].opacity.disabled)};
-                        border-color : ${ getFormatedColor(props.border[size].color.disabled, props.border[size].opacity.disabled)};     
-                      
-                        
-                            color:${getFormatedColor(props.typography[size].color.disabled, props.typography[size].opacity.disabled)};
-                        
+                        ${props.basis ? generateBackground(props.basis, size, 'disabled') : ''}
+                        ${props.border ? generateBorderColor(props.border, size, 'disabled') : ''}
+                        ${props.typography ? generateTextColor(props.typography, size, 'disabled') : ''}
                        
                         & i {
-                           ${ props.icon ? `color:${ getFormatedColor(props.icon[size].color.disabled, props.icon[size].opacity.disabled)};` : ''}
+                            ${props.icon ? generateTextColor(props.icon, size, 'disabled') : ''}
                         }
                        
                         &:hover{
-                            background-color:${ getFormatedColor(props.basis[size].color.disabled, props.basis[size].opacity.disabled )};
-                            border-color : ${ getFormatedColor(props.border[size].color.disabled, props.border[size].opacity.disabled )};     
+                            ${props.basis ? generateBackground(props.basis, size, 'disabled') : ''}
+                            ${props.border ? generateBorderColor(props.border, size, 'disabled') : ''}
+                            ${props.typography ? generateTextColor(props.typography, size, 'disabled') : ''}
                       
-                           
-                                color:${ getFormatedColor(props.typography[size].color.disabled, props.typography[size].opacity.disabled )};
-                            
-                           
                             & i {
-                               ${ props.icon ? `color:${ getFormatedColor(props.icon[size].color.disabled, props.icon[size].opacity.disabled )};` : ''}
+                                ${props.icon ? generateTextColor(props.icon, size, 'disabled') : ''}
                             }
                         }
-                    
                     }
-                   
                }
     }`)};
 `;

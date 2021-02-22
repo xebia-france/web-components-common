@@ -1,5 +1,6 @@
-import {getExtensionFileName, isNumber} from "./functions";
+import {getExtensionFileName, isHexadecimal, isNumber} from "./functions";
 import {extractWithoutExtension} from "./functions";
+import {hexToRgb, RGBAtoString} from "./functions";
 
 const generatePadding = (prop, size, subProp) => {
     if (subProp) {
@@ -253,14 +254,119 @@ const generateBorder = (prop, size) => {
         : ''}
      
      ` : ''}
-    
-       
-    `
+`
 }
+
+const generateBackground = (prop, size, subProp) => {
+    if(subProp){
+        return `
+            ${( prop[size].color[subProp] && prop[size].color[subProp].hex.startsWith('#')  ?
+                `background-color : ${getFormatedColor(prop[size].color[subProp], prop[size].opacity[subProp])}; `
+            : '' )}
+            
+            ${( prop[size].color[subProp] &&  prop[size].color[subProp].hex.includes('gradient')  ?
+                `background : ${ getFormatedColor(prop[size].color[subProp], prop[size].opacity[subProp])};` 
+            : '' )}
+        `;
+    }
+    return `
+            ${( prop[size].color && prop[size].color.hex.startsWith('#')  ?
+                `background-color : ${getFormatedColor(prop[size].color, prop[size].opacity)}; `
+            : '' )}
+            
+            ${( prop[size].color &&  prop[size].color.hex.includes('gradient')  ?
+                `background : ${ getFormatedColor(prop[size].color, prop[size].opacity)};` 
+            : '' )}
+        `;
+
+}
+
+const generateTextColor = (prop, size, subProp) => {
+    if(subProp){
+        return `
+            ${( prop[size].color[subProp] && prop[size].color[subProp].hex.startsWith('#')  ?
+                `color : ${getFormatedColor(prop[size].color[subProp], prop[size].opacity[subProp])}; `
+            : '' )}
+            
+            ${( prop[size].color[subProp] &&  prop[size].color[subProp].hex.includes('gradient')  ?
+                `
+                background: ${ getFormatedColor(prop[size].color[subProp], prop[size].opacity[subProp])};
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+               ` 
+            : '' )}
+        `;
+    }
+    return `
+            ${( prop[size].color && prop[size].color.hex.startsWith('#')  ?
+                `color : ${getFormatedColor(prop[size].color, prop[size].opacity)}; `
+            : '' )}
+            
+            ${( prop[size].color &&  prop[size].color.hex.includes('gradient')  ?
+                `
+                background: ${ getFormatedColor(prop[size].color, prop[size].opacity)};
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+               ` 
+            : '' )}
+        `;
+}
+
+const generateBorderColor = (prop, size, subProp) => {
+    if(subProp){
+        return `
+            ${(prop[size].color[subProp] && prop[size].color[subProp].hex.startsWith('#')  ?
+                `border-color : ${ getFormatedColor(prop[size].color[subProp], prop[size].opacity[subProp] ) };
+                 border-image-source: none;` 
+            : '' )}
+            
+            ${( prop[size].color[subProp] && prop[size].color[subProp].hex.includes('gradient')  ?
+                `border-image-source : ${ getFormatedColor(prop[size].color[subProp], prop[size].opacity[subProp] ) }; 
+                 border-image-slice: 1;` 
+            : '' )}
+        `;
+    }
+    return `
+            ${(prop[size].color && prop[size].color.hex.startsWith('#')  ?
+                `border-color : ${ getFormatedColor(prop[size].color, prop[size].opacity) };
+                 border-image-source: none;`
+        : '' )}
+            
+            ${( prop[size].color && prop[size].color.hex.includes('gradient')  ?
+                `border-image-source : ${ getFormatedColor(prop[size].color, prop[size].opacity) }; 
+                 border-image-slice: 1;`
+        : '' )}
+        `;
+}
+
 
 const getFormatedColor = (color, opacity) => {
     if (color.hex === 'transparent') {
         return color.hex
+    }else if(!isHexadecimal(color.hex)){
+        const gradient = color.hex;
+        const  gradientType = gradient.split('(')[0];
+        const gradientParameters = gradient.substring(gradient.indexOf('(') + 1, gradient.lastIndexOf(')'));
+        const arrayParameters = gradientParameters.split( /,(?![^(]*\))(?![^"']*["'](?:[^"']*["'][^"']*["'])*[^"']*$)/ );
+
+        const formatedGradient = arrayParameters.map(parameter => {
+            parameter = parameter.trim();
+
+            if(parameter.startsWith('#')){
+                const splited = parameter.split(' ');
+                const rgba = RGBAtoString(hexToRgb(splited[0]), opacity.value);
+                splited[0] = rgba;
+                return  splited.join(' ');
+            }else if(parameter.startsWith('rgba') || parameter.startsWith('rgb')){
+                const splited = parameter.split(' ');
+                var rgb = splited[0].match(/\d+/g);
+                const rgba = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${opacity.value})`
+                splited[0] = rgba;
+                return splited.join(' ');;
+            }
+            return parameter;
+        })
+        return gradientType + '(' + formatedGradient + ')';
     } else {
         return `rgba(${color.rgb},${opacity.value})`
     }
@@ -358,8 +464,11 @@ export {
     generateSize,
     generateFontProperties,
     generateBorder,
+    generateBackground,
     generateBackgroundImage,
     getFormatedColor,
+    generateTextColor,
+    generateBorderColor,
     getFormatedSizeProperty,
     generateBackgroundImageWebp,
     generateBackgroundImageWebpNoResponsive, generateBackgroundImageNoResponsive

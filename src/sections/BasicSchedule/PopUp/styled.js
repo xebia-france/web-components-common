@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 import { red} from "../styled";
 import { theme,  device } from '../../../styles/constants';
-import {generateBackgroundImageWebpNoResponsive, generateBackgroundImageNoResponsive, getFormatedColor, generateFontProperties} from "../../../utils/StyleGenerator";
+import {
+    generateBackgroundImageWebpNoResponsive,
+    generateBackgroundImageNoResponsive,
+    getFormatedColor,
+    generateFontProperties,
+    generateBackground, generateTextColor
+} from "../../../utils/StyleGenerator";
 
 export const PopUpContainer = styled.div.attrs(props => ({
 }))`
@@ -78,7 +84,7 @@ export const Day = styled.div.attrs(props => ({
   
   ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-            background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+            ${props.basis ? generateBackground(props.basis, size)  : ''}
          }`)
     };
   
@@ -161,17 +167,16 @@ export const Time = styled.div.attrs(props => ({
   
   ${ props => props.responsive.map(size => `
         @media ${ device[size] } {
-            ${ props.typographyTitle ? `color: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
+            ${props.typographyTitle ? generateTextColor(props.typographyTitle, size) : ''}
             ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
             font-size : 14px;
             line-height : 16px;
             
             ${ props.basis  ? `
                 @media ${ device[size] } {
-                   background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+                    ${props.basis ? generateBackground(props.basis, size) : ''}
                 }
             ` : ''}
-        
         }`)
     };
 `;
@@ -259,8 +264,6 @@ export const InfoSpeakers = styled(Info).attrs(props => ({
         
             & h4{
                 ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
-                //font-size : 14px;
-                //line-height : 17px;
             }
                          
         }`) : ''

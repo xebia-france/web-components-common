@@ -2,7 +2,13 @@ import styled from 'styled-components';
 import {
     generatePadding,
     generateBorder,
-    generateBackgroundImage, generateBackgroundImageWebp, getFormatedColor, generateFontProperties
+    generateBackground,
+    generateBackgroundImage,
+    generateBackgroundImageWebp,
+    getFormatedColor,
+    generateFontProperties,
+    generateBorderColor,
+    generateTextColor
 } from "../../utils/StyleGenerator";
 
 import {device, size, theme} from "../../styles/constants";
@@ -30,11 +36,7 @@ export const Wrapper = styled.section.attrs(props => ({
              
             ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
-            ${ props.border ?
-    ( props.border[size].color ?
-        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});`
-            : `${props.border[size].color.hex};`}` : '')
-    : ''}
+            ${ props.border ?  generateBorderColor(props.border, size) : '' }  
              
             &:after{
                z-index : 0;
@@ -46,8 +48,8 @@ export const Wrapper = styled.section.attrs(props => ({
                   top:${ props.basis[size].background.top  }px;
                 ` : 'top : 0;'}
                left : 0;
-               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-           ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+               ${props.basis ? generateBackground(props.basis, size): ''}
+               ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };
 
                ` : ''}
@@ -92,17 +94,6 @@ export const Container = styled.div.attrs(props => ({
     
 `;
 
-export const Test = styled.div.attrs(props => ({
-
-}))`
-  width : 100%;
-  height : 100%;
-  background : yellow;
-  position : relative;
-`;
-
-
-
 export const Dash = styled.div.attrs(props => ({
 
 }))`
@@ -124,9 +115,6 @@ export const DashContainer = styled.div.attrs(props => ({
    &>div:last-child{
        width : 5px;
    }
-   
-   
-   
 `;
 
 
@@ -150,26 +138,16 @@ export const Head = styled.div.attrs(props => ({
     };
 `;
 
-export const Column = styled.div.attrs(props => ({
-
-}))`
+export const Column = styled.div`
   margin-top : 30px;
 `;
 
 
-export const HeadSchedule = styled.div.attrs(props => ({
-
-}))`
+export const HeadSchedule = styled.div`
   display : flex;
 `;
 
-
-
-
-
-export const Label = styled.div.attrs(props => ({
-
-}))`
+export const Label = styled.div`
   width : 35px;
   min-width: 35px;
   height : 40px;
@@ -190,9 +168,7 @@ export const Label = styled.div.attrs(props => ({
 `;
 
 
-export const HoursLine = styled.div.attrs(props => ({
-
-}))`
+export const HoursLine = styled.div`
   width : 35px;
   min-width : 35px;
   //height : auto;
@@ -264,10 +240,6 @@ export const HoursLine = styled.div.attrs(props => ({
    }
 `;
 
-
-
-
-
 export const Day = styled.div.attrs(props => ({
     basis : props.basis,
     responsive : props.responsive,
@@ -288,11 +260,10 @@ export const Day = styled.div.attrs(props => ({
          @media ${ device[size] } {
             ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
             &.active{
-               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+                ${props.basis ? generateBackground(props.basis, size): ''}
             }
          }`)
     };
-  
 `;
 
 
@@ -358,8 +329,6 @@ export const Schedule = styled.div.attrs(props => ({
         }
     ` : ''}
    }
-  
-  
 `;
 
 
@@ -442,7 +411,7 @@ export const Time = styled.div.attrs(props => ({
  
  ${ props => props.responsive.map(size => `
         @media ${ device[size] } {
-            ${ props.typographyTitle ? `color: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
+            ${ props.typographyTitle ? generateTextColor(props.typographyTitle, size) : ''}
             ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
             font-size : 12px;
             line-height : 15px;
@@ -452,17 +421,12 @@ export const Time = styled.div.attrs(props => ({
             }
         }`)
     };
- 
- 
 `;
-
-
 
 export const SlotsContainer = styled.div.attrs(props => ({
 
 }))`
   position : relative;
-  
 `;
 
 export const Informations = styled.div.attrs(props => ({
@@ -474,28 +438,22 @@ export const Informations = styled.div.attrs(props => ({
 }))`
  display : flex;
  flex-direction : column;
- 
- 
+  
  ${ props =>  props.responsive ? props.responsive.map(size => `
         @media ${ device[size] } {
         
             & h4{
-                ${ props.typographyTitle ? `color: ${ getFormatedColor(props.typographyTitle[size].color, props.typographyTitle[size].opacity) };` : ''}
+                ${props.typographyTitle ? generateTextColor(props.typographyTitle, size) : ''}
                 ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
-                //${ props.basisTitle ? generatePadding(props.basisTitle, size) : '' }   
             }
             & h5{
-                ${ props.typographyText ? `color: ${ getFormatedColor(props.typographyText[size].color, props.typographyText[size].opacity) };` : ''}
+                ${props.typographyText ? generateTextColor(props.typographyText, size) : ''}
                 ${ props.typographyText ? generateFontProperties(props.typographyText, size) : '' }
-                //${ props.basisText ? generatePadding(props.basisText, size) : '' }   
-            }
-                         
+            }          
         }`) : ''
     }; 
     
   & h4{
-    //font-size : 14px;
-    //line-height : 18px;
     margin-top : 5px;
     
     &.cropped{
@@ -503,12 +461,8 @@ export const Informations = styled.div.attrs(props => ({
         white-space:nowrap; 
         text-overflow:ellipsis; 
     }
-   
   }
   & h5{
-    //font-size : 12px;
-    //line-height : 13px;
-    //opacity : 0.4;
     margin-top : 5px;
   }
   
@@ -587,7 +541,7 @@ export const Slot = styled.div.attrs(props => ({
   ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
             & ${SlotContent}{
-               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+                ${props.basis ? generateBackground(props.basis, size) : ''}
             }
          }`)
     };
@@ -730,8 +684,7 @@ export const SwitchButtons = styled.div.attrs(props => ({
         @media ${ device[size] } {
             & ${ToRight}, & ${ToLeft}{
                     &:hover{
-                        background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-                        
+                        ${props.basis ? generateBackground(props.basis, size) : ''}
                         & svg path{
                             fill : ${theme.white};
                         }
@@ -1345,7 +1298,6 @@ export const Filters = styled.div.attrs(props => ({
         
             &>div{
                 ${ props.typographyTitle ? generateFontProperties(props.typographyTitle, size) : '' }
-               // ${ props.basisTitle ? generatePadding(props.basisTitle, size) : '' }   
                 font-size : 14px;
                 line-height : 16px;
                 color : ${theme.white};
@@ -1354,7 +1306,7 @@ export const Filters = styled.div.attrs(props => ({
                    background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
                 }*/
                 &.active{
-                    background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+                    ${props.basis ? generateBackground(props.basis, size) : ''}
                 }
             }
                      
@@ -1376,10 +1328,6 @@ export const FiltersContainer = styled.div.attrs(props => ({
   @media ${device.M} {
      width : calc(100%  - 25px); 
   }   
-       
-        
-        
-  
 `;
 
 export const ToLeft = styled.div.attrs(props => ({

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {ArrowContainer, LinksChildren, Link} from "../styled";
-import { getFormatedColor} from "../../../utils/StyleGenerator";
+import {generateBackground, getFormatedColor} from "../../../utils/StyleGenerator";
 import { device} from "../../../styles/constants";
 
 export const Element = styled.li.attrs(props => ({
@@ -16,7 +16,7 @@ export const Element = styled.li.attrs(props => ({
     
     ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-                background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+                ${props.basis ? generateBackground(props.basis, size) : ''}
                 ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };
                ` : ''}

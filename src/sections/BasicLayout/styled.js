@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import {device} from "../../styles/constants";
 import {
     generatePadding,
-    generateBorder,
-    generateBackgroundImage, getFormatedColor, generateBackgroundImageWebp
+    generateBorder, generateSize,
+    generateBackgroundImage, generateBackgroundImageWebp, generateBorderColor, generateBackground
 } from "../../utils/StyleGenerator";
 
 export const Wrapper = styled.section.attrs(props => ({
@@ -22,14 +22,10 @@ export const Wrapper = styled.section.attrs(props => ({
   overflow : hidden;
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-             
+            ${ props.basis ? generateSize(props.basis, size) : '' }       
             ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
-            ${ props.border ? 
-                    ( props.border[size].color ? 
-                        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});` 
-                                                                        : `${props.border[size].color.hex};`}` : '')
-             : ''}
+            ${ props.border ?  generateBorderColor(props.border, size) : '' }   
             
             &:after{
                z-index : 0;
@@ -41,11 +37,10 @@ export const Wrapper = styled.section.attrs(props => ({
                   top:${ props.basis[size].background.top  }px;
                 ` : 'top : 0;'}
                left : 0;
-               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-           ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
-                  background:${ props.basis[size].color.gradient  };
-
-               ` : ''}
+               ${props.basis ? generateBackground(props.basis, size) : ''};
+               ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+                  background:${ props.basis[size].color.gradient  };` 
+                : ''}
             }
          }`)
     }; 
@@ -68,9 +63,6 @@ export const Wrapper = styled.section.attrs(props => ({
             .webp &:before{
                ${ props.asset ? generateBackgroundImageWebp(props.asset, size, props.assetsDirectory) : ''}  
             }
-            
-            
-         
          }`) : ''
     };
 `;
@@ -96,8 +88,6 @@ export const Container = styled.div.attrs(props => ({
              align-content: ${ props.flex[size].properties.alignContent };
              margin-bottom : -${ props.flex[size].properties.gutterVertical }px;
              
-             
-             
              &>*{
                 width: calc(100% / ${ props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px );
                 margin-bottom : ${ props.flex[size].properties.gutterVertical }px;
@@ -122,9 +112,7 @@ export const Container = styled.div.attrs(props => ({
                     }
                     `  : ''
                 }
-                
              }
-             
          }`)
     }; 
 `;

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import {device} from "../../styles/constants";
 import {
-    generatePadding, generateSize, generateMargin,
-    generateBorder, generateBackgroundImage, generateBackgroundImageWebp, getFormatedColor
+    generatePadding, generateSize, generateMargin,generateBackground,
+    generateBorder, generateBackgroundImage, generateBackgroundImageWebp, getFormatedColor, generateBorderColor
 } from "../../utils/StyleGenerator";
 
 export const Wrapper = styled.section.attrs(props => ({
@@ -23,15 +23,10 @@ export const Wrapper = styled.section.attrs(props => ({
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
             ${ props.basis ? generateMargin(props.basis, size) : '' } 
-    
             ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
-            ${ props.border ?
-    ( props.border[size].color ?
-        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});`
-            : `${props.border[size].color.hex};`}` : '')
-    : ''}
-             
+            ${ props.border ?  generateBorderColor(props.border, size) : '' }        
+                
             &:after{
                z-index : 0;
                position : absolute;
@@ -42,10 +37,9 @@ export const Wrapper = styled.section.attrs(props => ({
                   top:${ props.basis[size].background.top  }px;
                 ` : 'top : 0;'}
                left : 0;
-               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-           ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+               ${props.basis ? generateBackground(props.basis, size): ''}
+               ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };
-
                ` : ''}
             }
          }`)
@@ -83,7 +77,6 @@ export const Container = styled.div.attrs(props => ({
   width : inherit;
   display : flex;
   margin:auto;
-
   
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
@@ -95,8 +88,6 @@ export const Container = styled.div.attrs(props => ({
              align-items: ${ props.flex[size].properties.alignItems };
              align-content: ${ props.flex[size].properties.alignContent };
              margin-bottom : -${ props.flex[size].properties.gutterVertical }px;
-             
-             
              
              &>*{
                 width: calc(100% / ${ props.flex[size].properties.columns } - ${   ((props.flex[size].properties.columns - 1) * props.flex[size].properties.gutterHorizontal) / props.flex[size].properties.columns }px );

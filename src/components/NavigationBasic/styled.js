@@ -1,7 +1,15 @@
 import styled from "styled-components";
 import {device} from "../../styles/constants";
 import {isNumber} from "../../utils/functions";
-import {generateSize,generatePadding, generateMargin, getFormatedColor, generateFontProperties, generateBorder} from "../../utils/StyleGenerator";
+import {
+    generateSize,
+    generatePadding,
+    generateMargin,
+    getFormatedColor,
+    generateFontProperties,
+    generateBorder,
+    generateBorderColor, generateBackground, generateTextColor
+} from "../../utils/StyleGenerator";
 
 export const Container = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -105,12 +113,11 @@ export const Link = styled.a.attrs(props => ({
             ${ props.basis ? generateMargin(props.basis, size) : ''}
             ${ props.typography ? generateFontProperties(props.typography, size) : '' }
             ${ props.border ? generateBorder(props.border, size) : '' }
-            ${ props.border ?
-                ( props.border[size].color.basic ? `border-color : ${ getFormatedColor(props.border[size].color.basic, props.border[size].opacity.basic ) }; ` : '' )
-            : ''} 
+            ${ props.border ? generateBorderColor(props.border, size, 'basic') : '' }
             
-            background-color: ${ getFormatedColor(props.basis[size].color.basic, props.basis[size].opacity.basic )} ;
-            color:${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
+            ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
+            ${props.typography ? generateTextColor(props.typography, size, 'basic') : ''}
+    
             align-self:${ props.basis[size].alignment.horizontal || '' };
             
             & ${CheckContainer}, & ${ArrowContainer}{
@@ -120,20 +127,17 @@ export const Link = styled.a.attrs(props => ({
             }
          
             &:hover{
-               background-color: ${ getFormatedColor(props.basis[size].color.hover, props.basis[size].opacity.hover )} ;
-               color:${ getFormatedColor( props.typography[size].color.hover, props.typography[size].opacity.hover )};
-
-               ${ props.border ?
-                    ( props.border[size].color.hover ? `border-color : ${ getFormatedColor(props.border[size].color.hover, props.border[size].opacity.hover ) }; ` : '' )
-                : ''}
+               ${props.basis ? generateBackground(props.basis, size, 'hover') : ''}
+               ${props.typography ? generateTextColor(props.typography, size, 'hover') : ''}
+               ${ props.border ? generateBorderColor(props.border, size, 'hover') : '' }
+               
             }
             
             &.selected{
-               background-color: ${ getFormatedColor(props.basis[size].color.active, props.basis[size].opacity.active )} ;
-               color:${ getFormatedColor( props.typography[size].color.active, props.typography[size].opacity.active )};
-                ${ props.border ?
-                    ( props.border[size].color.active ? `border-color : ${ getFormatedColor(props.border[size].color.active, props.border[size].opacity.active ) }; ` : '' )
-                : ''}
+               ${props.basis ? generateBackground(props.basis, size, 'active') : ''}
+               ${props.typography ? generateTextColor(props.typography, size, 'active') : ''}
+               ${ props.border ? generateBorderColor(props.border, size, 'active') : '' }
+            
             }
          }`)
     };
@@ -161,11 +165,9 @@ export const LinkLanguage = styled.a.attrs(props => ({
             ${ props.basis ? generateMargin(props.basis, size) : ''}
             ${ props.typography ? generateFontProperties(props.typography, size) : '' }
             ${ props.border ? generateBorder(props.border, size) : '' }
-            ${ props.border ?
-                ( props.border[size].color.basic ? `border-color : ${ getFormatedColor(props.border[size].color.basic, props.border[size].opacity.basic ) }; ` : '' )
-            : ''} 
+            ${ props.border ? generateBorderColor(props.border, size, 'basic') : '' }
+            ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
             
-            background-color: ${ getFormatedColor(props.basis[size].color.basic, props.basis[size].opacity.basic )} ;
             align-self:${ props.basis[size].alignment.horizontal || '' };
          }`)
     };
@@ -338,20 +340,22 @@ export const FixedContainer = styled.div.attrs(props => ({
 
  ${ props => ['D'].map((size, i) => `
     @media ${ device[size] } {
-        background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
+        ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
+            
         
         ${ Links }{
             &>nav>ul li ul, &>nav ${Locale} ${LanguageSelector} {
-                background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
+                ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}            
             }
         } 
         
         &.scrolled{
-            background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
+            ${props.basis ? generateBackground(props.basis, size, 'scroll') : ''}
+            
             
             ${ Links }{
                 &>nav>ul li ul, &>nav ${Locale} ${LanguageSelector} {
-                    background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
+                    ${props.basis ? generateBackground(props.basis, size, 'scroll') : ''}
                 }
             }
         } 
@@ -372,7 +376,7 @@ export const FixedContainer = styled.div.attrs(props => ({
     @media ${ device[size] } {
         ${ Links }{
             &>nav{
-                background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},1)` : props.basis[size].color.basic.hex };
+                ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
                 padding-top:${ isNumber(props.basis[size].size.basic.height)
                                     ? `${ props.basis[size].size.basic.height }px`
                                     : props.basis[size].size.basic.height };
@@ -430,17 +434,17 @@ export const FixedContainer = styled.div.attrs(props => ({
         }
         
         ${ Top }{
-            background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
+            ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
         }
         
         &.scrolled{
              ${ Links }{
                 &>nav{
-                    background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},1)` : props.basis[size].color.scroll.hex };
+                    ${props.basis ? generateBackground(props.basis, size, 'scroll') : ''}
                 }
              }
              ${ Top }{
-                background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
+                ${props.basis ? generateBackground(props.basis, size, 'scroll') : ''}
             }
         }
         

@@ -33,7 +33,6 @@ const buildComponent = (fields, field,language,assetsDirectory,  key) => {
 }
 
 const HeaderBasic = ({fields, order, assetsDirectory, language}) =>  {
-    console.log('assetsDirectory', assetsDirectory);
         return (
             <Container  {...getTemplatePropsWithImage(fields.Template)}  assetsDirectory={assetsDirectory}>
                 {

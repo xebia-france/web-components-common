@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {ContainerCommon, ContentCommon} from "../../styles/common.styled";
 import { device} from "../../styles/constants";
-import { getFormatedColor, generateFontProperties} from "../../utils/StyleGenerator";
+import {getFormatedColor, generateFontProperties, generateTextColor} from "../../utils/StyleGenerator";
 import {ImageContainerCommon} from "../../styles/common.styled";
 
 export const Container = styled(ContainerCommon).attrs(props => ({
@@ -13,7 +13,7 @@ export const Container = styled(ContainerCommon).attrs(props => ({
          @media ${ device[size] } {
             
             & ${ ContentCommon } b, & ${ ContentCommon } strong{
-                color:${ getFormatedColor(props.contentBoldTypography[size].color, props.contentBoldTypography[size].opacity) };
+                ${props.contentBoldTypography ? generateTextColor(props.contentBoldTypography, size) : ''}
                 ${ props.contentBoldTypography ?  generateFontProperties(props.contentBoldTypography, size) : '' }
             }
          }`) : ''

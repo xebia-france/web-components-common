@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {ContainerCommon, ImageContainerCommon } from '../../styles/common.styled';
 import {device} from "../../styles/constants";
-import {generateFontProperties, generatePadding, getFormatedColor} from "../../utils/StyleGenerator";
+import {generateFontProperties, generatePadding, generateTextColor} from "../../utils/StyleGenerator";
 
 export const Container = styled(ContainerCommon)``;
 export const ImageContainer = styled(ImageContainerCommon)``;
@@ -43,7 +43,7 @@ export const Content = styled.div.attrs(props => ({
 ${ props => props.responsive.map(size => `
 
          @media ${ device[size] } {
-             color:${ getFormatedColor(props.typography[size].color, props.typography[size].opacity) };
+            ${ props.typography ?  generateTextColor(props.typography, size)  : ''}
             ${ props.typography ? generateFontProperties(props.typography, size) : '' }
             
             &>*{
@@ -52,45 +52,38 @@ ${ props => props.responsive.map(size => `
             }
          
             & strong{
-               ${ props.typographyBold ? `color:${ getFormatedColor(props.typographyBold[size].color, props.typographyBold[size].opacity) };` : ''}
+                ${props.typographyBold ? generateTextColor(props.typographyBold, size) : ''}
                ${ props.typographyBold ? generateFontProperties(props.typographyBold, size) : '' }
                 //${ props.basisBold ? generatePadding(props.basisBold, size) : '' } 
                 //   ${ props.typographyBold ? generateFontProperties(props.typographyBold, size) : '' }
             }
             
             & a{
-                ${ props.typographyLink ? `color:${ getFormatedColor(props.typographyLink[size].color, props.typographyLink[size].opacity) };` : ''}              
+                ${props.typographyLink  ? generateTextColor(props.typographyLink , size) : ''}
                 ${ props.typographyLink ? generateFontProperties(props.typographyLink, size) : '' }
                 //${ props.basisLink ? generatePadding(props.basisLink, size) : '' } 
                 //   ${ props.typographyLink ? generateFontProperties(props.typographyLink, size) : '' }
             }
             
             & h1{
-            
-                ${ props.typographyHeading1 ? `color:${ getFormatedColor(props.typographyHeading1[size].color, props.typographyHeading1[size].opacity) };` : ''}
+                ${props.typographyHeading1 ? generateTextColor(props.typographyHeading1, size) : ''}
                 ${ props.typographyHeading1 ? generateFontProperties(props.typographyHeading1, size) : '' }
                 ${ props.basisHeading1 ? generatePadding(props.basisHeading1, size) : '' } 
             
             }
             
             & h2{
-            
-                ${ props.typographyHeading2 ? `color:${ getFormatedColor(props.typographyHeading2[size].color, props.typographyHeading2[size].opacity) };` : ''}
+                ${props.typographyHeading2 ? generateTextColor(props.typographyHeading2, size) : ''}
                 ${ props.typographyHeading2 ? generateFontProperties(props.typographyHeading2, size) : '' }
                 ${ props.basisHeading2 ? generatePadding(props.basisHeading2, size) : '' } 
             
             }
             
             & h3{
-            
-                ${ props.typographyHeading3 ? `color:${ getFormatedColor(props.typographyHeading3[size].color, props.typographyHeading3[size].opacity) };` : ''}
+                ${props.typographyHeading3 ? generateTextColor(props.typographyHeading3, size) : ''}
                 ${ props.typographyHeading3 ? generateFontProperties(props.typographyHeading3, size) : '' }
                 ${ props.basisHeading3 ? generatePadding(props.basisHeading3, size) : '' } 
-            
             }
-            
-            
          }`)
     };
-
 `;

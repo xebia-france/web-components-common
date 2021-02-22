@@ -8,7 +8,7 @@ import {
     generateMargin,
     generateFontProperties,
     generateBorder,
-    getFormatedColor
+    getFormatedColor, generateBackground, generateTextColor, generateBorderColor
 } from "../../utils/StyleGenerator";
 
 export const Container = styled.div`
@@ -56,30 +56,28 @@ export const Link = styled.a.attrs(props => ({
   
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-            background-color:${getFormatedColor(props.basis[size].color.basic, props.basis[size].opacity.basic) };
-
+         
+            ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
             ${ props.basis ? generateSize(props.basis, size) : '' }       
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' } 
             ${ props.typography ? generateFontProperties(props.typography, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' } 
-            ${ props.border ?
-                ( props.border[size].color.basic ? `border-color : ${ getFormatedColor(props.border[size].color.basic, props.border[size].opacity.basic ) }; ` : '' )
-            : ''} 
-           
+            ${ props.border ? generateBorderColor(props.border, size, 'basic') : '' }
+            
             align-self:${ props.basis[size].alignment.horizontal || '' };
-            color:${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
+            ${props.typography ? generateTextColor(props.typography, size, 'basic') : ''}
                         
             &:hover{
-                background-color:${ getFormatedColor( props.basis[size].color.hover, props.basis[size].opacity.hover)};
-                border-color : ${ getFormatedColor(props.border[size].color.hover, props.border[size].opacity.hover)};
-                color:${ getFormatedColor(props.typography[size].color.hover, props.typography[size].opacity.hover )};
+                ${props.basis ? generateBackground(props.basis, size, 'hover') : ''}
+                ${props.typography ? generateTextColor(props.typography, size, 'hover') : ''}
+                ${ props.border ? generateBorderColor(props.border, size, 'hover') : '' }
             }
             
             &.selected{
-                background-color:${ getFormatedColor( props.basis[size].color.active, props.basis[size].opacity.active)};
-                border-color : ${ getFormatedColor(props.border[size].color.active, props.border[size].opacity.active)};
-                color:${ getFormatedColor(props.typography[size].color.active, props.typography[size].opacity.active )};                
+                ${props.basis ? generateBackground(props.basis, size, 'active') : ''}
+                ${props.typography ? generateTextColor(props.typography, size, 'active') : ''}
+                ${ props.border ? generateBorderColor(props.border, size, 'active') : '' }
             }
          }`)
     };
@@ -144,38 +142,10 @@ export const FixedContainer = styled.div.attrs(props => ({
 
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-             
-            width:${ isNumber(props.basis[size].size.basic.width)
-                    ? `${ props.basis[size].size.basic.width }px`
-                    : props.basis[size].size.basic.width };
-    
-            height:${ isNumber(props.basis[size].size.basic.height)
-                    ? `${ props.basis[size].size.basic.height }px`
-                    : props.basis[size].size.basic.height };
-            max-width: ${ isNumber(props.basis[size].size.basic.maxWidth)
-                    ? `${ props.basis[size].size.basic.maxWidth }px`
-                    : props.basis[size].size.basic.maxWidth || '' };
-            max-height:${ isNumber(props.basis[size].size.basic.maxHeight)
-                    ? `${ props.basis[size].size.basic.maxHeight }px`
-                    :props.basis[size].size.basic.maxHeight || '' };
-            min-width: ${ isNumber(props.basis[size].size.basic.minWidth)
-                    ? `${ props.basis[size].size.basic.minWidth }px`
-                    : props.basis[size].size.basic.minWidth || '' };
-            min-height:${ isNumber(props.basis[size].size.basic.minHeight)
-                    ? `${ props.basis[size].size.basic.minHeight }px`
-                    : props.basis[size].size.basic.minHeight || '' };      
-                                
-            padding-top : ${ props.basis[size].padding.basic.top }px;
-            padding-bottom : ${ props.basis[size].padding.basic.bottom }px;
-            padding-left : ${ props.basis[size].padding.basic.left }px;
-            padding-right : ${ props.basis[size].padding.basic.right }px;
-             
-            margin-top : ${ props.basis[size].margin.basic.top }px;
-            margin-bottom : ${ props.basis[size].margin.basic.bottom }px;
-            margin-left : ${ props.basis[size].margin.basic.left }px;
-            margin-right : ${ props.basis[size].margin.basic.right }px;
-            
-            background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
+            ${props.basis ? generateSize(props.basis, size,'basic' ) : ''}
+            ${props.basis ? generatePadding(props.basis, size,'basic' ) : ''}
+            ${props.basis ? generateMargin(props.basis, size,'basic' ) : ''}
+            ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
 
             & ${Top}{
                height:${ isNumber(props.basis[size].size.basic.height)
@@ -189,7 +159,7 @@ export const FixedContainer = styled.div.attrs(props => ({
             & ${Links}{
                 & li{
                     &>ul{
-                       background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},${props.basis[size].opacity.basic.value})` : props.basis[size].color.basic.hex };
+                       ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
                     }
                     &:hover{
                         &>ul li{
@@ -202,42 +172,15 @@ export const FixedContainer = styled.div.attrs(props => ({
             }
             
             &.scrolled{
-                width:${ isNumber(props.basis[size].size.scroll.width)
-                    ? `${ props.basis[size].size.scroll.width }px`
-                    : props.basis[size].size.scroll.width };
-    
-                height:${ isNumber(props.basis[size].size.scroll.height)
-                        ? `${ props.basis[size].size.scroll.height }px`
-                        : props.basis[size].size.scroll.height };
-                max-width: ${ isNumber(props.basis[size].size.scroll.maxWidth)
-                        ? `${ props.basis[size].size.scroll.maxWidth }px`
-                        : props.basis[size].size.scroll.maxWidth || '' };
-                max-height:${ isNumber(props.basis[size].size.scroll.maxHeight)
-                        ? `${ props.basis[size].size.scroll.maxHeight }px`
-                        :props.basis[size].size.scroll.maxHeight || '' };
-                min-width: ${ isNumber(props.basis[size].size.scroll.minWidth)
-                        ? `${ props.basis[size].size.scroll.minWidth }px`
-                        : props.basis[size].size.scroll.minWidth || '' };
-                min-height:${ isNumber(props.basis[size].size.scroll.minHeight)
-                        ? `${ props.basis[size].size.scroll.minHeight }px`
-                        : props.basis[size].size.scroll.minHeight || '' };      
-                                    
-                padding-top : ${ props.basis[size].padding.scroll.top }px;
-                padding-bottom : ${ props.basis[size].padding.scroll.bottom }px;
-                padding-left : ${ props.basis[size].padding.scroll.left }px;
-                padding-right : ${ props.basis[size].padding.scroll.right }px;
-                 
-                margin-top : ${ props.basis[size].margin.scroll.top }px;
-                margin-bottom : ${ props.basis[size].margin.scroll.bottom }px;
-                margin-left : ${ props.basis[size].margin.scroll.left }px;
-                margin-right : ${ props.basis[size].margin.scroll.right }px;
-                
-                background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
-    
+                ${props.basis ? generateSize(props.basis, size,'scroll' ) : ''}
+                ${props.basis ? generatePadding(props.basis, size,'scroll' ) : ''}
+                ${props.basis ? generateMargin(props.basis, size,'scroll' ) : ''}
+                ${props.basis ? generateBackground(props.basis, size, 'scroll') : ''}
+                    
                 & ${Links}{
                     & li{
                         &>ul{
-                           background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},${props.basis[size].opacity.scroll.value})` : props.basis[size].color.scroll.hex };
+                           ${props.basis ? generateBackground(props.basis, size, 'scroll') : ''}
                         }
                         &:hover{
                             &>ul li{

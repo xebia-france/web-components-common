@@ -6,7 +6,7 @@ import {
     generatePadding,
     generateMargin,
     generateFontProperties,
-    generateBorder, getFormatedColor
+    generateBorder, getFormatedColor, generateBackground, generateBorderColor, generateTextColor
 } from "../../utils/StyleGenerator";
 
 export const Container = styled.div`
@@ -29,32 +29,28 @@ export const Link = styled.a.attrs(props => ({
   
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
-             background-color:${getFormatedColor(props.basis[size].color.basic, props.basis[size].opacity.basic) };
-            
+            ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}            
             ${ props.basis ? generateSize(props.basis, size) : '' }  
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' } 
             ${ props.typography ? generateFontProperties(props.typography, size) : '' } 
             ${ props.border ? generateBorder(props.border, size) : '' } 
-            ${ props.border ?
-                ( props.border[size].color.basic ? `border-color : ${ getFormatedColor(props.border[size].color.basic, props.border[size].opacity.basic ) }; ` : '' )
-            : ''} 
-            
+            ${ props.border ? generateBorderColor(props.border, size, 'basic') : '' } 
             
             align-self:${ props.basis[size].alignment.horizontal || '' };
             justify-content:${ props.basis[size].alignment.horizontal || '' };
-            color:${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};
+            ${props.typography ? generateTextColor(props.typography, size, 'basic') : ''}
             
             &:not(.disabledHover):hover{
-                background-color:${ getFormatedColor( props.basis[size].color.hover, props.basis[size].opacity.hover)};
-                border-color : ${ getFormatedColor(props.border[size].color.hover, props.border[size].opacity.hover)};
-                color:${ getFormatedColor(props.typography[size].color.hover, props.typography[size].opacity.hover )};
+                ${props.basis ? generateBackground(props.basis, size, 'hover') : ''}     
+                ${ props.border ? generateBorderColor(props.border, size, 'hover') : '' }   
+                ${props.typography ? generateTextColor(props.typography, size, 'hover') : ''}    
             }
             
             &.selected{
-                background-color:${ getFormatedColor( props.basis[size].color.active, props.basis[size].opacity.active)};
-                border-color : ${ getFormatedColor(props.border[size].color.active, props.border[size].opacity.active)};
-                color:${ getFormatedColor(props.typography[size].color.active, props.typography[size].opacity.active )};
+                ${props.basis ? generateBackground(props.basis, size, 'active') : ''}     
+                ${ props.border ? generateBorderColor(props.border, size, 'active') : '' }   
+                ${props.typography ? generateTextColor(props.typography, size, 'active') : ''} 
             }
          }`)
     };
@@ -71,7 +67,7 @@ export const Bullet = styled.span.attrs(props => ({
    ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
             ${ props.typography ? generateFontProperties(props.typography, size) : '' } 
-            color:${ getFormatedColor( props.typography[size].color.basic, props.typography[size].opacity.basic )};            
+            ${props.typography ? generateTextColor(props.typography, size, 'basic') : ''} 
          }`)
     };
 `;
@@ -134,9 +130,9 @@ export const FooterContainer = styled.div.attrs(props => ({
          
             ${ props.basis ? generateSize(props.basis, size) : '' }
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
-            ${ props.basis ? generateMargin(props.basis, size) : '' }   
+            ${ props.basis ? generateMargin(props.basis, size) : '' }  
+            ${props.basis ? generateBackground(props.basis, size) : ''} 
             
-            background-color:${ props.basis[size].color.rgb ?  `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` : props.basis[size].color.hex };
             ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };
 
@@ -144,7 +140,7 @@ export const FooterContainer = styled.div.attrs(props => ({
             & ${Links}{
                 & li{
                     &>div{
-                       background-color:${ props.basis[size].color.rgb ?  `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` : props.basis[size].color.hex };
+                       ${props.basis ? generateBackground(props.basis, size) : ''} 
                     ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                       background-color: transparent;
     

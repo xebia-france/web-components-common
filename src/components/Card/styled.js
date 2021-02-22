@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {ContainerCommon} from '../../styles/common.styled';
 import { ContentCommon} from "../../styles/common.styled";
 import { device} from "../../styles/constants";
-import { getFormatedColor, generateFontProperties} from "../../utils/StyleGenerator";
+import { generateFontProperties, generateTextColor} from "../../utils/StyleGenerator";
 
 export const Container = styled(ContainerCommon).attrs(props => ({
     contentBold : props.contentBold,
@@ -13,7 +13,7 @@ export const Container = styled(ContainerCommon).attrs(props => ({
          @media ${ device[size] } {
             
             & ${ ContentCommon } b, & ${ ContentCommon } strong{
-                color:${ getFormatedColor(props.contentBoldTypography[size].color, props.contentBoldTypography[size].opacity) };
+                ${props.contentBoldTypography ? generateTextColor(props.contentBoldTypography, size) : ''}
                 ${ props.contentBoldTypography ?  generateFontProperties(props.contentBoldTypography, size) : '' }
             }
          }`) : ''

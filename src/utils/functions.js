@@ -21,6 +21,8 @@ const RGBAtoString = (rgb, opacity) => {
     return 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',' + opacity + ')';
 };
 
+const isHexadecimal = (el) => el.startsWith('#');
+
 const isResponsiveProps = props => {
     return (props.hasOwnProperty('M') || props.hasOwnProperty('T') || props.hasOwnProperty('D'));
 };
@@ -62,6 +64,7 @@ export {
     hexToRgb,
     RGBtoString,
     RGBAtoString,
+    isHexadecimal,
     isResponsiveProps,
     getResponsiveKey,
     isNumber, isOdd,

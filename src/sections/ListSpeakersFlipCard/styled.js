@@ -4,7 +4,7 @@ import {isNumber} from '../../utils/functions';
 import isEmpty from 'lodash/isEmpty'
 import {
     generatePadding,
-    generateBorder
+    generateBorder, generateBorderColor, generateBackground,
 } from "../../utils/StyleGenerator";
 
 export const Wrapper = styled.section.attrs(props => ({
@@ -22,11 +22,8 @@ export const Wrapper = styled.section.attrs(props => ({
             
             ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
-            ${ props.border ? 
-                    ( props.border[size].color ? 
-                        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});` 
-                                                                        : `${props.border[size].color.hex};`}` : '')
-             : ''}
+            ${ props.border ?  generateBorderColor(props.border, size) : '' }        
+            
          }`)
     }; 
 `;
@@ -114,8 +111,7 @@ export const Front = styled.div.attrs(props => ({
 
      ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-            background-color:${ `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` };
-            
+            ${props.basis ? generateBackground(props.basis, size): ''}            
          }`)
     }; 
     
@@ -159,7 +155,7 @@ export const Back = styled.div.attrs(props => ({
 
     ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-            background:${ `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` };
+            ${props.basis ? generateBackground(props.basis, size): ''}
             padding-top : ${ props.basis[size].padding.top }px;
             padding-bottom : ${ props.basis[size].padding.bottom }px;
             padding-left : ${ props.basis[size].padding.left }px;
@@ -206,7 +202,6 @@ export const Card = styled.div.attrs(props => ({
     
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-            //background:${ `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` };
 
              width:${ isNumber(props.basis[size].size.width)
     ? `${ props.basis[size].size.width }px`

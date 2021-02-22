@@ -3,7 +3,12 @@ import {device} from "../../styles/constants";
 import {
     generatePadding,
     generateBorder,
-    generateBackgroundImage, getFormatedColor, generateBackgroundImageWebp, generateSize
+    generateBackgroundImage,
+    getFormatedColor,
+    generateBackgroundImageWebp,
+    generateSize,
+    generateBorderColor,
+    generateBackground
 } from "../../utils/StyleGenerator";
 
 export const Wrapper = styled.section.attrs(props => ({
@@ -26,12 +31,8 @@ export const Wrapper = styled.section.attrs(props => ({
              ${ props.basis ? generateSize(props.basis, size) : '' } 
             ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
-            ${ props.border ?
-    ( props.border[size].color ?
-        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});`
-            : `${props.border[size].color.hex};`}` : '')
-    : ''}
-             
+            ${ props.border ?  generateBorderColor(props.border, size) : '' }        
+            
             &:after{
                z-index : 0;
                position : absolute;
@@ -42,8 +43,8 @@ export const Wrapper = styled.section.attrs(props => ({
                   top:${ props.basis[size].background.top  }px;
                 ` : 'top : 0;'}
                left : 0;
-               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-           ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
+               ${props.basis ? generateBackground(props.basis, size) : ''}
+                ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };
 
                ` : ''}

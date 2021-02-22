@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {device} from "../../../styles/constants";
-import { getFormatedColor} from "../../../utils/StyleGenerator";
+import {generateTextColor} from "../../../utils/StyleGenerator";
 import {Content} from "../styled";
 
 export const ContentBlock = styled(Content).attrs(props => ({
@@ -13,7 +13,7 @@ export const ContentBlock = styled(Content).attrs(props => ({
 ${ props => props.responsive.map(size => `
          @media ${ device[size] } {
             & strong, & a{
-              color:${ getFormatedColor(props.typography[size].color, props.typography[size].opacity) };
+              ${props.typography ? generateTextColor(props.typography, size) : ''}
             }
          }`)
     };

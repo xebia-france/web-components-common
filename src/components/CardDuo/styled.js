@@ -6,7 +6,7 @@ import {
     generateMargin,
     generateBackgroundImage,
     getFormatedColor,
-    generateBackgroundImageWebp
+    generateBackgroundImageWebp, generateBackground
 } from '../../utils/StyleGenerator';
 import {ContainerCommon, ImageContainerCommon} from "../../styles/common.styled";
 
@@ -45,11 +45,12 @@ export const Between = styled.div.attrs(props => ({
             ${ props.basis ? generateSize(props.basis, size) : '' } 
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' }  
-            background-color: ${ getFormatedColor(props.basisParent[size].color,props.basisParent[size].opacity) }; 
+            ${props.basisParent ?  generateBackground(props.basisParent, size) : ''}
             
             &>div{
                width : 100%;
                height : 100%;
+               ${props.basis ? generateBackground(props.basis, size) : ''}
                background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) }; 
             }
          }`)

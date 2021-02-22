@@ -3,7 +3,7 @@ import {ContainerCommon} from '../../styles/common.styled';
 import {ImageContainerCommon} from "../../styles/common.styled";
 import { device} from "../../styles/constants";
 import { ContentCommon} from "../../styles/common.styled";
-import { getFormatedColor, generateFontProperties} from "../../utils/StyleGenerator";
+import {getFormatedColor, generateFontProperties, generateTextColor} from "../../utils/StyleGenerator";
 
 export const Container = styled(ContainerCommon).attrs(props => ({
     disabledLink : props.disabledLink,
@@ -27,7 +27,7 @@ export const Container = styled(ContainerCommon).attrs(props => ({
          @media ${ device[size] } {
             
             & ${ ContentCommon } b, & ${ ContentCommon } strong{
-                color:${ getFormatedColor(props.contentBoldTypography[size].color, props.contentBoldTypography[size].opacity) };
+                ${props.contentBoldTypography ? generateTextColor(props.contentBoldTypography, size) : ''}
                 ${ props.contentBoldTypography ?  generateFontProperties(props.contentBoldTypography, size) : '' }
             }
          }`) : ''

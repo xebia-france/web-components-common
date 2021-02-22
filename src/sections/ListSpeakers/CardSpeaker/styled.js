@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {device, size} from "../../../styles/constants";
-import { getFormatedColor, generateBorder} from "../../../utils/StyleGenerator";
+import {getFormatedColor, generateBorder, generateBorderColor} from "../../../utils/StyleGenerator";
 import { isNumber } from "../../../utils/functions";
 
 export const Portrait = styled.div.attrs(props => ({
@@ -263,9 +263,8 @@ export const Card = styled.div.attrs(props => ({
         & ${Contain}{
             background-color: rgba(0,0,0,0.0);
             ${ props.border ?  generateBorder(props.border, size) : '' }    
-            ${ props.border ?
-                ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
-            : ''}
+            ${ props.border ?  generateBorderColor(props.border, size) : '' }    
+            
             box-shadow : ${ (props.basis[size].shadow && props.basis[size].shadow.value !== 'none' )  ? props.basis[size].shadow.value : '0px 5px 5px 5px rgba(0, 0, 0, 0.0)' };
             
             & ${Above}{

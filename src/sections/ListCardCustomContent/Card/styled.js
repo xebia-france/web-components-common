@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {device} from "../../../styles/constants";
 import {
     getFormatedColor,
-    generateBorder,
+    generateBorder, generateBorderColor,  generateBackground,
     generateMargin,
     generatePadding,
     generateSize, generateBackgroundImage, generateBackgroundImageWebp, generateBackgroundImageNoResponsive, generateBackgroundImageWebpNoResponsive
@@ -24,12 +24,8 @@ export const ImageBackground = styled.div.attrs(props => ({
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' }   
             ${ props.border ? generateBorder(props.border, size) : '' } 
-            ${ props.border ?
-    ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
-    : ''}
-               
+            ${ props.border ? generateBorderColor(props.border, size) : '' } 
             align-self:${ props.basis[size].alignment.horizontal || '' };
-         
          }`)
     }; 
     
@@ -95,9 +91,8 @@ export const Container = styled.div.attrs(props => ({
             ${ props.basis ? generatePadding(props.basis, size) : '' }       
             ${ props.basis ? generateMargin(props.basis, size) : '' } 
             ${ props.border ?  generateBorder(props.border, size) : '' }    
-            ${ props.border ?
-    ( props.border[size].color ? `border-color : ${ getFormatedColor(props.border[size].color, props.border[size].opacity ) }; ` : '' )
-    : ''}
+            ${ props.border ?  generateBorderColor(props.border, size) : '' }    
+            
             ${ props.basis &&  props.basis[size].shadow ?
     (  props.basis[size].shadow.value !== 'none' ? `box-shadow : ${ props.basis[size].shadow.value }; ` : '' )
     : ''}
@@ -112,7 +107,7 @@ export const Container = styled.div.attrs(props => ({
                   top:${ props.basis[size].background.top  }px;
                 ` : 'top : 0;'}
                left : 0;
-               background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+               ${props.basis ? generateBackground(props.basis, size): ''}
                 ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };
 
@@ -203,12 +198,8 @@ export const NextSession = styled.div.attrs(props => ({
    ${ props => props.responsive.map(size => `
        
          @media ${ device[size] } {
-              ${ props.basis && props.basis[size].color ? `
-                   background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
-
-              ` : ''}
-
-         
+            ${props.basis ? generateBackground(props.basis, size): ''}
+              
          }`)
     }; 
     

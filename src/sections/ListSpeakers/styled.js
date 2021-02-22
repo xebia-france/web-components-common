@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {device, size} from "../../styles/constants";
 import {
     generatePadding,
-    generateBorder,
+    generateBorder, generateBorderColor,generateBackground,
     generateBackgroundImage
 } from "../../utils/StyleGenerator";
 import {Above, Below, Card, Contain, Miniature, Portrait, TextContent} from "./CardSpeaker/styled";
@@ -26,11 +26,7 @@ export const Wrapper = styled.section.attrs(props => ({
              
             ${ props.basis ? generatePadding(props.basis, size) : '' }
             ${ props.border ?  generateBorder(props.border, size) : '' }        
-            ${ props.border ? 
-                    ( props.border[size].color ? 
-                        `border-color :${ props.border[size].color.rgb ? `rgba(${props.border[size].color.rgb},${props.border[size].opacity.value});` 
-                                                                        : `${props.border[size].color.hex};`}` : '')
-             : ''}
+            ${ props.border ?  generateBorderColor(props.border, size) : '' }        
              
             &:before{
                z-index : 0;
@@ -42,7 +38,7 @@ export const Wrapper = styled.section.attrs(props => ({
                   top:${ props.basis[size].background.top  }px;
                 ` : 'top : 0;'}
                left : 0;
-               background-color:${ props.basis[size].color.rgb ?  `rgba(${props.basis[size].color.rgb},${props.basis[size].opacity.value})` : props.basis[size].color.hex };
+               ${props.basis ? generateBackground(props.basis, size): ''}
             }
          }`)
     }; 

@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 import {device} from '../../styles/constants';
-import {generatePadding, generateSize, generateMargin, getFormatedColor, generateBackgroundImage, getFormatedSizeProperty, generateBackgroundImageWebp} from "../../utils/StyleGenerator";
+import {
+    generatePadding,
+    generateSize,
+    generateMargin,
+    getFormatedColor,
+    generateBackgroundImage,
+    getFormatedSizeProperty,
+    generateBackgroundImageWebp,
+    generateBackground
+} from "../../utils/StyleGenerator";
 
 export const ImageCorner = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -64,7 +73,7 @@ export const Container = styled.div.attrs(props => ({
    
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
-            background-color: ${ getFormatedColor(props.basis[size].color, props.basis[size].opacity) };
+            ${props.basis ? generateBackground(props.basis,  size) : ''}
             ${ props.basis[size].color.gradient && props.basis[size].color.gradient !== '' ? `
                   background:${ props.basis[size].color.gradient  };
 
