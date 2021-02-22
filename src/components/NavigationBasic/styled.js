@@ -376,7 +376,8 @@ export const FixedContainer = styled.div.attrs(props => ({
     @media ${ device[size] } {
         ${ Links }{
             &>nav{
-                ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
+               // ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
+               background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},1)` : props.basis[size].color.basic.hex };
                 padding-top:${ isNumber(props.basis[size].size.basic.height)
                                     ? `${ props.basis[size].size.basic.height }px`
                                     : props.basis[size].size.basic.height };
@@ -440,7 +441,7 @@ export const FixedContainer = styled.div.attrs(props => ({
         &.scrolled{
              ${ Links }{
                 &>nav{
-                    ${props.basis ? generateBackground(props.basis, size, 'scroll') : ''}
+                    background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},1)` : props.basis[size].color.scroll.hex };
                 }
              }
              ${ Top }{
