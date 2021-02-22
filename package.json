@@ -25,12 +25,12 @@
     "@babel/polyfill": "7.6.0",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
-    "@storybook/addon-actions": "5.1.11",
-    "@storybook/addon-info": "5.1.11",
-    "@storybook/addon-knobs": "5.1.11",
-    "@storybook/addon-notes": "5.1.11",
-    "@storybook/addons": "5.1.11",
-    "@storybook/react": "5.1.11",
+    "@storybook/addon-actions": "6.1.18",
+    "@storybook/addon-info": "5.3.21",
+    "@storybook/addon-knobs": "6.1.18",
+    "@storybook/addon-notes": "5.3.21",
+    "@storybook/addons": "6.1.18",
+    "@storybook/react": "6.1.18",
     "@tulipjs/eslint-config": "^1.1.1",
     "babel-eslint": "10.0.1",
     "babel-jest": "26.2.2",
@@ -67,6 +67,7 @@
     "react-swipeable-views": "0.13.9",
     "styled-components": "4.3.2"
   },
+  "peerDependencies": {},
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
