@@ -13,6 +13,7 @@ export { default as CardMultiCTA } from './CardMultiCTA';
 export { default as CardIframe } from './CardIframe';
 export { default as CardWithListPartners } from './CardWithListPartners';
 export { default as CardZoom } from './CardZoom';
+export { default as CountdownDate } from './CountdownDate';
 export { default as BlockText } from './BlockText';
 export { default as HeaderCategory } from './HeaderCategory';
 export { default as HeaderImageSwitchDown } from './HeaderImageSwitchDown';
