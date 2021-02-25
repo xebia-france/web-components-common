@@ -43,6 +43,8 @@ const CountdownDate = ({fields, order, assetsDirectory, language}) => {
         return () => clearTimeout(timer);
     });
 
+    const adaptPlural = (number, string) => number <= 1 ? string.replace(/s\b/ig, '') : string
+
     return (
         <Container  {...getTemplatePropsWithImage(fields.Template)}
                     assetsDirectory={assetsDirectory}>
@@ -60,7 +62,7 @@ const CountdownDate = ({fields, order, assetsDirectory, language}) => {
                         <TextCommon {...getTextProps(fields.Title)}>{timeLeft.days}</TextCommon>
                         {
                             (fields.TextDays.content.text && fields.TextDays.content.text[language]) &&
-                            <TextCommon {...getTextProps(fields.Tagline)}>{fields.TextDays.content.text ? fields.TextDays.content.text[language] : ''}</TextCommon>
+                            <TextCommon {...getTextProps(fields.Tagline)}>{fields.TextDays.content.text ? adaptPlural(timeLeft.days, fields.TextDays.content.text[language]) : ''}</TextCommon>
                         }
                     </Box>
                     <Separator {...getTemplateProps(fields.Separator)}></Separator>
@@ -68,7 +70,7 @@ const CountdownDate = ({fields, order, assetsDirectory, language}) => {
                         <TextCommon {...getTextProps(fields.Title)}>{timeLeft.hours}</TextCommon>
                         {
                             (fields.TextHours.content.text && fields.TextHours.content.text[language]) &&
-                            <TextCommon {...getTextProps(fields.Tagline)}>{fields.TextHours.content.text ? fields.TextHours.content.text[language] : ''}</TextCommon>
+                            <TextCommon {...getTextProps(fields.Tagline)}>{fields.TextHours.content.text ? adaptPlural(timeLeft.hours, fields.TextHours.content.text[language]) : ''}</TextCommon>
                         }
                     </Box>
                     <Separator {...getTemplateProps(fields.Separator)}></Separator>
@@ -76,7 +78,7 @@ const CountdownDate = ({fields, order, assetsDirectory, language}) => {
                         <TextCommon {...getTextProps(fields.Title)}>{timeLeft.minutes}</TextCommon>
                         {
                             (fields.TextMinutes.content.text && fields.TextMinutes.content.text[language]) &&
-                            <TextCommon {...getTextProps(fields.Tagline)}>{fields.TextMinutes.content.text ? fields.TextMinutes.content.text[language] : ''}</TextCommon>
+                            <TextCommon {...getTextProps(fields.Tagline)}>{fields.TextMinutes.content.text ? adaptPlural(timeLeft.minutes,fields.TextMinutes.content.text[language]) : ''}</TextCommon>
                         }
                     </Box>
                     <Separator {...getTemplateProps(fields.Separator)}></Separator>
@@ -84,7 +86,7 @@ const CountdownDate = ({fields, order, assetsDirectory, language}) => {
                         <TextCommon {...getTextProps(fields.Title)}>{timeLeft.seconds}</TextCommon>
                         {
                             (fields.TextSeconds.content.text && fields.TextSeconds.content.text[language]) &&
-                            <TextCommon {...getTextProps(fields.Tagline)}>{fields.TextSeconds.content.text ? fields.TextSeconds.content.text[language] : ''}</TextCommon>
+                            <TextCommon {...getTextProps(fields.Tagline)}>{fields.TextSeconds.content.text ? adaptPlural(timeLeft.seconds, fields.TextSeconds.content.text[language]) : ''}</TextCommon>
                         }
                     </Box>
                 </>
