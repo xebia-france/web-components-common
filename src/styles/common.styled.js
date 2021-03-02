@@ -99,6 +99,7 @@ export const TextCommon = styled.p.attrs(props => ({
             ${ props.border ?  generateBorderColor(props.border, size) : '' }   
         }`)
     }; 
+    
 `;
 
 export const ContentCommon = styled.div.attrs(props => ({
@@ -123,6 +124,7 @@ export const ContentCommon = styled.div.attrs(props => ({
             }
          }`)
     };
+    
     
     & iframe{
         margin-top : 40px;

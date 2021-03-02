@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, ImageContainer, CTA, Contain} from './styled';
+import {Container, ImageContainer, CTA, Contain, TextHeading, ContentHeading} from './styled';
 import PropTypes from 'prop-types';
 import {fileNameFromUrl} from "../../utils/functions";
 import {generatePictureWebP} from "../../utils/gettersCommonElement";
@@ -24,10 +24,10 @@ const buildComponent = (fields, field,language,assetsDirectory,  key, data) => {
     if (!fields[field]) return
     switch (field) {
         case 'Title':
-            return <TextCommon key={key} {...getTextProps(fields[field])}>{data.name}</TextCommon>
+            return <TextHeading key={key} {...getTextProps(fields[field])} >{data.name}</TextHeading>
 
         case 'Content':
-            return <ContentCommon  {...getContentProps(fields[field])} key={key}
+            return <ContentHeading  {...getContentProps(fields[field])} key={key}
                                    dangerouslySetInnerHTML={{
                                        __html: data.title && data.title.childMarkdownRemark ?
                                            data.title.childMarkdownRemark.html

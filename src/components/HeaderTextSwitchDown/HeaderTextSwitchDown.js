@@ -1,20 +1,26 @@
 import React from 'react';
-import {Container, CallToActions, Contain} from './styled';
+import {Container, CallToActions, Contain, TextHeading} from './styled';
 import PropTypes from 'prop-types';
 import Text from '../../functional/Text';
 import Content from '../../functional/Content';
 import CTA from '../../functional/CTA'
 import Image from "../../functional/Image";
-import {getTemplatePropsWithImage} from "../../utils/gettersProperties";
+import {getTemplatePropsWithImage, getTextProps} from "../../utils/gettersProperties";
+
+const HeadingElement = ({field, language}) => {
+    const content = field.content.text ? field.content.text[language] : null
+    if (!content) return null;
+    return (<TextHeading {...getTextProps(field)}>{content}</TextHeading>);
+};
 
 const buildComponent = (fields, field, language, assetsDirectory, key) => {
     if (!fields[field]) return
     switch (field) {
         case 'Title':
-            return <Text key={key} field={fields[field]} language={language}/>;
+            return <HeadingElement key={key} field={fields[field]} textShadow language={language}/>;
 
         case 'Tagline':
-            return <Text key={key} field={fields[field]} language={language}/>;
+            return <HeadingElement key={key} field={fields[field]} textShadow language={language}/>;
 
         case 'Content':
             return <Content key={key} field={fields[field]} language={language}/>;

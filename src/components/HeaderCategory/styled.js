@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {ContainerCommon , ImageContainerCommon, CTACommon } from '../../styles/common.styled';
+import {ContainerCommon, ImageContainerCommon, CTACommon, TextCommon, ContentCommon} from '../../styles/common.styled';
 import {device} from "../../styles/constants";
 import { generateBackgroundImage, generateBackgroundImageWebp} from "../../utils/StyleGenerator";
 
@@ -41,6 +41,24 @@ export const ImageContainer = styled(ImageContainerCommon)``;
 
 export const CTA = styled(CTACommon)``;
 
+
+export const TextHeading = styled(TextCommon)`
+    ${  ['T', 'D'].map((size, i) => `
+         @media ${ device[size] } {
+           text-shadow: 0px 0px 6px rgb(0,0,0,60%);
+         }`)
+    };
+`;
+
+export const ContentHeading = styled(ContentCommon)`
+    ${  ['T', 'D'].map((size, i) => `
+         @media ${ device[size] } {
+           &>*{
+            text-shadow: 0px 0px 6px rgb(0,0,0,60%);
+           }
+         }`)
+    };
+`;
 
 export const Contain = styled.div`
     z-index : 2;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { device } from '../../styles/constants';
-import {ContainerCommon} from "../../styles/common.styled";
+import {ContainerCommon, TextCommon} from "../../styles/common.styled";
 import { generateBackgroundImage, generateBackgroundImageWebp } from "../../utils/StyleGenerator";
 
 export const Container = styled(ContainerCommon)`
@@ -81,4 +81,13 @@ export const CallToActions = styled.div.attrs(props => ({
          @media ${ device[size] } {
             justify-content:${ props.basis[size].alignment.horizontal || '' };
         }`)};
+`;
+
+
+export const TextHeading = styled(TextCommon)`
+    ${  ['T', 'D'].map((size, i) => `
+         @media ${ device[size] } {
+           text-shadow: 0px 0px 6px rgb(0,0,0,60%);
+         }`)
+    };
 `;
