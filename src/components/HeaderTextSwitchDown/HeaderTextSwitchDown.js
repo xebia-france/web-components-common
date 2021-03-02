@@ -17,10 +17,10 @@ const buildComponent = (fields, field, language, assetsDirectory, key) => {
     if (!fields[field]) return
     switch (field) {
         case 'Title':
-            return <HeadingElement key={key} field={fields[field]} textShadow language={language}/>;
+            return <HeadingElement key={key} field={fields[field]} language={language}/>;
 
         case 'Tagline':
-            return <HeadingElement key={key} field={fields[field]} textShadow language={language}/>;
+            return <HeadingElement key={key} field={fields[field]} language={language}/>;
 
         case 'Content':
             return <Content key={key} field={fields[field]} language={language}/>;
