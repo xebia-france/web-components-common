@@ -207,6 +207,13 @@ export const Main = styled(ContainerCommon)`
 
 export const Text = styled(TextCommon)``;
 
+
+export const TextHeading = styled(TextCommon)`
+    &>*{
+        text-shadow: 0px 0px 6px rgb(0,0,0,60%);
+    }
+`;
+
 export const Content = styled.div.attrs(props => ({
     responsive: props.responsive,
     typographyHeading1 : props.typographyHeading1,

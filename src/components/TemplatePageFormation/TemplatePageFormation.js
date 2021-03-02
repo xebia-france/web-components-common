@@ -6,7 +6,7 @@ import {
     Content,
     Main,
     Blocks,
-    Trainers,
+    Trainers,TextHeading,
     PartnershipList, PromotionBanner, ContainerBanner, Contain, ArrowContainer, AdditionalInformation, AdditionalToggle
 } from './styled';
 import {IconContainer} from "./ItemSession/styled";
@@ -240,8 +240,8 @@ class TemplatePageFormation extends Component {
                     }
                     <Contain>
 
-                        <TextCommon {...getTextProps(HeaderSettings.Tagline)}>{data.category[0].name}</TextCommon>
-                        <TextCommon {...getTextProps(HeaderSettings.Title)}>{data.name}</TextCommon>
+                        <TextHeading {...getTextProps(HeaderSettings.Tagline)}>{data.category[0].name}</TextHeading>
+                        <TextHeading {...getTextProps(HeaderSettings.Title)}>{data.name}</TextHeading>
                     </Contain>
 
 

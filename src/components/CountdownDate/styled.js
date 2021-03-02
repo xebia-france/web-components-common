@@ -27,6 +27,7 @@ export const Container = styled(ContainerCommon).attrs(props => ({
 `;
 export const Separator = styled(ContainerCommon)`
     z-index : 3;
+    
   
 `;
 
