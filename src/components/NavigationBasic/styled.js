@@ -345,7 +345,8 @@ export const FixedContainer = styled.div.attrs(props => ({
         
         ${ Links }{
             &>nav>ul li ul, &>nav ${Locale} ${LanguageSelector} {
-                ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}            
+                ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
+                            
             }
         } 
         
@@ -538,7 +539,7 @@ export const FixedContainer = styled.div.attrs(props => ({
         left : 0;
         z-index : 3;
         overflow : hidden;
-        transition : background-color 500ms ease-in-out;
+        transition : background-color 500ms ease-in-out, background 500ms ease-in-out;
         height :  inherit;
     }
     
@@ -564,7 +565,7 @@ export const FixedContainer = styled.div.attrs(props => ({
                 float : left;
                 z-index: 2;
                 width : 100%;
-                transition : transform 700ms ease-in-out, background-color 500ms ease-in-out;
+                transition : transform 700ms ease-in-out, background-color 500ms ease-in-out, background 500ms ease-in-out;
                 overflow-x : hidden;
                 display : flex;
                 flex-direction : column;
