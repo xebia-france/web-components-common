@@ -341,10 +341,23 @@ export const FixedContainer = styled.div.attrs(props => ({
  ${ props => ['D'].map((size, i) => `
     @media ${ device[size] } {
         
-            
+         ${ Top }{
+            overflow-x : hidden;
+            position : absolute;
+            display : flex;
+            align-items : center;
+            justify-content : space-between;
+            width : 100%;
+            top : 0;
+            left : 0;
+            z-index : 3;
+            overflow : hidden;
+            transition : background-color 500ms ease-in-out, background 500ms ease-in-out;
+            height :  inherit;
+        }
+    
         ${ Top }{
             ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
-            transition : background-color 500ms ease-in-out, background 500ms ease-in-out;
         }
         ${ Links }{
             &>nav>ul li ul, &>nav ${Locale} ${LanguageSelector} {
