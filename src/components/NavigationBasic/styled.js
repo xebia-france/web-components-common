@@ -342,7 +342,9 @@ export const FixedContainer = styled.div.attrs(props => ({
     @media ${ device[size] } {
         ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
             
-        
+        ${ Top }{
+            transition : background-color 500ms ease-in-out, background 500ms ease-in-out;
+        }
         ${ Links }{
             &>nav>ul li ul, &>nav ${Locale} ${LanguageSelector} {
                 ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
