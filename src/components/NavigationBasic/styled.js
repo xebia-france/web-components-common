@@ -264,7 +264,9 @@ export const CurrentLocale = styled.div.attrs(props => ({
   }
 `;
 
-export const Top = styled.div``;
+export const Top = styled.div`
+     transition : background-color 500ms ease-in-out, background 500ms ease-in-out;
+`;
 
 export const FixedContainer = styled.div.attrs(props => ({
     responsive: props.responsive,
@@ -277,6 +279,7 @@ export const FixedContainer = styled.div.attrs(props => ({
     width : 100%;
     justify-content : space-between;
     align-items : center;
+    transition : background-color 500ms ease-in-out, background 500ms ease-in-out;
     
     ${ Links }{
         height : inherit;
@@ -340,25 +343,10 @@ export const FixedContainer = styled.div.attrs(props => ({
 
  ${ props => ['D'].map((size, i) => `
     @media ${ device[size] } {
-        
-         ${ Top }{
-            overflow-x : hidden;
-            position : absolute;
-            display : flex;
-            align-items : center;
-            justify-content : space-between;
-            width : 100%;
-            top : 0;
-            left : 0;
-            z-index : 3;
-            overflow : hidden;
-            transition : background-color 500ms ease-in-out, background 500ms ease-in-out;
-            height :  inherit;
-        }
     
-        ${ Top }{
-            ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
-        }
+        
+        ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
+        
         ${ Links }{
             &>nav>ul li ul, &>nav ${Locale} ${LanguageSelector} {
                 ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
