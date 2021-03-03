@@ -8,7 +8,7 @@ import {
     getFormatedColor,
     generateFontProperties,
     generateBorder,
-    generateBorderColor, generateBackground, generateTextColor
+    generateBorderColor, generateBackground, generateTextColor, getFirstColorGradient
 } from "../../utils/StyleGenerator";
 
 export const Container = styled.div.attrs(props => ({
@@ -377,7 +377,14 @@ export const FixedContainer = styled.div.attrs(props => ({
         ${ Links }{
             &>nav{
                // ${props.basis ? generateBackground(props.basis, size, 'basic') : ''}
-               background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},1)` : props.basis[size].color.basic.hex };
+              // background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},1)` : props.basis[size].color.basic.hex };
+                ${ props.basis[size].color.basic && props.basis[size].color.basic.hex.startsWith('#') ? 
+                `background: ${props.basis[size].color.basic.hex};`: ''}
+                
+                ${ props.basis[size].color.basic && props.basis[size].color.basic.hex.includes('gradient') ? 
+                `background: ${getFirstColorGradient(props.basis[size].color.basic.hex)};`: ''}
+                
+                
                 padding-top:${ isNumber(props.basis[size].size.basic.height)
                                     ? `${ props.basis[size].size.basic.height }px`
                                     : props.basis[size].size.basic.height };
@@ -441,7 +448,12 @@ export const FixedContainer = styled.div.attrs(props => ({
         &.scrolled{
              ${ Links }{
                 &>nav{
-                    background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},1)` : props.basis[size].color.scroll.hex };
+                    //background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},1)` : props.basis[size].color.scroll.hex };
+                    ${ props.basis[size].color.scroll && props.basis[size].color.scroll.hex.startsWith('#') ? 
+                    `background: ${props.basis[size].color.scroll.hex};`: ''}
+                
+                    ${ props.basis[size].color.scroll && props.basis[size].color.scroll.hex.includes('gradient') ? 
+                    `background: ${getFirstColorGradient(props.basis[size].color.scroll.hex)};`: ''}
                 }
              }
              ${ Top }{
@@ -451,12 +463,25 @@ export const FixedContainer = styled.div.attrs(props => ({
         
         &.open{
             ${ Top }{
-                 background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},1)` : props.basis[size].color.basic.hex };
+                ${ props.basis[size].color.basic && props.basis[size].color.basic.hex.startsWith('#') ? 
+                `background: ${props.basis[size].color.basic.hex};`: ''}
+                
+                ${ props.basis[size].color.basic && props.basis[size].color.basic.hex.includes('gradient') ? 
+                `background: ${getFirstColorGradient(props.basis[size].color.basic.hex)};`: ''}
+                
+                
+                // background-color:${ props.basis[size].color.basic.rgb ?  `rgba(${props.basis[size].color.basic.rgb},1)` : props.basis[size].color.basic.hex };
             }  
             
             &.scrolled{
                 ${ Top }{
-                    background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},1})` : props.basis[size].color.scroll.hex };
+                    ${ props.basis[size].color.scroll && props.basis[size].color.scroll.hex.startsWith('#') ? 
+                    `background: ${props.basis[size].color.scroll.hex};`: ''}
+                
+                    ${ props.basis[size].color.scroll && props.basis[size].color.scroll.hex.includes('gradient') ? 
+                    ` background: ${getFirstColorGradient(props.basis[size].color.scroll.hex)};`: ''}
+                
+                    //background-color:${ props.basis[size].color.scroll.rgb ?  `rgba(${props.basis[size].color.scroll.rgb},1})` : props.basis[size].color.scroll.hex };
                 }
             }  
         }

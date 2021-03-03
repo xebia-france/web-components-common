@@ -360,16 +360,46 @@ const getFormatedColor = (color, opacity) => {
             }else if(parameter.startsWith('rgba') || parameter.startsWith('rgb')){
                 const splited = parameter.split(' ');
                 var rgb = splited[0].match(/\d+/g);
-                const rgba = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${opacity.value})`
+
+                const rgba = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${rgb[3] === '0' ? 0 : opacity.value})`
                 splited[0] = rgba;
                 return splited.join(' ');;
             }
             return parameter;
         })
+
         return gradientType + '(' + formatedGradient + ')';
     } else {
         return `rgba(${color.rgb},${opacity.value})`
     }
+}
+
+const getFirstColorGradient = (gradient) => {
+
+
+    const  gradientType = gradient.split('(')[0];
+    const gradientParameters = gradient.substring(gradient.indexOf('(') + 1, gradient.lastIndexOf(')'));
+    const arrayParameters = gradientParameters.split( /,(?![^(]*\))(?![^"']*["'](?:[^"']*["'][^"']*["'])*[^"']*$)/ );
+
+    let color =  null;
+
+        arrayParameters.forEach(parameter => {
+            parameter = parameter.trim();
+            if(color !== null){
+                return;
+            }else if(parameter.startsWith('#')){
+                const splited = parameter.split(' ');
+                color = splited[0];
+
+            }else if(parameter.startsWith('rgba') || parameter.startsWith('rgb')){
+                const splited = parameter.split(' ');
+                var rgb = splited[0].match(/\d+/g);
+
+                color = `rgba(${rgb[0]},${rgb[1]},${rgb[2]}, 1)`;
+            }
+        })
+
+    return color;
 }
 
 const getFormatedSizeProperty = (property, value) => {
@@ -459,6 +489,7 @@ const generateBackgroundImageWebpNoResponsive = (fileName, assetsDirectory) => {
 }
 
 export {
+    getFirstColorGradient,
     generatePadding,
     generateMargin,
     generateSize,
