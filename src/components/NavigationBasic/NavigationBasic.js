@@ -113,7 +113,7 @@ class NavigationBasic extends Component {
 
                 case 'null':
                     return <NavigationLink key={`${i}-${link.name}`}>
-                        <Link responsive={responsiveSettings} basis={basis} typography={typography} border={border}>
+                        <Link as={'p'} responsive={responsiveSettings} basis={basis} typography={typography} border={border}>
                             {link.name}
                             {Arrow}
                         </Link>

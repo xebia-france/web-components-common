@@ -72,6 +72,7 @@ class FooterBasic extends Component {
                         basis={settings.basis}
                         typography={settings.typography}
                         border={settings.border}
+                        as={'p'}
                         className={'disabledHover'}
                     >{link.name}</Link>
                         {
