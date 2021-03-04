@@ -116,7 +116,7 @@ export const Links = styled.div`
   }
 `;
 
-export const FooterContainer = styled.div.attrs(props => ({
+export const FooterContainer = styled.ul.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis
 }))`
