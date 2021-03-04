@@ -37,7 +37,6 @@ export const ImageCorner = styled.div.attrs(props => ({
     
     ${ props =>  props.asset ?  props.responsiveContent.map((size, i) => `
          @media ${ device[size] } {
-            //${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
             .no-webp &{
                ${ props.asset ? generateBackgroundImage(props.asset, size, props.assetsDirectory) : ''}  
             }
@@ -47,7 +46,7 @@ export const ImageCorner = styled.div.attrs(props => ({
             background-size : 100% auto;  
             background-position : top;
             background-repeat : no-repeat;
-         }
+         
          }`)
     : ''  };
          
