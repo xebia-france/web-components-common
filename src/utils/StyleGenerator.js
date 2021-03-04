@@ -267,7 +267,9 @@ const generateBackground = (prop, size, subProp) => {
             : '' )}
             
             ${( prop[size].color[subProp] &&  prop[size].color[subProp].hex.includes('gradient')  ?
-                `background : ${ getFormatedColor(prop[size].color[subProp], prop[size].opacity[subProp])};` 
+                `background : ${ getFormatedColor(prop[size].color[subProp], prop[size].opacity[subProp])};
+                 background-origin : border-box;
+                ` 
             : '' )}
         `;
     }
@@ -278,7 +280,9 @@ const generateBackground = (prop, size, subProp) => {
             : '' )}
             
             ${( prop[size].color &&  prop[size].color.hex.includes('gradient')  ?
-                `background : ${ getFormatedColor(prop[size].color, prop[size].opacity)};` 
+                `background : ${ getFormatedColor(prop[size].color, prop[size].opacity)};
+                 background-origin : border-box;
+                ` 
             : '' )}
         `;
 
