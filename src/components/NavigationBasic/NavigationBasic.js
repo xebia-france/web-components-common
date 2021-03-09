@@ -192,7 +192,7 @@ class NavigationBasic extends Component {
                                         <LanguageSelector>
                                             {
                                                 locales.map((l) => {
-                                                    return <Link key={l}
+                                                    return <li><Link key={l}
                                                                  responsive={this.props.fields['Links'].responsiveSettings}
                                                                  basis={this.props.fields['Links'].settings.basis}
                                                                  typography={this.props.fields['Links'].settings.typography}
@@ -207,7 +207,7 @@ class NavigationBasic extends Component {
                                                         <CheckContainer className={l === locale ? 'selected' : ''}>
                                                             <SvgCheck/>
                                                         </CheckContainer>
-                                                    </Link>
+                                                    </Link></li>
                                                 })
                                             }
                                         </LanguageSelector>

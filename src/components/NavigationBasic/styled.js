@@ -144,7 +144,7 @@ export const Link = styled.a.attrs(props => ({
 `;
 
 
-export const LinkLanguage = styled.a.attrs(props => ({
+export const LinkLanguage = styled.p.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis,
     typography: props.typography,
