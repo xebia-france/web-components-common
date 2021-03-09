@@ -72,7 +72,7 @@ export const Bullet = styled.span.attrs(props => ({
     };
 `;
 
-export const Links = styled.div`
+export const Links = styled.ul`
   display : flex;
   flex-wrap : no-wrap;
   transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
@@ -116,7 +116,7 @@ export const Links = styled.div`
   }
 `;
 
-export const FooterContainer = styled.ul.attrs(props => ({
+export const FooterContainer = styled.div.attrs(props => ({
     responsive: props.responsive,
     basis: props.basis
 }))`
