@@ -77,6 +77,7 @@ export const Links = styled.ul`
   flex-wrap : no-wrap;
   transition : height .2s cubic-bezier(.25,.46,.45,.94) 0ms;
   margin: auto;
+  width : 100%;
   
   & li{
     display : flex;
@@ -124,6 +125,7 @@ export const FooterContainer = styled.div.attrs(props => ({
   flex-direction : row;
   width : 100%;
   transition : all .3s cubic-bezier(.25,.46,.45,.94) 0ms;
+  margin : auto;
 
    ${ props => props.responsive.map((size, i) => `
          @media ${ device[size] } {
