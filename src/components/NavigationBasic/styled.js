@@ -199,9 +199,15 @@ export const LanguageSelector = styled.ul`
     display : flex;
     background-color : transparent !important;
     
+    &>li{
+      display : flex;
+      width : 100%;
+    }
     & ${Link}{
        background-color : transparent;
     }
+    
+    
    }
 `;
 
@@ -505,14 +511,18 @@ export const FixedContainer = styled.div.attrs(props => ({
             border-top : 1px solid rgba(${ props.burger[size].fill.rgb},0.3);
             background-color : rgba(${ props.burger[size].fill.rgb}, 0.05) !important;
             
+            & li {
+                &:not(:last-child){
+                    border-right : 1px solid rgba(${ props.burger[size].fill.rgb},0.3);
+                }
+            }
+            
             & ${Link}{
                 transition: height 0ms ease-in-out;
                 height:${ isNumber(props.basis[size].size.basic.height)
                                 ? `calc(${ props.basis[size].size.basic.height }px - 10px)`
                                 : props.basis[size].size.basic.height } !important;
-                &:not(:last-child){
-                    border-right : 1px solid rgba(${ props.burger[size].fill.rgb},0.3);
-               }
+              
                
                ${CheckContainer}{
                   width:${ isNumber(props.basis[size].size.basic.height)
