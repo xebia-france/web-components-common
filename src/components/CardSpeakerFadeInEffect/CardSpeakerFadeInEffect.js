@@ -68,10 +68,12 @@ const CardSpeakerFadeInEffect = ({fields, order, assetsDirectory, language}) => 
         test_dimensions();
     }, []);
 
-    window.addEventListener('resize', ()=>{
-        clearInterval(movement_timer);
-        movement_timer = setTimeout(test_dimensions, RESET_TIMEOUT);
-    });
+    if (typeof window !== 'undefined' && typeof document !== `undefined`) {
+        window.addEventListener('resize', ()=>{
+            clearInterval(movement_timer);
+            movement_timer = setTimeout(test_dimensions, RESET_TIMEOUT);
+        });
+    }
 
     return (
         <Container ref={targetRef} dynamicHeight={dimensions.width} fadeAnimation={fields.TemplateActive}  ref={targetRef}  {...getTemplatePropsWithImage(fields.Template)} contentBold={ContentBold}
