@@ -10,6 +10,7 @@ export { default as CardClickable } from './CardClickable';
 export { default as CardDuo } from './CardDuo';
 export { default as CardImageLeft } from './CardImageLeft';
 export { default as CardMultiCTA } from './CardMultiCTA';
+export { default as CardSpeakerFadeInEffect } from './CardSpeakerFadeInEffect';
 export { default as CardIframe } from './CardIframe';
 export { default as CardWithListPartners } from './CardWithListPartners';
 export { default as CardZoom } from './CardZoom';
