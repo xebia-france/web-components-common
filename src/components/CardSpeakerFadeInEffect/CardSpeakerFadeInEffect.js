@@ -43,7 +43,7 @@ const CardSpeakerFadeInEffect = ({fields, order, assetsDirectory, language}) => 
     return (
         <Container dynamicHeight={dimensions.width} fadeAnimation={fields.TemplateActive}
                    ref={targetRef}  {...getTemplatePropsWithImage(fields.Template)} contentBold={ContentBold}
-                   assetsDirectory={assetsDirectory} className={isActive ? 'active' : ''}
+                   assetsDirectory={assetsDirectory} className={isActive ? 'active' : 'inactive'}
                    onClick={() => setIsActive(!isActive)}>
             <ShortPresentation>
                 {fields.TextName && <Text field={fields.TextName} language={language}/>}

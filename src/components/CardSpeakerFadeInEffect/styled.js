@@ -86,7 +86,9 @@ export const Container = styled(ContainerCommon).attrs(props => ({
     
     ${props => props.fadeAnimation ?
     `
-        &:not(.active){
+       
+        
+        &.inactive{
             & ${ContainerActive}{
                 &:before, &:after{
                     transition : opacity .4s cubic-bezier(.25,.46,.45,.94) 200ms;
@@ -100,6 +102,7 @@ export const Container = styled(ContainerCommon).attrs(props => ({
                
             }
             & ${ShortPresentation}{
+                top : 0;
                 &>*{
                     opacity : 1;
                     transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 200ms;
@@ -107,7 +110,7 @@ export const Container = styled(ContainerCommon).attrs(props => ({
             }
         }
         
-        &:hover, &.active,  &:hover:not(.active) {
+        &:hover, &.active {
             & ${ContainerActive}{
                 &:before, &:after{
                     opacity : 1;
@@ -130,6 +133,35 @@ export const Container = styled(ContainerCommon).attrs(props => ({
                 }
             }
         }
+        
+       
+        
+        @media  ${ device.M },  ${ device.T } {
+             cursor: pointer;
+             
+            &.inactive{
+                & ${ContainerActive}{
+                    &:before, &:after{
+                        transition : opacity .4s cubic-bezier(.25,.46,.45,.94) 200ms;
+                        opacity : 0 !important;
+                    }
+        
+                    &>*{
+                        transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+                        opacity : 0 !important;
+                    }
+                   
+                }
+                & ${ShortPresentation}{
+                    top : 0 !important;
+                    &>*{
+                        opacity : 1 !important;
+                        transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 200ms;
+                    }
+                }
+            }
+        }
+        
     `
  : ''}
       
