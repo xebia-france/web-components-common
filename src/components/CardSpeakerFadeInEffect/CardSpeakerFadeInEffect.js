@@ -37,7 +37,8 @@ const buildComponent = (fields, field, language, assetsDirectory, key) => {
 const CardSpeakerFadeInEffect = ({fields, order, assetsDirectory, language}) => {
     const ContentBold = fields.ContentBold ? {...getContentProps(fields.ContentBold)} : null;
 
-    const size = useWindowSize();
+
+    const [isActive, setIsActive] = useState(false);
 
     const targetRef = useRef();
     const [dimensions, setDimensions] = useState({ width:0, height: 0 });
@@ -59,13 +60,11 @@ const CardSpeakerFadeInEffect = ({fields, order, assetsDirectory, language}) => 
                 height: targetRef.current.offsetHeight
             });
 
-            console.log('targetRef.current !', targetRef.current)
         }
     }
 
     // This sets the dimensions on the first render
     useLayoutEffect(() => {
-        console.log('effect !');
         test_dimensions();
     }, []);
 
@@ -75,10 +74,9 @@ const CardSpeakerFadeInEffect = ({fields, order, assetsDirectory, language}) => 
     });
 
     return (
-        <Container ref={targetRef} dynamicHeight={dimensions.width}  ref={targetRef}  {...getTemplatePropsWithImage(fields.Template)} contentBold={ContentBold}
-                    assetsDirectory={assetsDirectory}>
+        <Container ref={targetRef} dynamicHeight={dimensions.width} fadeAnimation={fields.TemplateActive}  ref={targetRef}  {...getTemplatePropsWithImage(fields.Template)} contentBold={ContentBold}
+                    assetsDirectory={assetsDirectory} className={isActive ? 'active' : ''} onClick={() => setIsActive(!isActive)}>
             <ShortPresentation>
-                { dimensions.width}
                 {fields.TextName && <Text field={fields.TextName} language={language}/>}
                 {fields.TextJob && <Text field={fields.TextJob} language={language}/>}
             </ShortPresentation>

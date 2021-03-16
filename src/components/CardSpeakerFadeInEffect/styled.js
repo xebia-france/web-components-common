@@ -25,16 +25,19 @@ export const ContainerActive = styled(ContainerCommon).attrs(props => ({
     justify-content : center;
     
     height : inherit;
+    position : absolute;
+    top : 0;
+    left : 0;
     
-    &:before, &:after{
-        transition : opacity .6s cubic-bezier(.25,.46,.45,.94) 300ms;
+  /*  &:before, &:after{
+        transition : opacity .4s cubic-bezier(.25,.46,.45,.94) 200ms;
         opacity : 0;
     }
     
     &>*{
-        transition : opacity .3s cubic-bezier(.25,.46,.45,.94) 0ms;
+        transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 0ms;
         opacity : 0;
-    }
+    }*/
 
 `;
 
@@ -50,11 +53,11 @@ export const ShortPresentation = styled.div.attrs(props => ({
     flex-direction: column;
     justify-content : flex-end;
     
-    &>*{
+   /*&>*{
         opacity : 1;
-        transition : opacity .3s cubic-bezier(.25,.46,.45,.94) 300ms;
+        transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 200ms;
 
-    }
+    }*/
     
     
 `;
@@ -63,7 +66,8 @@ export const Container = styled(ContainerCommon).attrs(props => ({
     contentBold : props.contentBold,
     contentBoldResponsive: props.contentBold ? props.contentBold.responsive : [],
     contentBoldTypography : props.contentBold ? props.contentBold.typography : {},
-    dynamicHeight : props.dynamicHeight
+    dynamicHeight : props.dynamicHeight,
+    fadeAnimation : props.fadeAnimation
 }))`
     ${ props =>  props.contentBold ? props.contentBoldResponsive.map(size => `
          @media ${ device[size] } {
@@ -77,30 +81,52 @@ export const Container = styled(ContainerCommon).attrs(props => ({
     
     ${props =>  props.dynamicHeight !== 0 ? `height : ${props.dynamicHeight}px;` : ''}
     
+    ${props => props.fadeAnimation ?
+    `
+        &:not(.active){
+            & ${ContainerActive}{
+                &:before, &:after{
+                    transition : opacity .4s cubic-bezier(.25,.46,.45,.94) 200ms;
+                    opacity : 0;
+                }
     
-    &:hover, &.active {
-        & ${ContainerActive}{
-            &:before, &:after{
-                opacity : 1;
-                transition : opacity .3s cubic-bezier(.25,.46,.45,.94) 300ms;
+                &>*{
+                    transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+                    opacity : 0; 
+                }
+               
             }
-
-            &>*{
-                opacity : 1;
-                transition : opacity .3s cubic-bezier(.25,.46,.45,.94) 600ms; 
-            }
-           
-        }
-        & ${ShortPresentation}{
-            &>*{
-                opacity : 0;
-                transition : opacity .3s cubic-bezier(.25,.46,.45,.94) 0ms;
-
-                
+            & ${ShortPresentation}{
+                &>*{
+                    opacity : 1;
+                    transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 200ms;
+                }
             }
         }
-       
         
-    }
+        &:hover, &.active,  &:hover:not(.active) {
+            & ${ContainerActive}{
+                &:before, &:after{
+                    opacity : 1;
+                    transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 200ms;
+                }
+    
+                &>*{
+                    opacity : 1;
+                    transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 400ms; 
+                }
+               
+            }
+            & ${ShortPresentation}{
+                &>*{
+                    opacity : 0;
+                    transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+    
+                    
+                }
+            }
+        }
+    `
+ : ''}  
 `;
 

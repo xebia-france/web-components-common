@@ -356,6 +356,7 @@ const getFormatedColor = (color, opacity) => {
         const gradientParameters = gradient.substring(gradient.indexOf('(') + 1, gradient.lastIndexOf(')'));
         const arrayParameters = gradientParameters.split( /,(?![^(]*\))(?![^"']*["'](?:[^"']*["'][^"']*["'])*[^"']*$)/ );
 
+        console.log('arrayParameters', arrayParameters);
         const formatedGradient = arrayParameters.map(parameter => {
             parameter = parameter.trim();
 
@@ -368,12 +369,15 @@ const getFormatedColor = (color, opacity) => {
                 const splited = parameter.split(' ');
                 var rgb = splited[0].match(/\d+/g);
 
+                console.log('rgb', rgb)
                 const rgba = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${rgb[3] === '0' ? 0 : opacity.value})`
                 splited[0] = rgba;
                 return splited.join(' ');;
             }
             return parameter;
         })
+
+        console.log('formatedGradient',formatedGradient);
 
         return gradientType + '(' + formatedGradient + ')';
     } else {
