@@ -52,6 +52,9 @@ export const ShortPresentation = styled.div.attrs(props => ({
     display : flex;
     flex-direction: column;
     justify-content : flex-end;
+    top : 0;
+    left : 0;
+    transition : top .2s cubic-bezier(.25,.46,.45,.94) 0ms;
     
    /*&>*{
         opacity : 1;
@@ -108,16 +111,17 @@ export const Container = styled(ContainerCommon).attrs(props => ({
             & ${ContainerActive}{
                 &:before, &:after{
                     opacity : 1;
-                    transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 200ms;
+                    transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 100ms;
                 }
     
                 &>*{
                     opacity : 1;
-                    transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 400ms; 
+                    transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 250ms; 
                 }
                
             }
             & ${ShortPresentation}{
+                top : -30%;
                 &>*{
                     opacity : 0;
                     transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 0ms;
@@ -127,6 +131,7 @@ export const Container = styled(ContainerCommon).attrs(props => ({
             }
         }
     `
- : ''}  
+ : ''}
+      
 `;
 

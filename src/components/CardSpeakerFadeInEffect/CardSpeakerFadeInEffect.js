@@ -51,7 +51,7 @@ const CardSpeakerFadeInEffect = ({fields, order, assetsDirectory, language}) => 
             </ShortPresentation>
             {
                 fields.TemplateActive &&
-                <ContainerActive  {...getTemplatePropsWithImage(fields.TemplateActive)} contentBold={ContentBold}
+                <ContainerActive onClick={() => setIsActive(!isActive)}  {...getTemplatePropsWithImage(fields.TemplateActive)} contentBold={ContentBold}
                                   assetsDirectory={assetsDirectory}>
                     {fields.TextNameActive &&
                     <TextCommon {...getTextProps(fields.TextNameActive)}>{fields.TextName.content.text ? fields.TextName.content.text[language] : null}</TextCommon>
