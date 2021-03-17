@@ -54,7 +54,7 @@ export const ShortPresentation = styled.div.attrs(props => ({
     justify-content : flex-end;
     top : 0;
     left : 0;
-    transition : top .2s cubic-bezier(.25,.46,.45,.94) 0ms;
+    transition : top .4s cubic-bezier(.25,.46,.45,.94) 0ms;
     
    /*&>*{
         opacity : 1;
@@ -127,9 +127,7 @@ export const Container = styled(ContainerCommon).attrs(props => ({
                 top : -30%;
                 &>*{
                     opacity : 0;
-                    transition : opacity .2s cubic-bezier(.25,.46,.45,.94) 0ms;
-    
-                    
+                    transition : opacity .4s cubic-bezier(.25,.46,.45,.94) 0ms;
                 }
             }
         }
